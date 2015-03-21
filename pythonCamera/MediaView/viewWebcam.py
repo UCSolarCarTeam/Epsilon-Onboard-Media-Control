@@ -39,21 +39,24 @@ def drawImageToBuffer():
     yoffset = 0
     screen.blit(imagen,(xoffset,yoffset))
 
-
-screen = createMainScreen()
-webcam = initiatePyCamera()
-
-while True:
-
-    #grab image, scale and blit to screen
-    imagen = getImage()
-    drawImageToBuffer()
-    #draw all updates to display
-    pygame.display.update()
-
+def checkToQuit():
     # check for quit events
     for event in pygame.event.get():
         if event.type == pygame.QUIT or (event.type == KEYDOWN and event.key == K_ESCAPE):
             webcam.stop()
             pygame.quit()
             sys.exit()
+
+screen = createMainScreen()
+webcam = initiatePyCamera()
+
+pygame.mixer.music.load('Polaris.mp3')
+pygame.mixer.music.play(0)
+
+
+while True:
+    imagen = getImage()
+    drawImageToBuffer()
+    pygame.display.update()
+    checkToQuit()
+
