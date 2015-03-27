@@ -8,11 +8,14 @@ from pygame.locals import *
 pygame.init()
 pygame.camera.init()
 
-xwidth = 900    
-yheight = 506
+screenWidth = 1920
+screenHeight = 1080
+
+xwidth = 800    
+yheight = 500
 
 #create fullscreen display 640x480
-screen = pygame.display.set_mode((xwidth,yheight),pygame.FULLSCREEN|pygame.HWSURFACE)
+screen = pygame.display.set_mode((screenWidth,screenHeight),pygame.FULLSCREEN|pygame.HWSURFACE)
 
 cam_list = pygame.camera.list_cameras()
 webcam = pygame.camera.Camera(cam_list[0],(xwidth,yheight))
@@ -21,7 +24,7 @@ webcam.start()
 while True:
    #grab image, scale and blit to screen
    imagen = webcam.get_image()
-   #imagen = pygame.transform.scale(imagen,(640,480))
+   #imagen = pygame.transform.scale(imagen,(1920,1080))
    screen.blit(imagen,(0,0))
 
    #draw all updates to display
