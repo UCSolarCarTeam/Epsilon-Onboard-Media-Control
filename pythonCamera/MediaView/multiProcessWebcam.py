@@ -45,6 +45,7 @@ def startWebcamStream(thewebcam,childPipe,killPipe):
                 break
         print("maybe here?")
         childPipe.send(package)
+        print("sent package")
     print("WebcamStream quit")
 
 def checkToQuit():
