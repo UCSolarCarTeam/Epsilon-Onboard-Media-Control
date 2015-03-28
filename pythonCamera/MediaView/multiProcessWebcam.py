@@ -2,7 +2,7 @@ import sys
 import pygame
 import pygame.camera
 from pygame.locals import *
-from multiprocessing import Pipe, Process
+from multiprocessing import Pipe, Process, Queue
 import time
 
 pygame.init()
@@ -16,7 +16,7 @@ displayHeight = 720
 cameraWidth = 1000
 cameraHeight = 600
 
-cameraNumber = 1
+cameraNumber = 0
 
 def createMainScreen():
     #create fullscreen display 640x480
@@ -31,18 +31,16 @@ def initiatePyCamera():
     webcam.start()
     return webcam
 
-def startWebcamStream(thewebcam,childPipe,killPipe):
+def startWebcamStream(thewebcam,childPipe,messageQueue):
     while True:
         imagen = thewebcam.get_image()
         imagen = pygame.transform.flip(imagen,1,0)  #flip horizontal
         #imagen = pygame.transform.scale(imagen,(640,480))
         package = pygame.image.tostring(imagen, 'RGB')
         print("repeating")
-        if (killPipe.poll()):
-            print("got here")
-            if (killPipe.recv() == 1):
-                print("startWebcamStream: quitting...")
-                break
+        if (not messageQueue.empty()):
+            print("startWebcamStream: quitting...")
+            break
         print("maybe here?")
         childPipe.send(package)
         print("sent package")
@@ -74,9 +72,9 @@ webcam = initiatePyCamera()
 webcamSize = webcam.get_size()
 
 parent_webcam, child_webcam = Pipe(False) #only parent can receive, only child can send
-webcam_receive, webcam_sender = Pipe(False)
+quitQueue = Queue()
 
-webcamProcess = Process(target=startWebcamStream, args=(webcam, child_webcam,webcam_receive,))
+webcamProcess = Process(target=startWebcamStream, args=(webcam, child_webcam,quitQueue,))
 
 
 webcamProcess.start()
@@ -95,7 +93,7 @@ while True:
 
     quitFlag = checkToQuit()
     if (quitFlag == 1):
-        webcam_sender.send(1)
+        quitQueue.put(1)
         print("sent signal to kill webcam")
         time.sleep(1) 
         if(webcamProcess.is_alive()):
