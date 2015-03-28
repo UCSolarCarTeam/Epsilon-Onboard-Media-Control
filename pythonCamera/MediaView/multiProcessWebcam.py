@@ -31,10 +31,12 @@ def initiatePyCamera():
 
 def startWebcamStream(thewebcam,childPipe):
     while True:
+        print("Streaming")
         imagen = thewebcam.get_image()
         imagen = pygame.transform.flip(imagen,1,0)  #flip horizontal
         #imagen = pygame.transform.scale(imagen,(640,480))
-        childPipe.send(imagen)
+        package = pygame.image.tostring(imagen, 'RGB')
+        childPipe.send(package)
         if (childPipe.poll()):
             if (childPipe.recv() == "quit"):
                 break
@@ -43,25 +45,48 @@ def checkToQuit():
     # check for quit events
     for event in pygame.event.get():
         if event.type == pygame.QUIT or (event.type == KEYDOWN and event.key == K_ESCAPE):
-            webcam.stop()
-            pygame.quit()
-            sys.exit()
+            return 1
 
-def drawImageToBuffer(image):
+    return 0
+def endProgram():
+    webcam.stop()
+    pygame.quit()
+    sys.exit()
+
+def drawWebcamImageToBuffer(image):
     xoffset = displayWidth - image.get_width()
     yoffset = 0
     screen.blit(image,(xoffset,yoffset))
 
 
-screen = createMainScree()
+screen = createMainScreen()
 webcam = initiatePyCamera()
+webcamSize = webcam.get_size()
 
 parent_webcam, child_webcam = Pipe()
 
-webcamProcess = Process(target=startWebcamStream, args=(webcam, childPipe,))
+webcamProcess = Process(target=startWebcamStream, args=(webcam, child_webcam,))
+
+
+webcamProcess.start()
 
 while True:
-
     update = 0
 
-    
+    if (parent_webcam.poll()):
+        print("received")
+        stringImage = parent_webcam.recv()
+        image = pygame.image.fromstring(stringImage,webcamSize,'RGB')
+        drawWebcamImageToBuffer(image)
+        update = 1
+
+    if (update == 1):
+        pygame.display.update()
+
+    quitFlag = checkToQuit()
+    if (quitFlag == 1):
+        parent_webcam.send("quit")
+        endProgram()
+
+
+
