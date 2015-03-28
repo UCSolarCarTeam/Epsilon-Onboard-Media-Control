@@ -13,8 +13,8 @@ displayHeight = 720
 
 #1024
 #576
-cameraWidth = 1000
-cameraHeight = 600
+cameraWidth = 640
+cameraHeight = 480
 
 cameraNumber = 0
 
@@ -82,7 +82,7 @@ while True:
 
     if (parent_webcam.poll()):
         stringImage = parent_webcam.recv()
-        image = pygame.image.fromstring(stringImage,webcamSize,'RGB')
+        image = pygame.image.frombuffer(stringImage,webcamSize,'RGB')
         drawWebcamImageToBuffer(image)
         update = 1
 
