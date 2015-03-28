@@ -45,6 +45,7 @@ def startWebcamStream(thewebcam,childPipe,killPipe):
                 break
         print("maybe here?")
         childPipe.send(package)
+    print("WebcamStream quit")
 
 def checkToQuit():
     # check for quit events
@@ -95,7 +96,7 @@ while True:
     if (quitFlag == 1):
         webcam_sender.send(1)
         print("sent signal to kill webcam")
-        time.sleep(0.2) 
+        time.sleep(1) 
         endProgram()
 
 
