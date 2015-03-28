@@ -21,7 +21,8 @@ cameraNumber = 0
 
 def createMainScreen():
     #create fullscreen display 640x480
-    screen = pygame.display.set_mode((displayWidth,displayHeight),pygame.FULLSCREEN|pygame.HWSURFACE)
+    #screen = pygame.display.set_mode((displayWidth,displayHeight),pygame.FULLSCREEN|pygame.HWSURFACE)
+    screen = pygame.display.set_mode((displayWidth,displayHeight),pygame.FULLSCREEN)
     pygame.draw.rect(screen,(255,0,0),(0,0,displayWidth,displayHeight),1)
     return screen
 

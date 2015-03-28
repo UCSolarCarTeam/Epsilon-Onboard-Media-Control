@@ -36,6 +36,7 @@ def initiatePyCamera():
 
 def startWebcamStream(thewebcam,childPipe,messageQueue):
     while True:
+        streamstart = time.time()
         imagen = thewebcam.get_image()
         imagen = pygame.transform.flip(imagen,1,0)  #flip horizontal
         #imagen = pygame.transform.scale(imagen,(640,480))
@@ -44,6 +45,7 @@ def startWebcamStream(thewebcam,childPipe,messageQueue):
             print("startWebcamStream: quitting...")
             break
         childPipe.send(package)
+        print("stream loop took: " + str(time.time()-streamstart))
     print("WebcamStream quit")
 
 def checkToQuit():
@@ -73,14 +75,15 @@ webcam = initiatePyCamera()
 webcamSize = webcam.get_size()
 imageWidth = webcam.get_image().get_width()
 
-parent_webcam, child_webcam = Pipe() #only parent can receive, only child can send
-#quitQueue = Queue()
+parent_webcam, child_webcam = Pipe(False) #only parent can receive, only child can send
+quitQueue = Queue()
 
-webcamProcess = Process(target=startWebcamStream, args=(webcam, child_webcam,))
+webcamProcess = Process(target=startWebcamStream, args=(webcam, child_webcam,quitQueue,))
 
 webcamProcess.start()
 
 while True:
+    mainloopstart = time.time()
     update = 0
     #print(webcam.get_size())
 
@@ -107,6 +110,8 @@ while True:
             print("webcam is alive still?")
             webcamProcess.terminate()
         endProgram()
+
+    print("mainloop took:    " + str(time.time()-mainloopstart))
 
 
 
