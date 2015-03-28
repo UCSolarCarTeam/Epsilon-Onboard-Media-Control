@@ -30,16 +30,14 @@ def initiatePyCamera():
     webcam.start()
     return webcam
 
-def startWebcamStream(thewebcam,childPipe):
+def startWebcamStream(thewebcam,childPipe,killPipe):
     while True:
         imagen = thewebcam.get_image()
         imagen = pygame.transform.flip(imagen,1,0)  #flip horizontal
         #imagen = pygame.transform.scale(imagen,(640,480))
         package = pygame.image.tostring(imagen, 'RGB')
-        print("repeating")
-        if (childPipe.poll()):
-            print("something is in the pipe!!")
-            if (childPipe.recv() == 1):
+        if (killPipe.poll()):
+            if (killPipe.recv() == 1):
                 print("startWebcamStream: quitting...")
                 break
         childPipe.send(package)
@@ -69,9 +67,10 @@ screen = createMainScreen()
 webcam = initiatePyCamera()
 webcamSize = webcam.get_size()
 
-parent_webcam, child_webcam = Pipe()
+parent_webcam, child_webcam = Pipe(False) #only parent can receive, only child can send
+webcam_receive, webcam_sender = Pipe(False)
 
-webcamProcess = Process(target=startWebcamStream, args=(webcam, child_webcam,))
+webcamProcess = Process(target=startWebcamStream, args=(webcam, child_webcam,webcam_receive,))
 
 
 webcamProcess.start()
@@ -90,8 +89,8 @@ while True:
 
     quitFlag = checkToQuit()
     if (quitFlag == 1):
-        parent_webcam.send(1)
-        print("sent to child to kill")
+        webcam_sender.send(1)
+        print("sent signal to kill webcam")
         
         webcamProcess.join()
         endProgram()
