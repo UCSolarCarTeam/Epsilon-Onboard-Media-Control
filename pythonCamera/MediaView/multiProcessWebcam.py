@@ -1,9 +1,8 @@
-#!/usr/bin/python
 import sys
 import pygame
 import pygame.camera
 from pygame.locals import *
-
+from multiprocessing import Pipe, Process
 
 pygame.init()
 pygame.camera.init()
@@ -24,23 +23,21 @@ def createMainScreen():
     pygame.draw.rect(screen,(255,0,0),(0,0,displayWidth,displayHeight),1)
     return screen
 
-def initiatePyCamera(theWebcam):
+def initiatePyCamera():
     cam_list = pygame.camera.list_cameras()
     webcam = pygame.camera.Camera(cam_list[cameraNumber],(cameraWidth,cameraHeight))
     webcam.start()
-    theWebcam = webcam
     return webcam
 
-def getImage():
-    imagen = webcam.get_image()
-    imagen = pygame.transform.flip(imagen,1,0)  #flip horizontal
-    #imagen = pygame.transform.scale(imagen,(640,480))
-    return imagen
-
-def drawImageToBuffer():
-    xoffset = displayWidth - imagen.get_width()
-    yoffset = 0
-    screen.blit(imagen,(xoffset,yoffset))
+def startWebcamStream(thewebcam,childPipe):
+    while True:
+        imagen = thewebcam.get_image()
+        imagen = pygame.transform.flip(imagen,1,0)  #flip horizontal
+        #imagen = pygame.transform.scale(imagen,(640,480))
+        childPipe.send(imagen)
+        if (childPipe.poll()):
+            if (childPipe.recv() == "quit"):
+                break
 
 def checkToQuit():
     # check for quit events
@@ -50,18 +47,21 @@ def checkToQuit():
             pygame.quit()
             sys.exit()
 
-screen = createMainScreen()
-#webcam = initiatePyCamera()
-webcam = 0 
-initiatePyCamera(webcam)
+def drawImageToBuffer(image):
+    xoffset = displayWidth - image.get_width()
+    yoffset = 0
+    screen.blit(image,(xoffset,yoffset))
 
-pygame.mixer.music.load('Polaris.mp3')
-pygame.mixer.music.play(0)
 
+screen = createMainScree()
+webcam = initiatePyCamera()
+
+parent_webcam, child_webcam = Pipe()
+
+webcamProcess = Process(target=startWebcamStream, args=(webcam, childPipe,))
 
 while True:
-    imagen = getImage()
-    drawImageToBuffer()
-    pygame.display.update()
-    checkToQuit()
 
+    update = 0
+
+    
