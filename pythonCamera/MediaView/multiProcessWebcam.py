@@ -73,10 +73,10 @@ webcam = initiatePyCamera()
 webcamSize = webcam.get_size()
 imageWidth = webcam.get_image().get_width()
 
-parent_webcam, child_webcam = Pipe(False) #only parent can receive, only child can send
-quitQueue = Queue()
+parent_webcam, child_webcam = Pipe() #only parent can receive, only child can send
+#quitQueue = Queue()
 
-webcamProcess = Process(target=startWebcamStream, args=(webcam, child_webcam,quitQueue,))
+webcamProcess = Process(target=startWebcamStream, args=(webcam, child_webcam,))
 
 webcamProcess.start()
 

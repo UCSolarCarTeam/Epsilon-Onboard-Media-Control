@@ -3,18 +3,19 @@ import sys
 import pygame
 import pygame.camera
 from pygame.locals import *
+import time
 
 
 pygame.init()
 pygame.camera.init()
 
-displayWidth = 1280    
+displayWidth = 1232    
 displayHeight = 720
 
 #1024
 #576
-cameraWidth = 1000
-cameraHeight = 600
+cameraWidth = 640
+cameraHeight = 360
 
 cameraNumber = 0
 
@@ -24,7 +25,7 @@ def createMainScreen():
     pygame.draw.rect(screen,(255,0,0),(0,0,displayWidth,displayHeight),1)
     return screen
 
-def initiatePyCamera(theWebcam):
+def initiatePyCamera():
     cam_list = pygame.camera.list_cameras()
     webcam = pygame.camera.Camera(cam_list[cameraNumber],(cameraWidth,cameraHeight))
     webcam.start()
@@ -52,16 +53,28 @@ def checkToQuit():
 
 screen = createMainScreen()
 #webcam = initiatePyCamera()
-webcam = 0 
-initiatePyCamera(webcam)
+webcam = initiatePyCamera()
 
-pygame.mixer.music.load('Polaris.mp3')
-pygame.mixer.music.play(0)
-
+#pygame.mixer.music.load('Polaris.mp3')
+#pygame.mixer.music.play(0)
+endloop = 0
 
 while True:
+     
+    
+    beforeimage = time.time()
     imagen = getImage()
+    afterimage = time.time()
     drawImageToBuffer()
+    afterdraw = time.time()
     pygame.display.update()
+    afterdisplay = time.time()
     checkToQuit()
+
+    print("Get Image: " + str(afterimage - beforeimage))    
+    print("Draw Image:" + str(afterdraw - afterimage))
+    print("After Disp:" + str(afterdisplay - afterdraw))
+    print("------ loop took: " + str(time.time()- endloop) + "-------")
+    endloop = time.time()
+
 
