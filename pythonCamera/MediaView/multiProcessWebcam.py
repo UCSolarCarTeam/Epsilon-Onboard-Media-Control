@@ -20,8 +20,8 @@ cameraNumber = 0
 
 def createMainScreen():
     #create fullscreen display 640x480
-    #screen = pygame.display.set_mode((displayWidth,displayHeight),pygame.FULLSCREEN|pygame.HWSURFACE)
-    screen = pygame.display.set_mode((displayWidth,displayHeight))
+    screen = pygame.display.set_mode((displayWidth,displayHeight),pygame.FULLSCREEN|pygame.HWSURFACE)
+    #screen = pygame.display.set_mode((displayWidth,displayHeight))
     pygame.draw.rect(screen,(255,0,0),(0,0,displayWidth,displayHeight),1)
     return screen
 
@@ -78,7 +78,7 @@ webcamProcess.start()
 
 while True:
     update = 0
-    print(webcam.get_size())
+    #print(webcam.get_size())
 
     if (parent_webcam.poll()):
         stringImage = parent_webcam.recv()
