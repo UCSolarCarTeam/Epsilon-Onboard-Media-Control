@@ -62,7 +62,7 @@ def endProgram():
 
 
 def drawWebcamImageToBuffer(image):
-    xoffset = displayWidth - webcamSize[1]
+    xoffset = displayWidth - imageWidth 
     yoffset = 0
     screen.blit(image,(xoffset,yoffset))
 
@@ -71,7 +71,7 @@ def drawWebcamImageToBuffer(image):
 screen = createMainScreen()
 webcam = initiatePyCamera()
 webcamSize = webcam.get_size()
-
+imageWidth = webcam.get_image().get_width()
 
 parent_webcam, child_webcam = Pipe(False) #only parent can receive, only child can send
 quitQueue = Queue()
