@@ -37,13 +37,10 @@ def startWebcamStream(thewebcam,childPipe,messageQueue):
         imagen = pygame.transform.flip(imagen,1,0)  #flip horizontal
         #imagen = pygame.transform.scale(imagen,(640,480))
         package = pygame.image.tostring(imagen, 'RGB')
-        print("repeating")
         if (not messageQueue.empty()):
             print("startWebcamStream: quitting...")
             break
-        print("maybe here?")
         childPipe.send(package)
-        print("sent package")
     print("WebcamStream quit")
 
 def checkToQuit():
