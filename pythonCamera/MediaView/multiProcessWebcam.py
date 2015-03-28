@@ -13,8 +13,11 @@ displayHeight = 720
 
 #1024
 #576
+
+#640
+#360
 cameraWidth = 640
-cameraHeight = 480
+cameraHeight = 360
 
 cameraNumber = 0
 
@@ -59,20 +62,21 @@ def endProgram():
 
 
 def drawWebcamImageToBuffer(image):
-    xoffset = displayWidth - image.get_width()
+    xoffset = displayWidth - webcamSize[1]
     yoffset = 0
     screen.blit(image,(xoffset,yoffset))
 
 
+#INITIALIZE EVERYTHING FIRST#
 screen = createMainScreen()
 webcam = initiatePyCamera()
 webcamSize = webcam.get_size()
+
 
 parent_webcam, child_webcam = Pipe(False) #only parent can receive, only child can send
 quitQueue = Queue()
 
 webcamProcess = Process(target=startWebcamStream, args=(webcam, child_webcam,quitQueue,))
-
 
 webcamProcess.start()
 
@@ -90,6 +94,7 @@ while True:
         pygame.display.update()
 
     quitFlag = checkToQuit()
+
     if (quitFlag == 1):
         quitQueue.put(1)
         print("sent signal to kill webcam")
