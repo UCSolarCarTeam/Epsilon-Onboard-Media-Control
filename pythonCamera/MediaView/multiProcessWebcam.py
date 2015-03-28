@@ -44,8 +44,11 @@ def startWebcamStream(thewebcam,childPipe,messageQueue):
         if (not messageQueue.empty()):
             print("startWebcamStream: quitting...")
             break
+        beforesend = time.time()
         childPipe.send(package)
+        aftersend = time.time()
         print("stream loop took: " + str(time.time()-streamstart))
+        print("sending image:    " + str(aftersend - beforesend))
     print("WebcamStream quit")
 
 def checkToQuit():
