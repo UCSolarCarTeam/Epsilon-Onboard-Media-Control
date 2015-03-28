@@ -95,7 +95,9 @@ while True:
     if (quitFlag == 1):
         quitQueue.put(1)
         print("sent signal to kill webcam")
-        time.sleep(1) 
+        if(parent_webcam.poll()):
+            parent_webcam.recv()
+
         if(webcamProcess.is_alive()):
             print("webcam is alive still?")
             webcamProcess.terminate()
