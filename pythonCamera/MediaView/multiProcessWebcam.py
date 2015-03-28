@@ -3,6 +3,7 @@ import pygame
 import pygame.camera
 from pygame.locals import *
 from multiprocessing import Pipe, Process
+import time
 
 pygame.init()
 pygame.camera.init()
@@ -94,8 +95,7 @@ while True:
     if (quitFlag == 1):
         webcam_sender.send(1)
         print("sent signal to kill webcam")
-        
-        webcamProcess.join()
+        time.sleep(0.2) 
         endProgram()
 
 
