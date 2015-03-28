@@ -78,6 +78,7 @@ webcamProcess.start()
 
 while True:
     update = 0
+    print(webcam.get_size())
 
     if (parent_webcam.poll()):
         stringImage = parent_webcam.recv()
