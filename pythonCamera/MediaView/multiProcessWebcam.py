@@ -7,7 +7,7 @@ from multiprocessing import Pipe, Process
 pygame.init()
 pygame.camera.init()
 
-displayWidth = 1280    
+displayWidth = 1232    
 displayHeight = 720
 
 #1024
@@ -19,7 +19,8 @@ cameraNumber = 0
 
 def createMainScreen():
     #create fullscreen display 640x480
-    screen = pygame.display.set_mode((displayWidth,displayHeight),pygame.FULLSCREEN|pygame.HWSURFACE)
+    #screen = pygame.display.set_mode((displayWidth,displayHeight),pygame.FULLSCREEN|pygame.HWSURFACE)
+    screen = pygame.display.set_mode((displayWidth,displayHeight))
     pygame.draw.rect(screen,(255,0,0),(0,0,displayWidth,displayHeight),1)
     return screen
 
@@ -31,15 +32,17 @@ def initiatePyCamera():
 
 def startWebcamStream(thewebcam,childPipe):
     while True:
-        print("Streaming")
         imagen = thewebcam.get_image()
         imagen = pygame.transform.flip(imagen,1,0)  #flip horizontal
         #imagen = pygame.transform.scale(imagen,(640,480))
         package = pygame.image.tostring(imagen, 'RGB')
-        childPipe.send(package)
+        print("repeating")
         if (childPipe.poll()):
-            if (childPipe.recv() == "quit"):
+            print("something is in the pipe!!")
+            if (childPipe.recv() == 1):
+                print("startWebcamStream: quitting...")
                 break
+        childPipe.send(package)
 
 def checkToQuit():
     # check for quit events
@@ -50,8 +53,11 @@ def checkToQuit():
     return 0
 def endProgram():
     webcam.stop()
+    print("stopped webcam")
     pygame.quit()
+    print("stopped pygame")
     sys.exit()
+
 
 def drawWebcamImageToBuffer(image):
     xoffset = displayWidth - image.get_width()
@@ -74,7 +80,6 @@ while True:
     update = 0
 
     if (parent_webcam.poll()):
-        print("received")
         stringImage = parent_webcam.recv()
         image = pygame.image.fromstring(stringImage,webcamSize,'RGB')
         drawWebcamImageToBuffer(image)
@@ -85,7 +90,10 @@ while True:
 
     quitFlag = checkToQuit()
     if (quitFlag == 1):
-        parent_webcam.send("quit")
+        parent_webcam.send(1)
+        print("sent to child to kill")
+        
+        webcamProcess.join()
         endProgram()
 
 
