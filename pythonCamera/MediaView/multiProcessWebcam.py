@@ -16,7 +16,7 @@ displayHeight = 720
 cameraWidth = 1000
 cameraHeight = 600
 
-cameraNumber = 0
+cameraNumber = 1
 
 def createMainScreen():
     #create fullscreen display 640x480
@@ -98,6 +98,9 @@ while True:
         webcam_sender.send(1)
         print("sent signal to kill webcam")
         time.sleep(1) 
+        if(webcamProcess.is_alive()):
+            print("webcam is alive still?")
+            webcamProcess.terminate()
         endProgram()
 
 
