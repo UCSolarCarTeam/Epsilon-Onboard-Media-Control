@@ -85,6 +85,8 @@ webcamProcess = Process(target=startWebcamStream, args=(webcam, child_webcam,qui
 
 webcamProcess.start()
 
+
+lastimagetime = 0
 while True:
     mainloopstart = time.time()
     update = 0
@@ -95,6 +97,8 @@ while True:
         image = pygame.image.frombuffer(stringImage,webcamSize,'RGB')
         drawWebcamImageToBuffer(image)
         update = 1
+        print("deltatime:        " + str(time.time() - lastimagetime))
+        lastimagetime = time.time()
 
     if (update == 1):
         pygame.display.update()
