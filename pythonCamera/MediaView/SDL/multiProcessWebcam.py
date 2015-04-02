@@ -88,15 +88,14 @@ webcamProcess.start()
 
 lastimagetime = 0
 while True:
+    mainloopstart = time.time()
     update = 0
     #print(webcam.get_size())
 
     if (parent_webcam.poll()):
         stringImage = parent_webcam.recv()
         image = pygame.image.frombuffer(stringImage,webcamSize,'RGB')
-        mainloopstart = time.time()
         drawWebcamImageToBuffer(image)
-        print("draw image   :    " + str(time.time()-mainloopstart))
         update = 1
         print("deltatime:        " + str(time.time() - lastimagetime))
         lastimagetime = time.time()
@@ -119,6 +118,7 @@ while True:
             webcamProcess.terminate()
         endProgram()
 
+    print("mainloop took:    " + str(time.time()-mainloopstart))
 
 
 
