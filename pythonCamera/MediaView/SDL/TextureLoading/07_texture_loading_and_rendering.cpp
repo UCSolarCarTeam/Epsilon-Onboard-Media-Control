@@ -14,8 +14,8 @@ and may not be redistributed without written permission.*/
 using namespace cv;
 
 //Screen dimension constants
-const int SCREEN_WIDTH = 640;
-const int SCREEN_HEIGHT = 480;
+const int SCREEN_WIDTH = 1280;
+const int SCREEN_HEIGHT = 720;
 
 //Starts up SDL and creates window
 bool init();
@@ -37,6 +37,9 @@ SDL_Renderer* gRenderer = NULL;
 
 //Current displayed texture
 SDL_Texture* gTexture = NULL;
+
+VideoCapture cap(1);
+
 
 bool init()
 {
@@ -89,7 +92,15 @@ bool init()
 		}
 	}
 
+    if(!cap.isOpened())  // check if we succeeded
+            return -1;
+        else
+        	printf("Video Opened\n");
+
+	cap.set(CV_CAP_PROP_FRAME_WIDTH, 1280);
+	cap.set(CV_CAP_PROP_FRAME_HEIGHT, 720); 
 	return success;
+
 }
 
 bool loadMedia()
@@ -106,7 +117,7 @@ bool loadMedia()
 	// }
 
 
-	VideoCapture cap(0);
+
 	Mat frame;
     cap >> frame; // get a new frame
     IplImage ipl_frame = frame;
@@ -210,6 +221,10 @@ int main( int argc, char* args[] )
 					}
 				}
 
+				if( !loadMedia() )
+				{
+					printf( "Failed to load media!\n" );
+				}
 				//Clear screen
 				SDL_RenderClear( gRenderer );
 
