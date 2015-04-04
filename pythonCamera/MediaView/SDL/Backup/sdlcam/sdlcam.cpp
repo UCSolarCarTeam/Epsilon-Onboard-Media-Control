@@ -62,7 +62,7 @@ SDL_Surface *screen = NULL;
 SDL_Surface *cam_surface = NULL;
 
 char *mypixels;
-char *dev_name = "/dev/video0";
+char *dev_name = "/dev/video1";
 
 int fd = -1;
 
@@ -504,38 +504,50 @@ static void init_userp (unsigned int buffer_size)
 
 static void init_device (void)
 {
-	struct v4l2_capability cap;
-	struct v4l2_cropcap cropcap;
-	struct v4l2_crop crop;
-	struct v4l2_format fmt;
-	unsigned int min;
+    struct v4l2_capability cap;
+    struct v4l2_cropcap cropcap;
+    struct v4l2_crop crop;
+    struct v4l2_format fmt;
+    unsigned int min;
 
-	if (!(cap.capabilities & V4L2_CAP_VIDEO_CAPTURE)) 
-	{
-		fprintf (stderr, "%s is no video capture device\n",dev_name);
-		exit (EXIT_FAILURE);
-	}
+    if (-1 == xioctl (fd, VIDIOC_QUERYCAP, &cap))
+    {
+        if (EINVAL == errno)
+        {
+            fprintf (stderr, "%s is no V4L2 device\n", dev_name);
+            exit (EXIT_FAILURE);
+        }
+        else
+        {
+            errno_exit ("VIDIOC_QUERYCAP");
+        }
+    }
 
-	switch (io) 
-	{
-		case IO_METHOD_READ:
-			if (!(cap.capabilities & V4L2_CAP_READWRITE)) 
-			{
-				fprintf (stderr, "%s does not support read i/o\n",dev_name);
-				exit (EXIT_FAILURE);
-			}
-			break;
+    if (!(cap.capabilities & V4L2_CAP_VIDEO_CAPTURE))
+    {
+        fprintf (stderr, "%s is no video capture device\n", dev_name);
+        exit (EXIT_FAILURE);
+    }
 
-		case IO_METHOD_MMAP:
-		case IO_METHOD_USERPTR:
-			if (!(cap.capabilities & V4L2_CAP_STREAMING)) 
-			{
-				fprintf (stderr, "%s does not support streaming i/o\n",dev_name);
-				exit (EXIT_FAILURE);
-			}
-			break;
-	}
+        switch (io)
+    {
+        case IO_METHOD_READ:
+            if (!(cap.capabilities & V4L2_CAP_READWRITE))
+            {
+                fprintf (stderr, "%s does not support read i/o\n", dev_name);
+                exit (EXIT_FAILURE);
+            }
+            break;
 
+        case IO_METHOD_MMAP:
+        case IO_METHOD_USERPTR:
+            if (!(cap.capabilities & V4L2_CAP_STREAMING))
+            {
+                fprintf (stderr, "%s does not support streaming i/o\n", dev_name);
+                exit (EXIT_FAILURE);
+            }
+            break;
+    }
 		
 	/* Select video input, video standard and tune here. */
 
@@ -726,7 +738,6 @@ int main( int argc, char* args[] )
 	SDL_WM_SetCaption( "Video4Linux + SDL", NULL );
 
 	//Load the images
-
 	createCamImage (CAM_WIDTH*2,CAM_HEIGHT*2);
 
 	apply_surface (0,0,cam_surface,screen);
@@ -736,7 +747,7 @@ int main( int argc, char* args[] )
 		return 1;    
 	}
 
-	open_device ();
+	open_device();
 	init_device();
 
 	while(!quit)

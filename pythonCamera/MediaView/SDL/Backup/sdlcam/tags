@@ -1,0 +1,50 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+CAM_HEIGHT	sdlcam.cpp	/^const int CAM_HEIGHT = 240;$/;"	v
+CAM_WIDTH	sdlcam.cpp	/^const int CAM_WIDTH = 320;$/;"	v
+CLEAR	sdlcam.cpp	45;"	d	file:
+IO_METHOD_MMAP	sdlcam.cpp	/^	IO_METHOD_MMAP,$/;"	e	enum:__anon1	file:
+IO_METHOD_READ	sdlcam.cpp	/^	IO_METHOD_READ,$/;"	e	enum:__anon1	file:
+IO_METHOD_USERPTR	sdlcam.cpp	/^	IO_METHOD_USERPTR,$/;"	e	enum:__anon1	file:
+SCREEN_BPP	sdlcam.cpp	/^const int SCREEN_BPP = 32;$/;"	v
+SCREEN_HEIGHT	sdlcam.cpp	/^const int SCREEN_HEIGHT = 480;$/;"	v
+SCREEN_WIDTH	sdlcam.cpp	/^const int SCREEN_WIDTH = 640;$/;"	v
+apply_surface	sdlcam.cpp	/^void apply_surface( int x, int y, SDL_Surface* source, SDL_Surface* destination )$/;"	f
+background	sdlcam.cpp	/^SDL_Surface *background = NULL;$/;"	v
+buffer	sdlcam.cpp	/^} buffer;$/;"	t	typeref:struct:__anon2	file:
+buffers	sdlcam.cpp	/^buffer *        	buffers	= NULL;$/;"	v
+cam_surface	sdlcam.cpp	/^SDL_Surface *cam_surface = NULL;$/;"	v
+clamp	sdlcam.cpp	/^int clamp (double x)$/;"	f
+close_device	sdlcam.cpp	/^static void close_device (void)$/;"	f	file:
+createCamImage	sdlcam.cpp	/^void createCamImage (int w,int h)$/;"	f
+dev_name	sdlcam.cpp	/^char *dev_name = "\/dev\/video1";$/;"	v
+errno_exit	sdlcam.cpp	/^static void errno_exit (const char *s)$/;"	f	file:
+fd	sdlcam.cpp	/^int fd = -1;$/;"	v
+init_device	sdlcam.cpp	/^static void init_device (void)$/;"	f	file:
+init_mmap	sdlcam.cpp	/^static void init_mmap (void)$/;"	f	file:
+init_read	sdlcam.cpp	/^static void init_read (unsigned int buffer_size)$/;"	f	file:
+init_userp	sdlcam.cpp	/^static void init_userp (unsigned int buffer_size)$/;"	f	file:
+io	sdlcam.cpp	/^static io_method	io		= IO_METHOD_MMAP;$/;"	v	file:
+io_method	sdlcam.cpp	/^} io_method;$/;"	t	typeref:enum:__anon1	file:
+length	sdlcam.cpp	/^	size_t length;$/;"	m	struct:__anon2	file:
+load_image	sdlcam.cpp	/^SDL_Surface *load_image( std::string filename ) $/;"	f
+main	sdlcam.cpp	/^int main( int argc, char* args[] )$/;"	f
+message	sdlcam.cpp	/^SDL_Surface *message = NULL;$/;"	v
+mypixels	sdlcam.cpp	/^char *mypixels;$/;"	v
+n_buffers	sdlcam.cpp	/^static unsigned int     n_buffers       = 0;$/;"	v	file:
+open_device	sdlcam.cpp	/^static void open_device (void)$/;"	f	file:
+process_image	sdlcam.cpp	/^static void process_image(const void * p)$/;"	f	file:
+quit	sdlcam.cpp	/^int quit=false;$/;"	v
+read_frame	sdlcam.cpp	/^static int read_frame (void)$/;"	f	file:
+screen	sdlcam.cpp	/^SDL_Surface *screen = NULL;$/;"	v
+start	sdlcam.cpp	/^	void * start;$/;"	m	struct:__anon2	file:
+start_capturing	sdlcam.cpp	/^static void start_capturing (void)$/;"	f	file:
+stop_capturing	sdlcam.cpp	/^static void stop_capturing (void)$/;"	f	file:
+uninit_device	sdlcam.cpp	/^static void	uninit_device (void)$/;"	f	file:
+update_cam	sdlcam.cpp	/^int update_cam ()$/;"	f
+xioctl	sdlcam.cpp	/^static int xioctl (int fd, int request, void *arg)$/;"	f	file:
+yuv420_rgb	sdlcam.cpp	/^void yuv420_rgb (unsigned char Y1, unsigned char Cb, unsigned char Cr, int *ER, int *EG, int *EB)$/;"	f
