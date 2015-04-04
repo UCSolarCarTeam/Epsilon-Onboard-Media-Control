@@ -6,7 +6,12 @@ and may not be redistributed without written permission.*/
 #include <SDL_image.h>
 #include <stdio.h>
 #include <string>
-#include <iostream>
+
+#include "opencv2/opencv.hpp"
+#include <cv.h>
+#include <highgui.h>
+
+using namespace cv;
 
 //Screen dimension constants
 const int SCREEN_WIDTH = 640;
@@ -32,8 +37,6 @@ SDL_Renderer* gRenderer = NULL;
 
 //Current displayed texture
 SDL_Texture* gTexture = NULL;
-
-int animationNumber = 1; 
 
 bool init()
 {
@@ -91,29 +94,39 @@ bool init()
 
 bool loadMedia()
 {
-	std::string imageName = ""; 
-	std::string baseName = "Running/Running";
-	std::string fileType = ".png";
-	//Loading success flag
 	bool success = true;
+	// //Loading success flag
 
-	//Load PNG texture
-	
-	imageName.append(baseName);
-	imageName.append(std::to_string(animationNumber));
-	imageName.append(fileType);
+	// //Load PNG texture
+	// gTexture = loadTexture( "texture.png" );
+	// if( gTexture == NULL )
+	// {
+	// 	printf( "Failed to load texture image!\n" );
+	// 	success = false;
+	// }
 
-	gTexture = loadTexture( imageName );
-	if( gTexture == NULL )
-	{
-		printf( "Failed to load texture image %s!\n",imageName.c_str() );
-		success = false;
-	}
-	animationNumber++;
-	animationNumber = animationNumber%11;
-	if (animationNumber == 0)
-		animationNumber = 1;
-	
+
+	VideoCapture cap(0);
+	Mat frame;
+    cap >> frame; // get a new frame
+    IplImage ipl_frame = frame;
+    IplImage* img = &ipl_frame;
+
+ 	SDL_Surface* tempSurface = SDL_CreateRGBSurfaceFrom((void*)img->imageData,
+    	img->width,
+    	img->height,
+    	img->depth * img->nChannels,
+    	img->widthStep,
+    	0xff0000, 0x00ff00, 0x0000ff, 0
+    	);
+
+     gTexture = SDL_CreateTextureFromSurface(gRenderer, tempSurface);
+
+    if( gTexture == NULL )
+    {
+    	printf( "Unable to create texture from! SDL Error: %s\n", SDL_GetError() );
+    }
+
 
 	return success;
 }
@@ -195,11 +208,6 @@ int main( int argc, char* args[] )
 					{
 						quit = true;
 					}
-				}
-
-				if( !loadMedia() )
-				{
-					printf( "Failed to load media!\n" );
 				}
 
 				//Clear screen

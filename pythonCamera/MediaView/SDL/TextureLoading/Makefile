@@ -1,5 +1,5 @@
 #OBJS = files to compile 
-OBJS = test.cpp 
+OBJS = 07_texture_loading_and_rendering.cpp 
 
 #CC = compiler used
 CC = g++

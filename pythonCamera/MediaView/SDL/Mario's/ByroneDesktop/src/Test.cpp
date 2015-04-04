@@ -288,11 +288,6 @@ void setup_ffmpeg(char* filename, char* filename2)
 int main(int argc, char* argv[])
 {
     
-    if (argc < 2)
-    {
-        fprintf(stderr, "Usage: %s <video>\n", argv[0]);
-        return -1;
-    }
     av_register_all();
     
     if (!init_SDL())
@@ -319,95 +314,93 @@ int main(int argc, char* argv[])
     SDL_Thread* gpsThread = SDL_CreateThread(gpsWorker, "GPS Camera Thread", NULL);
     while (!quit)
     {
-        
-        SDL_Event event;
-        SDL_PollEvent(&event);
-        switch(event.type)
-        {
-            case SDL_QUIT:
-                quit = 1;
-                close();
-                SDL_Quit();
-                exit(0);
-                break;
-                
-            default:
-                break;
-        }
-    // make this take from an array based on each context / packet?
-    /*while*/ 
-    if((failures = av_read_frame(ctxArray[0], &packet)) == 0)
-    {
-        /*
-        if (packet.stream_index == videoStream)
-        {   */
+
+    	SDL_Event event;
+    	SDL_PollEvent(&event);
+    	switch(event.type)
+    	{
+    		case SDL_QUIT:
+    		quit = 1;
+    		close();
+    		SDL_Quit();
+    		exit(0);
+    		break;
+
+    		default:
+    		break;
+    	}
+    	// make this take from an array based on each context / packet?
+    	/*while*/ 
+    	if((failures = av_read_frame(ctxArray[0], &packet)) == 0)
+    	{
+	        /*
+	        if (packet.stream_index == videoStream)
+	        {   */
               // Actually this is were SYNC between audio/video would happen.
               // Right now I assume that every VIDEO packet contains an entire video frame, and that's not true. A video frame can be made by multiple packets!
               // But for the time being, assume 1 video frame == 1 video packet,
               // so instead of reading the frame through ffmpeg, I read it through OpenCV. 
-              threadImage1 = 0;
-              threadImage2 = 0;
-              Mat frame;
-              Mat frame2;
-              cap >> frame; // get a new frame
-              cap2 >> frame2;
-              IplImage ipl_frame = frame;
-              IplImage ipl_frame2 = frame2;
-              IplImage temp = frame;
-              threadImage1 = &ipl_frame;
-              SDL_CondSignal(imageReady1);
-              threadImage2 = &ipl_frame2;
-              SDL_CondSignal(imageReady2);
-              show_frame(&ipl_frame, &ipl_frame2);
-              
-             /* if (threadSurface1 != NULL)
-              {*/
-                    threadText1 = SDL_CreateTextureFromSurface(renderer, threadSurface1);
-                    threadText2 = SDL_CreateTextureFromSurface(renderer, threadSurface2);
-                    surfaceFree1 = false;
-                    surfaceFree2 = false;
-                    SDL_LockMutex(threadLock1);
-                    SDL_FreeSurface(threadSurface1);
-                    SDL_CondSignal(surfaceReady1);
-                    SDL_UnlockMutex(threadLock1);
-                    
-                    SDL_LockMutex(threadLock2);
-                    SDL_FreeSurface(threadSurface2);
-                    SDL_CondSignal(surfaceReady2);
-                    SDL_UnlockMutex(threadLock2);
-                    
-                    SDL_RenderCopy(renderer, threadText1, NULL, &videoRect);
-                    SDL_RenderCopy(renderer, threadText2, NULL, &videoRect2);
-              //}
-              /*
-              SDL_LockMutex(threadLock);
-              threadImage1 = &temp;
-              SDL_UnlockMutex(threadLock);
-              
-              //SDL_Delay(60);
-              SDL_LockMutex(threadLock);
-            if (threadText1 != NULL)
-            {
-                SDL_RenderCopy(renderer, threadText1, NULL, NULL);
-                printf("sick\n");
-            }*
-              SDL_UnlockMutex(threadLock);
-            */
-              SDL_RenderPresent(renderer);
-              cvWaitKey(25 / 2); //any way to do this naturally?
-              
-              av_free_packet(&packet);
-    }
-    
-    else
-    {
-        threadImage1 = 0;
-        SDL_RenderClear(renderer);
-        SDL_RenderPresent(renderer);
-        usleep(2000);
-    }
+        	threadImage1 = 0;
+	        threadImage2 = 0;
+	        Mat frame;
+	        Mat frame2;
+	        cap >> frame; // get a new frame
+	        cap2 >> frame2;
+	        IplImage ipl_frame = frame;
+	        IplImage ipl_frame2 = frame2;
+	        IplImage temp = frame;
+	        threadImage1 = &ipl_frame;
+	        SDL_CondSignal(imageReady1);
+	        threadImage2 = &ipl_frame2;
+	        SDL_CondSignal(imageReady2);
+	        show_frame(&ipl_frame, &ipl_frame2);
+	          
+	         /* if (threadSurface1 != NULL)
+	        {*/
+	        threadText1 = SDL_CreateTextureFromSurface(renderer, threadSurface1);
+	        threadText2 = SDL_CreateTextureFromSurface(renderer, threadSurface2);
+	        surfaceFree1 = false;
+	        surfaceFree2 = false;
+	        SDL_LockMutex(threadLock1);
+	        SDL_FreeSurface(threadSurface1);
+	        SDL_CondSignal(surfaceReady1);
+	        SDL_UnlockMutex(threadLock1);
+          	SDL_LockMutex(threadLock2);
+	        SDL_FreeSurface(threadSurface2);
+	        SDL_CondSignal(surfaceReady2);
+	        SDL_UnlockMutex(threadLock2);
 
-    }
+         	SDL_RenderCopy(renderer, threadText1, NULL, &videoRect);
+	        SDL_RenderCopy(renderer, threadText2, NULL, &videoRect2);
+	        //}
+	        /*
+	         SDL_LockMutex(threadLock);	        threadImage1 = &temp;
+	         SDL_UnlockMutex(threadLock);
+	         
+	         //SDL_Delay(60);
+	         SDL_LockMutex(threadLock);
+        	if (threadText1 != NULL)
+	        {
+	            SDL_RenderCopy(renderer, threadText1, NULL, NULL);
+	            printf("sick\n");
+	        }*
+	        SDL_UnlockMutex(threadLock);
+	        */
+	        SDL_RenderPresent(renderer);
+	        cvWaitKey(25 / 2); //any way to do this naturally?
+	        
+	        av_free_packet(&packet);
+          }
+
+          else
+          {
+          	threadImage1 = 0;
+          	SDL_RenderClear(renderer);
+          	SDL_RenderPresent(renderer);
+          	usleep(2000);
+          }
+
+      }
 
     SDL_WaitThread(threadID, NULL);
     SDL_WaitThread(gpsThread, NULL);
