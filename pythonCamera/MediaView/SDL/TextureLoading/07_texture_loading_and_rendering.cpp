@@ -14,8 +14,8 @@ and may not be redistributed without written permission.*/
 using namespace cv;
 
 //Screen dimension constants
-const int SCREEN_WIDTH = 1280;
-const int SCREEN_HEIGHT = 720;
+const int SCREEN_WIDTH = 960;
+const int SCREEN_HEIGHT = 540;
 
 //Starts up SDL and creates window
 bool init();
@@ -37,6 +37,8 @@ SDL_Renderer* gRenderer = NULL;
 
 //Current displayed texture
 SDL_Texture* gTexture = NULL;
+
+SDL_Surface* tempSurface = NULL;
 
 VideoCapture cap(1);
 
@@ -97,8 +99,8 @@ bool init()
         else
         	printf("Video Opened\n");
 
-	cap.set(CV_CAP_PROP_FRAME_WIDTH, 1280);
-	cap.set(CV_CAP_PROP_FRAME_HEIGHT, 720); 
+	cap.set(CV_CAP_PROP_FRAME_WIDTH, 960);
+	cap.set(CV_CAP_PROP_FRAME_HEIGHT, 540); 
 	return success;
 
 }
@@ -106,9 +108,13 @@ bool init()
 bool loadMedia()
 {
 	bool success = true;
+	SDL_DestroyTexture( gTexture );
+
+
 	// //Loading success flag
 
 	// //Load PNG texture
+
 	// gTexture = loadTexture( "texture.png" );
 	// if( gTexture == NULL )
 	// {
@@ -123,7 +129,7 @@ bool loadMedia()
     IplImage ipl_frame = frame;
     IplImage* img = &ipl_frame;
 
- 	SDL_Surface* tempSurface = SDL_CreateRGBSurfaceFrom((void*)img->imageData,
+ 	tempSurface = SDL_CreateRGBSurfaceFrom((void*)img->imageData,
     	img->width,
     	img->height,
     	img->depth * img->nChannels,
@@ -131,8 +137,10 @@ bool loadMedia()
     	0xff0000, 0x00ff00, 0x0000ff, 0
     	);
 
-     gTexture = SDL_CreateTextureFromSurface(gRenderer, tempSurface);
 
+
+    gTexture = SDL_CreateTextureFromSurface(gRenderer, tempSurface);
+	SDL_FreeSurface(tempSurface);
     if( gTexture == NULL )
     {
     	printf( "Unable to create texture from! SDL Error: %s\n", SDL_GetError() );
