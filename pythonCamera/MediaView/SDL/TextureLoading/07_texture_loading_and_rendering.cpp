@@ -17,6 +17,9 @@ using namespace cv;
 const int SCREEN_WIDTH = 960;
 const int SCREEN_HEIGHT = 540;
 
+const int VIDEO_WIDTH = 960;
+const int VIDEO_HEIGHT = 540;
+
 //Starts up SDL and creates window
 bool init();
 
@@ -26,9 +29,6 @@ bool loadMedia();
 //Frees media and shuts down SDL
 void close();
 
-//Loads individual image as texture
-SDL_Texture* loadTexture( std::string path );
-
 //The window we'll be rendering to
 SDL_Window* gWindow = NULL;
 
@@ -37,10 +37,17 @@ SDL_Renderer* gRenderer = NULL;
 
 //Current displayed texture
 SDL_Texture* gTexture = NULL;
-
 SDL_Surface* tempSurface = NULL;
 
-VideoCapture cap(1);
+//Shared Mat
+Mat sharedFrame;
+SDL_bool condition = SDL_FALSE;
+SDL_mutex* threadLock1 = NULL;
+SDL_cond* threadCond1 = NULL;
+
+
+
+VideoCapture cap(0);
 
 
 bool init()
@@ -48,60 +55,66 @@ bool init()
 	//Initialization flag
 	bool success = true;
 
+    if(!cap.isOpened())  // check if we succeeded
+    	return -1;
+    else
+    	printf("Video Opened\n");
+
+    cap.set(CV_CAP_PROP_FRAME_WIDTH, VIDEO_WIDTH);
+    cap.set(CV_CAP_PROP_FRAME_HEIGHT, VIDEO_HEIGHT); 
+
 	//Initialize SDL
-	if( SDL_Init( SDL_INIT_VIDEO ) < 0 )
-	{
-		printf( "SDL could not initialize! SDL Error: %s\n", SDL_GetError() );
-		success = false;
-	}
-	else
-	{
+    if( SDL_Init( SDL_INIT_VIDEO ) < 0 )
+    {
+    	printf( "SDL could not initialize! SDL Error: %s\n", SDL_GetError() );
+    	success = false;
+    }
+    else
+    {
 		//Set texture filtering to linear
-		if( !SDL_SetHint( SDL_HINT_RENDER_SCALE_QUALITY, "1" ) )
-		{
-			printf( "Warning: Linear texture filtering not enabled!" );
-		}
+    	if( !SDL_SetHint( SDL_HINT_RENDER_SCALE_QUALITY, "1" ) )
+    	{
+    		printf( "Warning: Linear texture filtering not enabled!" );
+    	}
 
 		//Create window
-		gWindow = SDL_CreateWindow( "SDL Tutorial", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN );
-		if( gWindow == NULL )
-		{
-			printf( "Window could not be created! SDL Error: %s\n", SDL_GetError() );
-			success = false;
-		}
-		else
-		{
+		//gWindow = SDL_CreateWindow( "SDL Tutorial", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN );
+    	gWindow = SDL_CreateWindow("Test SDL 2", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, cap.get(CV_CAP_PROP_FRAME_WIDTH)
+									, cap.get(CV_CAP_PROP_FRAME_HEIGHT), SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL); //for raspberry
+    	if( gWindow == NULL )
+    	{
+    		printf( "Window could not be created! SDL Error: %s\n", SDL_GetError() );
+    		success = false;
+    	}
+    	else
+    	{
 			//Create renderer for window
-			gRenderer = SDL_CreateRenderer( gWindow, -1, SDL_RENDERER_ACCELERATED );
-			if( gRenderer == NULL )
-			{
-				printf( "Renderer could not be created! SDL Error: %s\n", SDL_GetError() );
-				success = false;
-			}
-			else
-			{
+    		gRenderer = SDL_CreateRenderer( gWindow, -1, SDL_RENDERER_ACCELERATED );
+    		if( gRenderer == NULL )
+    		{
+    			printf( "Renderer could not be created! SDL Error: %s\n", SDL_GetError() );
+    			success = false;
+    		}
+    		else
+    		{
 				//Initialize renderer color
-				SDL_SetRenderDrawColor( gRenderer, 0xFF, 0xFF, 0xFF, 0xFF );
+    			SDL_SetRenderDrawColor( gRenderer, 0xFF, 0xFF, 0xFF, 0xFF );
 
 				//Initialize PNG loading
-				int imgFlags = IMG_INIT_PNG;
-				if( !( IMG_Init( imgFlags ) & imgFlags ) )
-				{
-					printf( "SDL_image could not initialize! SDL_image Error: %s\n", IMG_GetError() );
-					success = false;
-				}
-			}
-		}
-	}
+    			int imgFlags = IMG_INIT_PNG;
+    			if( !( IMG_Init( imgFlags ) & imgFlags ) )
+    			{
+    				printf( "SDL_image could not initialize! SDL_image Error: %s\n", IMG_GetError() );
+    				success = false;
+    			}
+    		}
+    	}
 
-    if(!cap.isOpened())  // check if we succeeded
-            return -1;
-        else
-        	printf("Video Opened\n");
+    	threadLock1 = SDL_CreateMutex();
+    }
 
-	cap.set(CV_CAP_PROP_FRAME_WIDTH, 960);
-	cap.set(CV_CAP_PROP_FRAME_HEIGHT, 540); 
-	return success;
+
+    return success;
 
 }
 
@@ -110,26 +123,25 @@ bool loadMedia()
 	bool success = true;
 	SDL_DestroyTexture( gTexture );
 
+	// Mat frame;
+ //    cap >> frame; 					// get a new frame
+    IplImage ipl_frame = sharedFrame;		// turn into ipl image
+    IplImage* img = &ipl_frame;  	
+    
 
-	// //Loading success flag
+    // cv::Size size = frame.size();
 
-	// //Load PNG texture
+    // int total = size.width * size.height * frame.channels();
+    // std::cout << "Mat size = " << total << std::endl;
 
-	// gTexture = loadTexture( "texture.png" );
-	// if( gTexture == NULL )
-	// {
-	// 	printf( "Failed to load texture image!\n" );
-	// 	success = false;
-	// }
+    // std::vector<uchar> data(frame.ptr(), frame.ptr() + total);
+    // std::string s(data.begin(), data.end());                   
+    // std::cout << "String size = " << s.length() << std::endl;
+    //std::cout << s << std::endl;
 
+   // printf("%s",img->imageData);
 
-
-	Mat frame;
-    cap >> frame; // get a new frame
-    IplImage ipl_frame = frame;
-    IplImage* img = &ipl_frame;
-
- 	tempSurface = SDL_CreateRGBSurfaceFrom((void*)img->imageData,
+    tempSurface = SDL_CreateRGBSurfaceFrom((void*)img->imageData,
     	img->width,
     	img->height,
     	img->depth * img->nChannels,
@@ -138,16 +150,15 @@ bool loadMedia()
     	);
 
 
-
     gTexture = SDL_CreateTextureFromSurface(gRenderer, tempSurface);
-	SDL_FreeSurface(tempSurface);
+    SDL_FreeSurface(tempSurface);
     if( gTexture == NULL )
     {
     	printf( "Unable to create texture from! SDL Error: %s\n", SDL_GetError() );
     }
 
 
-	return success;
+    return success;
 }
 
 void close()
@@ -167,32 +178,20 @@ void close()
 	SDL_Quit();
 }
 
-SDL_Texture* loadTexture( std::string path )
+int CameraStream(void* data) 
 {
-	//The final texture
-	SDL_Texture* newTexture = NULL;
-
-	//Load image at specified path
-	SDL_Surface* loadedSurface = IMG_Load( path.c_str() );
-	if( loadedSurface == NULL )
+	while (true)
 	{
-		printf( "Unable to load image %s! SDL_image Error: %s\n", path.c_str(), IMG_GetError() );
+		printf("looping");
+		SDL_LockMutex(threadLock1);
+		cap >> sharedFrame;
+		condition = SDL_TRUE;
+		SDL_CondSignal(threadCond1);
+		SDL_UnlockMutex(threadLock1);
 	}
-	else
-	{
-		//Create texture from surface pixels
-        newTexture = SDL_CreateTextureFromSurface( gRenderer, loadedSurface );
-		if( newTexture == NULL )
-		{
-			printf( "Unable to create texture from %s! SDL Error: %s\n", path.c_str(), SDL_GetError() );
-		}
-
-		//Get rid of old loaded surface
-		SDL_FreeSurface( loadedSurface );
-	}
-
-	return newTexture;
+	return 0;
 }
+
 
 int main( int argc, char* args[] )
 {
@@ -203,45 +202,47 @@ int main( int argc, char* args[] )
 	}
 	else
 	{
-		//Load media
-		if( !loadMedia() )
-		{
-			printf( "Failed to load media!\n" );
-		}
-		else
-		{	
+
+    	SDL_Thread* threadID = SDL_CreateThread(CameraStream, "Backup Camera Thread", NULL);
+
 			//Main loop flag
-			bool quit = false;
+		bool quit = false;
 
 			//Event handler
-			SDL_Event e;
+		SDL_Event e;
 
 			//While application is running
-			while( !quit )
-			{
+		while( !quit )
+		{
 				//Handle events on queue
-				while( SDL_PollEvent( &e ) != 0 )
-				{
+			while( SDL_PollEvent( &e ) != 0 )
+			{
 					//User requests quit
-					if( e.type == SDL_QUIT )
-					{
-						quit = true;
-					}
-				}
-
-				if( !loadMedia() )
+				if( e.type == SDL_QUIT )
 				{
-					printf( "Failed to load media!\n" );
+					quit = true;
 				}
+			}
+
+			SDL_LockMutex(threadLock1);
+			while (!condition) {
+				SDL_CondWait(threadCond1, threadLock1);
+			}
+			condition = SDL_FALSE;
+			if( !loadMedia() ){
+				printf( "Failed to load media!\n" );
+			}
+			SDL_UnlockMutex(threadLock1);
+
+
 				//Clear screen
-				SDL_RenderClear( gRenderer );
+				//SDL_RenderClear( gRenderer );
 
 				//Render texture to screen
-				SDL_RenderCopy( gRenderer, gTexture, NULL, NULL );
+			SDL_RenderCopy( gRenderer, gTexture, NULL, NULL );
 
 				//Update screen
-				SDL_RenderPresent( gRenderer );
-			}
+			SDL_RenderPresent( gRenderer );
 		}
 	}
 
