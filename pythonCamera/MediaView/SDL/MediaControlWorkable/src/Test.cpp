@@ -26,7 +26,7 @@ using namespace cv;
 #define SDL_AUDIO_BUFFER_SIZE 1024
 #define AVCODEC_MAX_AUDIO_FRAME_SIZE 192000*/
 #define SCREEN_HEIGHT 400
-#define SCREEN_WIDTH 900
+#define SCREEN_WIDTH 1200
 #define MAX_CAMERAS 3
 
 
@@ -63,10 +63,13 @@ using namespace cv;
 
  IplImage threadImage1;
  IplImage threadImage2;
+
+ bool updatedImage1 = false;
+ bool updatedImage2 = false;
 //
 
  VideoCapture cap(0);
- VideoCapture cap2(0);
+ VideoCapture cap2(1);
  Mat frame;
  Mat frame2;
 
@@ -152,6 +155,7 @@ int backupWorker(void* data)
 			SDL_CondWait(surfaceReady1, threadLock1);
 		cap >> frame;
 		threadImage1 = frame;
+		updatedImage1 = true;
 		SDL_UnlockMutex(threadLock1);
 	}
 	return 0;
@@ -166,18 +170,22 @@ int gpsWorker(void* data)
 			SDL_CondWait(surfaceReady2, threadLock2);
 		cap2 >> frame2;
 		threadImage2 = frame2;
+		updatedImage2 = true;
 		SDL_UnlockMutex(threadLock2);
 	}
 	return 0;
 }
 
 // Shows an individual frame of the supplied video
-void show_frame(IplImage* img, IplImage* img2)
-{	
+void show_Camera(IplImage* img){	
 	SDL_RenderClear(renderer);
-	SDL_Rect r;
 	
 	SDL_LockMutex(threadLock1);
+		if (updatedImage1 == false){
+			SDL_CondSignal(surfaceReady1);
+			SDL_UnlockMutex(threadLock1);
+			return;
+		}
 	SDL_Surface* surface = SDL_CreateRGBSurfaceFrom((void*)img->imageData,
 		img->width,
 		img->height,
@@ -185,11 +193,29 @@ void show_frame(IplImage* img, IplImage* img2)
 		img->widthStep,
 		0xff0000, 0x00ff00, 0x0000ff, 0
 		);
+	updatedImage1 = false;
 	SDL_CondSignal(surfaceReady1);
 	SDL_UnlockMutex(threadLock1);
 
-	SDL_LockMutex(threadLock2);
+	SDL_DestroyTexture(threadText1);
 
+	SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
+
+	SDL_FreeSurface(surface);
+
+	surface = NULL;
+
+	SDL_RenderCopy(renderer, texture, NULL, &videoRect);
+
+}
+
+void show_GPS(IplImage* img2){
+	SDL_LockMutex(threadLock2);
+	if (updatedImage2 == false){
+		SDL_CondSignal(surfaceReady2);
+		SDL_UnlockMutex(threadLock2);
+		return;
+	}
 	SDL_Surface* surface2 = SDL_CreateRGBSurfaceFrom((void*)img2->imageData,
 		img2->width,
 		img2->height,
@@ -197,33 +223,25 @@ void show_frame(IplImage* img, IplImage* img2)
 		img2->widthStep,
 		0xff0000, 0x00ff00, 0x0000ff, 0
 		);
+	updatedImage2 = false;
 	SDL_CondSignal(surfaceReady2);
 	SDL_UnlockMutex(threadLock2);
 
+	SDL_DestroyTexture(threadText2);
 
-
-	SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
 	SDL_Texture* texture2 = SDL_CreateTextureFromSurface(renderer, surface2);
 
-	SDL_FreeSurface(surface);
 	SDL_FreeSurface(surface2);
-	surface = NULL;
+
 	surface2 = NULL;
-	SDL_RenderCopy(renderer, texture, NULL, &videoRect);
+
 	SDL_RenderCopy(renderer, texture2, NULL, &videoRect2);
-
-	SDL_DestroyTexture(texture);
-	SDL_DestroyTexture(texture2); 
 }
-
-
 
 /***********************************************************************
  * 
  * *********************************************************************/
  
-
-
  int main(int argc, char* argv[])
  {
 
@@ -245,7 +263,11 @@ void show_frame(IplImage* img, IplImage* img2)
 	// read frame is undefined
 
  	SDL_Thread* threadID = SDL_CreateThread(backupWorker, "Backup Camera Thread", NULL);
- 	SDL_Thread* gpsThread = SDL_CreateThread(gpsWorker, "GPS Camera Thread", NULL);
+
+ 	//SDL_Thread* gpsThread = SDL_CreateThread(gpsWorker, "GPS Camera Thread", NULL);
+
+	surfaceFree1 = false;
+	surfaceFree2 = false;
 
  	while (!quit)
  	{
@@ -265,19 +287,21 @@ void show_frame(IplImage* img, IplImage* img2)
  			break;
  		}
 
- 
-		surfaceFree1 = false;
-		surfaceFree2 = false;
-		show_frame(&threadImage1, &threadImage2);
-	
+
+		show_Camera(&threadImage1);
+
+		//show_GPS(&threadImage2);
+
 		SDL_RenderPresent(renderer);
 		cvWaitKey(10); //any way to do this naturally?
 
 
 	}
 
+
+
 	SDL_WaitThread(threadID, NULL);
-	SDL_WaitThread(gpsThread, NULL);
+	//SDL_WaitThread(gpsThread, NULL);
 
 	avformat_close_input(&pFormatCtx);
 	for (int i = 0; i < MAX_CAMERAS; i++)

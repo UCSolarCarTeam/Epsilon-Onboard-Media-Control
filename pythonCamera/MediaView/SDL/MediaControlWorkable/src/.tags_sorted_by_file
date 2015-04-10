@@ -1,0 +1,46 @@
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+INT64_C	Test.cpp	6;"	d	file:
+MAX_CAMERAS	Test.cpp	30;"	d	file:
+SCREEN_HEIGHT	Test.cpp	28;"	d	file:
+SCREEN_WIDTH	Test.cpp	29;"	d	file:
+UINT64_C	Test.cpp	7;"	d	file:
+audioStream	Test.cpp	/^ int audioStream = -1;$/;"	v
+backupWorker	Test.cpp	/^int backupWorker(void* data) $/;"	f
+close	Test.cpp	/^	void close()$/;"	f
+ctxArray	Test.cpp	/^AVFormatContext* ctxArray[MAX_CAMERAS] = {NULL};	\/\/ context array for all cameras$/;"	v
+failures	Test.cpp	/^ int failures = 0;$/;"	v
+frame	Test.cpp	/^ Mat frame;$/;"	v
+frame2	Test.cpp	/^ Mat frame2;$/;"	v
+gpsWorker	Test.cpp	/^int gpsWorker(void* data)$/;"	f
+imageArray	Test.cpp	/^IplImage* imageArray[MAX_CAMERAS];		\/\/ image array for all cameras$/;"	v
+imageReady1	Test.cpp	/^ SDL_cond* imageReady1 = NULL;$/;"	v
+imageReady2	Test.cpp	/^ SDL_cond* imageReady2 = NULL;$/;"	v
+init_SDL	Test.cpp	/^bool init_SDL()$/;"	f
+main	Test.cpp	/^ int main(int argc, char* argv[])$/;"	f
+pFormatCtx	Test.cpp	/^AVFormatContext* pFormatCtx = NULL;$/;"	v
+pFormatCtx2	Test.cpp	/^AVFormatContext* pFormatCtx2 = NULL;$/;"	v
+quit	Test.cpp	/^ int quit = 0;$/;"	v
+renderer	Test.cpp	/^ SDL_Renderer* renderer = NULL;$/;"	v
+show_frame	Test.cpp	/^void show_frame(IplImage* img, SDL_mutex* threadLock)$/;"	f
+sick	Test.cpp	/^bool sick = true;$/;"	v
+surfaceFree1	Test.cpp	/^ bool surfaceFree1 = true;$/;"	v
+surfaceFree2	Test.cpp	/^ bool surfaceFree2 = true;$/;"	v
+surfaceReady1	Test.cpp	/^ SDL_cond* surfaceReady1 = NULL;$/;"	v
+surfaceReady2	Test.cpp	/^ SDL_cond* surfaceReady2 = NULL;$/;"	v
+threadImage1	Test.cpp	/^ IplImage threadImage1;$/;"	v
+threadImage2	Test.cpp	/^ IplImage threadImage2;$/;"	v
+threadLock1	Test.cpp	/^ SDL_mutex* threadLock1 = NULL;$/;"	v
+threadLock2	Test.cpp	/^ SDL_mutex* threadLock2 = NULL;$/;"	v
+threadSurface1	Test.cpp	/^ SDL_Surface* threadSurface1 = NULL;$/;"	v
+threadSurface2	Test.cpp	/^ SDL_Surface* threadSurface2 = NULL;$/;"	v
+threadText1	Test.cpp	/^ SDL_Texture* threadText1 = NULL;$/;"	v
+threadText2	Test.cpp	/^ SDL_Texture* threadText2 = NULL;$/;"	v
+videoRect	Test.cpp	/^ SDL_Rect videoRect;$/;"	v
+videoRect2	Test.cpp	/^ SDL_Rect videoRect2;$/;"	v
+videoStream	Test.cpp	/^ int videoStream = -1;$/;"	v
+window	Test.cpp	/^ SDL_Window* window = NULL;$/;"	v
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
