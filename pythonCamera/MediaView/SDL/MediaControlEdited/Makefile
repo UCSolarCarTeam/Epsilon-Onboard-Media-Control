@@ -1,5 +1,5 @@
 #OBJS = files to compile 
-OBJS = test.cpp 
+OBJS = src/Test.cpp
 
 #CC = compiler used
 CC = g++

@@ -182,9 +182,10 @@ int CameraStream(void* data)
 {
 	while (true)
 	{
+		cap >> sharedFrame;
 		printf("looping");
 		SDL_LockMutex(threadLock1);
-		cap >> sharedFrame;
+
 		condition = SDL_TRUE;
 		SDL_CondSignal(threadCond1);
 		SDL_UnlockMutex(threadLock1);
