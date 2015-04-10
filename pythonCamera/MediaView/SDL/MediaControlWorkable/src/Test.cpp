@@ -128,8 +128,8 @@ bool init_SDL()
 	}
 	videoRect.x = 0;
 	videoRect.y = 0;
-	videoRect.w = 640;
-	videoRect.h = 480;
+	videoRect.w = 1024;	//640
+	videoRect.h = 576;	//480
 	
 	videoRect2.x = 640;
 	videoRect2.y = 0;
