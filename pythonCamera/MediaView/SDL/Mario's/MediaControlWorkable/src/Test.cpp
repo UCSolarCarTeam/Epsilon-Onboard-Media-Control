@@ -1,6 +1,12 @@
 #include <highgui.h>
 #include <cv.h>
 #include "opencv2/opencv.hpp"
+
+#ifndef INT64_C
+#define INT64_C(c) (c ## LL)
+#define UINT64_C(c) (c ## ULL)
+#endif
+
 extern "C" {
 	#include <SDL.h>
 	#include <SDL_thread.h>
