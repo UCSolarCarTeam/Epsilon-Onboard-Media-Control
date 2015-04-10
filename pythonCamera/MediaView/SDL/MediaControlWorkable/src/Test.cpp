@@ -69,7 +69,7 @@ using namespace cv;
 //
 
  VideoCapture cap(0);
- VideoCapture cap2(1);
+ //VideoCapture cap2(1);
  Mat frame;
  Mat frame2;
 
