@@ -187,6 +187,7 @@ void show_frame(IplImage* img, IplImage* img2)
 		);
 	SDL_CondSignal(surfaceReady1);
 	SDL_UnlockMutex(threadLock1);
+
 	SDL_LockMutex(threadLock2);
 	SDL_Surface* surface2 = SDL_CreateRGBSurfaceFrom((void*)img2->imageData,
 		img2->width,
@@ -197,14 +198,21 @@ void show_frame(IplImage* img, IplImage* img2)
 		);
 	SDL_CondSignal(surfaceReady2);
 	SDL_UnlockMutex(threadLock2);
+
+
+
 	SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
 	SDL_Texture* texture2 = SDL_CreateTextureFromSurface(renderer, surface2);
+
 	SDL_FreeSurface(surface);
 	SDL_FreeSurface(surface2);
 	surface = NULL;
 	surface2 = NULL;
 	SDL_RenderCopy(renderer, texture, NULL, &videoRect);
 	SDL_RenderCopy(renderer, texture2, NULL, &videoRect2);
+
+	SDL_DestroyTexture(texture);
+	SDL_DestroyTexture(texture2); 
 }
 
 
