@@ -189,6 +189,9 @@ void show_Camera(IplImage* img){
 	SDL_FreeSurface(surface);
 	surface = NULL;
 	SDL_RenderCopy(renderer, texture, NULL, &videoRect);
+	printf("image updated!\n");
+	}else{
+		printf("image not updated!\n");
 	}
 
 }
@@ -271,13 +274,13 @@ void show_GPS(IplImage* img2){
  			break;
  		}
 
-
+ 		printf("looping\n");
 		show_Camera(&threadImage1);
 
 		//show_GPS(&threadImage2);
 
 		SDL_RenderPresent(renderer);
-		cvWaitKey(10); //any way to do this naturally?
+//		cvWaitKey(1); //any way to do this naturally?
 
 
 	}
