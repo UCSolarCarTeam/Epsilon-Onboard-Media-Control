@@ -69,7 +69,7 @@ using namespace cv;
 //
 
  VideoCapture cap(0);
- //VideoCapture cap2(1);
+ VideoCapture cap2(0);
  Mat frame;
  Mat frame2;
 
@@ -150,13 +150,9 @@ int backupWorker(void* data)
 {
 	while (true)
 	{
-		SDL_LockMutex(threadLock1);
-		if (!surfaceFree1)
-			SDL_CondWait(surfaceReady1, threadLock1);
 		cap >> frame;
 		threadImage1 = frame;
 		updatedImage1 = true;
-		SDL_UnlockMutex(threadLock1);
 	}
 	return 0;
 }
@@ -165,47 +161,35 @@ int gpsWorker(void* data)
 {
 	while (true)
 	{
-		SDL_LockMutex(threadLock2);
-		if (!surfaceFree2)
-			SDL_CondWait(surfaceReady2, threadLock2);
+
 		cap2 >> frame2;
 		threadImage2 = frame2;
 		updatedImage2 = true;
-		SDL_UnlockMutex(threadLock2);
 	}
 	return 0;
 }
 
 // Shows an individual frame of the supplied video
 void show_Camera(IplImage* img){	
-	SDL_RenderClear(renderer);
+	//SDL_RenderClear(renderer);
 	
-	SDL_LockMutex(threadLock1);
-		if (updatedImage1 == false){
-			SDL_CondSignal(surfaceReady1);
-			SDL_UnlockMutex(threadLock1);
-			return;
-		}
-	SDL_Surface* surface = SDL_CreateRGBSurfaceFrom((void*)img->imageData,
-		img->width,
-		img->height,
-		img->depth * img->nChannels,
-		img->widthStep,
-		0xff0000, 0x00ff00, 0x0000ff, 0
-		);
-	updatedImage1 = false;
-	SDL_CondSignal(surfaceReady1);
-	SDL_UnlockMutex(threadLock1);
+	if(updatedImage1 == true){
+		SDL_Surface* surface = SDL_CreateRGBSurfaceFrom((void*)img->imageData,
+			img->width,
+			img->height,
+			img->depth * img->nChannels,
+			img->widthStep,
+			0xff0000, 0x00ff00, 0x0000ff, 0
+			);
+		updatedImage1 = false;
+
 
 	SDL_DestroyTexture(threadText1);
-
 	SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
-
 	SDL_FreeSurface(surface);
-
 	surface = NULL;
-
 	SDL_RenderCopy(renderer, texture, NULL, &videoRect);
+	}
 
 }
 
