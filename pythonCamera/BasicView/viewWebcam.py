@@ -11,8 +11,8 @@ pygame.camera.init()
 screenWidth = 1920
 screenHeight = 1080
 
-xwidth = 800    
-yheight = 500
+xwidth = 1920    
+yheight = 1080
 
 #create fullscreen display 640x480
 screen = pygame.display.set_mode((screenWidth,screenHeight),pygame.FULLSCREEN|pygame.HWSURFACE)

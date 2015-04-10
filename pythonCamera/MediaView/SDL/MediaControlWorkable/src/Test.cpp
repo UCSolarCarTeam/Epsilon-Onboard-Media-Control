@@ -25,8 +25,8 @@ using namespace cv;
 /*
 #define SDL_AUDIO_BUFFER_SIZE 1024
 #define AVCODEC_MAX_AUDIO_FRAME_SIZE 192000*/
-#define SCREEN_HEIGHT 400
-#define SCREEN_WIDTH 1200
+#define SCREEN_HEIGHT 1080
+#define SCREEN_WIDTH 1920
 #define MAX_CAMERAS 3
 
 
@@ -128,8 +128,8 @@ bool init_SDL()
 	}
 	videoRect.x = 0;
 	videoRect.y = 0;
-	videoRect.w = 1024;	//640
-	videoRect.h = 576;	//480
+	videoRect.w = 1920;	//640
+	videoRect.h = 1080;	//480
 	
 	videoRect2.x = 640;
 	videoRect2.y = 0;
@@ -257,10 +257,10 @@ void show_GPS(IplImage* img2){
 	surfaceFree2 = false;
 
 	int screenUpdate = 0;
-
+	int loops = 0;
  	while (!quit)
  	{
-
+		loops++;
  		SDL_Event event;
  		SDL_PollEvent(&event);
  		switch(event.type)
@@ -281,10 +281,13 @@ void show_GPS(IplImage* img2){
 
 		//show_GPS(&threadImage2);
 
-		if (screenUpdate == 1)
+		if (screenUpdate == 1){
 			SDL_RenderPresent(renderer);
+			printf("update: %d\n",loops);
+			screenUpdate = 0;
+			loops = 0;
+		}
 //		cvWaitKey(1); //any way to do this naturally?
-
 
 	}
 
