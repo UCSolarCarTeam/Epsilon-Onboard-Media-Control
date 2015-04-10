@@ -189,6 +189,7 @@ void show_frame(IplImage* img, IplImage* img2)
 	SDL_UnlockMutex(threadLock1);
 
 	SDL_LockMutex(threadLock2);
+
 	SDL_Surface* surface2 = SDL_CreateRGBSurfaceFrom((void*)img2->imageData,
 		img2->width,
 		img2->height,
