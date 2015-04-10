@@ -25,8 +25,8 @@ using namespace cv;
 /*
 #define SDL_AUDIO_BUFFER_SIZE 1024
 #define AVCODEC_MAX_AUDIO_FRAME_SIZE 192000*/
-#define SCREEN_HEIGHT 500
-#define SCREEN_WIDTH 1000
+#define SCREEN_HEIGHT 400
+#define SCREEN_WIDTH 900
 #define MAX_CAMERAS 3
 
 

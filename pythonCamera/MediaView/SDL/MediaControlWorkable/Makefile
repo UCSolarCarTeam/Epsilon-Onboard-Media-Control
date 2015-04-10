@@ -1,5 +1,5 @@
 #OBJS = files to compile 
-OBJS = src/Test.cpp src/GUIObject.cpp src/MText.cpp src/MCameraText.cpp
+OBJS = src/Test.cpp
 
 #CC = compiler used
 CC = g++
@@ -18,4 +18,7 @@ INCLUDE_FLAGS = -Ilib
 
 all : 
 	 $(CC) $(OBJS) $(INCLUDE_FLAGS) $(LINK_FLAGS) $(COMPILE_FLAGS)  -o $(OUTPUT_NAME)
+
+clean :
+	rm test
 
