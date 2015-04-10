@@ -170,7 +170,7 @@ int gpsWorker(void* data)
 }
 
 // Shows an individual frame of the supplied video
-void show_Camera(IplImage* img){	
+int show_Camera(IplImage* img){	
 	//SDL_RenderClear(renderer);
 	
 	if(updatedImage1 == true){
@@ -184,14 +184,15 @@ void show_Camera(IplImage* img){
 		updatedImage1 = false;
 
 
-	SDL_DestroyTexture(threadText1);
-	SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
-	SDL_FreeSurface(surface);
-	surface = NULL;
-	SDL_RenderCopy(renderer, texture, NULL, &videoRect);
-	SDL_DestroyTexture(texture);
-
+		SDL_DestroyTexture(threadText1);
+		SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
+		SDL_FreeSurface(surface);
+		surface = NULL;
+		SDL_RenderCopy(renderer, texture, NULL, &videoRect);
+		SDL_DestroyTexture(texture);
+		return 1;
 	}
+		return 0;
 
 }
 
@@ -255,6 +256,8 @@ void show_GPS(IplImage* img2){
 	surfaceFree1 = false;
 	surfaceFree2 = false;
 
+	int screenUpdate = 0;
+
  	while (!quit)
  	{
 
@@ -273,11 +276,13 @@ void show_GPS(IplImage* img2){
  			break;
  		}
 
-		show_Camera(&threadImage1);
+ 		
+		screenUpdate = show_Camera(&threadImage1);
 
 		//show_GPS(&threadImage2);
 
-		SDL_RenderPresent(renderer);
+		if (screenUpdate == 1)
+			SDL_RenderPresent(renderer);
 //		cvWaitKey(1); //any way to do this naturally?
 
 
