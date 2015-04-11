@@ -2,6 +2,7 @@
 import sys
 import pygame
 import pygame.camera
+import pygame.transform
 from pygame.locals import *
 import time
 '''
@@ -52,7 +53,8 @@ def getImage():
     #imagen = pygame.transform.scale(imagen,(640,480))
     return imagen
 
-def drawImageToBuffer():
+def drawImageToBuffer(imagen):
+    imagen = pygame.transform.scale(imagen,(1260,720))
     xoffset = displayWidth - imagen.get_width()
     yoffset = 0
     screen.blit(imagen,(xoffset,yoffset))
@@ -83,7 +85,7 @@ while True:
     beforeimage = time.time()
     imagen = getImage()
     afterimage = time.time()
-    drawImageToBuffer()
+    drawImageToBuffer(imagen)
     afterdraw = time.time()
     pygame.display.update()
     afterdisplay = time.time()
