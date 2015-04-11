@@ -25,8 +25,8 @@ using namespace cv;
 /*
 #define SDL_AUDIO_BUFFER_SIZE 1024
 #define AVCODEC_MAX_AUDIO_FRAME_SIZE 192000*/
-#define SCREEN_HEIGHT 1080
-#define SCREEN_WIDTH 1920
+#define SCREEN_HEIGHT 720
+#define SCREEN_WIDTH 1230
 #define MAX_CAMERAS 3
 
 
@@ -128,8 +128,8 @@ bool init_SDL()
 	}
 	videoRect.x = 0;
 	videoRect.y = 0;
-	videoRect.w = 1920;	//640
-	videoRect.h = 1080;	//480
+	videoRect.w = 1280;	//640
+	videoRect.h = 720;	//480
 	
 	videoRect2.x = 640;
 	videoRect2.y = 0;
@@ -148,7 +148,7 @@ bool init_SDL()
 
 int backupWorker(void* data) 
 {
-	while (true)
+	while (!quit)
 	{
 		cap >> frame;
 		threadImage1 = frame;
@@ -184,7 +184,8 @@ int show_Camera(IplImage* img){
 		updatedImage1 = false;
 
 
-		SDL_DestroyTexture(threadText1);
+		//SDL_DestroyTexture(threadText1);
+
 		SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
 		SDL_FreeSurface(surface);
 		surface = NULL;
@@ -266,11 +267,27 @@ void show_GPS(IplImage* img2){
  		switch(event.type)
  		{
  			case SDL_QUIT:
- 			quit = 1;
- 			close();
- 			SDL_Quit();
- 			exit(0);
- 			break;
+	 			quit = 1;
+	 			close();
+	 			SDL_Quit();
+	 			exit(0);
+	 			break;
+
+ 			case SDL_KEYDOWN:
+ 				switch(event.key.keysym.sym) {
+			 		case SDLK_ESCAPE: 
+			 		 	printf("Esc was Pressed!");
+			       	 	quit = true;
+			       	 	int threadReturnValue;
+			       	 	SDL_WaitThread(threadID, &threadReturnValue);
+			       	 	printf("\nThread returned value: %d", threadReturnValue);
+			       	 	close();
+			 			SDL_Quit();
+			 			exit(0);
+			        	break;
+			    }
+
+ 				break;
 
  			default:
  			break;
@@ -310,8 +327,8 @@ void show_GPS(IplImage* img2){
 		SDL_DestroyTexture(threadText2);
 		SDL_DestroyRenderer(renderer);
 		SDL_DestroyWindow(window);
-		SDL_DestroyMutex(threadLock1);
-		SDL_DestroyMutex(threadLock2);
+		// SDL_DestroyMutex(threadLock1);
+		// SDL_DestroyMutex(threadLock2);
 		threadText1 = NULL;
 		threadText2 = NULL;
 		threadLock1 = NULL;
