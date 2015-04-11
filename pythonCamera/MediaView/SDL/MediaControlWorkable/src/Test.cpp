@@ -78,6 +78,9 @@ using namespace cv;
 
  VideoCapture cap(0);
  VideoCapture cap2(0);
+ int cameraHeight;
+ int cameraWidth;
+
  Mat frame;
  Mat frame2;
 
@@ -144,9 +147,14 @@ bool init_SDL()
 	videoRect2.w = 640;
 	videoRect2.h = 480;
 
-	cap.set(CV_CAP_PROP_FRAME_WIDTH, videoRect.w);
-	cap.set(CV_CAP_PROP_FRAME_HEIGHT, videoRect.h);
+	// cap.set(CV_CAP_PROP_FRAME_WIDTH, videoRect.w);
+	// cap.set(CV_CAP_PROP_FRAME_HEIGHT, videoRect.h);
 	
+	cameraWidth = cap.get(CV_CAP_PROP_FRAME_WIDTH);
+	cameraHeight = cap.get(CV_CAP_PROP_FRAME_HEIGHT);
+
+	printf("Camera Width%d, Camera Height %d \n",cameraWidth,cameraHeight);
+
 	threadLock1 = SDL_CreateMutex();
 	imageReady1 = SDL_CreateCond();
 	surfaceReady1 = SDL_CreateCond();
