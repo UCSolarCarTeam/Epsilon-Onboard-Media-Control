@@ -7,6 +7,7 @@
 #define UINT64_C(c) (c ## ULL)
 #endif
 
+//for the rasperry pi
 extern "C" {
 	#include <SDL.h>
 	#include <SDL_thread.h>
@@ -14,9 +15,16 @@ extern "C" {
 	#include "libavcodec/avcodec.h"
 	#include "libavformat/avformat.h"
 }
+
 #include <iostream>
 #include <stdio.h>
 #include <unistd.h>
+
+//for the timers
+#include <chrono>
+#include <ctime>
+#include <iostream>
+
 //#include <vector>
 bool sick = true;
 using namespace cv;
@@ -153,7 +161,12 @@ int backupWorker(void* data)
 {
 	while (!quit)
 	{
+		std::chrono::time_point<std::chrono::system_clock> start, end;
+		start = std::chrono::system_clock::now();
 		cap >> frame;
+	   	end = std::chrono::system_clock::now();
+	   	std::chrono::duration<double> elapsed_seconds = end-start;
+	   	std::cout << "time to retrieve frame from camera:" << elapsed_seconds.count() << "s\n";
 		threadImage1 = frame;
 		updatedImage1 = true;
 	}
