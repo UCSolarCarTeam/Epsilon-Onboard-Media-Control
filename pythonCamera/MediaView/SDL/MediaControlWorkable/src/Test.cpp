@@ -139,8 +139,8 @@ bool init_SDL()
 	}
 	videoRect.x = 0;
 	videoRect.y = 0;
-	videoRect.w = 1280;	//640
-	videoRect.h = 720;	//480
+	videoRect.w = 640;	//640
+	videoRect.h = 480;	//480
 	
 	videoRect2.x = 640;
 	videoRect2.y = 0;
@@ -201,7 +201,7 @@ int show_Camera(IplImage* img){
 				std::chrono::time_point<std::chrono::system_clock> start, end;
 		start = std::chrono::system_clock::now();
 
-
+		printf("width%d\n",img->width);
 		SDL_Surface* surface = SDL_CreateRGBSurfaceFrom((void*)img->imageData,
 			img->width,
 			img->height,
