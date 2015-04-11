@@ -116,7 +116,7 @@ bool init_SDL()
 			}
 			else 
 			{
-				SDL_SetRenderDrawColor(renderer, 0x00, 0x00, 0xFF, 0xFF);
+				SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
 				int imgFlags = IMG_INIT_PNG;
 				if (! (IMG_Init(imgFlags) & imgFlags))
 				{
@@ -280,6 +280,7 @@ void show_GPS(IplImage* img2){
  			case SDL_KEYDOWN:
  				switch(event.key.keysym.sym) {
 			 		case SDLK_ESCAPE: 
+			 			SDL_SetRenderDrawColor( renderer, 0x00, 0x00, 0xFF, 0xFF );   
 			 		 	printf("Esc was Pressed!");
 			       	 	quit = true;
 			       	 	SDL_WaitThread(threadID, &threadReturnValue);
