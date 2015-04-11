@@ -198,6 +198,10 @@ int show_Camera(IplImage* img){
 	//SDL_RenderClear(renderer);
 	
 	if(updatedImage1 == true){
+				std::chrono::time_point<std::chrono::system_clock> start, end;
+		start = std::chrono::system_clock::now();
+
+
 		SDL_Surface* surface = SDL_CreateRGBSurfaceFrom((void*)img->imageData,
 			img->width,
 			img->height,
@@ -215,6 +219,9 @@ int show_Camera(IplImage* img){
 		surface = NULL;
 		SDL_RenderCopy(renderer, texture, NULL, &videoRect);
 		SDL_DestroyTexture(texture);
+		end = std::chrono::system_clock::now();
+	   	std::chrono::duration<double> elapsed_seconds = end-start;
+	   	std::cout << "time to convert image to texture:" << elapsed_seconds.count() << "s\n";
 		return 1;
 	}
 		return 0;
