@@ -25,8 +25,8 @@ using namespace cv;
 /*
 #define SDL_AUDIO_BUFFER_SIZE 1024
 #define AVCODEC_MAX_AUDIO_FRAME_SIZE 192000*/
-#define SCREEN_HEIGHT 720
-#define SCREEN_WIDTH 1230
+#define SCREEN_HEIGHT 768
+#define SCREEN_WIDTH 1232
 #define MAX_CAMERAS 3
 
 
@@ -135,6 +135,9 @@ bool init_SDL()
 	videoRect2.y = 0;
 	videoRect2.w = 640;
 	videoRect2.h = 480;
+
+	cap.set(CV_CAP_PROP_FRAME_WIDTH, videoRect.w);
+	cap.set(CV_CAP_PROP_FRAME_HEIGHT, videoRect.h);
 	
 	threadLock1 = SDL_CreateMutex();
 	imageReady1 = SDL_CreateCond();
