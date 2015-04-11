@@ -116,7 +116,7 @@ bool init_SDL()
 			}
 			else 
 			{
-				SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
+				SDL_SetRenderDrawColor(renderer, 0x00, 0x00, 0xFF, 0xFF);
 				int imgFlags = IMG_INIT_PNG;
 				if (! (IMG_Init(imgFlags) & imgFlags))
 				{
@@ -260,6 +260,9 @@ void show_GPS(IplImage* img2){
 	int screenUpdate = 0;
 	int loops = 0;
 	int threadReturnValue;	
+
+
+
  	while (!quit)
  	{
 		loops++;
@@ -307,6 +310,7 @@ void show_GPS(IplImage* img2){
 		//show_GPS(&threadImage2);
 
 		if (screenUpdate == 1){
+			SDL_RenderDrawLine(renderer, SCREEN_WIDTH/2, 0, SCREEN_WIDTH/2 , SCREEN_HEIGHT+100);
 			SDL_RenderPresent(renderer);
 			printf("update: %d\n",loops);
 			screenUpdate = 0;
