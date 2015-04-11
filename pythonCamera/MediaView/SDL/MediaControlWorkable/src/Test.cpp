@@ -267,42 +267,43 @@ void show_GPS(IplImage* img2){
  	{
 		loops++;
  		SDL_Event event;
- 		SDL_PollEvent(&event);
- 		switch(event.type)
- 		{
- 			case SDL_QUIT:
-	 			quit = 1;
-	 			close();
-	 			SDL_Quit();
-	 			exit(0);
+ 		while (SDL_PollEvent(&event)){
+	 		switch(event.type)
+	 		{
+	 			case SDL_QUIT:
+		 			quit = 1;
+		 			close();
+		 			SDL_Quit();
+		 			exit(0);
+		 			break;
+
+	 			case SDL_KEYDOWN:
+	 				switch(event.key.keysym.sym) {
+				 		case SDLK_ESCAPE: 
+				 			SDL_SetRenderDrawColor( renderer, 0x00, 0x00, 0xFF, 0xFF );   
+				 		 	printf("Esc was Pressed!");
+				       	 	quit = true;
+				       	 	SDL_WaitThread(threadID, &threadReturnValue);
+				       	 	printf("\nThread returned value: %d", threadReturnValue);
+				       	 	close();
+				 			SDL_Quit();
+				 			exit(0);
+				        	break;
+				        default:
+				        	quit = true;
+				       	 	SDL_WaitThread(threadID, &threadReturnValue);
+				       	 	printf("\nThread returned value: %d", threadReturnValue);
+				       	 	close();
+				 			SDL_Quit();
+				 			exit(0);
+				 			break;
+				    }
+
+	 				break;
+
+	 			default:
 	 			break;
-
- 			case SDL_KEYDOWN:
- 				switch(event.key.keysym.sym) {
-			 		case SDLK_ESCAPE: 
-			 			SDL_SetRenderDrawColor( renderer, 0x00, 0x00, 0xFF, 0xFF );   
-			 		 	printf("Esc was Pressed!");
-			       	 	quit = true;
-			       	 	SDL_WaitThread(threadID, &threadReturnValue);
-			       	 	printf("\nThread returned value: %d", threadReturnValue);
-			       	 	close();
-			 			SDL_Quit();
-			 			exit(0);
-			        	break;
-			        default:
-			        	quit = true;
-			       	 	SDL_WaitThread(threadID, &threadReturnValue);
-			       	 	printf("\nThread returned value: %d", threadReturnValue);
-			       	 	close();
-			 			SDL_Quit();
-			 			exit(0);
-			 			break;
-			    }
-
- 				break;
-
- 			default:
- 			break;
+	 		}
  		}
 
  		
