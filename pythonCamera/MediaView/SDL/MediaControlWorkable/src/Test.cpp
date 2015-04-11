@@ -201,7 +201,6 @@ int show_Camera(IplImage* img){
 				std::chrono::time_point<std::chrono::system_clock> start, end;
 		start = std::chrono::system_clock::now();
 
-		printf("width%d\n",img->width);
 		SDL_Surface* surface = SDL_CreateRGBSurfaceFrom((void*)img->imageData,
 			img->width,
 			img->height,
@@ -345,8 +344,6 @@ void show_GPS(IplImage* img2){
 		if (screenUpdate == 1){
 			SDL_RenderDrawLine(renderer, SCREEN_WIDTH/2, 0, SCREEN_WIDTH/2 , SCREEN_HEIGHT+100);
 			SDL_RenderPresent(renderer);
-			printf("update: %d\n",loops);
-			screenUpdate = 0;
 			loops = 0;
 		}
 //		cvWaitKey(1); //any way to do this naturally?
