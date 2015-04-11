@@ -259,6 +259,7 @@ void show_GPS(IplImage* img2){
 
 	int screenUpdate = 0;
 	int loops = 0;
+	int threadReturnValue;	
  	while (!quit)
  	{
 		loops++;
@@ -278,13 +279,20 @@ void show_GPS(IplImage* img2){
 			 		case SDLK_ESCAPE: 
 			 		 	printf("Esc was Pressed!");
 			       	 	quit = true;
-			       	 	int threadReturnValue;
 			       	 	SDL_WaitThread(threadID, &threadReturnValue);
 			       	 	printf("\nThread returned value: %d", threadReturnValue);
 			       	 	close();
 			 			SDL_Quit();
 			 			exit(0);
 			        	break;
+			        default:
+			        	quit = true;
+			       	 	SDL_WaitThread(threadID, &threadReturnValue);
+			       	 	printf("\nThread returned value: %d", threadReturnValue);
+			       	 	close();
+			 			SDL_Quit();
+			 			exit(0);
+			 			break;
 			    }
 
  				break;
