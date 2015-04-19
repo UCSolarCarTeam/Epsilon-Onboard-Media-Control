@@ -169,12 +169,7 @@ int backupWorker(void* data)
 {
 	while (!quit)
 	{
-		std::chrono::time_point<std::chrono::system_clock> start, end;
-		start = std::chrono::system_clock::now();
 		cap >> frame;
-	   	end = std::chrono::system_clock::now();
-	   	std::chrono::duration<double> elapsed_seconds = end-start;
-	   	std::cout << "time to retrieve frame from camera:" << elapsed_seconds.count() << "s\n";
 		threadImage1 = frame;
 		updatedImage1 = true;
 	}
@@ -198,8 +193,6 @@ int show_Camera(IplImage* img){
 	//SDL_RenderClear(renderer);
 	
 	if(updatedImage1 == true){
-				std::chrono::time_point<std::chrono::system_clock> start, end;
-		start = std::chrono::system_clock::now();
 
 		SDL_Surface* surface = SDL_CreateRGBSurfaceFrom((void*)img->imageData,
 			img->width,
@@ -210,7 +203,6 @@ int show_Camera(IplImage* img){
 			);
 		updatedImage1 = false;
 
-
 		//SDL_DestroyTexture(threadText1);
 
 		SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
@@ -218,9 +210,6 @@ int show_Camera(IplImage* img){
 		surface = NULL;
 		SDL_RenderCopy(renderer, texture, NULL, &videoRect);
 		SDL_DestroyTexture(texture);
-		end = std::chrono::system_clock::now();
-	   	std::chrono::duration<double> elapsed_seconds = end-start;
-	   	std::cout << "time to convert image to texture:" << elapsed_seconds.count() << "s\n";
 		return 1;
 	}
 		return 0;
