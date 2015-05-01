@@ -36,7 +36,7 @@ using namespace cv;
 #define MAX_CAMERAS 3
 
 // "../../../../../lib/" - the location of music.
-Mix_Music *music = NULL;
+Mix_Music *gMusic = NULL;
 
 
  void close();
@@ -128,6 +128,14 @@ bool init_SDL()
 					printf("SDL_image could not init. SDL_image error: %s\n", IMG_GetError());
 					success = false;
 				}
+
+				 //Initialize SDL_mixer
+				if( Mix_OpenAudio( 44100, MIX_DEFAULT_FORMAT, 2, 2048 ) < 0 )
+				{
+					printf( "SDL_mixer could not initialize! SDL_mixer Error: %s\n", Mix_GetError() );
+					success = false;
+				}
+
 			}
 		}
 	}
@@ -156,6 +164,20 @@ bool init_SDL()
 	threadLock2 = SDL_CreateMutex();
 	imageReady2 = SDL_CreateCond();
 	surfaceReady2 = SDL_CreateCond();
+	return success;
+}
+
+bool loadMedia()
+{
+	bool success = true;
+	//Load music
+	gMusic = Mix_LoadMUS("assets/Polaris.mp3");
+	if( gMusic == NULL )
+	{
+		printf( "Failed to load beat music! SDL_mixer Error: %s\n", Mix_GetError() );
+		success = false;
+	}
+
 	return success;
 }
 
@@ -202,7 +224,8 @@ int show_Camera(IplImage* img){
 		SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
 		SDL_FreeSurface(surface);
 		surface = NULL;
-		SDL_RenderCopy(renderer, texture, NULL, &videoRect);
+		SDL_RendererFlip flip = SDL_FLIP_HORIZONTAL;
+		SDL_RenderCopyEx(renderer, texture, NULL, &videoRect ,0, NULL, flip);
 		SDL_DestroyTexture(texture);
 		return 1;
 	}
@@ -236,7 +259,8 @@ void show_GPS(IplImage* img2){
 
 	surface2 = NULL;
 
-	SDL_RenderCopy(renderer, texture2, NULL, &videoRect2);
+
+	//SDL_RenderCopyEx(renderer, texture2, NULL, &videoRect2, 0, NULL, flip);
 }
 
 /***********************************************************************
@@ -246,11 +270,6 @@ void show_GPS(IplImage* img2){
  int main(int argc, char* argv[])
  {
 
-	music = Mix_LoadMUS("../../../../../lib/Polaris.mp3");
-	if( music == NULL ){
-		printf("failed to load music!\n");
-        return false;    
-    }
     
  	av_register_all();
 
@@ -262,6 +281,10 @@ void show_GPS(IplImage* img2){
  		fprintf(stderr, "Failed to load file!\n");
  		return -1;
  	}
+	if( !loadMedia() ){
+		printf( "Failed to load media!\n" );
+	}
+
 
  	AVPacket packet;
 	// read frame is undefined
@@ -271,13 +294,6 @@ void show_GPS(IplImage* img2){
 
 	surfaceFree1 = false;
 	surfaceFree2 = false;
-
-
-
-
-	if( Mix_PlayMusic( music, -1 ) == -1 ){
-		printf("didnt play music!\n");
-	}   
 
 	int screenUpdate = 0;
 	int loops = 0;
@@ -311,20 +327,41 @@ void show_GPS(IplImage* img2){
 				 			SDL_Quit();
 				 			exit(0);
 				        	break;
-				        default:
-				        	quit = true;
-				       	 	SDL_WaitThread(threadID, &threadReturnValue);
-				       	 	printf("\nThread returned value: %d", threadReturnValue);
-				       	 	close();
-				 			SDL_Quit();
-				 			exit(0);
-				 			break;
-				    }
 
-	 				break;
+						case SDLK_9:
+							//If there is no music playing
+							if( Mix_PlayingMusic() == 0 )
+							{
+								//Play the music
+								Mix_PlayMusic( gMusic, -1 );
+							}
+							//If music is being played
+							else
+							{
+								//If the music is paused
+								if( Mix_PausedMusic() == 1 )
+								{
+									//Resume the music
+									Mix_ResumeMusic();
+								}
+								//If the music is playing
+								else
+								{
+									//Pause the music
+									Mix_PauseMusic();
+								}
+							}
+							break;
+						
+						case SDLK_0:
+							//Stop the music
+							Mix_HaltMusic();
+							break;
 
-	 			default:
-	 			break;
+			        	default:
+			 				break;
+			    }
+
 	 		}
  		}
 
@@ -334,7 +371,7 @@ void show_GPS(IplImage* img2){
 		//show_GPS(&threadImage2);
 
 		if (screenUpdate == 1){
-			SDL_RenderDrawLine(renderer, SCREEN_WIDTH/2, 0, SCREEN_WIDTH/2 , SCREEN_HEIGHT+100);
+			//SDL_RenderDrawLine(renderer, SCREEN_WIDTH/2, 0, SCREEN_WIDTH/2 , SCREEN_HEIGHT+100);
 			SDL_RenderPresent(renderer);
 			loops = 0;
 		}
@@ -357,7 +394,7 @@ void show_GPS(IplImage* img2){
 
 	void close()
 	{
-		Mix_FreeMusic(music);
+		Mix_FreeMusic(gMusic);
 		Mix_CloseAudio();
 		SDL_DestroyTexture(threadText1);
 		SDL_DestroyTexture(threadText2);
