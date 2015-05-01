@@ -2,12 +2,13 @@
 #include <cv.h>
 #include "opencv2/opencv.hpp"
 
+//for the rasperry pi
 #ifndef INT64_C
 #define INT64_C(c) (c ## LL)
 #define UINT64_C(c) (c ## ULL)
 #endif
 
-//for the rasperry pi
+
 extern "C" {
 	#include <SDL.h>
 	#include <SDL_thread.h>
@@ -20,10 +21,7 @@ extern "C" {
 #include <stdio.h>
 #include <unistd.h>
 
-//for the timers
-#include <chrono>
-#include <ctime>
-#include <iostream>
+#include <SDL_mixer.h>
 
 //#include <vector>
 bool sick = true;
@@ -37,13 +35,9 @@ using namespace cv;
 #define SCREEN_WIDTH 1232
 #define MAX_CAMERAS 3
 
+// "../../../../../lib/" - the location of music.
+Mix_Music *music = NULL;
 
-/* TODO: make an add camera function (have it increment a port number?) 
- * 		 change main loop so that it will render regardless of the video 
- * 		 being finished
- * 		 IMPORTANT: make arrays for the contexts and everything doubled
- * 		 with the size of the max number of cameras, and change functions
- * 		 to use arrays. MCameraText does not work well, maybe ditch?  */
 
  void close();
  int backupWorker(void* data);
@@ -252,16 +246,19 @@ void show_GPS(IplImage* img2){
  int main(int argc, char* argv[])
  {
 
+	music = Mix_LoadMUS("../../../../../lib/Polaris.mp3");
+	if( music == NULL ){
+		printf("failed to load music!\n");
+        return false;    
+    }
+    
  	av_register_all();
 
- 	if (!init_SDL())
- 	{
+ 	if (!init_SDL()){
  		fprintf(stderr, "Could not initialize SDL!\n");
  		return -1;
  	}
-
- 	if (!cap.isOpened())
- 	{
+ 	if (!cap.isOpened()){
  		fprintf(stderr, "Failed to load file!\n");
  		return -1;
  	}
@@ -270,11 +267,17 @@ void show_GPS(IplImage* img2){
 	// read frame is undefined
 
  	SDL_Thread* threadID = SDL_CreateThread(backupWorker, "Backup Camera Thread", NULL);
-
  	//SDL_Thread* gpsThread = SDL_CreateThread(gpsWorker, "GPS Camera Thread", NULL);
 
 	surfaceFree1 = false;
 	surfaceFree2 = false;
+
+
+
+
+	if( Mix_PlayMusic( music, -1 ) == -1 ){
+		printf("didnt play music!\n");
+	}   
 
 	int screenUpdate = 0;
 	int loops = 0;
@@ -354,6 +357,8 @@ void show_GPS(IplImage* img2){
 
 	void close()
 	{
+		Mix_FreeMusic(music);
+		Mix_CloseAudio();
 		SDL_DestroyTexture(threadText1);
 		SDL_DestroyTexture(threadText2);
 		SDL_DestroyRenderer(renderer);
