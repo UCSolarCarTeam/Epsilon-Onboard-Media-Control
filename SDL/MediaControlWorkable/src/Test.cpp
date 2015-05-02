@@ -370,12 +370,12 @@ void show_GPS(IplImage* img2){
 
 		//show_GPS(&threadImage2);
 
-		if (screenUpdate == 1){
+		// if (screenUpdate == 1){
 			//SDL_RenderDrawLine(renderer, SCREEN_WIDTH/2, 0, SCREEN_WIDTH/2 , SCREEN_HEIGHT+100);
 			SDL_RenderPresent(renderer);
-			loops = 0;
-		}
-//		cvWaitKey(1); //any way to do this naturally?
+		// 	loops = 0;
+		// }
+
 
 	}
 
