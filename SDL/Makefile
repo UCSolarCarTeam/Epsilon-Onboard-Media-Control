@@ -1,5 +1,5 @@
 #OBJS = files to compile 
-OBJS = src/Test.cpp
+OBJS = src/Main.cpp
 
 #CC = compiler used
 CC = g++
@@ -11,14 +11,14 @@ LINK_FLAGS = `sdl2-config --cflags` `sdl2-config --libs` `pkg-config opencv --cf
 
 
 #OUTPUT_NAME = final name
-OUTPUT_NAME = test
+OUTPUT_NAME = main
 
 #INCLUDE FLAGS
-INCLUDE_FLAGS = -Ilib
+INCLUDE_FLAGS = -Ilib -Iinclude
 
 all : 
 	 $(CC) $(OBJS) $(INCLUDE_FLAGS) $(LINK_FLAGS) $(COMPILE_FLAGS)  -o $(OUTPUT_NAME)
 
 clean :
-	rm test
+	rm main
 

@@ -12,83 +12,41 @@
 extern "C" {
 	#include <SDL.h>
 	#include <SDL_thread.h>
-	#include <SDL_image.h>
-	#include "libavcodec/avcodec.h"
-	#include "libavformat/avformat.h"
 }
 
 #include <iostream>
 #include <stdio.h>
 #include <unistd.h>
-
 #include <SDL_mixer.h>
 
-//#include <vector>
-bool sick = true;
 using namespace cv;
 
-// Necessary definitions
-/*
-#define SDL_AUDIO_BUFFER_SIZE 1024
-#define AVCODEC_MAX_AUDIO_FRAME_SIZE 192000*/
 #define SCREEN_HEIGHT 768
 #define SCREEN_WIDTH 1232
-#define MAX_CAMERAS 3
 
-// "../../../../../lib/" - the location of music.
 Mix_Music *gMusic = NULL;
 
+int quit;
 
- void close();
- int backupWorker(void* data);
- int gpsWorker(void* data);
+void close();
+int cameraWorker(void* data);
+int gpsWorker(void* data);
 
- int videoStream = -1;
- int audioStream = -1;
- int quit = 0;
- bool surfaceFree1 = true;
- bool surfaceFree2 = true;
- int failures = 0;
+IplImage threadImage1;
 
-//
- SDL_mutex* threadLock1 = NULL;
- SDL_cond* surfaceReady1 = NULL;
- SDL_cond* imageReady1 = NULL;
- SDL_Surface* threadSurface1 = NULL;
- SDL_Texture* threadText1 = NULL;
+bool updatedImage1 = false;
 
- SDL_mutex* threadLock2 = NULL;
- SDL_cond* surfaceReady2 = NULL;
- SDL_cond* imageReady2 = NULL;
- SDL_Surface* threadSurface2 = NULL;
- SDL_Texture* threadText2 = NULL;
+VideoCapture cap(0);
+int cameraHeight;
+int cameraWidth;
 
- IplImage threadImage1;
- IplImage threadImage2;
+Mat frame;
 
- bool updatedImage1 = false;
- bool updatedImage2 = false;
-//
+SDL_Renderer* renderer = NULL;
+SDL_Window* window = NULL;
+SDL_Rect videoRect;
 
- VideoCapture cap(0);
- VideoCapture cap2(0);
- int cameraHeight;
- int cameraWidth;
 
- Mat frame;
- Mat frame2;
-
- SDL_Renderer* renderer = NULL;
- SDL_Window* window = NULL;
-
- SDL_Rect videoRect;
- SDL_Rect videoRect2;
-
-AVFormatContext* ctxArray[MAX_CAMERAS] = {NULL};	// context array for all cameras
-IplImage* imageArray[MAX_CAMERAS];		// image array for all cameras
-
-AVFormatContext* pFormatCtx = NULL;
-AVFormatContext* pFormatCtx2 = NULL;
 
 
 /***********************************************************************
@@ -122,14 +80,6 @@ bool init_SDL()
 			else 
 			{
 				SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
-				int imgFlags = IMG_INIT_PNG;
-				if (! (IMG_Init(imgFlags) & imgFlags))
-				{
-					printf("SDL_image could not init. SDL_image error: %s\n", IMG_GetError());
-					success = false;
-				}
-
-				 //Initialize SDL_mixer
 				if( Mix_OpenAudio( 44100, MIX_DEFAULT_FORMAT, 2, 2048 ) < 0 )
 				{
 					printf( "SDL_mixer could not initialize! SDL_mixer Error: %s\n", Mix_GetError() );
@@ -143,32 +93,19 @@ bool init_SDL()
 	videoRect.y = 0;
 	videoRect.w = 1280;	//640
 	videoRect.h = 720;	//480
-	
-	videoRect2.x = 640;
-	videoRect2.y = 0;
-	videoRect2.w = 640;
-	videoRect2.h = 480;
 
-	// cap.set(CV_CAP_PROP_FRAME_WIDTH, videoRect.w);
-	// cap.set(CV_CAP_PROP_FRAME_HEIGHT, videoRect.h);
-	
 	cameraWidth = cap.get(CV_CAP_PROP_FRAME_WIDTH);
 	cameraHeight = cap.get(CV_CAP_PROP_FRAME_HEIGHT);
 
 	printf("Camera Width%d, Camera Height %d \n",cameraWidth,cameraHeight);
 
-	threadLock1 = SDL_CreateMutex();
-	imageReady1 = SDL_CreateCond();
-	surfaceReady1 = SDL_CreateCond();
-	
-	threadLock2 = SDL_CreateMutex();
-	imageReady2 = SDL_CreateCond();
-	surfaceReady2 = SDL_CreateCond();
 	return success;
 }
 
-bool loadMedia()
+bool loadSong(char* name = NULL)
 {
+	if (name == NULL)
+		return false;
 	bool success = true;
 	//Load music
 	gMusic = Mix_LoadMUS("assets/Polaris.mp3");
@@ -181,7 +118,7 @@ bool loadMedia()
 	return success;
 }
 
-int backupWorker(void* data) 
+int cameraWorker(void* data) 
 {
 	while (!quit)
 	{
@@ -192,23 +129,12 @@ int backupWorker(void* data)
 	return 0;
 }
 
-int gpsWorker(void* data)
-{
-	while (true)
-	{
-
-		cap2 >> frame2;
-		threadImage2 = frame2;
-		updatedImage2 = true;
-	}
-	return 0;
-}
 
 // Shows an individual frame of the supplied video
-int show_Camera(IplImage* img){	
-	//SDL_RenderClear(renderer);
-	
-	if(updatedImage1 == true){
+int show_Camera(IplImage* img)
+{		
+	if(updatedImage1 == true)
+	{
 
 		SDL_Surface* surface = SDL_CreateRGBSurfaceFrom((void*)img->imageData,
 			img->width,
@@ -218,8 +144,6 @@ int show_Camera(IplImage* img){
 			0xff0000, 0x00ff00, 0x0000ff, 0
 			);
 		updatedImage1 = false;
-
-		//SDL_DestroyTexture(threadText1);
 
 		SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
 		SDL_FreeSurface(surface);
@@ -233,77 +157,34 @@ int show_Camera(IplImage* img){
 
 }
 
-void show_GPS(IplImage* img2){
-	SDL_LockMutex(threadLock2);
-	if (updatedImage2 == false){
-		SDL_CondSignal(surfaceReady2);
-		SDL_UnlockMutex(threadLock2);
-		return;
-	}
-	SDL_Surface* surface2 = SDL_CreateRGBSurfaceFrom((void*)img2->imageData,
-		img2->width,
-		img2->height,
-		img2->depth * img2->nChannels,
-		img2->widthStep,
-		0xff0000, 0x00ff00, 0x0000ff, 0
-		);
-	updatedImage2 = false;
-	SDL_CondSignal(surfaceReady2);
-	SDL_UnlockMutex(threadLock2);
-
-	SDL_DestroyTexture(threadText2);
-
-	SDL_Texture* texture2 = SDL_CreateTextureFromSurface(renderer, surface2);
-
-	SDL_FreeSurface(surface2);
-
-	surface2 = NULL;
-
-
-	//SDL_RenderCopyEx(renderer, texture2, NULL, &videoRect2, 0, NULL, flip);
-}
-
 /***********************************************************************
  * 
  * *********************************************************************/
  
  int main(int argc, char* argv[])
  {
-
-    
- 	av_register_all();
-
- 	if (!init_SDL()){
+ 	if (!init_SDL())
+ 	{
  		fprintf(stderr, "Could not initialize SDL!\n");
  		return -1;
  	}
- 	if (!cap.isOpened()){
+ 	if (!cap.isOpened())
+ 	{
  		fprintf(stderr, "Failed to load file!\n");
  		return -1;
  	}
-	if( !loadMedia() ){
+	if( !loadSong("dummy") )
+	{ // Dummy value added to mimic future usage of loadSong function
 		printf( "Failed to load media!\n" );
 	}
 
-
- 	AVPacket packet;
-	// read frame is undefined
-
- 	SDL_Thread* threadID = SDL_CreateThread(backupWorker, "Backup Camera Thread", NULL);
- 	//SDL_Thread* gpsThread = SDL_CreateThread(gpsWorker, "GPS Camera Thread", NULL);
-
-	surfaceFree1 = false;
-	surfaceFree2 = false;
+ 	SDL_Thread* threadID = SDL_CreateThread(cameraWorker, "Backup Camera Thread", NULL);
 
 	int screenUpdate = 0;
-	int loops = 0;
 	int threadReturnValue;	
-
-
 
  	while (!quit)
  	{
-		loops++;
  		SDL_Event event;
  		while (SDL_PollEvent(&event)){
 	 		switch(event.type)
@@ -368,27 +249,14 @@ void show_GPS(IplImage* img2){
  		
 		screenUpdate = show_Camera(&threadImage1);
 
-		//show_GPS(&threadImage2);
-
 		if (screenUpdate == 1){
-			//SDL_RenderDrawLine(renderer, SCREEN_WIDTH/2, 0, SCREEN_WIDTH/2 , SCREEN_HEIGHT+100);
 			SDL_RenderPresent(renderer);
-			loops = 0;
 		}
-//		cvWaitKey(1); //any way to do this naturally?
 
 	}
-
 
 
 	SDL_WaitThread(threadID, NULL);
-	//SDL_WaitThread(gpsThread, NULL);
-
-	avformat_close_input(&pFormatCtx);
-	for (int i = 0; i < MAX_CAMERAS; i++)
-	{
-		avformat_close_input(&ctxArray[i]);
-	}
 	return 0;
 }
 
@@ -396,19 +264,10 @@ void show_GPS(IplImage* img2){
 	{
 		Mix_FreeMusic(gMusic);
 		Mix_CloseAudio();
-		SDL_DestroyTexture(threadText1);
-		SDL_DestroyTexture(threadText2);
 		SDL_DestroyRenderer(renderer);
 		SDL_DestroyWindow(window);
-		// SDL_DestroyMutex(threadLock1);
-		// SDL_DestroyMutex(threadLock2);
-		threadText1 = NULL;
-		threadText2 = NULL;
-		threadLock1 = NULL;
-		threadLock2 = NULL;
 		window = NULL;
 		renderer = NULL;
-	//Quit SDL subsystems
-		IMG_Quit();
+		gMusic = NULL;
 		SDL_Quit();
 	}
