@@ -208,7 +208,7 @@ int gpsWorker(void* data)
 int show_Camera(IplImage* img){	
 	//SDL_RenderClear(renderer);
 	
-	//if(updatedImage1 == true){
+	if(updatedImage1 == true){
 
 		SDL_Surface* surface = SDL_CreateRGBSurfaceFrom((void*)img->imageData,
 			img->width,
@@ -228,8 +228,8 @@ int show_Camera(IplImage* img){
 		SDL_RenderCopyEx(renderer, texture, NULL, &videoRect ,0, NULL, flip);
 		SDL_DestroyTexture(texture);
 		return 1;
-	//}
-		// return 0;
+	}
+		return 0;
 
 }
 
@@ -370,12 +370,12 @@ void show_GPS(IplImage* img2){
 
 		//show_GPS(&threadImage2);
 
-		// if (screenUpdate == 1){
+		if (screenUpdate == 1){
 			//SDL_RenderDrawLine(renderer, SCREEN_WIDTH/2, 0, SCREEN_WIDTH/2 , SCREEN_HEIGHT+100);
 			SDL_RenderPresent(renderer);
-		// 	loops = 0;
-		// }
-
+			loops = 0;
+		}
+//		cvWaitKey(1); //any way to do this naturally?
 
 	}
 
