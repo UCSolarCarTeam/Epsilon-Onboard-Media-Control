@@ -1,47 +1,43 @@
 #include <stdio.h>
 #include <Python.h>
 #include <string>
+#include "pythonImporter.h"
 
 //std::string test[10000];
 
-int main(int argc, char *argv[]) {
+int callPythonFunction(char* fileName, char* funcName, char* arguement){
+
 	PyObject *pythonFileName, *pModule, *pDict, *pFunc;
 	PyObject *pArgs, *pValue;
 	int i;
 	
-	if (argc < 3) {
-        fprintf(stderr,"Usage: call pythonfile funcname [args]\n");
-        return 1;
-    }
-
 	// Initializes Python
 	Py_Initialize();
-	PySys_SetPath("");
-	pythonFileName = PyString_FromString(argv[1]);
+	PySys_SetPath(""); //relative path
+	pythonFileName = PyString_FromString(fileName);
 	pModule = PyImport_Import(pythonFileName);
 	Py_DECREF(pythonFileName);
 	
 	if (pModule != NULL)
 	{
-		pFunc = PyObject_GetAttrString(pModule, argv[2]);
+		pFunc = PyObject_GetAttrString(pModule, funcName);
 		
 		if (pFunc && PyCallable_Check(pFunc)) 
 		{
 			// Only if we need to pass in args
-			pArgs = PyTuple_New(argc - 3);
-			for (i = 0; i < argc - 3; ++i) 
+			pArgs = PyTuple_New(1);
+
+			pValue = PyString_FromString(arguement);
+			if (!pValue) 
 			{
-				pValue = PyInt_FromLong(atoi(argv[i + 3]));
-				if (!pValue) 
-				{
-					Py_DECREF(pArgs);
-					Py_DECREF(pModule);
-					fprintf(stderr, "Cannot convert argument!\n");
-					return 1;
-				}
-				/* pValue reference stolen here: */
-                PyTuple_SetItem(pArgs, i, pValue);
+				Py_DECREF(pArgs);
+				Py_DECREF(pModule);
+				fprintf(stderr, "Cannot convert argument!\n");
+				return 1;
 			}
+			/* pValue reference stolen here: */
+            PyTuple_SetItem(pArgs, 0, pValue);
+
 			pValue = PyObject_CallObject(pFunc, pArgs);
 			Py_DECREF(pArgs);
 			if (pValue != NULL)
@@ -63,7 +59,7 @@ int main(int argc, char *argv[]) {
 		{
 			if (PyErr_Occurred())
 				PyErr_Print();
-			fprintf(stderr, "Cannot find function \"%s\"\n", argv[2]);	
+			fprintf(stderr, "Cannot find function \"%s\"\n", arguement);	
 		}
 		Py_XDECREF(pFunc);
 		Py_DECREF(pModule);
@@ -72,7 +68,7 @@ int main(int argc, char *argv[]) {
 	else
 	{
 		PyErr_Print();
-		fprintf(stderr, "Failed to load \"%s\"\n", argv[1]);
+		fprintf(stderr, "Failed to load \"%s\"\n", funcName);
 		return 1;
 	}
 	Py_Finalize();

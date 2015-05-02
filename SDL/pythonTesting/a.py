@@ -4,3 +4,6 @@ def multiply(a,b):
     for i in range(0, a):
         c = c + b
     return c
+
+def printStuff(a):
+	print(a)

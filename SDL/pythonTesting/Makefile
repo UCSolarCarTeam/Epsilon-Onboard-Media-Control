@@ -1,5 +1,5 @@
 #OBJS = files to compile 
-OBJS = host.cpp
+OBJS = main.cpp pythonImporter.cpp pythonImporter.h
 
 #CC = compiler used
 CC = g++

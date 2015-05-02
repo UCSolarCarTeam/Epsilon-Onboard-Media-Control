@@ -47,12 +47,11 @@ SDL_Window* window = NULL;
 SDL_Rect videoRect;
 
 
-
-
 /***********************************************************************
 /*							SDL functions 
 /***********************************************************************/
 // Initializes SDL window / renderer for use
+
 bool init_SDL()
 {
 	bool success = true;
@@ -79,12 +78,17 @@ bool init_SDL()
 			}
 			else 
 			{
+
+				int MusicFlags = MIX_INIT_MP3;
+	
 				SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
 				if( Mix_OpenAudio( 44100, MIX_DEFAULT_FORMAT, 2, 2048 ) < 0 )
 				{
 					printf( "SDL_mixer could not initialize! SDL_mixer Error: %s\n", Mix_GetError() );
 					success = false;
 				}
+
+
 
 			}
 		}
