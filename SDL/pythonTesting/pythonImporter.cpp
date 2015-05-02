@@ -1,11 +1,10 @@
 #include <stdio.h>
 #include <Python.h>
+
 #include <string>
 #include "pythonImporter.h"
 
-//std::string test[10000];
-
-int callPythonFunction(char* fileName, char* funcName, char* arguement){
+int callPythonFunction(char* fileName, char* funcName, char* argument){
 
 	PyObject *pythonFileName, *pModule, *pDict, *pFunc;
 	PyObject *pArgs, *pValue;
@@ -13,6 +12,10 @@ int callPythonFunction(char* fileName, char* funcName, char* arguement){
 	
 	// Initializes Python
 	Py_Initialize();
+	PySys_SetPath("~"); //relative path
+	PyImport_ImportModule("pygame");
+
+
 	PySys_SetPath(""); //relative path
 	pythonFileName = PyString_FromString(fileName);
 	pModule = PyImport_Import(pythonFileName);
@@ -27,7 +30,7 @@ int callPythonFunction(char* fileName, char* funcName, char* arguement){
 			// Only if we need to pass in args
 			pArgs = PyTuple_New(1);
 
-			pValue = PyString_FromString(arguement);
+			pValue = PyString_FromString(argument);
 			if (!pValue) 
 			{
 				Py_DECREF(pArgs);
@@ -39,6 +42,7 @@ int callPythonFunction(char* fileName, char* funcName, char* arguement){
             PyTuple_SetItem(pArgs, 0, pValue);
 
 			pValue = PyObject_CallObject(pFunc, pArgs);
+
 			Py_DECREF(pArgs);
 			if (pValue != NULL)
 			{
@@ -47,6 +51,7 @@ int callPythonFunction(char* fileName, char* funcName, char* arguement){
 			}
 			else
 			{
+
 				Py_DECREF(pFunc);
 				Py_DECREF(pModule);
 				PyErr_Print();
@@ -59,7 +64,7 @@ int callPythonFunction(char* fileName, char* funcName, char* arguement){
 		{
 			if (PyErr_Occurred())
 				PyErr_Print();
-			fprintf(stderr, "Cannot find function \"%s\"\n", arguement);	
+			fprintf(stderr, "Cannot find function \"%s\"\n", argument);	
 		}
 		Py_XDECREF(pFunc);
 		Py_DECREF(pModule);

@@ -75,8 +75,7 @@ screen = createMainScreen()
 #webcam = initiatePyCamera()
 webcam = initiatePyCamera()
 
-#pygame.mixer.music.load('Polaris.mp3')
-#pygame.mixer.music.play(0)
+playMusic()
 endloop = 0
 
 while True:
