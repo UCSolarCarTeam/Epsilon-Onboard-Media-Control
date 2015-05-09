@@ -19,6 +19,7 @@ extern "C" {
 #include <stdio.h>
 #include <unistd.h>
 #include <SDL_mixer.h>
+#include <SDL_ttf.h>
 
 using namespace cv;
 
@@ -26,9 +27,11 @@ using namespace cv;
 #define SCREEN_WIDTH 1232
 
 Mix_Music *gMusic = NULL;
+TTF_Font *font = NULL;
 SongLoader loader;
 
 int quit;
+int volume = 128;
 string songArray[20];
 void close();
 int cameraWorker(void* data);
@@ -47,6 +50,7 @@ Mat frame;
 SDL_Renderer* renderer = NULL;
 SDL_Window* window = NULL;
 SDL_Rect videoRect;
+SDL_Texture textTexture;
 
 
 /***********************************************************************
@@ -182,9 +186,11 @@ int show_Camera(IplImage* img)
  		return -1;
  	}
  	
- 	loader.readSongNames(songArray);
-	if( !loadSong(songArray[0]) )
-	
+ 	int songCount = loader.readSongNames(songArray);
+	int N = (sizeof(songArray) / sizeof(songArray[0]));
+	printf("%d\n", N);
+	std::sort(songArray, songArray + songCount);
+	if( !loadSong(songArray[0]))
 	{ // Dummy value added to mimic future usage of loadSong function
 		printf( "Failed to load media!\n" );
 	}
@@ -243,6 +249,17 @@ int show_Camera(IplImage* img)
 									Mix_PauseMusic();
 								}
 							}
+							break;
+						
+						case SDLK_1:
+							if (volume < 128)
+								volume+= 4;
+							Mix_VolumeMusic(volume);
+							break;
+						case SDLK_2:
+							if (volume > 0)
+								volume-= 4;
+							Mix_VolumeMusic(volume);
 							break;
 						
 						case SDLK_0:

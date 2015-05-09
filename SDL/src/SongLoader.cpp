@@ -18,9 +18,13 @@ int SongLoader::readSongNames(std::string container[])
 	{
 		while ((ent = readdir(dir)) != NULL)
 		{
-			if (strstr(ent->d_name, ".mp3") != NULL)
+			if (strstr(ent->d_name, ".ogg") != NULL)
+			{
 				container[count] = ent->d_name;
+				count++;
+			}
 		}
 	}
-	return 0;
+	printf("%d\n", count);
+	return count;
 }
