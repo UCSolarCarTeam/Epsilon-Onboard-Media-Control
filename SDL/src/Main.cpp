@@ -20,6 +20,18 @@ extern "C" {
 #include <unistd.h>
 #include <SDL_mixer.h>
 
+#ifdef __amd64__
+	#ifndef RUNNINGONINTEL
+	#define RUNNINGONINTEL
+	#endif
+#else
+	#ifndef RUNNINGONPI
+	#define RUNNINGONPI
+	#endif
+	#include <wiringPi.h>
+	//printf("Running on the Pi!\n");
+#endif
+
 using namespace cv;
 
 #define SCREEN_HEIGHT 768
@@ -56,6 +68,8 @@ SDL_Rect videoRect;
 
 bool init_SDL()
 {
+
+
 	bool success = true;
 	
 	if (SDL_Init(SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_TIMER)) < 0)
