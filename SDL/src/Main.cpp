@@ -1,6 +1,7 @@
 #include <highgui.h>
 #include <cv.h>
 #include "opencv2/opencv.hpp"
+#include <SongLoader.h>
 
 //for the rasperry pi
 #ifndef INT64_C
@@ -25,9 +26,10 @@ using namespace cv;
 #define SCREEN_WIDTH 1232
 
 Mix_Music *gMusic = NULL;
+SongLoader loader;
 
 int quit;
-
+string songArray[20];
 void close();
 int cameraWorker(void* data);
 int gpsWorker(void* data);
@@ -106,19 +108,19 @@ bool init_SDL()
 	return success;
 }
 
-bool loadSong(char* name = NULL)
+bool loadSong(std::string name = "")
 {
-	if (name == NULL)
+	if (name == "")
 		return false;
 	bool success = true;
 	//Load music
-	gMusic = Mix_LoadMUS("assets/Polaris.mp3");
+	std::string path = "assets/" + name;
+	gMusic = Mix_LoadMUS(path.c_str());
 	if( gMusic == NULL )
 	{
 		printf( "Failed to load beat music! SDL_mixer Error: %s\n", Mix_GetError() );
 		success = false;
 	}
-
 	return success;
 }
 
@@ -167,17 +169,22 @@ int show_Camera(IplImage* img)
  
  int main(int argc, char* argv[])
  {
+	 
  	if (!init_SDL())
  	{
  		fprintf(stderr, "Could not initialize SDL!\n");
  		return -1;
  	}
+  
  	if (!cap.isOpened())
  	{
  		fprintf(stderr, "Failed to load file!\n");
  		return -1;
  	}
-	if( !loadSong("dummy") )
+ 	
+ 	loader.readSongNames(songArray);
+	if( !loadSong(songArray[0]) )
+	
 	{ // Dummy value added to mimic future usage of loadSong function
 		printf( "Failed to load media!\n" );
 	}
