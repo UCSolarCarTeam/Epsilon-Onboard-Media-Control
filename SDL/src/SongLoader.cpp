@@ -53,12 +53,6 @@ int SongLoader::shuffleSongNames()
 	return 0;
 }
 
-int SongLoader::sortSongNames()
-{
-
-
-	
-}
 
 std::string SongLoader::nextSong()
 {
