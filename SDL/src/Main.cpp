@@ -1,4 +1,4 @@
-#include <highgui.h>
+
 #include <cv.h>
 #include "opencv2/opencv.hpp"
 #include <SongLoader.h>
@@ -8,7 +8,6 @@
 #define INT64_C(c) (c ## LL)
 #define UINT64_C(c) (c ## ULL)
 #endif
-
 
 extern "C" {
 	#include <SDL.h>
@@ -37,11 +36,7 @@ using namespace cv;
 #define SCREEN_HEIGHT 768
 #define SCREEN_WIDTH 1232
 
-Mix_Music *gMusic = NULL;
-SongLoader loader;
-
 int quit;
-string songArray[20];
 void close();
 int cameraWorker(void* data);
 int gpsWorker(void* data);
@@ -94,18 +89,7 @@ bool init_SDL()
 			}
 			else 
 			{
-
-				int MusicFlags = MIX_INIT_MP3;
-	
 				SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
-				if( Mix_OpenAudio( 44100, MIX_DEFAULT_FORMAT, 2, 2048 ) < 0 )
-				{
-					printf( "SDL_mixer could not initialize! SDL_mixer Error: %s\n", Mix_GetError() );
-					success = false;
-				}
-
-
-
 			}
 		}
 	}
@@ -119,22 +103,6 @@ bool init_SDL()
 
 	printf("Camera Width%d, Camera Height %d \n",cameraWidth,cameraHeight);
 
-	return success;
-}
-
-bool loadSong(std::string name = "")
-{
-	if (name == "")
-		return false;
-	bool success = true;
-	//Load music
-	std::string path = "assets/" + name;
-	gMusic = Mix_LoadMUS(path.c_str());
-	if( gMusic == NULL )
-	{
-		printf( "Failed to load beat music! SDL_mixer Error: %s\n", Mix_GetError() );
-		success = false;
-	}
 	return success;
 }
 
@@ -196,13 +164,6 @@ int show_Camera(IplImage* img)
  		return -1;
  	}
  	
- 	loader.readSongNames(songArray);
-	if( !loadSong(songArray[0]) )
-	
-	{ // Dummy value added to mimic future usage of loadSong function
-		printf( "Failed to load media!\n" );
-	}
-
  	SDL_Thread* threadID = SDL_CreateThread(cameraWorker, "Backup Camera Thread", NULL);
 
 	int screenUpdate = 0;
@@ -234,36 +195,6 @@ int show_Camera(IplImage* img)
 				 			exit(0);
 				        	break;
 
-						case SDLK_9:
-							//If there is no music playing
-							if( Mix_PlayingMusic() == 0 )
-							{
-								//Play the music
-								Mix_PlayMusic( gMusic, -1 );
-							}
-							//If music is being played
-							else
-							{
-								//If the music is paused
-								if( Mix_PausedMusic() == 1 )
-								{
-									//Resume the music
-									Mix_ResumeMusic();
-								}
-								//If the music is playing
-								else
-								{
-									//Pause the music
-									Mix_PauseMusic();
-								}
-							}
-							break;
-						
-						case SDLK_0:
-							//Stop the music
-							Mix_HaltMusic();
-							break;
-
 			        	default:
 			 				break;
 			    }
@@ -287,12 +218,9 @@ int show_Camera(IplImage* img)
 
 	void close()
 	{
-		Mix_FreeMusic(gMusic);
-		Mix_CloseAudio();
 		SDL_DestroyRenderer(renderer);
 		SDL_DestroyWindow(window);
 		window = NULL;
 		renderer = NULL;
-		gMusic = NULL;
 		SDL_Quit();
 	}
