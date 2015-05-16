@@ -18,7 +18,7 @@ SongLoader::SongLoader()
 {
 	counter=0;
 	song=0;
-	
+	readSongNames(); 
 }
 
 int SongLoader::readSongNames()
