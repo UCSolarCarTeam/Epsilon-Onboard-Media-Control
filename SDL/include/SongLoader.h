@@ -12,20 +12,19 @@
 
 
 
-class SongLoader 
+class SongLoader
 {
-	int counter,song;
-	std::vector<string> container[100];
-	std::string CurrentSong;
-	int readSongNames(); //Read all the songs in the directory
-	
-		public:
-			SongLoader();
-			int shuffleSongNames(); //Shuffle all the songs in the directory
-			std::string nextSong(); //Returns Next song
-			
-			
-
-	
+    int counter,song;
+    std::vector<std::string> container;
+    std::string CurrentSong;
+    int readSongNames(); //Read all the songs in the directory
+    
+public:
+    SongLoader();
+    int shuffleSongNames(); //Shuffle all the songs in the directory
+    std::string nextSong(); //Returns Next song
+    
+    
+    
 };
 #endif
