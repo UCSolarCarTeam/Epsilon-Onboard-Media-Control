@@ -1,18 +1,18 @@
 #include "SongLoader.h"
 
-int main()
-{
+// int main()
+// {
 
-SongLoader test;
-test.readSongNames();
-test.shuffleSongNames();
-std::cout<<test.nextSong()<<std::endl;
-std::cout<<test.nextSong()<<std::endl;
-std::cout<<test.nextSong()<<std::endl;
+// SongLoader test;
+// test.readSongNames();
+// test.shuffleSongNames();
+// std::cout<<test.nextSong()<<std::endl;
+// std::cout<<test.nextSong()<<std::endl;
+// std::cout<<test.nextSong()<<std::endl;
 
-return 0;
+// return 0;
 
-}
+// }
 
 SongLoader::SongLoader()
 {

@@ -1,5 +1,5 @@
 #OBJS = files to compile 
-OBJS = src/Main.cpp src/SongLoader.cpp
+OBJS = src/Main.cpp src/SongLoader.cpp src/SongPlayer.cpp
 
 #CC = compiler used
 CC = g++
