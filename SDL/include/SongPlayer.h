@@ -19,6 +19,7 @@ class SongPlayer{
 
 	private:
 	int freeMusic();
+	int SongThread();
 
 };
 

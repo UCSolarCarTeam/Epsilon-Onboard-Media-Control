@@ -6,9 +6,10 @@ unsigned char *songBuffer;
 
 SongPlayer::SongPlayer()
 {
-
+	SongLoader loader(); 
 }
 
+//Will load the songName into buffer
 int SongPlayer::load(std::string songName)
 {
 
@@ -24,7 +25,7 @@ int SongPlayer::back()
 }
 int SongPlayer::next()
 {
-
+	load(loader.nextSong());
 }
 int SongPlayer::pause()
 {
