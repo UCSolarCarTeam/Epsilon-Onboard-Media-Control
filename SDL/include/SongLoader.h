@@ -23,6 +23,7 @@ public:
     SongLoader();
     int shuffleSongNames(); //Shuffle all the songs in the directory
     std::string nextSong(); //Returns Next song
+    std::string previousSong(); //Returns Last song
     
     
     
