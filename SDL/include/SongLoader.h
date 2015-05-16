@@ -18,14 +18,12 @@ class SongLoader
 	std::string container[100];
 	std::string CurrentSong;
 	std::string PastSongs[10];
-
+	int readSongNames(); //Read all the songs in the directory
 	
 		public:
 			SongLoader();
-			int readSongNames(); //Read all the songs in the directory
+			
 			int shuffleSongNames(); //Shuffle all the songs in the directory
-			int sortSongNames();
-			int rearrangeArray();
 			std::string nextSong(); //Returns Next song
 			
 			
