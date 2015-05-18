@@ -32,11 +32,16 @@ Private Functions
 	private:
 	unsigned char *songBuffer;
 	bool playing;
+	bool loaded;
 	SongLoader loader;
 
+	mpg123_handle *mh;
+	ao_sample_format format;
+    int channels, encoding;
+    long rate;
+
+
 	/*For the time bar*/
-
-
 	int load(std::string songName);
 	int freeMusic();
 
