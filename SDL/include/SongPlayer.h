@@ -30,19 +30,20 @@ Public Functions
 Private Functions
 */
 	private:
-	unsigned char *songBuffer;
 	bool playing;
 	bool loaded;
 	SongLoader loader;
 
 	mpg123_handle *mh;
 	ao_sample_format format;
+	ao_device *dev;
     int channels, encoding;
     long rate;
 
 
+
 	/*For the time bar*/
-	int load(std::string songName);
+	int load(char* songName);
 	int freeMusic();
 
 	/*Functions to change 'bool playing' to true or false*/

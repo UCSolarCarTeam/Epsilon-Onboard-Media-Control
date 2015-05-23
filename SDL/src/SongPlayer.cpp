@@ -8,7 +8,6 @@ SongPlayer::SongPlayer()
 	playing = false;
 	loaded = false;
 
-
     ao_initialize();
 
 	mpg123_init();
@@ -17,10 +16,12 @@ SongPlayer::SongPlayer()
 }
 
 //Will load the songName into buffer
-int SongPlayer::load(std::string songName)
+int SongPlayer::load(char* songName)
 {
+	int driver;
+
 	/* open the file and get the decoding format */
-	mpg123_open(mh, argv[1]);
+	mpg123_open(mh, songName);
     mpg123_getformat(mh, &rate, &channels, &encoding);
 
     /* set the output format and open the output device */
@@ -39,16 +40,16 @@ int SongPlayer::play()
 int SongPlayer::back()
 {
 	pause();
-	//load(loader.previousSong());
+	//load(loader.previousSong()); 
 	play();
 }
 int SongPlayer::next()
 {
-	load(loader.nextSong());
+	//load(loader.nextSong());
 }
 int SongPlayer::pause()
 {
-	playing = false;
+	playing = false; 
 }
 
 
@@ -66,18 +67,24 @@ int SongPlayer::getCurrentTime()
 int SongPlayer::getSongLength()
 {
 	if(loaded){
- 		struct mpg123_frameinfo fInfo;
+ 		off_t length;
+ 		mpg123_scan(mh);
+ 		length = mpg123_length(mh);
+
+		times = (double)(length/marione.rate)/60; //time in minutes.minutes (e.g 5.3 minutes)
+		timem = times;          //time in minutes (5)
+		times = (times - (double)timem) * 60; //time in seconds (.3*60)
+		return timem+times/10; 
 
 
 	} else {
-		return 1;
+		return -1;
 	}
 
 }
 
 int SongPlayer::freeMusic()
 {
-	free(songBuffer);
     // ao_close(dev);
     // mpg123_close(mh);
     // mpg123_delete(mh);
@@ -103,9 +110,6 @@ int SongPlayer::songThread()
     int driver;
     ao_device *dev;
 
-    ao_sample_format format;
-    int channels, encoding;
-    long rate;
 
     driver = ao_default_driver_id();
     mh = mpg123_new(NULL, &err);
@@ -120,4 +124,6 @@ int SongPlayer::songThread()
         		ao_play(dev, (char*)buffer, done);
 		}
 	}
+
+	freeMusic();
 }
