@@ -17,7 +17,6 @@ extern "C" {
 #include <iostream>
 #include <stdio.h>
 #include <unistd.h>
-#include <SDL_mixer.h>
 
 #ifdef __amd64__
 	#ifndef RUNNINGONINTEL
