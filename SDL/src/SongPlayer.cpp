@@ -68,19 +68,17 @@ int SongPlayer::getSongLength()
 {
 	if(loaded){
  		off_t length;
+ 		double times;
+ 		int timem;
  		mpg123_scan(mh);
  		length = mpg123_length(mh);
-
-		times = (double)(length/marione.rate)/60; //time in minutes.minutes (e.g 5.3 minutes)
-		timem = times;          //time in minutes (5)
+		times = (double)(length/rate)/60; //time in minutes.minutes (e.g 5.3 minutes)
+		timem = times;         				 	//time in minutes (5)
 		times = (times - (double)timem) * 60; //time in seconds (.3*60)
 		return timem+times/10; 
-
-
 	} else {
 		return -1;
 	}
-
 }
 
 int SongPlayer::freeMusic()
