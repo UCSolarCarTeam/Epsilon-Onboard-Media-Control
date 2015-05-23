@@ -30,6 +30,18 @@ Public Functions
 Private Functions
 */
 	private:
+	/*For the time bar*/
+	int load(char* songName);
+	int freeMusic();
+
+	/*Functions to change 'bool playing' to true or false*/
+	void start();
+	void stop();
+
+	/*The Thread*/
+	int songThread();
+
+
 	bool playing;
 	bool loaded;
 	SongLoader loader;
@@ -39,19 +51,9 @@ Private Functions
 	ao_device *dev;
     int channels, encoding;
     long rate;
-
-
-
-	/*For the time bar*/
-	int load(char* songName);
-	int freeMusic();
-
-	/*Functions to change 'bool playing' to true or false*/
-	void start();
-	void stop();
-
-	int songThread();
 };
+
+
 
 #endif /* SONGPLAYER_H */
 
