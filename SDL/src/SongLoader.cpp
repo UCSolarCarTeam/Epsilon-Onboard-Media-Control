@@ -1,18 +1,5 @@
 #include "SongLoader.h"
 
-// int main()
-// {
-
-// SongLoader test;
-// test.readSongNames();
-// test.shuffleSongNames();
-// std::cout<<test.nextSong()<<std::endl;
-// std::cout<<test.nextSong()<<std::endl;
-// std::cout<<test.nextSong()<<std::endl;
-
-// return 0;
-
-// }
 
 SongLoader::SongLoader()
 {
@@ -55,17 +42,17 @@ int SongLoader::shuffleSongNames()
 }
 
 
-std::string SongLoader::nextSong()
+const char* SongLoader::nextSong()
 {
     song++;
     CurrentSong=container[song];
     if(song>=(counter-1))
         shuffleSongNames();
     
-    return CurrentSong;
+    return CurrentSong.c_str();
 }
 
-std::string SongLoader::previousSong()
+const char* SongLoader::previousSong()
 {
     if(song<=0)
     {
@@ -74,7 +61,7 @@ std::string SongLoader::previousSong()
     song--;
     CurrentSong=container[song];
 
-    return CurrentSong;
+    return CurrentSong.c_str();
 }
 
 
