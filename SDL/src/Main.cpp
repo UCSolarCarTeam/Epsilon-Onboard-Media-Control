@@ -184,6 +184,7 @@ int show_Camera(IplImage* img)
 				 			SDL_SetRenderDrawColor( renderer, 0x00, 0x00, 0xFF, 0xFF );   
 				 		 	printf("Esc was Pressed!");
 				       	 	quit = true;
+				       	 	songQuit();
 				       	 	SDL_WaitThread(threadID, &threadReturnValue);
 				       	 	printf("\nThread returned value: %d", threadReturnValue);
 				       	 	close();
