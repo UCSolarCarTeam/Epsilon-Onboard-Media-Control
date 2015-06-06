@@ -7,51 +7,35 @@
 
 #define BITS 8
 
-class SongPlayer{
+//class SongPlayer{
 
-/*****************************************************************************
-Public Functions
-*/
-	public:
-	SongPlayer();
+	void initSongPlayer();
 
-	int play();
-	int back();
-	int next(); 
-	int pause();
+	int playSong();
+	int previousSong();
+	int nextSong(); 
+	int pauseSong();
 
 	int getCurrentTime();
 	int getSongLength();
-
-	~SongPlayer();
-
-
-/*****************************************************************************
-Private Functions
-*/
-	private:
+	
 	/*For the time bar*/
-	int load(char* songName);
+	int loadSong(char* songName);
 	int freeMusic();
 
 	/*Functions to change 'bool playing' to true or false*/
-	void start();
-	void stop();
+	void startSong();
+	void stopSong();
 
 	/*The Thread*/
-	int songThread();
+	int songThread(void *data);
+	void songQuit();
+	
+	void closeSongPlayer();
 
 
-	bool playing;
-	bool loaded;
-	SongLoader loader;
 
-	mpg123_handle *mh;
-	ao_sample_format format;
-	ao_device *dev;
-    int channels, encoding;
-    long rate;
-};
+//};
 
 
 

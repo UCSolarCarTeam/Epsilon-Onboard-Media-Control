@@ -2,6 +2,7 @@
 #include <cv.h>
 #include "opencv2/opencv.hpp"
 #include <SongLoader.h>
+#include "SongPlayer.h"
 
 //for the rasperry pi
 #ifndef INT64_C
@@ -152,7 +153,13 @@ int show_Camera(IplImage* img)
  		return -1;
  	}
  	
+ 	initSongPlayer();
+ 	loadSong("assets/Polaris.mp3");
+ 	playSong();
+ 	//songThread();
  	SDL_Thread* threadID = SDL_CreateThread(cameraWorker, "Backup Camera Thread", NULL);
+
+ 	SDL_Thread* threadID2 = SDL_CreateThread(songThread, "Music Playing Thread", NULL);
 
 	int screenUpdate = 0;
 	int threadReturnValue;	
@@ -164,7 +171,8 @@ int show_Camera(IplImage* img)
 	 		switch(event.type)
 	 		{
 	 			case SDL_QUIT:
-		 			quit = 1;
+		 			quit = true;
+		 			songQuit();
 		 			close();
 		 			SDL_Quit();
 		 			exit(0);
@@ -196,11 +204,13 @@ int show_Camera(IplImage* img)
 	}
 
 	SDL_WaitThread(threadID, NULL);
+	SDL_WaitThread(threadID2, NULL);
 	return 0;
 }
 
 void close()
 {
+	closeSongPlayer();
 	SDL_DestroyRenderer(renderer);
 	SDL_DestroyWindow(window);
 	window = NULL;

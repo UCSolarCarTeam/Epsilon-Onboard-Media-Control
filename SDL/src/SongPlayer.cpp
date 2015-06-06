@@ -1,75 +1,92 @@
 #include "SongPlayer.h"
 #include "SongLoader.h"
 
+unsigned char *buffer;
+size_t buffer_size;
+bool playing;
+bool loaded;
+SongLoader loader;
+mpg123_handle *mh;
+ao_sample_format format;
+ao_device *dev;
+int channels, encoding;
+long rate;
+bool quitSong;
 
-SongPlayer::SongPlayer()
+void songQuit()
+{
+	quitSong = true;
+}
+
+void initSongPlayer()
 {
 	SongLoader loader(); 
 	playing = false;
 	loaded = false;
+	quitSong = false;
+	dev = NULL;
+	mh = NULL;
+	buffer = NULL;
 
     ao_initialize();
 
 	mpg123_init();
-
-
 }
 
 //Will load the songName into buffer
-int SongPlayer::load(char* songName)
+int loadSong(char* songName)
 {
 	if(loaded){
 		freeMusic();
 	}
 
-    unsigned char *buffer;
-    size_t buffer_size;
+    //unsigned char *buffer;
+    //size_t buffer_size;
 
 	int driver;
 	int err;
+	driver = ao_default_driver_id();
 
     mh = mpg123_new(NULL, &err);
-
-	/* open the file and get the decoding format */
+	// open the file and get the decoding format 
 	mpg123_open(mh, songName);
-    mpg123_getformat(mh, &rate, &channels, &encoding);
-
+    mpg123_getformat(mh, &rate, &channels, &encoding); // error: Invalid UTF16 surrogate pair at 10 (0xff08). when running this line
     buffer_size = mpg123_outblock(mh);
     buffer = (unsigned char*) malloc(buffer_size * sizeof(unsigned char));
 
-    /* set the output format and open the output device */
+    // set the output format and open the output device 
     format.bits = mpg123_encsize(encoding) * BITS;
     format.rate = rate;
     format.channels = channels;
     format.byte_format = AO_FMT_NATIVE;
     format.matrix = 0;
 
-    /*most important thing used in thread later*/
+    // most important thing used in thread later
     dev = ao_open_live(driver, &format, NULL);
 }
 
-int SongPlayer::play()
+int playSong()
 {
 	playing = true;
 }
-int SongPlayer::pause()
+int pauseSong()
 {
 	playing = false; 
 }
-int SongPlayer::back()
+int previousSong()
 {
-	pause();
-	load((char*)loader.previousSong()); 
-	play();
+	pauseSong();
+	loadSong((char*)loader.previousSong()); 
+	playSong();
 }
-int SongPlayer::next()
+int nextSong()
 {
-	pause();
-	load((char*)loader.nextSong());
-	play();
+	pauseSong();
+	loadSong((char*)loader.nextSong());
+	playSong();
 }
 
-int SongPlayer::getCurrentTime()
+int getCurrentTime()
 {
 	if(loaded){
 
@@ -80,7 +97,7 @@ int SongPlayer::getCurrentTime()
 		return 1;
 	}
 }
-int SongPlayer::getSongLength()
+int getSongLength()
 {
 	if(loaded){
  		off_t length;
@@ -97,7 +114,7 @@ int SongPlayer::getSongLength()
 	}
 }
 
-int SongPlayer::freeMusic()
+int freeMusic()
 {
 	free(buffer);
     ao_close(dev);
@@ -105,7 +122,7 @@ int SongPlayer::freeMusic()
     mpg123_delete(mh);
 }
 
-SongPlayer::~SongPlayer()
+void closeSongPlayer()
 {
 	freeMusic();
 	ao_shutdown();
@@ -122,11 +139,11 @@ SongPlayer::~SongPlayer()
 	-playing is going to be changed by pause() and play().
 
 */
-int SongPlayer::songThread()
+int songThread(void *data)
 {
     size_t done;
 
-	while (true)
+	while (!quitSong)
 	{
 		if (playing)
 		{
