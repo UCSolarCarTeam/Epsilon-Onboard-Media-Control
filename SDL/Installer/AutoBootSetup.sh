@@ -1,3 +1,16 @@
+#Ensures user is root
+
+USER=`whoami`
+if [ $USER = "root" ]
+        then
+        echo "Running as ROOT"
+else
+        echo "***********YOU ARE NOT ROOT************" 
+        exit 0
+fi
+
+#Sets up Autoboot
+
 if [ $HOME = "/home/pi" ]
 then
 echo "You are running on the pi, we will set up Auto Launch"
@@ -12,4 +25,8 @@ echo "filecontents = $FILECONTENTS"
                 echo "Autolaunch already set up!"
         fi
 fi
+
+#Sets up Fastboot
+apt-get install systemd
+sudo sh -c 'echo -n "`cat /boot/cmdline.txt` init=/bin/systemd" > /boot/cmdline.txt'
 
