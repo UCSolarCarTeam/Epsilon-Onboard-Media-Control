@@ -32,6 +32,7 @@ cd SDL2-2.0.3
 ./configure --host=armv71-raspberry-linux-gnueabihf
 make -j4 
 make install -j4 
+cd ..
 
 #SDL2_ttf
 wget https://www.libsdl.org/projects/SDL_ttf/release/SDL2_ttf-2.0.12.tar.gz 
@@ -40,6 +41,7 @@ cd SDL2_ttf-2.0.12
 ./configure 
 make -j4 
 make install -j4 
+cd ..
 
 #SDL2_image
 wget https://www.libsdl.org/projects/SDL_image/release/SDL2_image-2.0.0.tar.gz
@@ -48,5 +50,6 @@ cd SDL2_image-2.0.0
 ./configure
 make -j4 
 make install -j4 
+cd ..
 
 
