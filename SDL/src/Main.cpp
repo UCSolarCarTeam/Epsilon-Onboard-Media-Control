@@ -37,8 +37,11 @@ using namespace cv;
 #define SCREEN_WIDTH 1232
 
 
-void close();
+
 int cameraWorker(void* data);
+void processEvents();
+void signalToQuit();
+void close();
 
 IplImage threadImage1;
 bool updatedImage1 = false;
@@ -52,6 +55,11 @@ SDL_Window* window = NULL;
 SDL_Rect videoRect;
 int cameraHeight;
 int cameraWidth;
+
+SDL_Thread* SDLCameraThread;
+SDL_Thread* SDLMusicThread;
+
+
 
 int quit;
 
@@ -85,16 +93,21 @@ bool init_SDL()
 			}
 		}
 	}
+	return success;
+}
+
+bool init_CameraSettings()
+{
+	bool success = true;
 	videoRect.x = 0;
 	videoRect.y = 0;
-	videoRect.w = 1280;	//640
+	videoRect.w = 1280;	//640 not actually sure why we have this
 	videoRect.h = 720;	//480
 
 	cameraWidth = cap.get(CV_CAP_PROP_FRAME_WIDTH);
 	cameraHeight = cap.get(CV_CAP_PROP_FRAME_HEIGHT);
 
 	printf("Camera Width%d, Camera Height %d \n",cameraWidth,cameraHeight);
-
 	return success;
 }
 
@@ -147,9 +160,12 @@ int show_Camera(IplImage* img)
  		fprintf(stderr, "Could not initialize SDL!\n");
  		return -1;
  	}
-  
  	if (!cap.isOpened()){
  		fprintf(stderr, "Failed to load file!\n");
+ 		return -1;
+ 	}
+ 	if (!init_CameraSettings()){
+ 		printf("failed to load settings\n");
  		return -1;
  	}
  	
@@ -157,58 +173,64 @@ int show_Camera(IplImage* img)
  	loadSong("assets/Polaris.mp3");
  	playSong();
  	//songThread();
- 	SDL_Thread* threadID = SDL_CreateThread(cameraWorker, "Backup Camera Thread", NULL);
 
- 	SDL_Thread* threadID2 = SDL_CreateThread(songThread, "Music Playing Thread", NULL);
+ 	SDLCameraThread = SDL_CreateThread(cameraWorker, "Backup Camera Thread", NULL);
+ 	SDLMusicThread = SDL_CreateThread(songThread, "Music Playing Thread", NULL);
 
 	int screenUpdate = 0;
 	int threadReturnValue;	
 
  	while (!quit)
  	{
- 		SDL_Event event;
- 		while (SDL_PollEvent(&event)){
-	 		switch(event.type)
-	 		{
-	 			case SDL_QUIT:
-		 			quit = true;
-		 			songQuit();
-		 			close();
-		 			SDL_Quit();
-		 			exit(0);
-		 		break;
-
-	 			case SDL_KEYDOWN:
-	 				switch(event.key.keysym.sym) {
-				 		case SDLK_ESCAPE: 
-				 			SDL_SetRenderDrawColor( renderer, 0x00, 0x00, 0xFF, 0xFF );   
-				 		 	printf("Esc was Pressed!");
-				       	 	quit = true;
-				       	 	songQuit();
-				       	 	SDL_WaitThread(threadID, &threadReturnValue);
-				       	 	printf("\nThread returned value: %d", threadReturnValue);
-				       	 	close();
-				 			SDL_Quit();
-				 			exit(0);
-				break;
-
-			    default:
-			 	break;
-			    }
-	 		}
- 		}
+ 		
 		screenUpdate = show_Camera(&threadImage1);
-
+		processEvents();
 		if (screenUpdate == 1){
 			SDL_RenderPresent(renderer);
 		}
 	}
 
-	SDL_WaitThread(threadID, NULL);
-	SDL_WaitThread(threadID2, NULL);
+	SDL_WaitThread(SDLCameraThread, NULL);
+	SDL_WaitThread(SDLMusicThread, NULL);
 	return 0;
 }
 
+void processEvents()
+{
+	SDL_Event event;
+ 		while (SDL_PollEvent(&event))
+ 		{
+	 		switch(event.type)
+	 		{
+	 			case SDL_QUIT:
+	 				printf("SDL_QUIT was called\n");
+	 				signalToQuit();
+	 				close();
+		 			break;
+
+	 			case SDL_KEYDOWN:
+	 				switch(event.key.keysym.sym) 
+	 				{
+				 		case SDLK_ESCAPE: 
+				 		 	printf("Esc was Pressed!\n");
+				 		 	signalToQuit();
+				 		 	close();
+							break;
+			    	}
+	 		}
+ 		}
+}
+
+/* Signals all the threads to quit and then waits for the threads */
+void signalToQuit()
+{
+	quit = true;
+	songQuit();	
+	SDL_WaitThread(SDLCameraThread, NULL);
+	SDL_WaitThread(SDLMusicThread, NULL);
+}
+
+/* Cleans up and should free everything used in the program*/
 void close()
 {
 	closeSongPlayer();
@@ -217,4 +239,5 @@ void close()
 	window = NULL;
 	renderer = NULL;
 	SDL_Quit();
+	exit(0);
 }
