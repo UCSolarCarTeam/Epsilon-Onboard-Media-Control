@@ -11,6 +11,7 @@ else
 	exit 0
 fi
 
+apt-get update
 #OpenCV	(grabbing camera frames)
 #ao.h 	(playing music)
 #mpg123 (loading music)
@@ -29,7 +30,7 @@ ls | grep SDL2 | sudo xargs rm -r
 wget https://www.libsdl.org/release/SDL2-2.0.3.tar.gz
 tar -xzvf SDL2-2.0.3.tar.gz
 cd SDL2-2.0.3
-./configure --host=armv71-raspberry-linux-gnueabihf
+./configure --host=armv71-raspberry-linux-gnueabihf --target=arm-raspberry-linux-gnueabihf --disable-video-opengl --disable-video-x11
 make -j4 
 make install -j4 
 cd ..
