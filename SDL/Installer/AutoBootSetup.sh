@@ -28,5 +28,9 @@ fi
 
 #Sets up Fastboot
 apt-get install systemd
-sudo sh -c 'echo -n "`cat /boot/cmdline.txt` init=/bin/systemd" > /boot/cmdline.txt'
-
+FASTBOOT=`cat /boot/cmdline.txt`
+SYSTEMSET=`echo $FASTBOOT | grep -o "systemd"`
+if [ -z $SYSTEMSET ]
+then
+sudo sh -c 'FASTBOOT=`cat /boot/cmdline.txt`; echo -n "$FASTBOOT init=/bin/systemd" > /boot/cmdline.txt'
+fi 
