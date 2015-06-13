@@ -75,7 +75,6 @@ screen = createMainScreen()
 #webcam = initiatePyCamera()
 webcam = initiatePyCamera()
 
-playMusic()
 endloop = 0
 
 while True:
