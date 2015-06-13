@@ -21,6 +21,9 @@ apt-get install libao-dev
 apt-get install g++
 apt-get install libmpg123-dev
 
+apt-get install libdbus-1-dev
+apt-get install libudev-dev
+
 #SDL stuff
 
 #removes all old folders of SDL2
