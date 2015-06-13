@@ -170,7 +170,7 @@ int show_Camera(IplImage* img)
  	}
  	
  	initSongPlayer();
- 	loadSong("assets/Polaris.mp3");
+ 	loadSong("Polaris.mp3");
  	playSong();
  	//songThread();
 
@@ -215,6 +215,14 @@ void processEvents()
 				 		 	printf("Esc was Pressed!\n");
 				 		 	signalToQuit();
 				 		 	close();
+							break;
+						case SDLK_LEFT:
+							printf("Left arrow was Pressed!\n");
+							previousSong();
+							break;
+						case SDLK_RIGHT:
+							printf("Right arrow was Pressed!\n");
+							nextSong();
 							break;
 			    	}
 	 		}
