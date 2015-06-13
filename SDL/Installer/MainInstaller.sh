@@ -11,18 +11,18 @@ else
 	exit 0
 fi
 
-apt-get update
+apt-get update --yes
 #OpenCV	(grabbing camera frames)
 #ao.h 	(playing music)
 #mpg123 (loading music)
 #g++ 	(compiling)
-apt-get install libopencv-dev
-apt-get install libao-dev
-apt-get install g++
-apt-get install libmpg123-dev
+apt-get install libopencv-dev --yes
+apt-get install libao-dev --yes
+apt-get install g++ --yes 
+apt-get install libmpg123-dev --yes
 
-apt-get install libdbus-1-dev
-apt-get install libudev-dev
+apt-get install libdbus-1-dev --yes
+apt-get install libudev-dev --yes
 
 #SDL stuff
 
