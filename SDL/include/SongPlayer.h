@@ -33,7 +33,7 @@
 	
 	void closeSongPlayer();
 
-	char* prependName(char* pathName, char* songName);
+	std::string currentSong();
 
 
 

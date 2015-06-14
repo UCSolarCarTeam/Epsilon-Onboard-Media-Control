@@ -39,7 +39,6 @@ void initSongPlayer()
 int loadSong(char* songName)
 {
 
-	char* pathWithSong = prependName("SongLibrary/",songName);
 
 	if(loaded){
 		freeMusic();
@@ -53,7 +52,7 @@ int loadSong(char* songName)
 	driver = ao_default_driver_id();
     mh = mpg123_new(NULL, &err);
 	// open the file and get the decoding format 
-	mpg123_open(mh, pathWithSong);
+	mpg123_open(mh, songName);
     mpg123_getformat(mh, &rate, &channels, &encoding); // error: Invalid UTF16 surrogate pair at 10 (0xff08). when running this line
     buffer_size = mpg123_outblock(mh);
     buffer = (unsigned char*) malloc(buffer_size * sizeof(unsigned char));
@@ -80,13 +79,19 @@ int pauseSong()
 int previousSong()
 {
 	pauseSong();
-	loadSong((char*)loader.previousSong()); 
+	loadSong((char*)loader.previousSong().c_str()); 
 	playSong();
 }
+
+std::string currentSong()
+{
+	return loader.currentSong();
+}
+
 int nextSong()
 {
 	pauseSong();
-	loadSong((char*)loader.nextSong());
+	loadSong((char*)loader.nextSong().c_str());
 	playSong();
 }
 
@@ -155,24 +160,4 @@ int songThread(void *data)
         		ao_play(dev, (char*)buffer, done);
 		}
 	}
-}
-
-char* prependName(char* pathName, char* songName)
-{
-	printf("OriginalName: %s\n",songName);
-	size_t OrigLen = strlen(songName);
-	printf("Length of the Original string is %d\n", OrigLen);
-
-	printf("Path is: %s\n", pathName);
-	size_t PathLen = strlen(pathName);
-	printf("Length of the Original string is %d\n", PathLen);
-
-	char* prependedSongName = new char[PathLen+OrigLen+1];
-	strcpy(prependedSongName+PathLen,songName);
-	for(int i = 0; i < PathLen; i++){
-		prependedSongName[i] = pathName[i];
-	}
-
-	printf("NewName:%s\n",prependedSongName);
-	return prependedSongName;
 }

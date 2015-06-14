@@ -13,6 +13,7 @@
 extern "C" {
 	#include <SDL.h>
 	#include <SDL_thread.h>
+	#include <SDL_ttf.h>
 }
 
 #include <iostream>
@@ -170,7 +171,8 @@ int show_Camera(IplImage* img)
  	}
  	
  	initSongPlayer();
- 	loadSong("Polaris.mp3");
+ 	loadSong((char *)currentSong().c_str());
+
  	playSong();
  	//songThread();
 

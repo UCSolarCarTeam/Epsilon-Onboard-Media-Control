@@ -33,7 +33,6 @@ int SongLoader::readSongNames()
 
 int SongLoader::shuffleSongNames()
 {
-    
     std::random_device rd;
     std::mt19937 g(rd());
     std::shuffle ( container.begin(), container.end(), g );
@@ -42,28 +41,35 @@ int SongLoader::shuffleSongNames()
 }
 
 
-const char* SongLoader::nextSong()
+std::string SongLoader::nextSong()
 {
     song++;
     CurrentSong=container[song];
     if(song>=(counter-1))
         shuffleSongNames();
-    
-    return CurrentSong.c_str();
+
+    return ("SongLibrary/" + CurrentSong);
 }
 
-const char* SongLoader::previousSong()
+std::string SongLoader::previousSong()
 {
     if(song<=0)
     {
         song=counter;
     }
     song--;
+
     CurrentSong=container[song];
 
-    return CurrentSong.c_str();
+    return ("SongLibrary/" + CurrentSong);
 }
 
+std::string SongLoader::currentSong()
+{
+	if (song == -1)
+		song++;
+	return ("SongLibrary/" + container[song]);
+}
 
 
 
