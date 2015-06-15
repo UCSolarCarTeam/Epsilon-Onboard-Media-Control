@@ -32,7 +32,7 @@ int SongLoader::readSongNames()
 }
 
 int SongLoader::shuffleSongNames()
-{
+{	printf("shuffled!");
     std::random_device rd;
     std::mt19937 g(rd());
     std::shuffle ( container.begin(), container.end(), g );

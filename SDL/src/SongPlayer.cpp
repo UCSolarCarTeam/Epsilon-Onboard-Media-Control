@@ -66,6 +66,9 @@ int loadSong(char* songName)
 
     // most important thing used in thread later
     dev = ao_open_live(driver, &format, NULL);
+   /* if (pathWithSong != NULL)
+		delete[] pathWithSong;
+	//pathWithSong = NULL;*/
 }
 
 int playSong()
@@ -158,6 +161,10 @@ int songThread(void *data)
 		{
 			if (mpg123_read(mh, buffer, buffer_size, &done) == MPG123_OK)
         		ao_play(dev, (char*)buffer, done);
+        	else
+				printf("not okay\n");
 		}
+		else
+			printf("Not playing!\n");
 	}
 }
