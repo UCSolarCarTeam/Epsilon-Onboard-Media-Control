@@ -4,6 +4,8 @@
 #include <mpg123.h>
 #include <string>
 #include "SongLoader.h"
+#include <cstring>
+#include <unistd.h>
 
 #define BITS 8
 

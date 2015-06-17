@@ -180,7 +180,6 @@ int show_Camera(IplImage* img)
  	SDLMusicThread = SDL_CreateThread(songThread, "Music Playing Thread", NULL);
 
 	int screenUpdate = 0;
-	int threadReturnValue;	
 
  	while (!quit)
  	{

@@ -1,7 +1,7 @@
 #include "SongPlayer.h"
 #include "SongLoader.h"
 
-#include <cstring>
+
 
 unsigned char *buffer;
 size_t buffer_size;
@@ -38,9 +38,10 @@ void initSongPlayer()
 //Will load the songName into buffer
 int loadSong(char* songName)
 {
-
+	printf("loadSong: Trying to load %s\n",songName);
 
 	if(loaded){
+		printf("loadSong: calling freeMusic()\n");
 		freeMusic();
 	}
 
@@ -69,6 +70,9 @@ int loadSong(char* songName)
    /* if (pathWithSong != NULL)
 		delete[] pathWithSong;
 	//pathWithSong = NULL;*/
+
+	loaded = true;
+	printf("loadSong: Loaded %s!\n",songName);
 }
 
 int playSong()
@@ -77,6 +81,7 @@ int playSong()
 }
 int pauseSong()
 {
+	printf("Called pauseSong\n");
 	playing = false; 
 }
 int previousSong()
@@ -153,18 +158,26 @@ void closeSongPlayer()
 */
 int songThread(void *data)
 {
+	usleep(1000);
     size_t done;
 
 	while (!quitSong)
 	{
 		if (playing)
 		{
-			if (mpg123_read(mh, buffer, buffer_size, &done) == MPG123_OK)
+			if (mpg123_read(mh, buffer, buffer_size, &done) == MPG123_OK){
         		ao_play(dev, (char*)buffer, done);
-        	else
+        		printf("playing~\n");
+			}else{
+        		usleep(100);
+        		pauseSong();
 				printf("not okay\n");
+			}
+
+
 		}
 		else
-			printf("Not playing!\n");
+			printf("Paused! (Seeing this should be fine, we added a usleep on pause()\n");
+			usleep(1000);
 	}
 }
