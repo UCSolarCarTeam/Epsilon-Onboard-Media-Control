@@ -76,18 +76,6 @@ int loadSong(char* songName)
 	loaded = true;
 	printf("loadSong: Loaded %s!\n",songName);
 }
-//don't need this anymore
-int playSong()
-{
-
-}
-//dont need this anymore
-int pauseSong()
-{
-	printf("Called pauseSong\n");
-
-}
-
 
 int previousSong()
 {
