@@ -1,19 +1,21 @@
 #include "SongPlayer.h"
 #include "SongLoader.h"
 
+	unsigned char *buffer;
+	size_t buffer_size;
 
+	bool loaded;
+	SongLoader loader;
+	mpg123_handle *mh;
+	ao_sample_format format;
+	ao_device *dev;
+	int channels, encoding;
+	long rate;
+	bool quitSong;
 
-unsigned char *buffer;
-size_t buffer_size;
-bool playing;
-bool loaded;
-SongLoader loader;
-mpg123_handle *mh;
-ao_sample_format format;
-ao_device *dev;
-int channels, encoding;
-long rate;
-bool quitSong;
+	//The Modes the songThread can be in.
+	enum threadMode { PLAY, NEXT, PREVIOUS, SHUFFLE };
+	threadMode mode = PLAY;
 
 void songQuit()
 {
@@ -23,7 +25,7 @@ void songQuit()
 void initSongPlayer()
 {
 	SongLoader loader(); 
-	playing = false;
+
 	loaded = false;
 	quitSong = false;
 	dev = NULL;
@@ -74,41 +76,39 @@ int loadSong(char* songName)
 	loaded = true;
 	printf("loadSong: Loaded %s!\n",songName);
 }
-
+//don't need this anymore
 int playSong()
 {
-	playing = true;
+
 }
+//dont need this anymore
 int pauseSong()
 {
 	printf("Called pauseSong\n");
-	playing = false; 
+
 }
+
+
 int previousSong()
 {
-	pauseSong();
-	loadSong((char*)loader.previousSong().c_str()); 
-	playSong();
+	mode = PREVIOUS;
 }
+
+int nextSong()
+{
+	mode = NEXT;
+}
+
 
 std::string currentSong()
 {
 	return loader.currentSong();
 }
 
-int nextSong()
-{
-	pauseSong();
-	loadSong((char*)loader.nextSong().c_str());
-	playSong();
-}
 
 int getCurrentTime()
 {
 	if(loaded){
-
-
-
 
 	} else {
 		return 1;
@@ -153,8 +153,6 @@ void closeSongPlayer()
 	-buffer, the buffer is re-created depending on the frame size of mh
 	-buffer_size is also changed according to frame size
 	-dev is re-created accorprependNameding to the song mh.  
-	-playing is going to be changed by pause() and play().
-
 */
 int songThread(void *data)
 {
@@ -163,21 +161,31 @@ int songThread(void *data)
 
 	while (!quitSong)
 	{
-		if (playing)
-		{
+
+		switch(mode){
+
+		case PLAY:
 			if (mpg123_read(mh, buffer, buffer_size, &done) == MPG123_OK){
         		ao_play(dev, (char*)buffer, done);
-        		printf("playing~\n");
-			}else{
-        		usleep(100);
-        		pauseSong();
-				printf("not okay\n");
-			}
+        	}
+        	break;
+
+        case NEXT:
+        	loadSong((char*)loader.nextSong().c_str());
+        	mode = PLAY;
+        	break;
+
+        case PREVIOUS:
+			loadSong((char*)loader.previousSong().c_str()); 
+			mode = PLAY;
+        	break;
+
+        case SHUFFLE:
+
+        	break;
+
 
 
 		}
-		else
-			printf("Paused! (Seeing this should be fine, we added a usleep on pause()\n");
-			usleep(1000);
 	}
 }

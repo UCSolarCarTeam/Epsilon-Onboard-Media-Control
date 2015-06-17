@@ -1,5 +1,6 @@
 #ifndef SONGPLAYER_H
 #define SONGPLAYER_H
+
 #include <ao/ao.h>
 #include <mpg123.h>
 #include <string>
@@ -10,6 +11,7 @@
 #define BITS 8
 
 //class SongPlayer{
+
 
 	void initSongPlayer();
 
@@ -36,6 +38,7 @@
 	void closeSongPlayer();
 
 	std::string currentSong();
+
 
 
 
