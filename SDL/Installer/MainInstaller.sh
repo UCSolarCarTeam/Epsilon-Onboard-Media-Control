@@ -20,6 +20,8 @@ apt-get install libopencv-dev --yes
 apt-get install libao-dev --yes
 apt-get install g++ --yes 
 apt-get install libmpg123-dev --yes
+apt-get install libasound2-dev --yes
+apt-get install libpulse-dev --yes
 
 apt-get install libdbus-1-dev --yes
 apt-get install libudev-dev --yes
@@ -55,6 +57,20 @@ cd SDL2_image-2.0.0
 make -j4 
 make install -j4 
 cd ..
+
+#SDL2_mixer
+wget https://www.libsdl.org/projects/SDL_mixer/release/SDL2_mixer-2.0.0.tar.gz
+tar -xzvf SDL2_mixer-2.0.0.tar.gz
+cd SDL2_mixer-2.0.0
+#SMPEG
+cd external/smpeg2-2.0.0
+./configure
+make -j4
+make install -j4
+cd ../..
+./configure
+make -j4
+make install -j4
 
 #WiringPi
 git clone git://git.drogon.net/wiringPi

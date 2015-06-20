@@ -14,6 +14,7 @@ extern "C" {
 	#include <SDL.h>
 	#include <SDL_thread.h>
 	#include <SDL_ttf.h>
+	#include <SDL_mixer.h>
 }
 
 #include <iostream>
@@ -154,6 +155,8 @@ int show_Camera(IplImage* img)
  * 
  * *********************************************************************/
  
+ Mix_Music *gMusic = NULL;
+ 
  int main(int argc, char* argv[])
  {
 	 
@@ -169,6 +172,17 @@ int show_Camera(IplImage* img)
  		printf("failed to load settings\n");
  		return -1;
  	}
+ 	
+ 	if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0)
+ 	{
+		printf("Error opening audio: %s\n", Mix_GetError());
+	}
+ 	
+ 	gMusic = Mix_LoadMUS("SongLibrary/Polaris.mp3");
+ 	if (gMusic == NULL)
+		printf("Error loading music: %s\n", Mix_GetError());
+		
+	Mix_PlayMusic(gMusic, -1);
  	
  	initSongPlayer();
  	loadSong((char *)currentSong().c_str());
@@ -240,6 +254,8 @@ void signalToQuit()
 /* Cleans up and should free everything used in the program*/
 void close()
 {
+	Mix_FreeMusic(gMusic);
+	Mix_CloseAudio();
 	closeSongPlayer();
 	SDL_DestroyRenderer(renderer);
 	SDL_DestroyWindow(window);
