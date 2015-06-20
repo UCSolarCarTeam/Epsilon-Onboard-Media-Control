@@ -184,12 +184,12 @@ int show_Camera(IplImage* img)
 		
 	Mix_PlayMusic(gMusic, -1);
  	
- 	initSongPlayer();
- 	loadSong((char *)currentSong().c_str());
+ 	//initSongPlayer();
+ 	//loadSong((char *)currentSong().c_str());
  	//songThread();
 
  	SDLCameraThread = SDL_CreateThread(cameraWorker, "Backup Camera Thread", NULL);
- 	SDLMusicThread = SDL_CreateThread(songThread, "Music Playing Thread", NULL);
+ 	//SDLMusicThread = SDL_CreateThread(songThread, "Music Playing Thread", NULL);
 
 	int screenUpdate = 0;
 
@@ -246,9 +246,9 @@ void processEvents()
 void signalToQuit()
 {
 	quit = true;
-	songQuit();	
+	//songQuit();	
 	SDL_WaitThread(SDLCameraThread, NULL);
-	SDL_WaitThread(SDLMusicThread, NULL);
+	//SDL_WaitThread(SDLMusicThread, NULL);
 }
 
 /* Cleans up and should free everything used in the program*/
@@ -256,7 +256,7 @@ void close()
 {
 	Mix_FreeMusic(gMusic);
 	Mix_CloseAudio();
-	closeSongPlayer();
+	//closeSongPlayer();
 	SDL_DestroyRenderer(renderer);
 	SDL_DestroyWindow(window);
 	window = NULL;
