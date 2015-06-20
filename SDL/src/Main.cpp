@@ -170,12 +170,14 @@ int show_Camera(IplImage* img)
  		return -1;
  	}
  	
+ 	/*
  	initSongPlayer();
  	loadSong((char *)currentSong().c_str());
- 	//songThread();
+ 	SDLMusicThread = SDL_CreateThread(songThread, "Music Playing Thread", NULL);
+	*/
 
  	SDLCameraThread = SDL_CreateThread(cameraWorker, "Backup Camera Thread", NULL);
- 	SDLMusicThread = SDL_CreateThread(songThread, "Music Playing Thread", NULL);
+ 	
 
 	int screenUpdate = 0;
 
@@ -215,6 +217,7 @@ void processEvents()
 				 		 	signalToQuit();
 				 		 	close();
 							break;
+						/*
 						case SDLK_LEFT:
 							printf("Left arrow was Pressed!\n");
 							previousSong();
@@ -223,6 +226,7 @@ void processEvents()
 							printf("Right arrow was Pressed!\n");
 							nextSong();
 							break;
+						*/
 			    	}
 	 		}
  		}
