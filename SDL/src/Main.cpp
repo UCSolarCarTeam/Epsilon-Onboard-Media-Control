@@ -172,8 +172,6 @@ int show_Camera(IplImage* img)
  	
  	initSongPlayer();
  	loadSong((char *)currentSong().c_str());
-
- 	playSong();
  	//songThread();
 
  	SDLCameraThread = SDL_CreateThread(cameraWorker, "Backup Camera Thread", NULL);
