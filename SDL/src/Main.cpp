@@ -2,7 +2,7 @@
 #include <cv.h>
 #include "opencv2/opencv.hpp"
 #include <SongLoader.h>
-#include "SongPlayer.h"
+//#include "SongPlayer.h"
 
 //for the rasperry pi
 #ifndef INT64_C

@@ -1,3 +1,10 @@
+/**
+This is now Deprecated. However it still should work if you get libao and mpg123. We are not using this anymore because
+SDL_mixer is part of SDL and has a pause/play, and volume controls. It also doesn't need to be threaded by us, the 
+programmers.
+*/
+
+
 #include "SongPlayer.h"
 #include "SongLoader.h"
 
