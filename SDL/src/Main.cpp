@@ -14,7 +14,7 @@ extern "C" {
 	#include <SDL.h>
 	#include <SDL_thread.h>
 	#include <SDL_ttf.h>
-	#include <SDL_mixer.h>
+	#include <SDL/SDL_mixer.h>
 }
 
 #include <iostream>
@@ -44,6 +44,7 @@ int cameraWorker(void* data);
 void processEvents();
 void signalToQuit();
 void close();
+void changeVolume(int changeOfVolume);
 
 IplImage threadImage1;
 bool updatedImage1 = false;
@@ -62,8 +63,9 @@ SDL_Thread* SDLCameraThread;
 SDL_Thread* SDLMusicThread;
 
 
-
+int volume = 10;
 int quit;
+Mix_Music *gMusic = NULL;
 
 /***********************************************************************
 /*							SDL functions 
@@ -150,15 +152,83 @@ int show_Camera(IplImage* img)
 		return 0;
 
 }
+ 
+void processEvents()
+{
+	SDL_Event event;
+ 		while (SDL_PollEvent(&event))
+ 		{
+	 		switch(event.type)
+	 		{
+	 			case SDL_QUIT:
+	 				printf("SDL_QUIT was called\n");
+	 				signalToQuit();
+	 				close();
+		 			break;
 
-/***********************************************************************
- * 
- * *********************************************************************/
- 
- Mix_Music *gMusic = NULL;
- 
- int main(int argc, char* argv[])
- {
+	 			case SDL_KEYDOWN:
+	 				switch(event.key.keysym.sym) 
+	 				{
+				 		case SDLK_ESCAPE: 
+				 		 	printf("Esc was Pressed!\n");
+				 		 	signalToQuit();
+				 		 	close();
+							break;
+						case SDLK_LEFT:
+							printf("Left arrow was Pressed!\n");
+							break;
+						case SDLK_RIGHT:
+							printf("Right arrow was Pressed!\n");
+							break;
+						case SDLK_UP:
+							changeVolume(8);
+							break;
+						case SDLK_DOWN:
+							changeVolume(-8);
+							break;
+			    	}
+	 		}
+ 		}
+}
+void changeVolume(int changeOfVolume)
+{
+	volume += changeOfVolume;
+	if (volume >= 120)
+		volume = 120;
+	if (volume <= 0)
+		volume = 0;
+	Mix_VolumeMusic(volume);
+
+	printf("Volume is currently %d\n", volume);
+
+
+}
+
+/* Signals all the threads to quit and then waits for the threads */
+void signalToQuit()
+{
+	quit = true;
+	//songQuit();	
+	SDL_WaitThread(SDLCameraThread, NULL);
+	//SDL_WaitThread(SDLMusicThread, NULL);
+}
+
+/* Cleans up and should free everything used in the program*/
+void close()
+{
+	Mix_FreeMusic(gMusic);
+	Mix_CloseAudio();
+	//closeSongPlayer();
+	SDL_DestroyRenderer(renderer);
+	SDL_DestroyWindow(window);
+	window = NULL;
+	renderer = NULL;
+	SDL_Quit();
+	exit(0);
+}
+
+int main(int argc, char* argv[])
+{
 	 
  	if (!init_SDL()){
  		fprintf(stderr, "Could not initialize SDL!\n");
@@ -183,6 +253,7 @@ int show_Camera(IplImage* img)
 		printf("Error loading music: %s\n", Mix_GetError());
 		
 	Mix_PlayMusic(gMusic, -1);
+	Mix_VolumeMusic(10);
  	
  	//initSongPlayer();
  	//loadSong((char *)currentSong().c_str());
@@ -206,61 +277,4 @@ int show_Camera(IplImage* img)
 	SDL_WaitThread(SDLCameraThread, NULL);
 	SDL_WaitThread(SDLMusicThread, NULL);
 	return 0;
-}
-
-void processEvents()
-{
-	SDL_Event event;
- 		while (SDL_PollEvent(&event))
- 		{
-	 		switch(event.type)
-	 		{
-	 			case SDL_QUIT:
-	 				printf("SDL_QUIT was called\n");
-	 				signalToQuit();
-	 				close();
-		 			break;
-
-	 			case SDL_KEYDOWN:
-	 				switch(event.key.keysym.sym) 
-	 				{
-				 		case SDLK_ESCAPE: 
-				 		 	printf("Esc was Pressed!\n");
-				 		 	signalToQuit();
-				 		 	close();
-							break;
-						case SDLK_LEFT:
-							printf("Left arrow was Pressed!\n");
-							previousSong();
-							break;
-						case SDLK_RIGHT:
-							printf("Right arrow was Pressed!\n");
-							nextSong();
-							break;
-			    	}
-	 		}
- 		}
-}
-
-/* Signals all the threads to quit and then waits for the threads */
-void signalToQuit()
-{
-	quit = true;
-	//songQuit();	
-	SDL_WaitThread(SDLCameraThread, NULL);
-	//SDL_WaitThread(SDLMusicThread, NULL);
-}
-
-/* Cleans up and should free everything used in the program*/
-void close()
-{
-	Mix_FreeMusic(gMusic);
-	Mix_CloseAudio();
-	//closeSongPlayer();
-	SDL_DestroyRenderer(renderer);
-	SDL_DestroyWindow(window);
-	window = NULL;
-	renderer = NULL;
-	SDL_Quit();
-	exit(0);
 }
