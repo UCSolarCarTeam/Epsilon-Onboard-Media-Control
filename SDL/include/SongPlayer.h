@@ -13,35 +13,28 @@
 //class SongPlayer{
 
 
+/*************Public Functions*************/	
 	void initSongPlayer();
+	void closeSongPlayer();
 
-	int playSong();
+	/*Song Control*/
 	int previousSong();
 	int nextSong(); 
-	int pauseSong();
+	int playPause();
 
+	/*For the time bar*/
 	int getCurrentTime();
 	int getSongLength();
+	std::string currentSong();
 	
-	/*For the time bar*/
-	int loadSong(char* songName);
+/*************Private Functions*************/	
 	int freeMusic();
-
-	/*Functions to change 'bool playing' to true or false*/
-	void startSong();
-	void stopSong();
+	int loadSong(char* songName);
 
 	/*The Thread*/
 	int songThread(void *data);
 	void songQuit();
 	
-	void closeSongPlayer();
-
-	std::string currentSong();
-
-
-
-
 //};
 
 

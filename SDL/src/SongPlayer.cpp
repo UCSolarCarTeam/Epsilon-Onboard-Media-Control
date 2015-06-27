@@ -21,7 +21,7 @@ programmers.
 	bool quitSong;
 
 	//The Modes the songThread can be in.
-	enum threadMode { PLAY, NEXT, PREVIOUS, SHUFFLE };
+	enum threadMode { PLAY, NEXT, PREVIOUS, SHUFFLE, PAUSE};
 	threadMode mode = PLAY;
 
 void songQuit()
@@ -92,6 +92,16 @@ int previousSong()
 int nextSong()
 {
 	mode = NEXT;
+}
+
+int playPause()
+{
+	if(mode == PAUSE)
+	{
+		mode = PLAY;
+	}else{
+		mode = PAUSE;
+	}
 }
 
 
@@ -179,6 +189,10 @@ int songThread(void *data)
 
         	break;
 
+        case PAUSE:
+        	//Keeps the thread looping every 0.2 seconds (So we don't kill CPU cycles on this thread)
+        	usleep(200000);
+        	break;
 
 
 		}

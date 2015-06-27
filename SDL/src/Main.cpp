@@ -189,6 +189,9 @@ void processEvents()
 						case SDLK_DOWN:
 							//changeVolume(-8);
 							break;
+						case SDLK_SPACE:
+							printf("Space was pressed!\n");
+							playPause();
 			    	}
 	 		}
  		}
@@ -262,6 +265,8 @@ int main(int argc, char* argv[])
  	SDLMusicThread = SDL_CreateThread(songThread, "Music Playing Thread", NULL);
 
 	int screenUpdate = 0;
+
+	system("echo \"hello\" $USER");
 
  	while (!quit)
  	{
