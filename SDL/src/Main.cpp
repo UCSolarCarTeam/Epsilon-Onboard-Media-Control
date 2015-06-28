@@ -184,10 +184,10 @@ void processEvents()
 							nextSong();
 							break;
 						case SDLK_UP:
-							//changeVolume(8);
+							changeVolume(0.1);
 							break;
 						case SDLK_DOWN:
-							//changeVolume(-8);
+							changeVolume(-0.1);
 							break;
 						case SDLK_SPACE:
 							printf("Space was pressed!\n");

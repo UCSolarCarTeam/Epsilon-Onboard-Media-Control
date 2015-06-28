@@ -29,6 +29,11 @@ void songQuit()
 	quitSong = true;
 }
 
+void changeVolume(double change)
+{
+	mpg123_volume_change(mh, change);
+}
+
 void initSongPlayer()
 {
 	SongLoader loader(); 

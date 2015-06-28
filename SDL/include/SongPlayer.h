@@ -21,6 +21,7 @@
 	int previousSong();
 	int nextSong(); 
 	int playPause();
+	void changeVolume(double change);
 
 	/*For the time bar*/
 	int getCurrentTime();
