@@ -195,8 +195,7 @@ void processEvents()
 void signalToQuit()
 {
 	quit = true;
-	SDL_WaitThread(SDLCameraThread, NULL);
-	SDL_WaitThread(SDLMusicThread, NULL);
+	songQuit();
 }
 
 /* Cleans up and should free everything used in the program*/
