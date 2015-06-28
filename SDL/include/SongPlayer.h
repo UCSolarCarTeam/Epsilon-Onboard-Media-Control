@@ -10,9 +10,6 @@
 
 #define BITS 8
 
-//class SongPlayer{
-
-
 /*************Public Functions*************/	
 	void initSongPlayer();
 	void closeSongPlayer();
@@ -24,8 +21,8 @@
 	void changeVolume(double change);
 
 	/*For the time bar*/
-	int getCurrentTime();
-	int getSongLength();
+	double getCurrentTime();
+	double getSongLength();
 	std::string currentSong();
 	
 /*************Private Functions*************/	
@@ -36,9 +33,5 @@
 	int songThread(void *data);
 	void songQuit();
 	
-//};
-
-
-
 #endif /* SONGPLAYER_H */
 

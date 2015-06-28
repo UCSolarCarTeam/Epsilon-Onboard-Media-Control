@@ -3,7 +3,6 @@
 #include "opencv2/opencv.hpp"
 #include <SongLoader.h>
 #include <SongPlayer.h>
-//#include "SongPlayer.h"
 
 //for the rasperry pi
 #ifndef INT64_C
@@ -15,7 +14,6 @@ extern "C" {
 	#include <SDL.h>
 	#include <SDL_thread.h>
 	#include <SDL_ttf.h>
-	//#include <SDL_mixer.h>
 }
 
 #include <iostream>
@@ -31,7 +29,6 @@ extern "C" {
 	#define RUNNINGONPI
 	#endif
 	#include <wiringPi.h>
-	//printf("Running on the Pi!\n");
 #endif
 
 using namespace cv;
@@ -45,7 +42,6 @@ int cameraWorker(void* data);
 void processEvents();
 void signalToQuit();
 void close();
-//void changeVolume(int changeOfVolume);
 
 IplImage threadImage1;
 bool updatedImage1 = false;
@@ -63,10 +59,7 @@ int cameraWidth;
 SDL_Thread* SDLCameraThread;
 SDL_Thread* SDLMusicThread;
 
-
-int volume = 10;
 int quit;
-//Mix_Music *gMusic = NULL;
 
 /***********************************************************************
 /*							SDL functions 
@@ -196,35 +189,20 @@ void processEvents()
 	 		}
  		}
 }
-// void changeVolume(int changeOfVolume)
-// {
-// 	volume += changeOfVolume;
-// 	if (volume >= 120)
-// 		volume = 120;
-// 	if (volume <= 0)
-// 		volume = 0;
-// 	Mix_VolumeMusic(volume);
 
-// 	printf("Volume is currently %d\n", volume);
-
-
-// }
 
 /* Signals all the threads to quit and then waits for the threads */
 void signalToQuit()
 {
 	quit = true;
-	//songQuit();	
 	SDL_WaitThread(SDLCameraThread, NULL);
-	//SDL_WaitThread(SDLMusicThread, NULL);
+	SDL_WaitThread(SDLMusicThread, NULL);
 }
 
 /* Cleans up and should free everything used in the program*/
 void close()
 {
-	//Mix_FreeMusic(gMusic);
-	//Mix_CloseAudio();
-	//closeSongPlayer();
+	closeSongPlayer();
 	SDL_DestroyRenderer(renderer);
 	SDL_DestroyWindow(window);
 	window = NULL;
@@ -248,15 +226,6 @@ int main(int argc, char* argv[])
  		printf("failed to load settings\n");
  		return -1;
  	}
- 	
- // 	if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0)
- // 	{
-	// 	printf("Error opening audio: %s\n", Mix_GetError());
-	// }
- 	
- 	// gMusic = Mix_LoadMUS("SongLibrary/AARollingInTheDeep.mp3");
- 	// if (gMusic == NULL)
-		// printf("Error loading music: %s\n", Mix_GetError());
 		
  	initSongPlayer();
  	loadSong((char *)currentSong().c_str());
@@ -274,7 +243,9 @@ int main(int argc, char* argv[])
 		screenUpdate = show_Camera(&threadImage1);
 		processEvents();
 		if (screenUpdate == 1){
+			SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
 			SDL_RenderPresent(renderer);
+			SDL_RenderClear(renderer);
 		}
 	}
 

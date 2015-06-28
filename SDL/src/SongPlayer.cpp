@@ -1,10 +1,3 @@
-/**
-This is now Deprecated. However it still should work if you get libao and mpg123. We are not using this anymore because
-SDL_mixer is part of SDL and has a pause/play, and volume controls. It also doesn't need to be threaded by us, the 
-programmers.
-*/
-
-
 #include "SongPlayer.h"
 #include "SongLoader.h"
 
@@ -31,7 +24,10 @@ void songQuit()
 
 void changeVolume(double change)
 {
-	mpg123_volume_change(mh, change);
+	double a, b, c;
+	mpg123_getvolume(mh, &a, &b, &c);
+	if ( a < 2.0 || change < 0)
+		mpg123_volume_change(mh, change);
 }
 
 void initSongPlayer()
@@ -59,9 +55,6 @@ int loadSong(char* songName)
 		freeMusic();
 	}
 
-    //unsigned char *buffer;
-    //size_t buffer_size;
-
 	int driver;
 	int err;
 	driver = ao_default_driver_id();
@@ -81,9 +74,6 @@ int loadSong(char* songName)
 
     // most important thing used in thread later
     dev = ao_open_live(driver, &format, NULL);
-   /* if (pathWithSong != NULL)
-		delete[] pathWithSong;
-	//pathWithSong = NULL;*/
 
 	loaded = true;
 	printf("loadSong: Loaded %s!\n",songName);
@@ -116,26 +106,33 @@ std::string currentSong()
 }
 
 
-int getCurrentTime()
+double getCurrentTime()
 {
 	if(loaded){
+		off_t length;
+		double times;
+		int timem;
+        length = mpg123_tell(mh);
+        times = (double)(length/rate)/60;
+        timem = times;         				
+		times = (times - (double)timem) * 60;
+		return timem + times/100;
 
 	} else {
 		return 1;
 	}
 }
-int getSongLength()
+double getSongLength()
 {
 	if(loaded){
  		off_t length;
  		double times;
  		int timem;
- 		mpg123_scan(mh);
  		length = mpg123_length(mh);
 		times = (double)(length/rate)/60; //time in minutes.minutes (e.g 5.3 minutes)
 		timem = times;         				 	//time in minutes (5)
 		times = (times - (double)timem) * 60; //time in seconds (.3*60)
-		return timem+times/10; 
+		return timem+times/100; 
 	} else {
 		return -1;
 	}
@@ -178,6 +175,19 @@ int songThread(void *data)
 			if (mpg123_read(mh, buffer, buffer_size, &done) == MPG123_OK){
         		ao_play(dev, (char*)buffer, done);
         	}
+        	
+        	// stuff for testing
+        	double time, sec;
+        	int min;
+        	time = getCurrentTime();
+        	min = (int)time;
+        	time -= min;
+        	sec = (time*100);
+        	printf("%d:%02.0lf\n", min, sec);
+        	//
+        	
+        	if (getCurrentTime() >= getSongLength())
+				mode = NEXT;
         	break;
 
         case NEXT:
