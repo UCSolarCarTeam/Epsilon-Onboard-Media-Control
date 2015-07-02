@@ -183,7 +183,7 @@ int songThread(void *data)
         	min = (int)time;
         	time -= min;
         	sec = (time*100);
-        	printf("%d:%02.0lf\n", min, sec);
+        	//printf("%d:%02.0lf\n", min, sec);
         	//
         	
         	if (getCurrentTime() >= getSongLength())

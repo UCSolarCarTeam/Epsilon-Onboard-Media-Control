@@ -55,10 +55,9 @@ std::string SongLoader::previousSong()
 {
     if(song<=0)
     {
-        song=counter;
+        song=counter-1;
     }
     song--;
-
     CurrentSong=container[song];
 
     return ("SongLibrary/" + CurrentSong);
