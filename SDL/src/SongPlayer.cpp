@@ -49,6 +49,10 @@ void initSongPlayer()
 int loadSong(char* songName)
 {
 	printf("loadSong: Trying to load %s\n",songName);
+	if (NULL == songName || 0 == strcmp("", songName))
+	{
+	    return -1;
+	}
 
 	if(loaded){
 		printf("loadSong: calling freeMusic()\n");
@@ -77,6 +81,7 @@ int loadSong(char* songName)
 
 	loaded = true;
 	printf("loadSong: Loaded %s!\n",songName);
+	return 0;
 }
 
 int previousSong()

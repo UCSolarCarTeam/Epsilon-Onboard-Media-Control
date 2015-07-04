@@ -212,6 +212,7 @@ void close()
 
 int main(int argc, char* argv[])
 {
+	int noSongs;
 	 
  	if (!init_SDL()){
  		fprintf(stderr, "Could not initialize SDL!\n");
@@ -227,14 +228,13 @@ int main(int argc, char* argv[])
  	}
 		
  	initSongPlayer();
- 	loadSong((char *)currentSong().c_str());
+ 	noSongs = loadSong((char *)currentSong().c_str());
 
  	SDLCameraThread = SDL_CreateThread(cameraWorker, "Backup Camera Thread", NULL);
- 	SDLMusicThread = SDL_CreateThread(songThread, "Music Playing Thread", NULL);
+ 	if (!noSongs)
+ 	    SDLMusicThread = SDL_CreateThread(songThread, "Music Playing Thread", NULL);
 
 	int screenUpdate = 0;
-
-	system("echo \"hello\" $USER");
 
  	while (!quit)
  	{
@@ -249,6 +249,7 @@ int main(int argc, char* argv[])
 	}
 
 	SDL_WaitThread(SDLCameraThread, NULL);
-	SDL_WaitThread(SDLMusicThread, NULL);
+	if (!noSongs)
+	    SDL_WaitThread(SDLMusicThread, NULL);
 	return 0;
 }
