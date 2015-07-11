@@ -258,11 +258,12 @@ int main(int argc, char* argv[])
  	    SDLMusicThread = SDL_CreateThread(songThread, "Music Playing Thread", NULL);
 
 	int screenUpdate = 0;
-
+    int w, h;
  	while (!quit)
  	{
- 		
-		screenUpdate = show_Camera();
+        SDL_GetWindowSize(window, &w, &h);
+        printf("%d %d\n", w, h);
+        screenUpdate = show_Camera();
 		processEvents();
 		if (screenUpdate == 1){
 			SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
