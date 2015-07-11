@@ -43,8 +43,11 @@ void processEvents();
 void signalToQuit();
 void close();
 
+//attempting double buffer
 IplImage threadImage1;
-bool updatedImage1 = false;
+IplImage threadImage2;
+bool updatedImage = false;
+int bufferNumber = 1;
 
 VideoCapture cap(0);
 
@@ -55,6 +58,7 @@ SDL_Window* window = NULL;
 SDL_Rect videoRect;
 int cameraHeight;
 int cameraWidth;
+int noSongs;
 
 SDL_Thread* SDLCameraThread;
 SDL_Thread* SDLMusicThread;
@@ -114,18 +118,31 @@ int cameraWorker(void* data)
 	while (!quit)
 	{
 		cap >> frame;
-		threadImage1 = frame;
-		updatedImage1 = true;
+		if(bufferNumber == 1){
+			threadImage2 = frame;
+			bufferNumber = 2;
+		} else {
+			threadImage1 = frame;
+			bufferNumber = 1;
+		}
+		updatedImage = true;
 	}
 	return 0;
 }
 
 
 // Shows an individual frame of the supplied video
-int show_Camera(IplImage* img)
+int show_Camera()
 {		
-	if(updatedImage1 == true)
+	IplImage* img = NULL;
+	if(updatedImage == true)
 	{
+		updatedImage = false;
+		if(bufferNumber == 1){
+			 img = &threadImage1;
+		} else {
+			 img = &threadImage2;
+		}
 		SDL_Surface* surface = SDL_CreateRGBSurfaceFrom((void*)img->imageData,
 			img->width,
 			img->height,
@@ -133,7 +150,7 @@ int show_Camera(IplImage* img)
 			img->widthStep,
 			0xff0000, 0x00ff00, 0x0000ff, 0
 			);
-		updatedImage1 = false;
+		
 
 		SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
 		SDL_FreeSurface(surface);
@@ -212,7 +229,7 @@ void close()
 
 int main(int argc, char* argv[])
 {
-	int noSongs;
+	
 	 
  	if (!init_SDL()){
  		fprintf(stderr, "Could not initialize SDL!\n");
@@ -239,7 +256,7 @@ int main(int argc, char* argv[])
  	while (!quit)
  	{
  		
-		screenUpdate = show_Camera(&threadImage1);
+		screenUpdate = show_Camera();
 		processEvents();
 		if (screenUpdate == 1){
 			SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
