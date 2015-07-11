@@ -101,11 +101,13 @@ bool init_SDL()
 
 bool init_CameraSettings()
 {
+    int w, h;
 	bool success = true;
+    SDL_GetWindowSize(window, &w, &h);
 	videoRect.x = 0;
 	videoRect.y = 0;
-	videoRect.w = 1280;	//640 not actually sure why we have this
-	videoRect.h = 720;	//480
+	videoRect.w = w;	//640 not actually sure why we have this
+	videoRect.h = h-50;	//change 50 to whatever height we want for the PI cam
 
 	cameraWidth = cap.get(CV_CAP_PROP_FRAME_WIDTH);
 	cameraHeight = cap.get(CV_CAP_PROP_FRAME_HEIGHT);
@@ -258,11 +260,9 @@ int main(int argc, char* argv[])
  	    SDLMusicThread = SDL_CreateThread(songThread, "Music Playing Thread", NULL);
 
 	int screenUpdate = 0;
-    int w, h;
+
  	while (!quit)
  	{
-        SDL_GetWindowSize(window, &w, &h);
-        printf("%d %d\n", w, h);
         screenUpdate = show_Camera();
 		processEvents();
 		if (screenUpdate == 1){
