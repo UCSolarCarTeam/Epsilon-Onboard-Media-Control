@@ -46,6 +46,7 @@ void close();
 //attempting double buffer
 IplImage threadImage1;
 IplImage threadImage2;
+IplImage threadImage3;
 bool updatedImage = false;
 int bufferNumber = 1;
 
@@ -121,6 +122,9 @@ int cameraWorker(void* data)
 		if(bufferNumber == 1){
 			threadImage2 = frame;
 			bufferNumber = 2;
+		} else if (bufferNumber == 2){
+			threadImage3 = frame;
+			bufferNumber = 3;
 		} else {
 			threadImage1 = frame;
 			bufferNumber = 1;
@@ -139,9 +143,11 @@ int show_Camera()
 	{
 		updatedImage = false;
 		if(bufferNumber == 1){
-			 img = &threadImage1;
+			img = &threadImage1;
+		} else if (bufferNumber == 2){
+			img = &threadImage2;
 		} else {
-			 img = &threadImage2;
+			img = &threadImage3;
 		}
 		SDL_Surface* surface = SDL_CreateRGBSurfaceFrom((void*)img->imageData,
 			img->width,
