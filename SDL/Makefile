@@ -1,4 +1,4 @@
-#OBJS = files to compile 
+#OBJS = files to compile
 OBJS = src/Main.cpp src/SongLoader.cpp src/SongPlayer.cpp
 
 #CC = compiler used
@@ -11,14 +11,14 @@ LINK_FLAGS = `sdl2-config --cflags` `sdl2-config --libs` `pkg-config opencv --cf
 
 
 #OUTPUT_NAME = final name
-OUTPUT_NAME = main
+OUTPUT_NAME = BackupCamera
 
 #INCLUDE FLAGS
 INCLUDE_FLAGS = -Ilib -Iinclude
 
-all : 
+all :
 	 $(CC) $(OBJS) $(INCLUDE_FLAGS) $(LINK_FLAGS) $(COMPILE_FLAGS)  -o $(OUTPUT_NAME)
 
 clean :
-	rm main
+	rm BackupCamera
 

@@ -10,28 +10,28 @@
 
 #define BITS 8
 
-/*************Public Functions*************/	
-	void initSongPlayer();
-	void closeSongPlayer();
+/*************Public Functions*************/
+    void initSongPlayer();
+    void closeSongPlayer();
 
-	/*Song Control*/
-	int previousSong();
-	int nextSong(); 
-	int playPause();
-	void changeVolume(double change);
+    /*Song Control*/
+    int previousSong();
+    int nextSong();
+    int playPause();
+    void changeVolume(double change);
 
-	/*For the time bar*/
-	double getCurrentTime();
-	double getSongLength();
-	std::string currentSong();
-	
-/*************Private Functions*************/	
-	int freeMusic();
-	int loadSong(char* songName);
+    /*For the time bar*/
+    double getCurrentTime();
+    double getSongLength();
+    std::string currentSong();
 
-	/*The Thread*/
-	int songThread(void *data);
-	void songQuit();
-	
+/*************Private Functions*************/
+    int freeMusic();
+    int loadSong(char* songName);
+
+    /*The Thread*/
+    int songThread(void *data);
+    void songQuit();
+
 #endif /* SONGPLAYER_H */
 
