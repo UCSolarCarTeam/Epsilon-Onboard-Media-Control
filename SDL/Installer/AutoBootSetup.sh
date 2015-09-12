@@ -19,7 +19,7 @@ echo "filecontents = $FILECONTENTS"
 if [ -z $FILECONTENTS ]
 then
         echo "Setting up AutoLaunch"
-        sudo sh -c 'CAMERAPATH=`pwd`; echo "@$CAMERAPATH/main" >> /etc/xdg/lxsession/LXDE-pi/autostart'
+        sudo sh -c 'CAMERAPATH=`pwd`; echo "@$CAMERAPATH/BackupCamera" >> /etc/xdg/lxsession/LXDE-pi/autostart'
 else
         echo "Autolaunch already set up!"
 fi
