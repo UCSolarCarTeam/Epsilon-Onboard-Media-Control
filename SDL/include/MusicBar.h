@@ -7,17 +7,19 @@
 #include <string>
 #include <SDL2/SDL.h>
 #include <stdio.h>
+
 #include <cstdlib>
 
 
 class MusicBar
 {
-   
+    SDL_Surface* surface;
     void drawSongName();
     
 public:
     MusicBar();
 
+    SDL_Surface* returnMusicBar();
 
 };
 

@@ -5,10 +5,12 @@
 //std::string songName;
 
 MusicBar::MusicBar()
-{
-
-std::string songName = currentSong();
-printf("Song Name is:%s!!!\n",songName.c_str());
+{ 
+    std::string songName = currentSong();
+    printf("Song name is: %s\n",songName.c_str());
+    surface = SDL_CreateRGBSurface(0, 240, 240, 32, 0, 0, 0, 0);
+    
+    SDL_FillRect(surface, NULL, SDL_MapRGB(surface->format,255,0,0));
 }
 //void MusicBar::drawSongName()
 //{ 
@@ -24,6 +26,10 @@ printf("Song Name is:%s!!!\n",songName.c_str());
 //}
 // void MusicBar::MusicBar()
 //
+SDL_Surface* MusicBar::returnMusicBar()
+{
+    return surface;
+}
 
 
 
