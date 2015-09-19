@@ -3,6 +3,7 @@
 #include "opencv2/opencv.hpp"
 #include <SongLoader.h>
 #include <SongPlayer.h>
+#include <MusicBar.h>
 
 //for the rasperry pi
 #ifndef INT64_C
@@ -246,6 +247,8 @@ void close()
 
 int main(int argc, char* argv[])
 {
+    printf("Creating Gordons thing!\n");
+    MusicBar gordonMusic = MusicBar();
     if (!init_SDL())
     {
         fprintf(stderr, "Could not initialize SDL!\n");
@@ -268,17 +271,6 @@ int main(int argc, char* argv[])
     SDLCameraThread = SDL_CreateThread(cameraWorker, "Backup Camera Thread", NULL);
     int screenUpdate = 0;
 
-    SDL_Rect musicBar;
-    musicBar.x = 0;
-    musicBar.y = 730;
-    musicBar.h = 30;
-    musicBar.w = 1232;
-    
-    SDL_Rect insideBar;
-    insideBar.x = 1;
-    insideBar.y = 731;
-    insideBar.h = 28;
-    insideBar.w = 1230;
 
     while (!quit)
     {
@@ -286,10 +278,6 @@ int main(int argc, char* argv[])
         processEvents();
         if (screenUpdate == 1)
         {
-            SDL_SetRenderDrawColor(renderer, 255, 255, 255, 0);
-            SDL_RenderDrawRect(renderer, &musicBar);
-            SDL_SetRenderDrawColor(renderer, 122, 122, 122, 0);
-            SDL_RenderFillRect(renderer, &insideBar);
             SDL_RenderPresent(renderer);
             SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
             SDL_RenderClear(renderer);

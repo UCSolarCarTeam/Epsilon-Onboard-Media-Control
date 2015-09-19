@@ -8,7 +8,7 @@ MusicBar::MusicBar()
 {
 
 std::string songName = currentSong();
-printf("%s\n",songName.c_str());
+printf("Song Name is:%s!!!\n",songName.c_str());
 }
 //void MusicBar::drawSongName()
 //{ 
