@@ -23,6 +23,7 @@
     /*For the time bar*/
     double getCurrentTime();
     double getSongLength();
+    double getVolume();
     std::string currentSong();
 
 /*************Private Functions*************/

@@ -24,10 +24,18 @@ void songQuit()
 
 void changeVolume(double change)
 {
-    double a, b, c;
-    mpg123_getvolume(mh, &a, &b, &c);
-    if ( a < 2.0 || change < 0)
+    double baseVolume, realVolume, decibels;
+    mpg123_getvolume(mh, &baseVolume, &realVolume, &decibels);
+    if ( baseVolume < 2.0 || change < 0)
         mpg123_volume_change(mh, change);
+}
+
+/** Max Volume is 2.0 **/
+double getVolume()
+{
+    double baseVolume, realVolume, decibels;
+    mpg123_getvolume(mh, &baseVolume, &realVolume, &decibels);
+    return baseVolume
 }
 
 void initSongPlayer()
@@ -83,7 +91,6 @@ int loadSong(char* songName)
     printf("loadSong: Loaded %s!\n",songName);
     return 0;
 }
-
 int previousSong()
 {
     mode = PREVIOUS;
