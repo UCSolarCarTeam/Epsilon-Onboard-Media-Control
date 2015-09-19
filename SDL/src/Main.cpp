@@ -56,6 +56,7 @@ SDL_Renderer* renderer = NULL;
 SDL_Window* window = NULL;
 
 SDL_Rect videoRect;
+SDL_Rect musicBarRect;
 int cameraHeight;
 int cameraWidth;
 int noSongs;
@@ -113,6 +114,11 @@ bool init_CameraSettings()
     videoRect.y = 0;
     videoRect.w = w;
     videoRect.h = h-50; //change 50 to whatever height we want for the PI cam
+
+    musicBarRect.x = 0;
+    musicBarRect.y = h-49;
+    musicBarRect.w = w; 
+    musicBarRect.h = 49;
     cameraWidth = cap.get(CV_CAP_PROP_FRAME_WIDTH);
     cameraHeight = cap.get(CV_CAP_PROP_FRAME_HEIGHT);
     printf("Camera Width %d, Camera Height %d \n",cameraWidth,cameraHeight);
@@ -278,6 +284,11 @@ int main(int argc, char* argv[])
         processEvents();
         if (screenUpdate == 1)
         {
+            SDL_Surface* surfaceBar;
+            surfaceBar = gordonMusic.returnMusicBar();
+            SDL_RendererFlip flip = SDL_FLIP_HORIZONTAL;
+            SDL_Texture* textureMusicBar = SDL_CreateTextureFromSurface(renderer, surfaceBar);
+            SDL_RenderCopyEx(renderer, textureMusicBar, NULL, &musicBarRect ,0, NULL, flip);
             SDL_RenderPresent(renderer);
             SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
             SDL_RenderClear(renderer);
