@@ -35,7 +35,7 @@ double getVolume()
 {
     double baseVolume, realVolume, decibels;
     mpg123_getvolume(mh, &baseVolume, &realVolume, &decibels);
-    return baseVolume
+    return baseVolume;
 }
 
 void initSongPlayer()
