@@ -112,10 +112,8 @@ bool init_CameraSettings()
     videoRect.y = 0;
     videoRect.w = w;
     videoRect.h = h-50; //change 50 to whatever height we want for the PI cam
-
     cameraWidth = cap.get(CV_CAP_PROP_FRAME_WIDTH);
     cameraHeight = cap.get(CV_CAP_PROP_FRAME_HEIGHT);
-
     printf("Camera Width %d, Camera Height %d \n",cameraWidth,cameraHeight);
     return success;
 }
@@ -172,8 +170,6 @@ int show_Camera()
             img->widthStep,
             0xff0000, 0x00ff00, 0x0000ff, 0
             );
-
-
         SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
         SDL_FreeSurface(surface);
         surface = NULL;
@@ -182,7 +178,6 @@ int show_Camera()
         SDL_DestroyTexture(texture);
         return 1;
     }
-
     return 0;
 }
 
@@ -251,8 +246,6 @@ void close()
 
 int main(int argc, char* argv[])
 {
-
-
     if (!init_SDL())
     {
         fprintf(stderr, "Could not initialize SDL!\n");
@@ -268,15 +261,24 @@ int main(int argc, char* argv[])
         fprintf(stderr, "Failed to load settings!\n");
         return -1;
     }
-
     initSongPlayer();
     noSongs = loadSong((char *)currentSong().c_str());
-
-    SDLCameraThread = SDL_CreateThread(cameraWorker, "Backup Camera Thread", NULL);
     if (!noSongs)
         SDLMusicThread = SDL_CreateThread(songThread, "Music Playing Thread", NULL);
-
+    SDLCameraThread = SDL_CreateThread(cameraWorker, "Backup Camera Thread", NULL);
     int screenUpdate = 0;
+
+    SDL_Rect musicBar;
+    musicBar.x = 0;
+    musicBar.y = 730;
+    musicBar.h = 30;
+    musicBar.w = 1232;
+    
+    SDL_Rect insideBar;
+    insideBar.x = 1;
+    insideBar.y = 731;
+    insideBar.h = 28;
+    insideBar.w = 1230;
 
     while (!quit)
     {
@@ -284,12 +286,15 @@ int main(int argc, char* argv[])
         processEvents();
         if (screenUpdate == 1)
         {
-            SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
+            SDL_SetRenderDrawColor(renderer, 255, 255, 255, 0);
+            SDL_RenderDrawRect(renderer, &musicBar);
+            SDL_SetRenderDrawColor(renderer, 122, 122, 122, 0);
+            SDL_RenderFillRect(renderer, &insideBar);
             SDL_RenderPresent(renderer);
+            SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
             SDL_RenderClear(renderer);
         }
     }
-
     SDL_WaitThread(SDLCameraThread, NULL);
     if (!noSongs)
         SDL_WaitThread(SDLMusicThread, NULL);
