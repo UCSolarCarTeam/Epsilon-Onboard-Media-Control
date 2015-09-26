@@ -6,6 +6,7 @@ SongLoader::SongLoader()
     counter=0;
     song=-1;
     readSongNames();
+    shuffleSongNames();
 }
 
 int SongLoader::readSongNames()
