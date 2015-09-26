@@ -64,6 +64,7 @@ SDL_Thread* SDLCameraThread;
 
 int quit;
 
+SongPlayer musicPlayer;
 /***********************************************************************
 /*                          SDL functions
 /***********************************************************************/
@@ -186,7 +187,7 @@ int show_Camera()
     return 0;
 }
 
-void processEvents(SongPlayer eventMusicPlayer)
+void processEvents()
 {
     SDL_Event event;
         while (SDL_PollEvent(&event))
@@ -196,9 +197,6 @@ void processEvents(SongPlayer eventMusicPlayer)
                 case SDL_QUIT:
                     printf("SDL_QUIT was called\n");
                     signalToQuit();
-                    //music player quits should be put into the close() function later
-                    eventMusicPlayer.songQuit();
-                    eventMusicPlayer.closeSongPlayer();
                     close();
                     break;
 
@@ -212,21 +210,21 @@ void processEvents(SongPlayer eventMusicPlayer)
                             break;
                         case SDLK_LEFT:
                             printf("Left arrow was Pressed!\n");
-                            eventMusicPlayer.previousSong();
+                            musicPlayer.previousSong();
                             break;
                         case SDLK_RIGHT:
                             printf("Right arrow was Pressed!\n");
-                            eventMusicPlayer.nextSong();
+                            musicPlayer.nextSong();
                             break;
                         case SDLK_UP:
-                            eventMusicPlayer.changeVolume(0.1);
+                            musicPlayer.changeVolume(0.1);
                             break;
                         case SDLK_DOWN:
-                            eventMusicPlayer.changeVolume(-0.1);
+                            musicPlayer.changeVolume(-0.1);
                             break;
                         case SDLK_SPACE:
                             printf("Space was pressed!\n");
-                            eventMusicPlayer.playPause();
+                            musicPlayer.playPause();
                     }
             }
         }
@@ -237,11 +235,13 @@ void processEvents(SongPlayer eventMusicPlayer)
 void signalToQuit()
 {
     quit = true;
+    musicPlayer.songQuit();
 }
 
 /* Cleans up and should free everything used in the program*/
 void close()
 {
+    musicPlayer.closeSongPlayer();
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
     window = NULL;
@@ -252,7 +252,6 @@ void close()
 
 int main(int argc, char* argv[])
 {
-    bool WaitForMusicThread;
     if (!init_SDL())
     {
         fprintf(stderr, "Could not initialize SDL!\n");
@@ -265,26 +264,33 @@ int main(int argc, char* argv[])
     }
     if (!init_CameraSettings())
     {
-        fprintf(stderr, "Failed to load settings!\n");
+        printf("Failed to load settings!\n");
+        
         return -1;
     }
-    SongPlayer musicPlayer;
-    if(!musicPlayer.initSongPlayer())
+
+    if (musicPlayer.initSongPlayer())
     {
-        fprintf(stderr, "No Music Library");
-        WaitForMusicThread = false;
-    } else {
+        fprintf(stderr, "No SongLibrary Folder! Not creating Music Thread!\n");
+    }
+    else 
+    {
         musicPlayer.StartInternalThread();
-        WaitForMusicThread = true;
     }
 
+    //initSongPlayer();
+    //noSongs = loadSong((char *)currentSong().c_str());
+
     SDLCameraThread = SDL_CreateThread(cameraWorker, "Backup Camera Thread", NULL);
+    //if (!noSongs)
+        //SDLMusicThread = SDL_CreateThread(songThread, "Music Playing Thread", NULL);
+
     int screenUpdate = 0;
 
     while (!quit)
     {
         screenUpdate = show_Camera();
-        processEvents(musicPlayer);
+        processEvents();
         if (screenUpdate == 1)
         {
             SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
@@ -292,8 +298,8 @@ int main(int argc, char* argv[])
             SDL_RenderClear(renderer);
         }
     }
-    if (WaitForMusicThread)
-        musicPlayer.WaitForInternalThreadToExit();
+
+    musicPlayer.WaitForInternalThreadToExit();
     SDL_WaitThread(SDLCameraThread, NULL);
     return 0;
 }

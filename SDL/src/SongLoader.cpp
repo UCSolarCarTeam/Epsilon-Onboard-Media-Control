@@ -32,12 +32,11 @@ int SongLoader::readSongNames()
             }
 
         }
-    } 
-    else 
-    { 
+    }
+    else
+    {
         return 1;
     }
-
 
     return 0;
 }
