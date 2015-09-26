@@ -105,7 +105,7 @@ const char * xtime = sTime.c_str();
     //text = TTF_RenderText_Shaded(font, "Text", text_color, text_color2);
     time = TTF_RenderText_Solid(font, xtime, text_color);
     
-    SDL_RenderDrawLine
+
     //SDL_Rect textLocation = {0, 25, 0, 0};
     
     // Apply the text to surface
@@ -115,27 +115,8 @@ const char * xtime = sTime.c_str();
    printf("Time is: %s\n",sTime.c_str());
 }
 
-MusicBar::drawVolumeBar()
-{
-    // Initalize SDL_ttf Library
-    if (TTF_Init() !=0)
-    {
-        std::cerr << "TTF_Init Failed" << TTF_GetError() << std::endl;
-        SDL_Quit();
-        exit(1);
-    }
-
-    // Loads a Font
-    TTF_Font *font;
-    font = TTF_OpenFont("/home/gordon/Documents/SolarCar/Schulich-Delta-OnBoard-Media-Control/SDL/src/FreeSans.ttf", 12);
-    if (font == NULL)
-    {
-        std::cerr << "TTF_OpenFont Failed" << TTF_GetError << std::endl;
-        TTF_Quit();
-        SDL_Quit();
-        exit(1);
-    }
-}
+//MusicBar::drawVolumeBar()
+    
 
 //MusicBar::Update()
 
