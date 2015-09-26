@@ -15,10 +15,9 @@ class MusicBar
 {
     SDL_Surface* surface;
     void drawSongName();
-    
+    void drawTime();  
 public:
     MusicBar();
-
     SDL_Surface* returnMusicBar();
 
 };

@@ -82,7 +82,7 @@ bool init_SDL()
     }
     else
     {
-        window = SDL_CreateWindow("Video Application", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_FULLSCREEN);
+        window = SDL_CreateWindow("Video Application", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, 0);
         if (window == NULL)
         {
             printf("Window could not be created! SDL Error: %s\n", SDL_GetError());
@@ -286,7 +286,7 @@ int main(int argc, char* argv[])
         {
             SDL_Surface* surfaceBar;
             surfaceBar = gordonMusic.returnMusicBar();
-            SDL_RendererFlip flip = SDL_FLIP_HORIZONTAL;
+            SDL_RendererFlip flip = SDL_FLIP_NONE;
             SDL_Texture* textureMusicBar = SDL_CreateTextureFromSurface(renderer, surfaceBar);
             SDL_RenderCopyEx(renderer, textureMusicBar, NULL, &musicBarRect ,0, NULL, flip);
             SDL_RenderPresent(renderer);
