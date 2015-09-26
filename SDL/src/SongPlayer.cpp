@@ -2,6 +2,27 @@
 #include "SongLoader.h"
 
 
+SongPlayer::SongPlayer()
+{
+}
+
+int SongPlayer::initSongPlayer()
+{
+    SongLoader loader();
+    if(!loader.currentSong())
+    {
+        return 1;
+    }
+    loaded = false;
+    quitSong = false;
+    dev = NULL;
+    mh = NULL;
+    buffer = NULL;
+    ao_initialize();
+    mpg123_init();
+    return 0
+}
+
 void SongPlayer::songQuit()
 {
     quitSong = true;
@@ -23,20 +44,6 @@ double SongPlayer::getVolume()
     return baseVolume;
 }
 
-SongPlayer::SongPlayer()
-{
-    SongLoader loader();
-
-    loaded = false;
-    quitSong = false;
-    dev = NULL;
-    mh = NULL;
-    buffer = NULL;
-
-    ao_initialize();
-
-    mpg123_init();
-}
 
 //Will load the songName into buffer
 int SongPlayer::loadSong(char* songName)

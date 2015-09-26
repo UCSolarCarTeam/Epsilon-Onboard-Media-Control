@@ -18,7 +18,7 @@ class SongPlayer : public MyThreadClass
     public:
         SongPlayer();
 
-        void initSongPlayer();
+        int initSongPlayer();
         void closeSongPlayer();
 
         /*Song Control*/

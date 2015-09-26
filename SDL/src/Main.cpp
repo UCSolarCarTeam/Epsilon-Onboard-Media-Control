@@ -64,7 +64,6 @@ SDL_Thread* SDLCameraThread;
 
 int quit;
 
-SongPlayer musicPlayer;
 /***********************************************************************
 /*                          SDL functions
 /***********************************************************************/
@@ -252,6 +251,7 @@ void close()
 
 int main(int argc, char* argv[])
 {
+    bool WaitForMusicThread;
     if (!init_SDL())
     {
         fprintf(stderr, "Could not initialize SDL!\n");
@@ -267,9 +267,20 @@ int main(int argc, char* argv[])
         fprintf(stderr, "Failed to load settings!\n");
         return -1;
     }
-
     printf("Creating Music Thread");
-    musicPlayer.StartInternalThread();
+    SongPlayer musicPlayer
+    
+    if(!musicPlayer.initSongPlayer())
+    {
+        fprintf(stderr, "No Music Library")
+        WaitForMusicThread = false;
+    } else {
+        musicPlayer.StartInternalThread();
+        WaitForMusicThread = true;
+    }
+
+
+
     printf("Got here!\n");
 
     //initSongPlayer();
@@ -292,8 +303,8 @@ int main(int argc, char* argv[])
             SDL_RenderClear(renderer);
         }
     }
-
-    musicPlayer.WaitForInternalThreadToExit();
+    if (WaitForMusicThread)
+        musicPlayer.WaitForInternalThreadToExit();
     SDL_WaitThread(SDLCameraThread, NULL);
     return 0;
 }
