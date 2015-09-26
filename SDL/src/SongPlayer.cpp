@@ -8,8 +8,8 @@ SongPlayer::SongPlayer()
 
 int SongPlayer::initSongPlayer()
 {
-    SongLoader loader();
-    if(!loader.currentSong())
+    SongLoader loader;
+    if(!loader.libraryLoad())
     {
         return 1;
     }
@@ -20,7 +20,7 @@ int SongPlayer::initSongPlayer()
     buffer = NULL;
     ao_initialize();
     mpg123_init();
-    return 0
+    return 0;
 }
 
 void SongPlayer::songQuit()

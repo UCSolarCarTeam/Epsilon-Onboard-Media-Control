@@ -186,7 +186,7 @@ int show_Camera()
     return 0;
 }
 
-void processEvents()
+void processEvents(SongPlayer eventMusicPlayer)
 {
     SDL_Event event;
         while (SDL_PollEvent(&event))
@@ -196,6 +196,9 @@ void processEvents()
                 case SDL_QUIT:
                     printf("SDL_QUIT was called\n");
                     signalToQuit();
+                    //music player quits should be put into the close() function later
+                    eventMusicPlayer.songQuit();
+                    eventMusicPlayer.closeSongPlayer();
                     close();
                     break;
 
@@ -209,21 +212,21 @@ void processEvents()
                             break;
                         case SDLK_LEFT:
                             printf("Left arrow was Pressed!\n");
-                            musicPlayer.previousSong();
+                            eventMusicPlayer.previousSong();
                             break;
                         case SDLK_RIGHT:
                             printf("Right arrow was Pressed!\n");
-                            musicPlayer.nextSong();
+                            eventMusicPlayer.nextSong();
                             break;
                         case SDLK_UP:
-                            musicPlayer.changeVolume(0.1);
+                            eventMusicPlayer.changeVolume(0.1);
                             break;
                         case SDLK_DOWN:
-                            musicPlayer.changeVolume(-0.1);
+                            eventMusicPlayer.changeVolume(-0.1);
                             break;
                         case SDLK_SPACE:
                             printf("Space was pressed!\n");
-                            musicPlayer.playPause();
+                            eventMusicPlayer.playPause();
                     }
             }
         }
@@ -234,13 +237,11 @@ void processEvents()
 void signalToQuit()
 {
     quit = true;
-    musicPlayer.songQuit();
 }
 
 /* Cleans up and should free everything used in the program*/
 void close()
 {
-    musicPlayer.closeSongPlayer();
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
     window = NULL;
@@ -267,35 +268,23 @@ int main(int argc, char* argv[])
         fprintf(stderr, "Failed to load settings!\n");
         return -1;
     }
-    printf("Creating Music Thread");
-    SongPlayer musicPlayer
-    
+    SongPlayer musicPlayer;
     if(!musicPlayer.initSongPlayer())
     {
-        fprintf(stderr, "No Music Library")
+        fprintf(stderr, "No Music Library");
         WaitForMusicThread = false;
     } else {
         musicPlayer.StartInternalThread();
         WaitForMusicThread = true;
     }
 
-
-
-    printf("Got here!\n");
-
-    //initSongPlayer();
-    //noSongs = loadSong((char *)currentSong().c_str());
-
     SDLCameraThread = SDL_CreateThread(cameraWorker, "Backup Camera Thread", NULL);
-    //if (!noSongs)
-        //SDLMusicThread = SDL_CreateThread(songThread, "Music Playing Thread", NULL);
-
     int screenUpdate = 0;
 
     while (!quit)
     {
         screenUpdate = show_Camera();
-        processEvents();
+        processEvents(musicPlayer);
         if (screenUpdate == 1)
         {
             SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
