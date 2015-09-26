@@ -1,13 +1,13 @@
 #OBJS = files to compile
-OBJS = src/Main.cpp src/SongLoader.cpp src/SongPlayer.cpp
+OBJS = src/Main.cpp src/SongLoader.cpp src/SongPlayer.cpp include/threadClass.hpp
 
 #CC = compiler used
 CC = g++
 
 #COMPLIE_FLAGS = additional flags
-COMPILE_FLAGS = -w -g -std=c++0x -O3
+COMPILE_FLAGS = -w -g -std=c++11
 
-LINK_FLAGS = `sdl2-config --cflags` `sdl2-config --libs` `pkg-config opencv --cflags` `pkg-config opencv --libs` -lSDL2_image -lSDL2_ttf -ltiff -lao -lmpg123
+LINK_FLAGS = `sdl2-config --cflags` `sdl2-config --libs` `pkg-config opencv --cflags` `pkg-config opencv --libs` -lSDL2_image -lSDL2_ttf -lSDL2_mixer -ltiff -lao -lmpg123 -pthread
 
 
 #OUTPUT_NAME = final name
@@ -17,7 +17,7 @@ OUTPUT_NAME = BackupCamera
 INCLUDE_FLAGS = -Ilib -Iinclude
 
 all :
-	 $(CC) $(OBJS) $(INCLUDE_FLAGS) $(LINK_FLAGS) $(COMPILE_FLAGS)  -o $(OUTPUT_NAME)
+	 $(CC) $(OBJS) $(INCLUDE_FLAGS) $(LINK_FLAGS) $(COMPILE_FLAGS) -o $(OUTPUT_NAME) -pthread
 
 clean :
 	rm BackupCamera
