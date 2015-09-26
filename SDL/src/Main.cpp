@@ -149,9 +149,9 @@ int cameraWorker(void* data)
 // Shows an individual frame of the supplied video
 int show_Camera()
 {
-    IplImage* img = NULL;
     if(updatedImage == true)
     {
+        IplImage* img = NULL;
         updatedImage = false;
         if(bufferNumber == 1)
         {

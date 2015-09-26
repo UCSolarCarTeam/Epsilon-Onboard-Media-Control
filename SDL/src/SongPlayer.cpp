@@ -131,7 +131,7 @@ double getCurrentTime()
         times = (double)(length/rate)/60;
         timem = times;
         times = (times - (double)timem) * 60;
-        return timem + times/100;
+        return timem*60 + times;
 
     }
     else
@@ -150,7 +150,7 @@ double getSongLength()
         times = (double)(length/rate)/60; //time in minutes.minutes (e.g 5.3 minutes)
         timem = times;                          //time in minutes (5)
         times = (times - (double)timem) * 60; //time in seconds (.3*60)
-        return timem+times/100;
+        return timem*60+times;
     }
     else
     {
