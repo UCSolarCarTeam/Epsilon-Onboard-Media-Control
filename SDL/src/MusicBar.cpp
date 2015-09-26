@@ -11,6 +11,7 @@ MusicBar::MusicBar()
     SDL_FillRect(surface, NULL, SDL_MapRGB(surface->format,255,0,0));
  
     drawSongName();
+
     drawTime();
     
 }
@@ -27,7 +28,7 @@ void MusicBar::drawSongName()
 
     // Loads a Font
     TTF_Font *font;
-    font = TTF_OpenFont("/home/gordon/Documents/SolarCar/Schulich-Delta-OnBoard-Media-Control/SDL/src/FreeSans.ttf", 12);
+    font = TTF_OpenFont("src/FreeSans.ttf", 12);
     if (font == NULL)
     {
         std::cerr << "TTF_OpenFont Failed" << TTF_GetError << std::endl;
