@@ -67,7 +67,7 @@ SDL_Thread* SDLCameraThread;
 int quit;
 
 SongPlayer musicPlayer;
-MusicBar gordonMusic(musicPlayer);
+MusicBar gordonMusic(&musicPlayer);
 /***********************************************************************
 /*                          SDL functions
 /***********************************************************************/
@@ -298,6 +298,7 @@ int main(int argc, char* argv[])
         if (screenUpdate == 1)
         {
             SDL_Surface* surfaceBar;
+            gordonMusic.update();
             surfaceBar = gordonMusic.returnMusicBar();
             SDL_RendererFlip flip = SDL_FLIP_NONE;
             SDL_Texture* textureMusicBar = SDL_CreateTextureFromSurface(renderer, surfaceBar);

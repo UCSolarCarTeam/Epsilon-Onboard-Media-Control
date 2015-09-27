@@ -1,6 +1,6 @@
 #include "MusicBar.h"
 
-MusicBar::MusicBar(SongPlayer songPlayer)
+MusicBar::MusicBar(SongPlayer *songPlayer)
 {
     mPlayer = songPlayer;
     int musicBarSurfaceWidth = 1080;
@@ -8,9 +8,6 @@ MusicBar::MusicBar(SongPlayer songPlayer)
     surface = SDL_CreateRGBSurface(0, musicBarSurfaceWidth, musicBarSurfaceHeight, 32, 0, 0, 0, 0);
     SDL_FillRect(surface, NULL, SDL_MapRGB(surface->format,255,0,0));
  
-    drawSongName();
-
-    drawTime();
     
 }
 
@@ -39,7 +36,7 @@ void MusicBar::drawSongName()
 {
    
     // Gets current song and converts to char
-    std::string songName = mPlayer.currentSong();
+    std::string songName = mPlayer->currentSong();
     // std::size_t pos = str.find(".mp3")
     int stringLength = songName.length();
     //std::cout << stringLength;
@@ -71,39 +68,43 @@ void MusicBar::drawTime()
 {
 
 
-//double songTime = 8;
-double songTime = mPlayer.getCurrentTime();
-//double songTime = getSongLength();
-printf("The time is %lf \n", songTime);
-std::string sTime;
-std::stringstream convert;
-convert << songTime;
-sTime = convert.str();
-const char * xtime = sTime.c_str();
+    //double songTime = 8;
+    double songTime = mPlayer->getCurrentTime();
+    //double songTime = getSongLength();
+    printf("The time is %lf \n", songTime);
+    std::string sTime;
+    std::stringstream convert;
+    convert << songTime;
+    sTime = convert.str();
+    const char * xtime = sTime.c_str();
 
 
     // Write text to surface
     SDL_Surface *time;
     SDL_Color text_color = {255, 255, 255};
     //SDL_Color text_color2 = {0, 0, 0};
-    
+
     //text = TTF_RenderText_Shaded(font, "Text", text_color, text_color2);
     time = TTF_RenderText_Solid(font, xtime, text_color);
-    
+
 
     //SDL_Rect textLocation = {0, 25, 0, 0};
-    
+
     // Apply the text to surface
     SDL_BlitSurface(time, NULL, surface, NULL );
 
 
-   printf("Time is: %s\n",sTime.c_str());
+    printf("Time is: %s\n",sTime.c_str());
 }
 
 //MusicBar::drawVolumeBar()
     
 
-//MusicBar::Update()
+void MusicBar::update()
+{
+    drawSongName();
+    drawTime();
+}
 
 SDL_Surface* MusicBar::returnMusicBar()
 {

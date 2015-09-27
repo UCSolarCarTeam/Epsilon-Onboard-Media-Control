@@ -20,10 +20,11 @@ class MusicBar
     void drawTime();  
     TTF_Font *font;
     int init();
-    SongPlayer mPlayer;
+    SongPlayer *mPlayer;
 
 public:
-    MusicBar(SongPlayer);
+    void update();
+    MusicBar(SongPlayer *songPlayer);
     SDL_Surface* returnMusicBar();
 
 };
