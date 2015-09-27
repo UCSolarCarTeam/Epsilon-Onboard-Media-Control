@@ -1,10 +1,8 @@
 #include "MusicBar.h"
-#include <SDL_ttf.h>
-#include <iostream>
-#include <sstream>
 
-MusicBar::MusicBar()
+MusicBar::MusicBar(SongPlayer songPlayer)
 {
+    mPlayer = songPlayer;
     int musicBarSurfaceWidth = 1080;
     int musicBarSurfaceHeight = 32;
     surface = SDL_CreateRGBSurface(0, musicBarSurfaceWidth, musicBarSurfaceHeight, 32, 0, 0, 0, 0);
@@ -16,7 +14,7 @@ MusicBar::MusicBar()
     
 }
 
-void MusicBar::drawSongName()
+int MusicBar::init()
 {
     // Initalize SDL_ttf Library
     if (TTF_Init() !=0)
@@ -27,7 +25,6 @@ void MusicBar::drawSongName()
     }
 
     // Loads a Font
-    TTF_Font *font;
     font = TTF_OpenFont("src/FreeSans.ttf", 12);
     if (font == NULL)
     {
@@ -36,9 +33,13 @@ void MusicBar::drawSongName()
         SDL_Quit();
         exit(1);
     }
+}
+
+void MusicBar::drawSongName()
+{
    
     // Gets current song and converts to char
-    std::string songName = currentSong();
+    std::string songName = mPlayer.currentSong();
     // std::size_t pos = str.find(".mp3")
     int stringLength = songName.length();
     //std::cout << stringLength;
@@ -68,27 +69,10 @@ void MusicBar::drawSongName()
 
 void MusicBar::drawTime()
 {
-    // Initalize SDL_ttf Library
-    if (TTF_Init() !=0)
-    {
-        std::cerr << "TTF_Init Failed" << TTF_GetError() << std::endl;
-        SDL_Quit();
-        exit(1);
-    }
 
-    // Loads a Font
-    TTF_Font *font;
-    font = TTF_OpenFont("/home/gordon/Documents/SolarCar/Schulich-Delta-OnBoard-Media-Control/SDL/src/FreeSans.ttf", 12);
-    if (font == NULL)
-    {
-        std::cerr << "TTF_OpenFont Failed" << TTF_GetError << std::endl;
-        TTF_Quit();
-        SDL_Quit();
-        exit(1);
-    }
 
 //double songTime = 8;
-double songTime = getCurrentTime();
+double songTime = mPlayer.getCurrentTime();
 //double songTime = getSongLength();
 printf("The time is %lf \n", songTime);
 std::string sTime;

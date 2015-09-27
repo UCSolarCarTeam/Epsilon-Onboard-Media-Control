@@ -5,8 +5,13 @@ SongLoader::SongLoader()
 {
     counter=0;
     song=-1;
-    readSongNames();
+    noLibrary = readSongNames();
     shuffleSongNames();
+}
+
+int SongLoader::libraryLoad()
+{
+    return noLibrary;
 }
 
 int SongLoader::readSongNames()
@@ -27,6 +32,10 @@ int SongLoader::readSongNames()
             }
 
         }
+    }
+    else
+    {
+        return 1;
     }
 
     return 0;

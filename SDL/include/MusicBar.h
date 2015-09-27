@@ -7,7 +7,9 @@
 #include <string>
 #include <SDL2/SDL.h>
 #include <stdio.h>
-
+#include <SDL_ttf.h>
+#include <iostream>
+#include <sstream>
 #include <cstdlib>
 
 
@@ -16,8 +18,12 @@ class MusicBar
     SDL_Surface* surface;
     void drawSongName();
     void drawTime();  
+    TTF_Font *font;
+    int init();
+    SongPlayer mPlayer;
+
 public:
-    MusicBar();
+    MusicBar(SongPlayer);
     SDL_Surface* returnMusicBar();
 
 };
