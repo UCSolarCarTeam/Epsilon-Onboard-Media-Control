@@ -7,6 +7,7 @@ MusicBar::MusicBar(SongPlayer *songPlayer)
     int musicBarSurfaceHeight = 32;
     surface = SDL_CreateRGBSurface(0, musicBarSurfaceWidth, musicBarSurfaceHeight, 32, 0, 0, 0, 0);
     SDL_FillRect(surface, NULL, SDL_MapRGB(surface->format,255,0,0));
+    init();
  
     
 }
@@ -102,6 +103,7 @@ void MusicBar::drawTime()
 
 void MusicBar::update()
 {
+    SDL_FillRect(surface, NULL, SDL_MapRGB(surface->format,255,0,0));
     drawSongName();
     drawTime();
 }
