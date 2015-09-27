@@ -1,28 +1,18 @@
 #include "SongPlayer.h"
 #include "SongLoader.h"
 
-unsigned char *buffer;
-size_t buffer_size;
 
-bool loaded;
-SongLoader loader;
-mpg123_handle *mh;
-ao_sample_format format;
-ao_device *dev;
-int channels, encoding;
-long rate;
-bool quitSong;
-
-//The Modes the songThread can be in.
-enum threadMode { PLAY, NEXT, PREVIOUS, SHUFFLE, PAUSE};
-threadMode mode = PLAY;
-
-void songQuit()
+void SongPlayer::songQuit()
 {
     quitSong = true;
 }
 
-void changeVolume(double change)
+int SongPlayer::initSongPlayer()
+{
+    return loader.libraryLoad();
+}
+
+void SongPlayer::changeVolume(double change)
 {
     double baseVolume, realVolume, decibels;
     mpg123_getvolume(mh, &baseVolume, &realVolume, &decibels);
@@ -31,14 +21,14 @@ void changeVolume(double change)
 }
 
 /** Max Volume is 2.0 **/
-double getVolume()
+double SongPlayer::getVolume()
 {
     double baseVolume, realVolume, decibels;
     mpg123_getvolume(mh, &baseVolume, &realVolume, &decibels);
     return baseVolume;
 }
 
-void initSongPlayer()
+SongPlayer::SongPlayer()
 {
     SongLoader loader();
 
@@ -54,7 +44,7 @@ void initSongPlayer()
 }
 
 //Will load the songName into buffer
-int loadSong(char* songName)
+int SongPlayer::loadSong(char* songName)
 {
     printf("loadSong: Trying to load %s\n",songName);
     if (NULL == songName || 0 == strcmp("", songName))
@@ -91,17 +81,17 @@ int loadSong(char* songName)
     printf("loadSong: Loaded %s!\n",songName);
     return 0;
 }
-int previousSong()
+int SongPlayer::previousSong()
 {
     mode = PREVIOUS;
 }
 
-int nextSong()
+int SongPlayer::nextSong()
 {
     mode = NEXT;
 }
 
-int playPause()
+int SongPlayer::playPause()
 {
     if(mode == PAUSE)
     {
@@ -114,13 +104,13 @@ int playPause()
 }
 
 
-std::string currentSong()
+std::string SongPlayer::currentSong()
 {
     return loader.currentSong();
 }
 
 
-double getCurrentTime()
+double SongPlayer::getCurrentTime()
 {
     if(loaded)
     {
@@ -139,7 +129,7 @@ double getCurrentTime()
         return 1;
     }
 }
-double getSongLength()
+double SongPlayer::getSongLength()
 {
     if(loaded)
     {
@@ -158,7 +148,7 @@ double getSongLength()
     }
 }
 
-int freeMusic()
+int SongPlayer::freeMusic()
 {
     free(buffer);
     ao_close(dev);
@@ -166,7 +156,7 @@ int freeMusic()
     mpg123_delete(mh);
 }
 
-void closeSongPlayer()
+void SongPlayer::closeSongPlayer()
 {
     freeMusic();
     ao_shutdown();
@@ -181,7 +171,7 @@ void closeSongPlayer()
     -buffer_size is also changed according to frame size
     -dev is re-created accorprependNameding to the song mh.
 */
-int songThread(void *data)
+void SongPlayer::InternalThreadEntry()
 {
     usleep(1000);
     size_t done;

@@ -12,13 +12,14 @@
 
 class SongLoader
 {
-    int counter,song;
+    int counter, song, noLibrary; 
     std::vector<std::string> container;
     std::string CurrentSong;
     int readSongNames(); //Read all the songs in the directory
 
 public:
     SongLoader();
+    int libraryLoad();
     int shuffleSongNames(); //Shuffle all the songs in the directory
     std::string nextSong(); //Returns Next song
     std::string previousSong(); //Returns Last song

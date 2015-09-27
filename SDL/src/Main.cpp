@@ -4,6 +4,7 @@
 #include <SongLoader.h>
 #include <SongPlayer.h>
 
+
 //for the rasperry pi
 #ifndef INT64_C
 #define INT64_C(c) (c ## LL)
@@ -60,10 +61,10 @@ int cameraWidth;
 int noSongs;
 
 SDL_Thread* SDLCameraThread;
-SDL_Thread* SDLMusicThread;
 
 int quit;
 
+SongPlayer musicPlayer;
 /***********************************************************************
 /*                          SDL functions
 /***********************************************************************/
@@ -209,21 +210,21 @@ void processEvents()
                             break;
                         case SDLK_LEFT:
                             printf("Left arrow was Pressed!\n");
-                            previousSong();
+                            musicPlayer.previousSong();
                             break;
                         case SDLK_RIGHT:
                             printf("Right arrow was Pressed!\n");
-                            nextSong();
+                            musicPlayer.nextSong();
                             break;
                         case SDLK_UP:
-                            changeVolume(0.1);
+                            musicPlayer.changeVolume(0.1);
                             break;
                         case SDLK_DOWN:
-                            changeVolume(-0.1);
+                            musicPlayer.changeVolume(-0.1);
                             break;
                         case SDLK_SPACE:
                             printf("Space was pressed!\n");
-                            playPause();
+                            musicPlayer.playPause();
                     }
             }
         }
@@ -234,13 +235,13 @@ void processEvents()
 void signalToQuit()
 {
     quit = true;
-    songQuit();
+    musicPlayer.songQuit();
 }
 
 /* Cleans up and should free everything used in the program*/
 void close()
 {
-    closeSongPlayer();
+    musicPlayer.closeSongPlayer();
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
     window = NULL;
@@ -251,8 +252,6 @@ void close()
 
 int main(int argc, char* argv[])
 {
-
-
     if (!init_SDL())
     {
         fprintf(stderr, "Could not initialize SDL!\n");
@@ -265,16 +264,26 @@ int main(int argc, char* argv[])
     }
     if (!init_CameraSettings())
     {
-        fprintf(stderr, "Failed to load settings!\n");
+        printf("Failed to load settings!\n");
+        
         return -1;
     }
 
-    initSongPlayer();
-    noSongs = loadSong((char *)currentSong().c_str());
+    if (musicPlayer.initSongPlayer())
+    {
+        fprintf(stderr, "No SongLibrary Folder! Not creating Music Thread!\n");
+    }
+    else 
+    {
+        musicPlayer.StartInternalThread();
+    }
+
+    //initSongPlayer();
+    //noSongs = loadSong((char *)currentSong().c_str());
 
     SDLCameraThread = SDL_CreateThread(cameraWorker, "Backup Camera Thread", NULL);
-    if (!noSongs)
-        SDLMusicThread = SDL_CreateThread(songThread, "Music Playing Thread", NULL);
+    //if (!noSongs)
+        //SDLMusicThread = SDL_CreateThread(songThread, "Music Playing Thread", NULL);
 
     int screenUpdate = 0;
 
@@ -290,8 +299,7 @@ int main(int argc, char* argv[])
         }
     }
 
+    musicPlayer.WaitForInternalThreadToExit();
     SDL_WaitThread(SDLCameraThread, NULL);
-    if (!noSongs)
-        SDL_WaitThread(SDLMusicThread, NULL);
     return 0;
 }
