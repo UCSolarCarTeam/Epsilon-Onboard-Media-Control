@@ -3,57 +3,57 @@
 
 VideoStream::VideoStream()
 {
-    bufferNumber = 1; 
-    updatedImage = false;
+    m_bufferNumber = 1; 
+    m_updateImage = false;
 
 }
 
 void VideoStream::signalToQuit()
 {
-    quit = 1;
+    m_quit = true;
 }
 
 
 void VideoStream::InternalThreadEntry()
 {
     VideoCapture cap(0);
-    while (!quit)
+    while (!m_quit)
     {
-        cap >> frame;
-        switch(bufferNumber)
+        cap >> m_frame;
+        switch(m_bufferNumber)
         {
             case 1:
-                threadImage2 = frame;
-                bufferNumber = 2;
+                m_threadImage2 = m_frame;
+                m_bufferNumber = 2;
                 break;
             case 2:
-                threadImage3 = frame;
-                bufferNumber = 3;
+                m_threadImage3 = m_frame;
+                m_bufferNumber = 3;
                 break;
             case 3:
-                threadImage1 = frame;
-                bufferNumber = 1;
+                m_threadImage1 = m_frame;
+                m_bufferNumber = 1;
                 break;
         }
-        updatedImage = true;
+        m_updateImage = true;
     }
 }
 
 bool VideoStream::imageReady()
 {
-    return updatedImage;
+    return m_updateImage;
 }
 
 IplImage *VideoStream::getFrame()
 {
-    updatedImage = false;
-    switch(bufferNumber)
+    m_updateImage = false;
+    switch(m_bufferNumber)
     {
         case 1:
-            return &threadImage1;
+            return &m_threadImage1;
         case 2:
-            return &threadImage2;
+            return &m_threadImage2;
         case 3:
-            return &threadImage3;
+            return &m_threadImage3;
     }
 }

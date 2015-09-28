@@ -12,7 +12,6 @@
 #endif
 extern "C" {
     #include <SDL.h>
-//    #include <SDL_thread.h>
     #include <SDL_ttf.h>
 }
 #include <iostream>

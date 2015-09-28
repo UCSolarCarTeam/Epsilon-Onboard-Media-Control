@@ -1,5 +1,6 @@
 #ifndef VIDEOSTREAM_H
 #define VIDEOSTREAM_H 
+
 #include "threadClass.hpp"
 #include <cv.h>
 #include "opencv2/opencv.hpp"
@@ -19,13 +20,13 @@ class VideoStream : public MyThreadClass
         void InternalThreadEntry();
 
     private:
-        Mat frame;
-        bool updatedImage;
-        int bufferNumber;
-        IplImage threadImage1;
-        IplImage threadImage2;
-        IplImage threadImage3;
-        int quit;
+        Mat m_frame;
+        bool m_updateImage;
+        int m_bufferNumber;
+        IplImage m_threadImage1;
+        IplImage m_threadImage2;
+        IplImage m_threadImage3;
+        bool m_quit;
 
 };
 
