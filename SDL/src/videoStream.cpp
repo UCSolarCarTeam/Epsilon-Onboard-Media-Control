@@ -1,5 +1,6 @@
 #include "videoStream.hpp"
 
+
 VideoStream::VideoStream()
 {
     bufferNumber = 1; 
@@ -15,6 +16,7 @@ void VideoStream::signalToQuit()
 
 void VideoStream::InternalThreadEntry()
 {
+    VideoCapture cap(0);
     while (!quit)
     {
         cap >> frame;
@@ -35,7 +37,6 @@ void VideoStream::InternalThreadEntry()
         }
         updatedImage = true;
     }
-    return 0;
 }
 
 bool VideoStream::imageReady()
