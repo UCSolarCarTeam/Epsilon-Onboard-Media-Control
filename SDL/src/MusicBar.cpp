@@ -196,8 +196,10 @@ void MusicBar::drawTime()
     
    
     SDL_Surface *tick;
-    tick = SDL_CreateRGBSurface(0, 0 + songtimePercent*1080, 1, 32, 0, 0, 0, 0);
-    SDL_FillRect(tick, NULL, SDL_MapRGB(tick->format,255,255,255));
+    tick = SDL_CreateRGBSurface(0, 0 + songtimePercent*1080, 2, 32, 0, 0, 0, 0);
+   
+    //SDL_FillRect(tick, NULL, SDL_MapRGB(tick->format,255,255,255));
+    SDL_FillRect(tick, NULL, SDL_MapRGB(tick->format,0,162,255));
 
     SDL_Rect tkLocation = {0, 0, 0, 0};
 
@@ -216,12 +218,19 @@ void MusicBar::drawVolumeBar()
     double songVolumePercent;
     songVolumePercent = songVolume / maxVolume;
 
-    SDL_Surface *volBar;
-    volBar = SDL_CreateRGBSurface(0,0 + songVolumePercent*200, 1, 32, 0, 0, 0 ,0);
-    SDL_FillRect(volBar, NULL, SDL_MapRGB(volBar->format,255,255,255));
-
-    SDL_Rect vLocation = {440, 63, 0, 0};
+    SDL_Surface *volBackBar;
+    volBackBar = SDL_CreateRGBSurface(0, 200, 4, 32, 0, 0, 0, 0);
+    SDL_FillRect(volBackBar, NULL, SDL_MapRGB(volBackBar->format,0,0,0));
+    SDL_Rect vbLocation = {440, 58, 0, 0};
+    SDL_BlitSurface(volBackBar, NULL, surface, &vbLocation);
     
+    SDL_Surface *volBar;
+    volBar = SDL_CreateRGBSurface(0,0 + songVolumePercent*200, 4, 32, 0, 0, 0 ,0);
+    // UNCOMMENT TO CHANGE COLOUR SCHEME
+    SDL_FillRect(volBar, NULL, SDL_MapRGB(volBar->format,0,162,255));
+    
+    //SDL_FillRect(volBar, NULL, SDL_MapRGB(volBar->format,255,255,255));
+    SDL_Rect vLocation = {440, 58, 0, 0};
     SDL_BlitSurface(volBar, NULL, surface, &vLocation);
 }
 
