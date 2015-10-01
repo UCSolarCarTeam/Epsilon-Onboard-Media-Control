@@ -23,6 +23,7 @@ class MusicBar
     void drawTime();  
     void drawVolumeBar();
     TTF_Font *font;
+    TTF_Font *font_two;
     int init();
     SongPlayer *mPlayer;
 

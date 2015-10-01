@@ -4,9 +4,9 @@ MusicBar::MusicBar(SongPlayer *songPlayer)
 {
     mPlayer = songPlayer;
     int musicBarSurfaceWidth = 1080;
-    int musicBarSurfaceHeight = 32;
+    int musicBarSurfaceHeight = 64;
     surface = SDL_CreateRGBSurface(0, musicBarSurfaceWidth, musicBarSurfaceHeight, 32, 0, 0, 0, 0);
-    SDL_FillRect(surface, NULL, SDL_MapRGB(surface->format,255,0,0));
+    //SDL_FillRect(surface, NULL, SDL_MapRGB(surface->format,56,56,56));
     init();    
 }
 
@@ -20,8 +20,17 @@ int MusicBar::init()
         exit(1);
     }
 
-    // Loads a Font
-    font = TTF_OpenFont("assets/LiberationSerif-Regular.ttf", 12);
+    // Loads font for Song Name
+    font = TTF_OpenFont("assets/LiberationSerif-Regular.ttf", 50);
+    if (font == NULL)
+    {
+        std::cerr << "TTF_OpenFont Failed" << TTF_GetError << std::endl;
+        TTF_Quit();
+        SDL_Quit();
+        exit(1);
+    }
+
+    font_two = TTF_OpenFont("assets/LiberationSerif-Regular.ttf", 20);
     if (font == NULL)
     {
         std::cerr << "TTF_OpenFont Failed" << TTF_GetError << std::endl;
@@ -80,12 +89,43 @@ void MusicBar::drawTime()
     int minutes;
     int seconds;
     double songtimePercent;
-    songtimePercent = songTime / songLength * 100;
-    printf("Song Percent is: %lf", songtimePercent);
+    int currentmins;
+    int currentsecs;
+    
+    songtimePercent = songTime / songLength ;
+    printf("Song Percent is: %lf\n", songtimePercent);
 
     printf("The song length is %d \n", songLength);
     //double songTime = getSongLength();
     
+    int integersongTime;
+    integersongTime = songTime ;
+    currentmins = integersongTime / 60;
+    currentsecs = integersongTime % 60;
+    
+    std::string sCurrentMins;
+    std::string sCurrentSecs;
+    std::string sCurrentTime;
+    std::stringstream convert3;
+    std::stringstream convert4;
+    convert3 << currentmins;
+    convert4 << currentsecs;
+    sCurrentMins = convert3.str();
+    sCurrentSecs = convert4.str();
+    
+    if (currentsecs < 10)
+    {
+        sCurrentTime = sCurrentMins + ":0" + sCurrentSecs;
+    }
+    else
+    {
+        sCurrentTime = sCurrentMins + ":" + sCurrentSecs;
+    }
+    const char *xCurrentTime = sCurrentTime.c_str();
+
+   
+    songLength = songLength - songTime;
+
     minutes = songLength / 60;
     seconds = songLength % 60;
 
@@ -100,18 +140,26 @@ void MusicBar::drawTime()
     sSeconds = convert2.str();
 
     std::string sLength;
-    sLength = sMinutes + ":" + sSeconds;
+    if (seconds < 10)
+    {
+        sLength = sMinutes + ":0" + sSeconds;
+    }
+    else
+    {
+        sLength = sMinutes + ":" + sSeconds;
+    }
+
     const char *xLength = sLength.c_str();
     printf("Song Length in string: %s\n", xLength);
 
     printf("minutes: %d, seconds %d\n", minutes, seconds);
-    printf("The time is %lf \n", songTime);
+    printf("The time is %d \n", songTime);
     
-    std::string sTime;
-    std::stringstream convert;
-    convert << songTime;
-    sTime = convert.str();
-    const char * xtime = sTime.c_str();
+    //std::string sTime;
+    //std::stringstream convert;
+    //convert << songTime;
+    //sTime = convert.str();
+    //const char * xtime = sTime.c_str();
 
 
     // Write text to surface
@@ -121,35 +169,37 @@ void MusicBar::drawTime()
     //SDL_Color text_color2 = {0, 0, 0};
 
     //text = TTF_RenderText_Shaded(font, "Text", text_color, text_color2);
-    time = TTF_RenderText_Solid(font, xtime, text_color); 
-    length = TTF_RenderText_Solid(font, xLength, text_color);
+    time = TTF_RenderText_Solid(font_two, xCurrentTime, text_color); 
+    length = TTF_RenderText_Solid(font_two, xLength, text_color);
     //length = TTF_RenderText_Solid(font, 
-    SDL_Rect textLocation = {25, 0, 0, 0};
 
+    int lengthWidth, lengthHeight;
+    TTF_SizeText(font_two, xLength, &lengthWidth, &lengthHeight);
+    
+    SDL_Rect timeLocation = {0, 4, 0, 0};
+    SDL_Rect lengthLocation = {1080-lengthWidth, 4, 0};
     // Apply the text to surface
-    SDL_BlitSurface(time, NULL, surface, NULL );
-    SDL_BlitSurface(length, NULL, surface, &textLocation);
+    SDL_BlitSurface(time, NULL, surface, &timeLocation );
+    SDL_BlitSurface(length, NULL, surface, &lengthLocation);
     
-    printf("Time is: %s\n",sTime.c_str());
+    printf("Time is: %s\n",sCurrentTime.c_str());
 
 
-    SDL_Surface *tBar;
+    //SDL_Surface *tBar;
 
-    tBar = SDL_CreateRGBSurface(0, 100, 5, 32, 0, 0, 0, 0);
-    SDL_FillRect(tBar, NULL, SDL_MapRGB(tBar->format,0,255,0));
+    //tBar = SDL_CreateRGBSurface(0, 1080, 1, 32, 0, 0, 0, 0);
+    //SDL_FillRect(tBar, NULL, SDL_MapRGB(tBar->format,255,255,255));
     
-    SDL_Rect tLocation = {200,10,0,0};
+    //SDL_Rect tLocation = {0,0,0,0};
 
-    SDL_BlitSurface(tBar, NULL, surface, &tLocation);
+    //SDL_BlitSurface(tBar, NULL, surface, &tLocation);
     
    
     SDL_Surface *tick;
-    tick = SDL_CreateRGBSurface(0, 1, 10, 32, 0, 0, 0, 0);
-    SDL_FillRect(tick, NULL, SDL_MapRGB(tick->format,0,0,255));
+    tick = SDL_CreateRGBSurface(0, 0 + songtimePercent*1080, 1, 32, 0, 0, 0, 0);
+    SDL_FillRect(tick, NULL, SDL_MapRGB(tick->format,255,255,255));
 
-
-
-    SDL_Rect tkLocation = {200 + songtimePercent, 10, 0, 0};
+    SDL_Rect tkLocation = {0, 0, 0, 0};
 
     SDL_BlitSurface(tick, NULL, surface, &tkLocation);
     
@@ -164,13 +214,21 @@ void MusicBar::drawVolumeBar()
 
     double maxVolume = 2.0;
     double songVolumePercent;
-    songVolumePercent = songVolume / maxVolume * 100;
+    songVolumePercent = songVolume / maxVolume;
+
+    SDL_Surface *volBar;
+    volBar = SDL_CreateRGBSurface(0,0 + songVolumePercent*200, 1, 32, 0, 0, 0 ,0);
+    SDL_FillRect(volBar, NULL, SDL_MapRGB(volBar->format,255,255,255));
+
+    SDL_Rect vLocation = {440, 63, 0, 0};
+    
+    SDL_BlitSurface(volBar, NULL, surface, &vLocation);
 }
 
 
 void MusicBar::update()
 {
-    SDL_FillRect(surface, NULL, SDL_MapRGB(surface->format,255,0,0));
+    SDL_FillRect(surface, NULL, SDL_MapRGB(surface->format,43,43,43));
     drawSongName();
     drawTime();
     drawVolumeBar();
