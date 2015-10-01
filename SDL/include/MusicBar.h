@@ -15,6 +15,8 @@
 
 class MusicBar
 {
+    int xL = 0;
+    int udate = 0;
     SDL_Surface* surface = NULL;
     SDL_Renderer* renderer =  NULL;
     void drawSongName();

@@ -21,7 +21,7 @@ int MusicBar::init()
     }
 
     // Loads a Font
-    font = TTF_OpenFont("src/FreeSans.ttf", 12);
+    font = TTF_OpenFont("assets/LiberationSerif-Regular.ttf", 12);
     if (font == NULL)
     {
         std::cerr << "TTF_OpenFont Failed" << TTF_GetError << std::endl;
@@ -33,7 +33,10 @@ int MusicBar::init()
 
 void MusicBar::drawSongName()
 {
-   
+
+    
+    
+    
     // Gets current song and converts to char
     std::string songName = mPlayer->currentSong();
     // std::size_t pos = str.find(".mp3")
@@ -45,7 +48,7 @@ void MusicBar::drawSongName()
     // Write text to surface
     SDL_Surface *text;
     SDL_Color text_color = {255, 255, 255};
-    //SDL_Color text_color2 = {0, 0, 0};
+    //SDL_Color text_color2 = {0, 0, 0};t
     
     //text = TTF_RenderText_Shaded(font, "Text", text_color, text_color2);
     text = TTF_RenderText_Solid(font, song, text_color);
@@ -66,12 +69,20 @@ void MusicBar::drawSongName()
 void MusicBar::drawTime()
 {
 
+    
+
+    
+
+
     //double songTime = 8;
     int songLength = mPlayer->getSongLength();
     double songTime = mPlayer->getCurrentTime();
     int minutes;
     int seconds;
-    
+    double songtimePercent;
+    songtimePercent = songTime / songLength * 100;
+    printf("Song Percent is: %lf", songtimePercent);
+
     printf("The song length is %d \n", songLength);
     //double songTime = getSongLength();
     
@@ -120,6 +131,30 @@ void MusicBar::drawTime()
     SDL_BlitSurface(length, NULL, surface, &textLocation);
     
     printf("Time is: %s\n",sTime.c_str());
+
+
+    SDL_Surface *tBar;
+
+    tBar = SDL_CreateRGBSurface(0, 100, 5, 32, 0, 0, 0, 0);
+    SDL_FillRect(tBar, NULL, SDL_MapRGB(tBar->format,0,255,0));
+    
+    SDL_Rect tLocation = {200,10,0,0};
+
+    SDL_BlitSurface(tBar, NULL, surface, &tLocation);
+    
+   
+    SDL_Surface *tick;
+    tick = SDL_CreateRGBSurface(0, 1, 10, 32, 0, 0, 0, 0);
+    SDL_FillRect(tick, NULL, SDL_MapRGB(tick->format,0,0,255));
+
+
+
+    SDL_Rect tkLocation = {200 + songtimePercent, 10, 0, 0};
+
+    SDL_BlitSurface(tick, NULL, surface, &tkLocation);
+    
+    
+
 }
 
 void MusicBar::drawVolumeBar()
