@@ -20,7 +20,7 @@ int MusicBar::init()
     }
 
     // Loads font for song name 
-    font_one = TTF_OpenFont("assets/LiberationSerif-Regular.ttf", 50);
+    font_one = TTF_OpenFont("assets/Trebuchet-MS.ttf", 50);
     if (font_one == NULL)
     {
         std::cerr << "TTF_OpenFont Failed" << TTF_GetError << std::endl;
@@ -30,7 +30,7 @@ int MusicBar::init()
     }
     
     // Loads font for time
-    font_two = TTF_OpenFont("assets/LiberationSerif-Regular.ttf", 20);
+    font_two = TTF_OpenFont("assets/Trebuchet-MS.ttf", 20);
     if (font_two == NULL)
     {
         std::cerr << "TTF_OpenFont Failed" << TTF_GetError << std::endl;
