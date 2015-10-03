@@ -56,7 +56,7 @@ class SongPlayer : public MyThreadClass
         bool quitSong;
         //The Modes the songThread can be in.
         enum threadMode { PLAY, NEXT, PREVIOUS, SHUFFLE, PAUSE};
-        threadMode mode = PLAY;
+        threadMode mode;
 };
 
 #endif /* SONGPLAYER_H */

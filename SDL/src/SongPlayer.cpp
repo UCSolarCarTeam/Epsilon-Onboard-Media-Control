@@ -41,6 +41,7 @@ SongPlayer::SongPlayer()
     ao_initialize();
 
     mpg123_init();
+    mode = PLAY;
 }
 
 //Will load the songName into buffer
