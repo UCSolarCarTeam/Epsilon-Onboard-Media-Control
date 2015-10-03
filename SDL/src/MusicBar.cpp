@@ -28,7 +28,7 @@ int MusicBar::init()
         SDL_Quit();
         exit(1);
     }
-
+    
     // Loads font for time
     font_two = TTF_OpenFont("assets/LiberationSerif-Regular.ttf", 20);
     if (font_two == NULL)
@@ -89,7 +89,7 @@ void MusicBar::drawSongName()
     //SDL_BlitSurface(text, NULL, surface, &textLocation );
     
         
-    printf("Song name is: %s\n",song_name.c_str());
+    //printf("Song name is: %s\n",song_name.c_str());
     //printf("Song name is: %s\n",newString.c_str());
 }
 
@@ -137,7 +137,7 @@ void MusicBar::drawSongTime()
     
     // Conversions for current song time to minutes and seconds 
     song_current_percent = song_current_time / song_total_time; 
-    printf("Song percent is: %lf \n", song_current_percent);
+    //printf("Song percent is: %lf \n", song_current_percent);
     song_current_int_time = song_current_time;
     song_current_mins = song_current_int_time / 60;
     song_current_secs = song_current_int_time % 60;
@@ -145,7 +145,7 @@ void MusicBar::drawSongTime()
     // Conversion for total song time to minute and seconds
     song_total_time = song_total_time - song_current_time; // Remove to stop end time increment
     song_total_int_time = song_total_time;
-    printf("song ends in: %lf", song_total_time);
+    //printf("song ends in: %lf", song_total_time);
     song_total_mins = song_total_time / 60;
     song_total_secs = song_total_int_time % 60;
     
@@ -278,7 +278,7 @@ void MusicBar::drawSongTime()
 void MusicBar::drawVolumeBar()
 {
     double songVolume = mPlayer->getVolume();
-    printf("Song volume is: %lf\n", songVolume);
+    //printf("Song volume is: %lf\n", songVolume);
 
     double maxVolume = 2.0;
     double songVolumePercent;
