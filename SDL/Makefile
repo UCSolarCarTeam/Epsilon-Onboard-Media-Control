@@ -5,7 +5,7 @@ OBJS = src/Main.cpp src/SongLoader.cpp src/SongPlayer.cpp include/threadClass.hp
 CC = g++
 
 #COMPLIE_FLAGS = additional flags
-COMPILE_FLAGS = -w -g -std=c++11
+COMPILE_FLAGS = -w -g -std=c++0x
 
 LINK_FLAGS = `sdl2-config --cflags` `sdl2-config --libs` `pkg-config opencv --cflags` `pkg-config opencv --libs` -lSDL2_image -lSDL2_ttf -ltiff -lao -lmpg123 -pthread
 
