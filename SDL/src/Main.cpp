@@ -303,6 +303,7 @@ int main(int argc, char* argv[])
             SDL_RendererFlip flip = SDL_FLIP_NONE;
             SDL_Texture* textureMusicBar = SDL_CreateTextureFromSurface(renderer, surfaceBar);
             SDL_RenderCopyEx(renderer, textureMusicBar, NULL, &musicBarRect ,0, NULL, flip);
+            SDL_DestroyTexture(textureMusicBar);
             SDL_RenderPresent(renderer);
             SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
             SDL_RenderClear(renderer);
