@@ -69,6 +69,7 @@ void MusicBar::drawSongName()
     TTF_SizeText(font_one, song_char, &song_width, &song_height);
     SDL_Rect song_location = {1080/2 - song_width/2, 0, 0, 0};
     SDL_BlitSurface(song_surface, NULL, surface, &song_location);
+    SDL_FreeSurface(song_surface);
 
     
     // Write text to surface
@@ -221,6 +222,7 @@ void MusicBar::drawSongTime()
                                                      song_current_time_color);
     SDL_Rect song_current_time_location = {0, 4, 0, 0};
     SDL_BlitSurface(song_current_time_surface, NULL, surface, &song_current_time_location);
+    SDL_FreeSurface(song_current_time_surface);
     
     // Creates total song time surface
     SDL_Surface *song_total_time_surface;
@@ -230,6 +232,7 @@ void MusicBar::drawSongTime()
     TTF_SizeText(font_two, song_total_char_time, &total_time_width, &total_time_height);
     SDL_Rect song_total_time_location = {1080 - total_time_width, 4, 0};
     SDL_BlitSurface(song_total_time_surface, NULL, surface, &song_total_time_location);
+    SDL_FreeSurface(song_total_time_surface);
 
     // Write text to surface
     //SDL_Surface *time;
@@ -269,6 +272,7 @@ void MusicBar::drawSongTime()
     SDL_FillRect(song_timebar_surface, NULL, SDL_MapRGB(song_timebar_surface->format,0,162,255));
     SDL_Rect song_timebar_location = {0, 0, 0, 0};
     SDL_BlitSurface(song_timebar_surface, NULL, surface, &song_timebar_location);
+    SDL_FreeSurface(song_timebar_surface);
 }
 
 void MusicBar::drawVolumeBar()
@@ -285,6 +289,7 @@ void MusicBar::drawVolumeBar()
     SDL_FillRect(volBackBar, NULL, SDL_MapRGB(volBackBar->format,0,0,0));
     SDL_Rect vbLocation = {440, 58, 0, 0};
     SDL_BlitSurface(volBackBar, NULL, surface, &vbLocation);
+    SDL_FreeSurface(volBackBar);
     
     SDL_Surface *volBar;
     volBar = SDL_CreateRGBSurface(0,0 + songVolumePercent*200, 4, 32, 0, 0, 0 ,0);
@@ -294,6 +299,7 @@ void MusicBar::drawVolumeBar()
     //SDL_FillRect(volBar, NULL, SDL_MapRGB(volBar->format,255,255,255));
     SDL_Rect vLocation = {440, 58, 0, 0};
     SDL_BlitSurface(volBar, NULL, surface, &vLocation);
+    SDL_FreeSurface(volBar);
 }
 
 
