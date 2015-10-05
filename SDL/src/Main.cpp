@@ -198,6 +198,12 @@ void close()
 
 int main(int argc, char* argv[])
 {
+    #ifdef RUNNINGONPI
+        printf("Running on pi!\n");
+    #else
+        printf("Not running on pi!\n");
+    #endif  
+
     if (!init_SDL())
     {
         fprintf(stderr, "Could not initialize SDL!\n");
