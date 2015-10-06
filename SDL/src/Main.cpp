@@ -26,7 +26,7 @@ extern "C" {
     #ifndef RUNNINGONPI
     #define RUNNINGONPI
     #endif
-    #include <wiringPi.h>
+    #include "WiringPiButtons.cpp"
 #endif
 
 using namespace cv;
