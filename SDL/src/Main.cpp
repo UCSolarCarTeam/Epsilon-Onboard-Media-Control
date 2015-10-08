@@ -1,4 +1,3 @@
-
 #include <cv.h>
 #include "opencv2/opencv.hpp"
 #include "SongLoader.h"
@@ -200,6 +199,7 @@ int main(int argc, char* argv[])
 {
     #ifdef RUNNINGONPI
         printf("Running on pi!\n");
+        WiringPiButtons buttonManager;
     #else
         printf("Not running on pi!\n");
     #endif  
@@ -228,6 +228,10 @@ int main(int argc, char* argv[])
     while (!quit)
     {
         processEvents();
+        #ifdef RUNNINGONPI
+            buttonManager.getEvents();
+        #endif
+
         if (show_Camera())
         {
             SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
