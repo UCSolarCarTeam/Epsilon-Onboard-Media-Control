@@ -1,12 +1,17 @@
 #include "WiringPiButtons.hpp"
 // Pin number declarations using WiringPi numbering scheme 
 // 1 or UP is default -Not Pressed-, if button is pressed, the signal should go 0.
+// Will only accept calls 10 times a second, this is a simple way to debounce
 
 
 WiringPiButtons::WiringPiButtons()
 {
     wiringPiSetup(); // Initialize wiringPi
     initButton(UP);
+    initButton(DOWN);
+    initButton(LEFT);
+    initButton(RIGHT);
+    State = RELEASED;
 }
 
 void WiringPiButtons::initButton(int buttonNumber)
@@ -17,25 +22,36 @@ void WiringPiButtons::initButton(int buttonNumber)
 
 string* WiringPiButtons::getEvents()
 {
-    if (!digitalRead(UP)) // Button is released if this returns 1
+    switch(State)
     {
-        State = UP;
-    }
-    else if (!digitalRead(DOWN))
-    {
-        State = DOWN;
-    }
-    else if (!digitalRead(LEFT))
-    {
-        State = LEFT;
-    }
-    else if (!digitalRead(RIGHT))
-    {
-        State = RIGHT;
-    }
-    else 
-    {
-        printf("The Button %d was pressed!\n", UP);
-        State = RELEASED;
+        case RELEASED:
+            if (!digitalRead(UP))       { State = UP; }
+            if (!digitalRead(DOWN))     { State = DOWN; }
+            if (!digitalRead(LEFT))     { State = LEFT; }
+            if (!digitalRead(RIGHT))    { State = RIGHT; }
+        case UP:
+            if (digitalRead(UP))
+            {
+                printf("From UP Button %d was pressed!\n", State);
+                State = RELEASED; 
+            }
+        case DOWN:
+            if (digitalRead(DOWN)) 
+            {
+                printf("From DOWN Button %d was pressed!\n", State);
+                State = RELEASED; 
+            }
+        case LEFT:
+            if (digitalRead(LEFT))
+            {
+                printf("From LEFT Button %d was pressed!\n", State);
+                State = RELEASED; 
+            }
+        case RIGHT:
+            if (digitalRead(RIGHT)) 
+            {
+                printf("From RIGHT Button %d was pressed!\n", State);
+                State = RELEASED; 
+            }
     }
 }
