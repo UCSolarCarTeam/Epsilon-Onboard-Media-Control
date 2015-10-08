@@ -197,11 +197,11 @@ void MusicBar::drawVolumeBar()
     volumeBarHeight = 4;
     int volumeBarBackground_x_Location;
     int volumeBarBackground_y_Location;
-    volumeBarBackground_x_Location = 878;
+    volumeBarBackground_x_Location = 895;
     volumeBarBackground_y_Location = 58;
     int i;
     
-    for (i = 0; i < 20; i++)
+    for (i = 0; i < 24; i++)
     {
         volumeBackgroundSurface = SDL_CreateRGBSurface(0,4,volumeBarHeight,32,0,0,0,0);
         volumeBarHeight += 2;
@@ -218,17 +218,20 @@ void MusicBar::drawVolumeBar()
     int volumeBar_x_Location;
     int volumeBar_y_Location;
     int volumeBar_Height2;
+    int color_gradient;
     volumeBar_Height2 = 4;
-    volumeBar_x_Location = 878;
+    volumeBar_x_Location = 895;
     volumeBar_y_Location = 58;
-    songVolumePercent = songVolumePercent * 20 - 0.1;
+    songVolumePercent = songVolumePercent * 24 - 0.1;
+    int green_color_gradient = 162;
     
     for (i = 0; i < songVolumePercent; i++) 
     {
         volumeSurface = SDL_CreateRGBSurface(0,4, volumeBar_Height2, 32,0,0,0,0);
         volumeBar_Height2 += 2;
-        SDL_FillRect(volumeSurface, NULL, SDL_MapRGB(volumeSurface->format,0,162,255));
+        SDL_FillRect(volumeSurface, NULL, SDL_MapRGB(volumeSurface->format,255,green_color_gradient,0));
         SDL_Rect volumeLocation = {volumeBar_x_Location, volumeBar_y_Location, 0, 0};
+        green_color_gradient -= 6;
         volumeBar_x_Location += 6;
         volumeBar_y_Location -= 2;
         SDL_BlitSurface(volumeSurface, NULL, surface, &volumeLocation);
