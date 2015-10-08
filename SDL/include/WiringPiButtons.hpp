@@ -16,7 +16,8 @@ class WiringPiButtons
       enum Button { UP = 25, DOWN = 24, LEFT  = 23, RIGHT = 22, RELEASED = 0};
       void initButton(int buttonNumber);
       Button State;
-
+      high_resolution_clock::time_point period_start;
+      duration<double> deltaTime;
 };
 
 #endif

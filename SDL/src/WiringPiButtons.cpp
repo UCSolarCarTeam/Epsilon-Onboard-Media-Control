@@ -12,6 +12,7 @@ WiringPiButtons::WiringPiButtons()
     initButton(LEFT);
     initButton(RIGHT);
     State = RELEASED;
+    period_start = high_resolution_clock::now()
 }
 
 void WiringPiButtons::initButton(int buttonNumber)
@@ -22,6 +23,15 @@ void WiringPiButtons::initButton(int buttonNumber)
 
 string* WiringPiButtons::getEvents()
 {
+
+    deltaTime = duration_cast<duration<double>>(high_resolution_clock::now() - period_start);
+    if (deltaTime.count() < 0.10)
+    {
+        printf("delta is %lf \n", deltaTime.count());
+        return;
+    }
+    period_start = high_resolution_clock::now(); 
+
     switch(State)
     {
         case RELEASED:
