@@ -221,7 +221,7 @@ void MusicBar::drawVolumeBar()
     for (i = 0; i < songVolumePercent; i++) 
     {
         volumeSurface = SDL_CreateRGBSurface(0,4, volumeHeight, 32,0,0,0,0); // EDIT
-        SDL_FillRect(volumeSurface, NULL, SDL_MapRGB(volumeSurface->format,255,colorGreen,0)); /EDIT
+        SDL_FillRect(volumeSurface, NULL, SDL_MapRGB(volumeSurface->format,255,colorGreen,0)); //EDIT
         SDL_Rect volumeLocation = {volumeXLocation, volumeYLocation, 0, 0}; // EDIT
         SDL_BlitSurface(volumeSurface, NULL, surface, &volumeLocation);
         SDL_FreeSurface(volumeSurface);

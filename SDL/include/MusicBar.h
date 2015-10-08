@@ -16,15 +16,15 @@
 class MusicBar
 {
     SDL_Surface* surface;
-    // SDL_Renderer* renderer;
+    TTF_Font *songNameFont;
+    TTF_Font *timeFont;
+    SongPlayer *mPlayer;
+    
     void drawSongName();
     void drawSongTime();  
     void drawVolumeBar();
     std::string convertToString(int songIntTime);
-    TTF_Font *songNameFont;
-    TTF_Font *timeFont;
     int init();
-    SongPlayer *mPlayer;
 
 public:
     void update();
