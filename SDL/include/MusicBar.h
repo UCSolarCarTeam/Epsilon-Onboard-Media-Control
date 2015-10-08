@@ -20,6 +20,7 @@ class MusicBar
     void drawSongName();
     void drawSongTime();  
     void drawVolumeBar();
+    std::string convertToString(int songIntTime);
     TTF_Font *songNameFont;
     TTF_Font *timeFont;
     int init();
