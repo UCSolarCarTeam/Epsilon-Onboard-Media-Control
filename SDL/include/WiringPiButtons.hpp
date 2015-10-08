@@ -1,10 +1,11 @@
 #ifndef WIRINGPIBUTTONS_HPP
 #define WIRINGPIBUTTONS_HPP
 
-
 #include <stdio.h> 
 #include <wiringPi.h>
 #include <chrono>
+
+using namespace std::chrono;
 
 class WiringPiButtons
 {
