@@ -14,8 +14,9 @@ class WiringPiButtons
       string* getEvents();  
 
     private:
-      enum Button { UP = 25, DOWN = 24, LEFT  = 23, RIGHT = 22 };
+      enum Button { UP = 25, DOWN = 24, LEFT  = 23, RIGHT = 22, RELEASED = 0};
       void initButton(int buttonNumber);
+      Button State;
 
 };
 

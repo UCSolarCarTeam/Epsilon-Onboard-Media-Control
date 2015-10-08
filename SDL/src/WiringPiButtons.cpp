@@ -1,5 +1,6 @@
 #include "WiringPiButtons.hpp"
 // Pin number declarations using WiringPi numbering scheme 
+// 1 or UP is default -Not Pressed-, if button is pressed, the signal should go 0.
 
 
 WiringPiButtons::WiringPiButtons()
@@ -11,17 +12,30 @@ WiringPiButtons::WiringPiButtons()
 void WiringPiButtons::initButton(int buttonNumber)
 {
     pinMode(buttonNumber, INPUT);      // Set button as INPUT
-    pullUpDnControl(buttonNumber, PUD_DOWN); //Set DOWN
+    pullUpDnControl(buttonNumber, PUD_UP); //Default Pulled UP
 }
 
 string* WiringPiButtons::getEvents()
 {
-    if (digitalRead(UP)) // Button is released if this returns 1
+    if (!digitalRead(UP)) // Button is released if this returns 1
     {
-        printf("NOT PRESSED!!\n");
+        State = UP;
     }
-    else
+    else if (!digitalRead(DOWN))
     {
-        printf("Button Pressed!\n");
+        State = DOWN;
+    }
+    else if (!digitalRead(LEFT))
+    {
+        State = LEFT;
+    }
+    else if (!digitalRead(RIGHT))
+    {
+        State = RIGHT;
+    }
+    else 
+    {
+        printf("The Button %d was pressed!\n", UP);
+        State = RELEASED;
     }
 }
