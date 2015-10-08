@@ -16,12 +16,12 @@
 class MusicBar
 {
     SDL_Surface* surface;
-   // SDL_Renderer* renderer;
+    // SDL_Renderer* renderer;
     void drawSongName();
     void drawSongTime();  
     void drawVolumeBar();
-    TTF_Font *song_name_font;
-    TTF_Font *time_font;
+    TTF_Font *songNameFont;
+    TTF_Font *timeFont;
     int init();
     SongPlayer *mPlayer;
 
