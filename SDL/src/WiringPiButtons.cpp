@@ -29,29 +29,34 @@ string* WiringPiButtons::getEvents()
             if (!digitalRead(DOWN))     { State = DOWN; }
             if (!digitalRead(LEFT))     { State = LEFT; }
             if (!digitalRead(RIGHT))    { State = RIGHT; }
+            break;
         case UP:
             if (digitalRead(UP))
             {
                 printf("From UP Button %d was pressed!\n", State);
                 State = RELEASED; 
             }
+            break;
         case DOWN:
             if (digitalRead(DOWN)) 
             {
                 printf("From DOWN Button %d was pressed!\n", State);
                 State = RELEASED; 
             }
+            break;
         case LEFT:
             if (digitalRead(LEFT))
             {
                 printf("From LEFT Button %d was pressed!\n", State);
                 State = RELEASED; 
             }
+            break;
         case RIGHT:
             if (digitalRead(RIGHT)) 
             {
                 printf("From RIGHT Button %d was pressed!\n", State);
                 State = RELEASED; 
             }
+            break;
     }
 }
