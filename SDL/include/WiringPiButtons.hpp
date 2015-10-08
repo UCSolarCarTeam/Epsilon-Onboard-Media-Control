@@ -7,13 +7,15 @@
 
 
 
-class WiringPiButtons()
+class WiringPiButtons
 {
     public:
+      WiringPiButtons();
       string* getEvents();  
 
     private:
       enum Button { UP = 25, DOWN = 24, LEFT  = 23, RIGHT = 22 };
+      void initButton(int buttonNumber);
 
 };
 
