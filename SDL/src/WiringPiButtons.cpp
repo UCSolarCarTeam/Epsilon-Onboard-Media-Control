@@ -11,8 +11,9 @@ WiringPiButtons::WiringPiButtons()
     initButton(DOWN);
     initButton(LEFT);
     initButton(RIGHT);
-    State = RELEASED;
-    period_start = high_resolution_clock::now()
+    state = RELEASED;
+    period_start = std::chrono::high_resolution_clock::now();
+    returnButton = RELEASED;
 }
 
 void WiringPiButtons::initButton(int buttonNumber)
@@ -21,51 +22,70 @@ void WiringPiButtons::initButton(int buttonNumber)
     pullUpDnControl(buttonNumber, PUD_UP); //Default Pulled UP
 }
 
-string* WiringPiButtons::getEvents()
+Button WiringPiButtons::getEvents()
 {
 
-    deltaTime = duration_cast<duration<double>>(high_resolution_clock::now() - period_start);
-    if (deltaTime.count() < 0.10)
+    deltaTime = std::chrono::duration_cast<std::chrono::duration<double>>(std::chrono::high_resolution_clock::now() - period_start);
+    if (deltaTime.count() < 0.04)
     {
-        printf("delta is %lf \n", deltaTime.count());
-        return;
+        return 0;
     }
-    period_start = high_resolution_clock::now(); 
+    period_start = std::chrono::high_resolution_clock::now(); 
 
-    switch(State)
+    switch(state)
     {
         case RELEASED:
-            if (!digitalRead(UP))       { State = UP; }
-            if (!digitalRead(DOWN))     { State = DOWN; }
-            if (!digitalRead(LEFT))     { State = LEFT; }
-            if (!digitalRead(RIGHT))    { State = RIGHT; }
+            if (returnButton != 0)
+            {
+                int tempValue = returnButton;
+                returnButton = 0;
+	        printf("FUNCTION returned %d\n",tempValue);
+                return tempValue; 
+            }
+
+            if (!digitalRead(UP))      
+                state = UP; 
+
+            if (!digitalRead(DOWN))    
+                state = DOWN; 
+
+            if (!digitalRead(LEFT))
+                state = LEFT;
+
+            if (!digitalRead(RIGHT))  
+                state = RIGHT; 
+
             break;
         case UP:
             if (digitalRead(UP))
             {
-                printf("From UP Button %d was pressed!\n", State);
-                State = RELEASED; 
+                printf("From UP Button %d was pressed!\n", state);
+                returnButton = UP;
+                state = RELEASED; 
             }
             break;
         case DOWN:
             if (digitalRead(DOWN)) 
             {
-                printf("From DOWN Button %d was pressed!\n", State);
-                State = RELEASED; 
+                printf("From DOWN Button %d was pressed!\n", state);
+                returnButton = DOWN;
+                state = RELEASED; 
             }
             break;
         case LEFT:
             if (digitalRead(LEFT))
             {
-                printf("From LEFT Button %d was pressed!\n", State);
-                State = RELEASED; 
+                printf("From LEFT Button %d was pressed!\n", state);
+                returnButton = LEFT;
+                state = RELEASED; 
             }
             break;
         case RIGHT:
             if (digitalRead(RIGHT)) 
             {
-                printf("From RIGHT Button %d was pressed!\n", State);
-                State = RELEASED; 
+                printf("From RIGHT Button %d was pressed!\n", state);
+                returnButton = RIGHT;
+                state = RELEASED; 
             }
             break;
     }

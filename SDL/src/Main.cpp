@@ -13,7 +13,6 @@ extern "C" {
     #include <SDL.h>
     #include <SDL_ttf.h>
 }
-#include <iostream>
 #include <stdio.h>
 #include <unistd.h>
 
@@ -25,10 +24,8 @@ extern "C" {
     #ifndef RUNNINGONPI
     #define RUNNINGONPI
     #endif
-    #include "WiringPiButtons.cpp"
+    #include "WiringPiButtons.hpp"
 #endif
-
-using namespace cv;
 
 #define SCREEN_HEIGHT 768
 #define SCREEN_WIDTH 1232
@@ -37,15 +34,10 @@ void processEvents();
 void signalToQuit();
 void close();
 
-bool updatedImage = false;
-int bufferNumber = 1;
-
 SDL_Renderer* renderer = NULL;
 SDL_Window* window = NULL;
 
 SDL_Rect videoRect;
-int cameraHeight;
-int cameraWidth;
 int noSongs;
 
 SongPlayer musicPlayer;
@@ -174,7 +166,33 @@ void processEvents()
             }
         }
 }
-
+#ifdef RUNNINGONPI
+void processGPIO(WiringPiButtons::Button button)
+{
+    switch(button)
+    {
+        case WiringPiButtons::LEFT:
+	    printf("Left arrow was Pressed!\n");
+	    musicPlayer.previousSong();
+	    break;
+	case WiringPiButtons::RIGHT:
+	    printf("Right arrow was Pressed!\n");
+	    musicPlayer.nextSong();
+	    break;
+	case WiringPiButtons::UP:
+	    musicPlayer.changeVolume(0.1);
+	    break;
+	case WiringPiButtons::DOWN:
+	    musicPlayer.changeVolume(-0.1);
+	    break;
+	case WiringPiButtons::SPACE:
+	    printf("Space was pressed!\n");
+	    musicPlayer.playPause();
+	default:
+	    break;
+    }
+}
+#endif
 
 /* Signals all the threads to quit and then waits for the threads */
 void signalToQuit()
@@ -229,7 +247,7 @@ int main(int argc, char* argv[])
     {
         processEvents();
         #ifdef RUNNINGONPI
-            buttonManager.getEvents();
+        processGPIO(buttonManager.getEvents());
         #endif
 
         if (show_Camera())

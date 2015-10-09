@@ -5,20 +5,22 @@
 #include <wiringPi.h>
 #include <chrono>
 
-using namespace std::chrono;
+//using namespace std::chrono;
 
 class WiringPiButtons
 {
     public:
+      enum Button { SPACE = 29, UP = 25, DOWN = 24, LEFT  = 23, RIGHT = 22, RELEASED = 0};
       WiringPiButtons();
-      string* getEvents();  
+      Button getEvents();  
+      //run `gpio readall` on the pi to see the wiringPi numbering 
 
     private:
-      enum Button { UP = 25, DOWN = 24, LEFT  = 23, RIGHT = 22, RELEASED = 0};
       void initButton(int buttonNumber);
-      Button State;
-      high_resolution_clock::time_point period_start;
-      duration<double> deltaTime;
+      Button state;
+      std::chrono::high_resolution_clock::time_point period_start;
+      std::chrono::duration<double> deltaTime;
+      int returnButton;
 };
 
 #endif
