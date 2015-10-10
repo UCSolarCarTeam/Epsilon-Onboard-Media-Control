@@ -52,7 +52,6 @@ void MusicBar::drawSongName()
     int songHeight;
 
     songName = mPlayer->currentSong();
-    printf("Song name is: %s\n", songName.c_str());
     songStringLength = songName.length();
     songName = songName.substr(12, songStringLength - 16); // removes SongLibrary/ and .mp3 from songName
     songChar = songName.c_str(); 
