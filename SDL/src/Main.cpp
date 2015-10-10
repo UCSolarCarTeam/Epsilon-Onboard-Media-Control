@@ -184,7 +184,6 @@ void processGPIO(WiringPiButtons::Button button)
 	    musicPlayer.changeVolume(-0.1);
 	    break;
 	case WiringPiButtons::TOGGLEPLAY:
-	    printf("Space was pressed!\n");
 	    musicPlayer.playPause();
 	default:
 	    break;
@@ -214,10 +213,7 @@ void close()
 int main(int argc, char* argv[])
 {
     #ifdef RUNNINGONPI
-        printf("Running on pi!\n");
         WiringPiButtons buttonManager;
-    #else
-        printf("Not running on pi!\n");
     #endif  
 
     if (!init_SDL())

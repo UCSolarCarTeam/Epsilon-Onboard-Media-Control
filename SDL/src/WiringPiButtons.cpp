@@ -41,7 +41,6 @@ WiringPiButtons::Button WiringPiButtons::getEvents()
             {
                 Button tempValue = returnButton;
                 returnButton = RELEASED;
-	            printf("FUNCTION returned %d\n",tempValue);
                 return tempValue; 
             }
 
