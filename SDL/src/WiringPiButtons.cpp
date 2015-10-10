@@ -38,8 +38,8 @@ WiringPiButtons::Button WiringPiButtons::getEvents()
             if (returnButton != 0)
             {
                 Button tempValue = returnButton;
-                returnButton = 0;
-	        printf("FUNCTION returned %d\n",tempValue);
+                returnButton = RELEASED;
+	            printf("FUNCTION returned %d\n",tempValue);
                 return tempValue; 
             }
 
