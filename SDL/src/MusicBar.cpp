@@ -14,8 +14,8 @@ int MusicBar::init()
     int songNameFontSize; 
     int timeFontSize;
     
-    songNameFontSize = 50;
-    timeFontSize = 20;
+    songNameFontSize = 45;
+    timeFontSize = 25;
     
     if (TTF_Init() !=0)
     {
@@ -24,7 +24,7 @@ int MusicBar::init()
         exit(1);
     }
 
-    songNameFont = TTF_OpenFont("assets/Trebuchet-MS.ttf", songNameFontSize);
+    songNameFont = TTF_OpenFont("assets/ant-maru.ttf", songNameFontSize);
     if (songNameFont == NULL)
     {
         fprintf(stderr, "TTF_OpenFont Failed%s\n", TTF_GetError());
@@ -52,15 +52,21 @@ void MusicBar::drawSongName()
     int songHeight;
 
     songName = mPlayer->currentSong();
+    printf("Song name is: %s\n", songName.c_str());
     songStringLength = songName.length();
     songName = songName.substr(12, songStringLength - 16); // removes SongLibrary/ and .mp3 from songName
-    songChar = songName.c_str();
+    songChar = songName.c_str(); 
     
     SDL_Surface *songSurface;
     SDL_Color songColor = {255, 255, 255}; // EDIT
-    songSurface = TTF_RenderText_Solid(songNameFont, songChar, songColor);
+    SDL_Color songBackgroundColor = {43,43,43};
+    //songSurface = TTF_RenderText_Solid(songNameFont, songChar, songColor);
+    //songSurface = TTF_RenderUTF8_Shaded(songNameFont, songChar, songColor, songBackgroundColor );
+    songSurface = TTF_RenderUTF8_Blended(songNameFont, songChar, songColor);
     TTF_SizeText(songNameFont, songChar, &songWidth, &songHeight);
-    SDL_Rect songLocation = {1080/2 - songWidth/2, 0, 0, 0};      // EDIT
+    //if (songWidth > 880)
+    //    songFontSize = 30;
+    SDL_Rect songLocation = {1080/2 - songWidth/2, 64/2 - songHeight/2, 0, 0};      // EDIT
     SDL_BlitSurface(songSurface, NULL, surface, &songLocation);
     SDL_FreeSurface(songSurface);
 }
@@ -146,14 +152,16 @@ void MusicBar::drawSongTime()
     
     SDL_Surface *songCurrentTimeSurface;
     SDL_Color songCurrentTimeColor = {255, 255, 255}; // EDIT
-    songCurrentTimeSurface = TTF_RenderText_Solid(timeFont, songCurrentCharTime, songCurrentTimeColor);
+    //songCurrentTimeSurface = TTF_RenderText_Solid(timeFont, songCurrentCharTime, songCurrentTimeColor);
+    songCurrentTimeSurface = TTF_RenderText_Blended(timeFont, songCurrentCharTime, songCurrentTimeColor);
     SDL_Rect songCurrentTimeLocation = {0, 4, 0, 0}; // EDIT
     SDL_BlitSurface(songCurrentTimeSurface, NULL, surface, &songCurrentTimeLocation);
     SDL_FreeSurface(songCurrentTimeSurface);
     
     SDL_Surface *songTotalTimeSurface;
     SDL_Color songTotalTimeColor = {255, 255, 255}; // EDIT
-    songTotalTimeSurface = TTF_RenderText_Solid(timeFont, songTotalCharTime, songTotalTimeColor);
+    //songTotalTimeSurface = TTF_RenderText_Solid(timeFont, songTotalCharTime, songTotalTimeColor);
+    songTotalTimeSurface = TTF_RenderText_Blended(timeFont, songTotalCharTime, songTotalTimeColor);
     TTF_SizeText(timeFont, songTotalCharTime, &totalTimeWidth, &totalTimeHeight);
     SDL_Rect songTotalTimeLocation = {1080 - totalTimeWidth, 4, 0}; // EDIT
     SDL_BlitSurface(songTotalTimeSurface, NULL, surface, &songTotalTimeLocation);
