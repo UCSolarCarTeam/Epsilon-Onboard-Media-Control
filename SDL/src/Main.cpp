@@ -1,4 +1,3 @@
-
 #include <cv.h>
 #include "opencv2/opencv.hpp"
 #include "SongLoader.h"
@@ -15,7 +14,6 @@ extern "C" {
     #include <SDL.h>
     #include <SDL_ttf.h>
 }
-#include <iostream>
 #include <stdio.h>
 #include <unistd.h>
 
@@ -27,10 +25,8 @@ extern "C" {
     #ifndef RUNNINGONPI
     #define RUNNINGONPI
     #endif
-    #include <wiringPi.h>
+    #include "WiringPiButtons.hpp"
 #endif
-
-using namespace cv;
 
 #define SCREEN_HEIGHT 768
 #define SCREEN_WIDTH 1232
@@ -39,16 +35,11 @@ void processEvents();
 void signalToQuit();
 void close();
 
-bool updatedImage = false;
-int bufferNumber = 1;
-
 SDL_Renderer* renderer = NULL;
 SDL_Window* window = NULL;
 
 SDL_Rect videoRect;
 SDL_Rect musicBarRect;
-int cameraHeight;
-int cameraWidth;
 int noSongs;
 
 VideoStream backupCamera;
@@ -187,7 +178,30 @@ void processEvents()
             }
         }
 }
-
+#ifdef RUNNINGONPI
+void processGPIO(WiringPiButtons::Button button)
+{
+    switch(button)
+    {
+        case WiringPiButtons::PREVIOUS:
+	    musicPlayer.previousSong();
+	    break;
+	case WiringPiButtons::NEXT:
+	    musicPlayer.nextSong();
+	    break;
+	case WiringPiButtons::VOLUMEUP:
+	    musicPlayer.changeVolume(0.1);
+	    break;
+	case WiringPiButtons::VOLUMEDOWN:
+	    musicPlayer.changeVolume(-0.1);
+	    break;
+	case WiringPiButtons::TOGGLEPLAY:
+	    musicPlayer.playPause();
+	default:
+	    break;
+    }
+}
+#endif
 
 /* Signals all the threads to quit and then waits for the threads */
 void signalToQuit()
@@ -210,6 +224,10 @@ void close()
 
 int main(int argc, char* argv[])
 {
+    #ifdef RUNNINGONPI
+        WiringPiButtons buttonManager;
+    #endif  
+
     if (!init_SDL())
     {
         fprintf(stderr, "Could not initialize SDL!\n");
@@ -235,6 +253,10 @@ int main(int argc, char* argv[])
     while (!quit)
     {
         processEvents();
+        #ifdef RUNNINGONPI
+        processGPIO(buttonManager.getEvents());
+        #endif
+
         if (show_Camera())
         {
             SDL_Surface* surfaceBar;
