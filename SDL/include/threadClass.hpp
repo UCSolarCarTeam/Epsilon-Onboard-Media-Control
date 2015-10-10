@@ -1,4 +1,6 @@
-//#include <pthread.h>
+#ifndef THREADCLASS_H
+#define THREADCLASS_H
+
 #include <thread>
 
 /** CREDIT: http://stackoverflow.com/a/1151615 **/
@@ -34,3 +36,5 @@ private:
 
    pthread_t _thread;
 };
+
+#endif

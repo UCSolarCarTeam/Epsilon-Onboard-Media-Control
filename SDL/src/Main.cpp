@@ -1,23 +1,20 @@
 
 #include <cv.h>
 #include "opencv2/opencv.hpp"
-#include <SongLoader.h>
-#include <SongPlayer.h>
+#include "SongLoader.h"
+#include "SongPlayer.h"
+#include "videoStream.hpp"
 #include <MusicBar.h>
-
 
 //for the rasperry pi
 #ifndef INT64_C
 #define INT64_C(c) (c ## LL)
 #define UINT64_C(c) (c ## ULL)
 #endif
-
 extern "C" {
     #include <SDL.h>
-    #include <SDL_thread.h>
     #include <SDL_ttf.h>
 }
-
 #include <iostream>
 #include <stdio.h>
 #include <unistd.h>
@@ -38,21 +35,13 @@ using namespace cv;
 #define SCREEN_HEIGHT 768
 #define SCREEN_WIDTH 1232
 
-int cameraWorker(void* data);
 void processEvents();
 void signalToQuit();
 void close();
 
-//attempting double buffer
-IplImage threadImage1;
-IplImage threadImage2;
-IplImage threadImage3;
 bool updatedImage = false;
 int bufferNumber = 1;
 
-VideoCapture cap(0);
-
-Mat frame;
 SDL_Renderer* renderer = NULL;
 SDL_Window* window = NULL;
 
@@ -62,12 +51,13 @@ int cameraHeight;
 int cameraWidth;
 int noSongs;
 
-SDL_Thread* SDLCameraThread;
+VideoStream backupCamera;
 
 int quit;
 
 SongPlayer musicPlayer;
 MusicBar gordonMusic(&musicPlayer);
+
 /***********************************************************************
 /*                          SDL functions
 /***********************************************************************/
@@ -84,7 +74,7 @@ bool init_SDL()
     }
     else
     {
-        window = SDL_CreateWindow("Video Application", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, 0);
+        window = SDL_CreateWindow("Video Application", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_FULLSCREEN);
         if (window == NULL)
         {
             printf("Window could not be created! SDL Error: %s\n", SDL_GetError());
@@ -121,57 +111,21 @@ bool init_CameraSettings()
     musicBarRect.y = h-49;
     musicBarRect.w = w; 
     musicBarRect.h = 49;
-    cameraWidth = cap.get(CV_CAP_PROP_FRAME_WIDTH);
-    cameraHeight = cap.get(CV_CAP_PROP_FRAME_HEIGHT);
-    printf("Camera Width %d, Camera Height %d \n",cameraWidth,cameraHeight);
+    //cameraWidth = cap.get(CV_CAP_PROP_FRAME_WIDTH);
+    //cameraHeight = cap.get(CV_CAP_PROP_FRAME_HEIGHT);
+    //printf("Camera Width %d, Camera Height %d \n",cameraWidth,cameraHeight);
+    
     return success;
-}
-
-int cameraWorker(void* data)
-{
-    while (!quit)
-    {
-        cap >> frame;
-        if(bufferNumber == 1)
-        {
-            threadImage2 = frame;
-            bufferNumber = 2;
-        }
-        else if (bufferNumber == 2)
-        {
-            threadImage3 = frame;
-            bufferNumber = 3;
-        }
-        else
-        {
-            threadImage1 = frame;
-            bufferNumber = 1;
-        }
-        updatedImage = true;
-    }
-    return 0;
 }
 
 
 // Shows an individual frame of the supplied video
 int show_Camera()
 {
-    if(updatedImage == true)
+    if(backupCamera.imageReady())
     {
         IplImage* img = NULL;
-        updatedImage = false;
-        if(bufferNumber == 1)
-        {
-            img = &threadImage1;
-        }
-        else if (bufferNumber == 2)
-        {
-            img = &threadImage2;
-        }
-        else
-        {
-            img = &threadImage3;
-        }
+        img = backupCamera.getFrame();
         SDL_Surface* surface = SDL_CreateRGBSurfaceFrom((void*)img->imageData,
             img->width,
             img->height,
@@ -179,6 +133,7 @@ int show_Camera()
             img->widthStep,
             0xff0000, 0x00ff00, 0x0000ff, 0
             );
+
         SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
         SDL_FreeSurface(surface);
         surface = NULL;
@@ -237,7 +192,7 @@ void processEvents()
 /* Signals all the threads to quit and then waits for the threads */
 void signalToQuit()
 {
-    quit = true;
+    backupCamera.signalToQuit();
     musicPlayer.songQuit();
 }
 
@@ -260,15 +215,9 @@ int main(int argc, char* argv[])
         fprintf(stderr, "Could not initialize SDL!\n");
         return -1;
     }
-    if (!cap.isOpened())
-    {
-        fprintf(stderr, "Failed to load file!\n");
-        return -1;
-    }
     if (!init_CameraSettings())
     {
         printf("Failed to load settings!\n");
-        
         return -1;
     }
 
@@ -280,22 +229,13 @@ int main(int argc, char* argv[])
     {
         musicPlayer.StartInternalThread();
     }
-
-    //initSongPlayer();
-    //noSongs = loadSong((char *)currentSong().c_str());
-
-    SDLCameraThread = SDL_CreateThread(cameraWorker, "Backup Camera Thread", NULL);
-    //if (!noSongs)
-        //SDLMusicThread = SDL_CreateThread(songThread, "Music Playing Thread", NULL);
-
-    int screenUpdate = 0;
+    backupCamera.StartInternalThread();
 
 
     while (!quit)
     {
-        screenUpdate = show_Camera();
         processEvents();
-        if (screenUpdate == 1)
+        if (show_Camera())
         {
             SDL_Surface* surfaceBar;
             gordonMusic.update();
@@ -311,6 +251,6 @@ int main(int argc, char* argv[])
     }
 
     musicPlayer.WaitForInternalThreadToExit();
-    SDL_WaitThread(SDLCameraThread, NULL);
+    backupCamera.WaitForInternalThreadToExit();
     return 0;
 }
