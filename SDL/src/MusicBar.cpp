@@ -62,7 +62,7 @@ void MusicBar::drawSongName()
     SDL_Color songColor = {255, 255, 255}; 
     songSurface = TTF_RenderUTF8_Blended(songNameFont, songChar, songColor);
     TTF_SizeText(songNameFont, songChar, &songWidth, &songHeight);
-    SDL_Rect songLocation = {musicbarSurfaceWidth/2 - songWidth/2, musicbarSurfaceHeight/2 - songHeight/2, 0, 0};      // EDIT
+    SDL_Rect songLocation = {musicbarSurfaceWidth/2 - songWidth/2, musicbarSurfaceHeight/2 - songHeight/2, 0, 0};      
     SDL_BlitSurface(songSurface, NULL, surface, &songLocation);
     SDL_FreeSurface(songSurface);
 }
@@ -146,8 +146,7 @@ void MusicBar::drawSongTime()
 
     songTotalCharTime =  songTotalStrTime.c_str();
     
-    
-    // SDL CALLS //
+    // SDL CALLS//
     
     SDL_Color songTimeColor = {255, 255, 255};
     
@@ -183,58 +182,56 @@ void MusicBar::drawVolumeBar()
     
     songVolumePercent = songVolumeCurrent / songVolumeMax;
     
-    // Volume Background Bar Prototype
+    // Volume Background Bar
     SDL_Surface *volumeBackgroundSurface;
-    int volumeBackgroundHeight;
-    int volumeBackgroundXLocation;
-    int volumeBackgroundYLocation;
-    int i; 
+    int volumeBarHeight;
+    int volumeBarXLocation;
+    int volumeBarYLocation;
     int volumeBarNumber;
+    int i;
+    int colorGreen;
 
-    volumeBarNumber = 20;
-    
-    volumeBackgroundHeight = 4;
-    volumeBackgroundXLocation = 880;
-    volumeBackgroundYLocation = 50;
+    volumeBarNumber = 20; 
+    volumeBarHeight = 4;
+    volumeBarXLocation = 880;
+    volumeBarYLocation = 50;
     
     for (i = 0; i < volumeBarNumber; i++)
     {
-        volumeBackgroundSurface = SDL_CreateRGBSurface(0,4, volumeBackgroundHeight,32,0,0,0,0);
+        volumeBackgroundSurface = SDL_CreateRGBSurface(0,4, volumeBarHeight,32,0,0,0,0);
         SDL_FillRect(volumeBackgroundSurface, NULL, SDL_MapRGB(volumeBackgroundSurface->format,0,0,0));
-        SDL_Rect volumeBackgroundLocation = {volumeBackgroundXLocation,volumeBackgroundYLocation,0,0};
-        SDL_BlitSurface(volumeBackgroundSurface, NULL, surface, &volumeBackgroundLocation);
+        SDL_Rect volumeBarLocation = {volumeBarXLocation,volumeBarYLocation,0,0};
+        SDL_BlitSurface(volumeBackgroundSurface, NULL, surface, &volumeBarLocation);
         SDL_FreeSurface(volumeBackgroundSurface);
 
-        volumeBackgroundHeight += 2; 
-        volumeBackgroundXLocation += 6; 
-        volumeBackgroundYLocation -= 2;
+        //Increments for changing bar size
+        volumeBarHeight += 2;
+        volumeBarXLocation += 6; 
+        volumeBarYLocation -= 2;
     }
 
-    // Volume Bar Prototype
+    // Volume bar
     SDL_Surface *volumeSurface;
-    int volumeHeight;
-    int volumeXLocation;
-    int volumeYLocation;
-    int colorGreen;
     
-    volumeHeight = 4;
-    volumeXLocation = 880;
-    volumeYLocation = 50;
+    volumeBarHeight = 4;
+    volumeBarXLocation = 880;
+    volumeBarYLocation = 50;
     colorGreen = 162;
     songVolumePercent = songVolumePercent * volumeBarNumber - 0.1;
 
     for (i = 0; i < songVolumePercent; i++) 
     {
-        volumeSurface = SDL_CreateRGBSurface(0,4, volumeHeight, 32,0,0,0,0); 
+        volumeSurface = SDL_CreateRGBSurface(0,4, volumeBarHeight, 32,0,0,0,0); 
         SDL_FillRect(volumeSurface, NULL, SDL_MapRGB(volumeSurface->format,255,colorGreen,0)); 
-        SDL_Rect volumeLocation = {volumeXLocation, volumeYLocation, 0, 0}; 
-        SDL_BlitSurface(volumeSurface, NULL, surface, &volumeLocation);
+        SDL_Rect volumeBarLocation = {volumeBarXLocation, volumeBarYLocation, 0, 0}; 
+        SDL_BlitSurface(volumeSurface, NULL, surface, &volumeBarLocation);
         SDL_FreeSurface(volumeSurface);
     
-        volumeHeight += 2; 
+        // Increments for changing bar size and gradient
+        volumeBarHeight += 2; 
         colorGreen -= 6; 
-        volumeXLocation += 6; 
-        volumeYLocation -= 2; 
+        volumeBarXLocation += 6; 
+        volumeBarYLocation -= 2; 
     }
 }
 
