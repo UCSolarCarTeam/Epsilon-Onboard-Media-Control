@@ -14,6 +14,9 @@ fi
 
 echo "You are running on the pi, we will set up Auto Launch"
 cd ..
+cp assets/*.ttf /usr/share/fonts
+cp SongLibray/*.mp3 /home/Music
+
 FILECONTENTS=`grep -Eo "onboardmediacontrol" /etc/rc.local`
 echo "filecontents = $FILECONTENTS"
 if [ -z $FILECONTENTS ]
