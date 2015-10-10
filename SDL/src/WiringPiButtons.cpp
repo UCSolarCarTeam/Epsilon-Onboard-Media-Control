@@ -60,28 +60,28 @@ WiringPiButtons::Button WiringPiButtons::getEvents()
             if (!digitalRead(TOGGLEPLAY))  
                 state = TOGGLEPLAY; 
             break;
-        case UP:
+        case VOLUMEDOWN:
             if (digitalRead(VOLUMEDOWN))
             {
                 returnButton = VOLUMEDOWN;
                 state = RELEASED; 
             }
             break;
-        case DOWN:
+        case VOLUMEUP:
             if (digitalRead(VOLUMEUP)) 
             {
                 returnButton = VOLUMEUP;
                 state = RELEASED; 
             }
             break;
-        case LEFT:
+        case NEXT:
             if (digitalRead(NEXT))
             {
                 returnButton = NEXT;
                 state = RELEASED; 
             }
             break;
-        case RIGHT:
+        case PREVIOUS:
             if (digitalRead(PREVIOUS)) 
             {
                 returnButton = PREVIOUS;
