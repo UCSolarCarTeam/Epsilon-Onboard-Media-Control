@@ -14,17 +14,19 @@ fi
 
 echo "You are running on the pi, we will set up Auto Launch"
 cd ..
-FILECONTENTS=`grep -Eo "onboardmediacontrol" /etc/xdg/lxsession/LXDE-pi/autostart`
+FILECONTENTS=`grep -Eo "onboardmediacontrol" /etc/rc.local`
 echo "filecontents = $FILECONTENTS"
 if [ -z $FILECONTENTS ]
 then
         echo "Setting up AutoLaunch"
-        sudo sh -c 'CAMERAPATH=`pwd`; echo "@$CAMERAPATH/BackupCamera" >> /etc/xdg/lxsession/LXDE-pi/autostart'
+        sed -i '$ d' /etc/rc.local
+        sudo sh -c 'CAMERAPATH=`pwd`; echo "@$CAMERAPATH/BackupCamera" >> /etc/rc.local'
+        echo "exit 0" >> /etc/rc.local
 else
         echo "Autolaunch already set up!"
 fi
 
-#Sets up Fastboot
+Sets up Fastboot
 apt-get install systemd
 FASTBOOT=`cat /boot/cmdline.txt`
 SYSTEMSET=`echo $FASTBOOT | grep -o "systemd"`
