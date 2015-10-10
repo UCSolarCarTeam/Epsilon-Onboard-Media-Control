@@ -4,6 +4,7 @@
 #include "SongLoader.h"
 #include "SongPlayer.h"
 #include "videoStream.hpp"
+#include <MusicBar.h>
 
 //for the rasperry pi
 #ifndef INT64_C
@@ -45,14 +46,18 @@ SDL_Renderer* renderer = NULL;
 SDL_Window* window = NULL;
 
 SDL_Rect videoRect;
+SDL_Rect musicBarRect;
 int cameraHeight;
 int cameraWidth;
 int noSongs;
 
-SongPlayer musicPlayer;
 VideoStream backupCamera;
 
 int quit;
+
+SongPlayer musicPlayer;
+MusicBar gordonMusic(&musicPlayer);
+
 /***********************************************************************
 /*                          SDL functions
 /***********************************************************************/
@@ -69,7 +74,7 @@ bool init_SDL()
     }
     else
     {
-        window = SDL_CreateWindow("Video Application", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
+        window = SDL_CreateWindow("Video Application", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_FULLSCREEN);
         if (window == NULL)
         {
             printf("Window could not be created! SDL Error: %s\n", SDL_GetError());
@@ -102,6 +107,14 @@ bool init_CameraSettings()
     videoRect.w = w;
     videoRect.h = h-50; //change 50 to whatever height we want for the PI cam
 
+    musicBarRect.x = 0;
+    musicBarRect.y = h-49;
+    musicBarRect.w = w; 
+    musicBarRect.h = 49;
+    //cameraWidth = cap.get(CV_CAP_PROP_FRAME_WIDTH);
+    //cameraHeight = cap.get(CV_CAP_PROP_FRAME_HEIGHT);
+    //printf("Camera Width %d, Camera Height %d \n",cameraWidth,cameraHeight);
+    
     return success;
 }
 
@@ -129,7 +142,6 @@ int show_Camera()
         SDL_DestroyTexture(texture);
         return 1;
     }
-
     return 0;
 }
 
@@ -219,13 +231,21 @@ int main(int argc, char* argv[])
     }
     backupCamera.StartInternalThread();
 
+
     while (!quit)
     {
         processEvents();
         if (show_Camera())
         {
-            SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
+            SDL_Surface* surfaceBar;
+            gordonMusic.update();
+            surfaceBar = gordonMusic.returnMusicBar();
+            SDL_RendererFlip flip = SDL_FLIP_NONE;
+            SDL_Texture* textureMusicBar = SDL_CreateTextureFromSurface(renderer, surfaceBar);
+            SDL_RenderCopyEx(renderer, textureMusicBar, NULL, &musicBarRect ,0, NULL, flip);
+            SDL_DestroyTexture(textureMusicBar);
             SDL_RenderPresent(renderer);
+            SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
             SDL_RenderClear(renderer);
         }
     }
