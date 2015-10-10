@@ -22,13 +22,13 @@ void WiringPiButtons::initButton(int buttonNumber)
     pullUpDnControl(buttonNumber, PUD_UP); //Default Pulled UP
 }
 
-Button WiringPiButtons::getEvents()
+WiringPiButtons::Button WiringPiButtons::getEvents()
 {
 
     deltaTime = std::chrono::duration_cast<std::chrono::duration<double>>(std::chrono::high_resolution_clock::now() - period_start);
     if (deltaTime.count() < 0.04)
     {
-        return 0;
+        return RELEASED;
     }
     period_start = std::chrono::high_resolution_clock::now(); 
 
@@ -37,7 +37,7 @@ Button WiringPiButtons::getEvents()
         case RELEASED:
             if (returnButton != 0)
             {
-                int tempValue = returnButton;
+                Button tempValue = returnButton;
                 returnButton = 0;
 	        printf("FUNCTION returned %d\n",tempValue);
                 return tempValue; 

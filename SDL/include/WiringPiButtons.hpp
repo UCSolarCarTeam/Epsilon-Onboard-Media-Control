@@ -20,7 +20,7 @@ class WiringPiButtons
       Button state;
       std::chrono::high_resolution_clock::time_point period_start;
       std::chrono::duration<double> deltaTime;
-      int returnButton;
+      Button returnButton;
 };
 
 #endif
