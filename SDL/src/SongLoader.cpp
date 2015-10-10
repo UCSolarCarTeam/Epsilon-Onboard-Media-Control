@@ -56,11 +56,19 @@ int SongLoader::shuffleSongNames()
 
 
 std::string SongLoader::nextSong()
-{
-    song++;
-    CurrentSong=container[song];
+{ 
     if(song>=(counter-1))
+    {
         shuffleSongNames();
+        song = 0;
+    }
+    else
+    {
+        song++;
+    }    
+    
+    CurrentSong=container[song];
+    
     if (counter == 0)
         return "";
     return ("SongLibrary/" + CurrentSong);
@@ -72,8 +80,13 @@ std::string SongLoader::previousSong()
     {
         song=counter-1;
     }
-    song--;
+    else
+    {
+        song--;
+    }
+    
     CurrentSong=container[song];
+    
     if (counter == 0)
         return "";
     return ("SongLibrary/" + CurrentSong);
