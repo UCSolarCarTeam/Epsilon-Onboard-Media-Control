@@ -20,7 +20,7 @@ int SongLoader::readSongNames()
     DIR *dir;
     struct dirent *ent;
     // Change string to directory with songs in it
-    if ((dir = opendir("SongLibrary")) != NULL)
+    if ((dir = opendir("/home/Music")) != NULL)
     {
         while ((ent = readdir(dir)) != NULL)
         {
@@ -56,7 +56,7 @@ int SongLoader::shuffleSongNames()
 
 
 std::string SongLoader::nextSong()
-{ 
+{
     if(song>=(counter-1))
     {
         shuffleSongNames();
@@ -65,13 +65,13 @@ std::string SongLoader::nextSong()
     else
     {
         song++;
-    }    
-    
+    }
+
     CurrentSong=container[song];
-    
+
     if (counter == 0)
         return "";
-    return ("SongLibrary/" + CurrentSong);
+    return ("/home/Music/" + CurrentSong);
 }
 
 std::string SongLoader::previousSong()
@@ -84,12 +84,12 @@ std::string SongLoader::previousSong()
     {
         song--;
     }
-    
+
     CurrentSong=container[song];
-    
+
     if (counter == 0)
         return "";
-    return ("SongLibrary/" + CurrentSong);
+    return ("/home/Music/" + CurrentSong);
 }
 
 std::string SongLoader::currentSong()
@@ -98,7 +98,7 @@ std::string SongLoader::currentSong()
         song++;
     if (counter == 0)
         return "";
-    return ("SongLibrary/" + container[song]);
+    return ("/home/Music/" + container[song]);
 }
 
 
