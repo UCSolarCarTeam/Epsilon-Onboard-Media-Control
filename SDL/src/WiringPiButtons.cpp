@@ -7,10 +7,12 @@
 WiringPiButtons::WiringPiButtons()
 {
     wiringPiSetup(); // Initialize wiringPi
-    initButton(UP);
-    initButton(DOWN);
-    initButton(LEFT);
-    initButton(RIGHT);
+    initButton(SPACE);
+    initButton(VOLUMEDOWN);
+    initButton(VOLUMEUP);
+    initButton(NEXT);
+    initButton(PREVIOUS);
+    initButton(TOGGLEPLAY);
     state = RELEASED;
     period_start = std::chrono::high_resolution_clock::now();
     returnButton = RELEASED;
