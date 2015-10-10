@@ -171,21 +171,19 @@ void processGPIO(WiringPiButtons::Button button)
 {
     switch(button)
     {
-        case WiringPiButtons::LEFT:
-	    printf("Left arrow was Pressed!\n");
+        case WiringPiButtons::PREVIOUS:
 	    musicPlayer.previousSong();
 	    break;
-	case WiringPiButtons::RIGHT:
-	    printf("Right arrow was Pressed!\n");
+	case WiringPiButtons::NEXT:
 	    musicPlayer.nextSong();
 	    break;
-	case WiringPiButtons::UP:
+	case WiringPiButtons::VOLUMEUP:
 	    musicPlayer.changeVolume(0.1);
 	    break;
-	case WiringPiButtons::DOWN:
+	case WiringPiButtons::VOLUMEDOWN:
 	    musicPlayer.changeVolume(-0.1);
 	    break;
-	case WiringPiButtons::SPACE:
+	case WiringPiButtons::TOGGLEPLAY:
 	    printf("Space was pressed!\n");
 	    musicPlayer.playPause();
 	default:

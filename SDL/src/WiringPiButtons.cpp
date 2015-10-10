@@ -43,48 +43,53 @@ WiringPiButtons::Button WiringPiButtons::getEvents()
                 return tempValue; 
             }
 
-            if (!digitalRead(UP))      
-                state = UP; 
+            if (!digitalRead(VOLUMEDOWN))      
+                state = VOLUMEDOWN; 
 
-            if (!digitalRead(DOWN))    
-                state = DOWN; 
+            if (!digitalRead(VOLUMEUP))    
+                state = VOLUMEUP; 
 
-            if (!digitalRead(LEFT))
-                state = LEFT;
+            if (!digitalRead(NEXT))
+                state = NEXT;
 
-            if (!digitalRead(RIGHT))  
-                state = RIGHT; 
-
+            if (!digitalRead(PREVIOUS))  
+                state = PREVIOUS; 
+            
+            if (!digitalRead(TOGGLEPLAY))  
+                state = TOGGLEPLAY; 
             break;
         case UP:
-            if (digitalRead(UP))
+            if (digitalRead(VOLUMEDOWN))
             {
-                printf("From UP Button %d was pressed!\n", state);
-                returnButton = UP;
+                returnButton = VOLUMEDOWN;
                 state = RELEASED; 
             }
             break;
         case DOWN:
-            if (digitalRead(DOWN)) 
+            if (digitalRead(VOLUMEUP)) 
             {
-                printf("From DOWN Button %d was pressed!\n", state);
-                returnButton = DOWN;
+                returnButton = VOLUMEUP;
                 state = RELEASED; 
             }
             break;
         case LEFT:
-            if (digitalRead(LEFT))
+            if (digitalRead(NEXT))
             {
-                printf("From LEFT Button %d was pressed!\n", state);
-                returnButton = LEFT;
+                returnButton = NEXT;
                 state = RELEASED; 
             }
             break;
         case RIGHT:
-            if (digitalRead(RIGHT)) 
+            if (digitalRead(PREVIOUS)) 
             {
-                printf("From RIGHT Button %d was pressed!\n", state);
-                returnButton = RIGHT;
+                returnButton = PREVIOUS;
+                state = RELEASED; 
+            }
+            break;
+        case TOGGLEPLAY:
+            if (digitalRead(TOGGLEPLAY)) 
+            {
+                returnButton = TOGGLEPLAY;
                 state = RELEASED; 
             }
             break;

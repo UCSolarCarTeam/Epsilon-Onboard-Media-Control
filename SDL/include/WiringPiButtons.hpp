@@ -10,7 +10,7 @@
 class WiringPiButtons
 {
     public:
-      enum Button { SPACE = 29, UP = 25, DOWN = 24, LEFT  = 23, RIGHT = 22, RELEASED = 0};
+      enum Button { SPACE = 29, VOLUMEDOWN = 25, VOLUMEUP = 24, NEXT  = 23, PREVIOUS = 22, TOGGLEPLAY = 21, RELEASED = 0};
       WiringPiButtons();
       Button getEvents();  
       //run `gpio readall` on the pi to see the wiringPi numbering 
