@@ -21,6 +21,9 @@ class MusicBar
     std::string convertToString(int songIntTime);
     int init();
 
+    int musicbarSurfaceWidth;
+    int musicbarSurfaceHeight;
+
 public:
     void update();
     MusicBar(SongPlayer *songPlayer);
