@@ -14,6 +14,7 @@ fi
 
 echo "You are running on the pi, we will set up Auto Launch"
 cd ..
+sudo mkdir /home/Music
 cp assets/*.ttf /usr/share/fonts
 cp SongLibray/*.mp3 /home/Music
 
