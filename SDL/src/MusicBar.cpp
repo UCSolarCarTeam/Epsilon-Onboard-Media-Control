@@ -24,7 +24,7 @@ int MusicBar::init()
         exit(1);
     }
 
-    songNameFont = TTF_OpenFont("assets/ant-maru.ttf", songNameFontSize);
+    songNameFont = TTF_OpenFont("/usr/share/fonts/ant-maru.ttf", songNameFontSize);
     if (songNameFont == NULL)
     {
         fprintf(stderr, "TTF_OpenFont Failed%s\n", TTF_GetError());
@@ -33,7 +33,7 @@ int MusicBar::init()
         exit(1);
     }
     
-    timeFont = TTF_OpenFont("assets/Trebuchet-MS.ttf", timeFontSize);
+    timeFont = TTF_OpenFont("/usr/share/fonts/Trebuchet-MS.ttf", timeFontSize);
     if (timeFont == NULL)
     {
         fprintf(stderr, "TTF_OpenFont Failed%s\n", TTF_GetError());
