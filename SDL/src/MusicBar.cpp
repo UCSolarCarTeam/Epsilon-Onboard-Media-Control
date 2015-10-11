@@ -176,7 +176,7 @@ void MusicBar::drawVolumeBar()
     double songVolumeCurrent;
     double songVolumePercent;
     double songVolumeMax;
-    songVolumeMax = 2.0;
+    songVolumeMax = 0.4;
 
     songVolumeCurrent = mPlayer->getVolume();
     

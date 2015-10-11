@@ -170,10 +170,10 @@ void processEvents()
                             musicPlayer.nextSong();
                             break;
                         case SDLK_UP:
-                            musicPlayer.changeVolume(0.1);
+                            musicPlayer.changeVolume(0.02);
                             break;
                         case SDLK_DOWN:
-                            musicPlayer.changeVolume(-0.1);
+                            musicPlayer.changeVolume(-0.02);
                             break;
                         case SDLK_SPACE:
                             printf("Space was pressed!\n");
@@ -194,10 +194,10 @@ void processGPIO(WiringPiButtons::Button button)
 	    musicPlayer.nextSong();
 	    break;
 	case WiringPiButtons::VOLUMEUP:
-	    musicPlayer.changeVolume(0.1);
+	    musicPlayer.changeVolume(0.02);
 	    break;
 	case WiringPiButtons::VOLUMEDOWN:
-	    musicPlayer.changeVolume(-0.1);
+	    musicPlayer.changeVolume(-0.02);
 	    break;
 	case WiringPiButtons::TOGGLEPLAY:
 	    musicPlayer.playPause();

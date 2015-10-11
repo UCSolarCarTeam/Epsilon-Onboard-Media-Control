@@ -16,7 +16,7 @@ void SongPlayer::changeVolume(double change)
 {
     double baseVolume, realVolume, decibels;
     mpg123_getvolume(mh, &baseVolume, &realVolume, &decibels);
-    if ( baseVolume < 2.0 || change < 0)
+    if ( baseVolume < 0.4 || change < 0)
         mpg123_volume_change(mh, change);
 }
 
@@ -62,6 +62,7 @@ int SongPlayer::loadSong(char* songName)
     int err;
     driver = ao_default_driver_id();
     mh = mpg123_new(NULL, &err);
+    mpg123_volume(mh, 0.1);
     // open the file and get the decoding format
     mpg123_open(mh, songName);
     mpg123_getformat(mh, &rate, &channels, &encoding); // error: Invalid UTF16 surrogate pair at 10 (0xff08). when running this line
