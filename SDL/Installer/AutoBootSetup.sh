@@ -24,7 +24,7 @@ if [ -z $FILECONTENTS ]
 then
         echo "Setting up AutoLaunch"
         sed -i '$ d' /etc/rc.local
-        sudo sh -c 'CAMERAPATH=`pwd`; echo "@$CAMERAPATH/BackupCamera" >> /etc/rc.local'
+        sudo sh -c 'CAMERAPATH=`pwd`; echo "$CAMERAPATH/BackupCamera" >> /etc/rc.local'
         echo "exit 0" >> /etc/rc.local
 else
         echo "Autolaunch already set up!"
