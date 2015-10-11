@@ -24,7 +24,7 @@ int MusicBar::init()
         exit(1);
     }
 
-    songNameFont = TTF_OpenFont("/usr/share/fonts/ant-maru.ttf", songNameFontSize);
+    songNameFont = TTF_OpenFont("/usr/share/fonts/ArialUni.ttf", songNameFontSize);
     if (songNameFont == NULL)
     {
         fprintf(stderr, "TTF_OpenFont Failed%s\n", TTF_GetError());
@@ -33,7 +33,7 @@ int MusicBar::init()
         exit(1);
     }
     
-    timeFont = TTF_OpenFont("/usr/share/fonts/Trebuchet-MS.ttf", timeFontSize);
+    timeFont = TTF_OpenFont("/usr/share/fonts/ArialUni.ttf", timeFontSize);
     if (timeFont == NULL)
     {
         fprintf(stderr, "TTF_OpenFont Failed%s\n", TTF_GetError());
@@ -50,7 +50,7 @@ void MusicBar::drawSongName()
     const char * songChar;
     int songWidth;
     int songHeight;
-
+    
     songName = mPlayer->currentSong();
     songStringLength = songName.length();
     songName = songName.substr(12, songStringLength - 16); // removes SongLibrary/ and .mp3 from songName
@@ -62,7 +62,7 @@ void MusicBar::drawSongName()
     SDL_Color songColor = {255, 255, 255}; 
     songSurface = TTF_RenderUTF8_Blended(songNameFont, songChar, songColor);
     TTF_SizeText(songNameFont, songChar, &songWidth, &songHeight);
-    SDL_Rect songLocation = {musicbarSurfaceWidth/2 - songWidth/2, musicbarSurfaceHeight/2 - songHeight/2, 0, 0};      
+    SDL_Rect songLocation = {(880-50)/2 - songWidth/2, musicbarSurfaceHeight/2 - songHeight/2, 0, 0}; //880 is start of volume bar, 50 is end of current time
     SDL_BlitSurface(songSurface, NULL, surface, &songLocation);
     SDL_FreeSurface(songSurface);
 }
@@ -145,7 +145,7 @@ void MusicBar::drawSongTime()
     }
 
     songTotalCharTime =  songTotalStrTime.c_str();
-    
+     
     // SDL CALLS//
     
     SDL_Color songTimeColor = {255, 255, 255};
