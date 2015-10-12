@@ -126,7 +126,7 @@ void MusicBar::drawSongName()
         songLocation = {xSongLocation, musicbarSurfaceHeight/2 - songHeight/2, 0, 0}; 
         SDL_BlitSurface(songSurface, NULL, surface, &songLocation);
         SDL_FreeSurface(songSurface);
-        xSongLocation = xSongLocation - 20;
+        xSongLocation = xSongLocation - 4;
         if (xSongLocation + songWidth < 150)
         {
             xSongLocation = 880;
