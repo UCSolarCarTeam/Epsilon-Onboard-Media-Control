@@ -5,6 +5,7 @@ MusicBar::MusicBar(SongPlayer *songPlayer)
     mPlayer = songPlayer;
     musicbarSurfaceWidth = 1080;
     musicbarSurfaceHeight = 64;
+    xSongLocation = 300;
     surface = SDL_CreateRGBSurface(0, musicbarSurfaceWidth, musicbarSurfaceHeight, 32, 0, 0, 0, 0);
     init();    
 }
@@ -50,7 +51,7 @@ void MusicBar::drawSongName()
     const char * songChar;
     int songWidth;
     int songHeight;
-    
+
     songName = mPlayer->currentSong();
     songStringLength = songName.length();
     songName = songName.substr(12, songStringLength - 16); // removes SongLibrary/ and .mp3 from songName
@@ -58,14 +59,63 @@ void MusicBar::drawSongName()
     
     // SDL CALLS // 
     
+   // SDL_Surface *songSurface;
+    //SDL_Color songColor = {255, 255, 255}; 
+    //songSurface = TTF_RenderUTF8_Blended(songNameFont, songChar, songColor);
+    //TTF_SizeText(songNameFont, songChar, &songWidth, &songHeight);
+    //SDL_Rect songLocation = {(880-50)/2 - songWidth/2, musicbarSurfaceHeight/2 - songHeight/2, 0, 0}; //880 is start of volume bar, 50 is end of current time
+    //SDL_BlitSurface(songSurface, NULL, surface, &songLocation);
+    //SDL_FreeSurface(songSurface);
+
+    double songCurrentTime;
+    songCurrentTime = mPlayer->getCurrentTime();
+    
+    if (songCurrentTime >= 0 && songCurrentTime <= 2)
+    {
+        xSongLocation = 150;
+    }
+
     SDL_Surface *songSurface;
+
+    SDL_Rect songLocation;
+
     SDL_Color songColor = {255, 255, 255}; 
     songSurface = TTF_RenderUTF8_Blended(songNameFont, songChar, songColor);
     TTF_SizeText(songNameFont, songChar, &songWidth, &songHeight);
-    SDL_Rect songLocation = {(880-50)/2 - songWidth/2, musicbarSurfaceHeight/2 - songHeight/2, 0, 0}; //880 is start of volume bar, 50 is end of current time
-    SDL_BlitSurface(songSurface, NULL, surface, &songLocation);
-    SDL_FreeSurface(songSurface);
+
+    if (songWidth > 700)
+    {    
+        songLocation = {xSongLocation, musicbarSurfaceHeight/2 - songHeight/2, 0, 0}; 
+        SDL_BlitSurface(songSurface, NULL, surface, &songLocation);
+        SDL_FreeSurface(songSurface);
+        xSongLocation = xSongLocation - 20;
+        if (xSongLocation + songWidth < 150)
+        {
+            xSongLocation = 880;
+        }
+    } 
+    else 
+    {
+        songLocation = {300, musicbarSurfaceHeight/2 - songHeight/2, 0, 0}; //880 is start of volume bar, 50 is end of current time
+        SDL_BlitSurface(songSurface, NULL, surface, &songLocation);
+        SDL_FreeSurface(songSurface);
+    }
+    
+    SDL_Surface *Rect1Surface;
+    Rect1Surface = SDL_CreateRGBSurface(0, 150, 64, 32, 0, 0, 0, 0);
+    SDL_FillRect(Rect1Surface, NULL, SDL_MapRGB(Rect1Surface->format,43,43,43));
+    SDL_Rect Rect1Location = {0,0,0,0};
+    SDL_BlitSurface(Rect1Surface, NULL, surface, &Rect1Location);
+    SDL_FreeSurface(Rect1Surface);
+
+    SDL_Surface *Rect2Surface;
+    Rect2Surface = SDL_CreateRGBSurface(0, 1080-850, 64, 32, 0, 0, 0, 0);
+    SDL_FillRect(Rect2Surface, NULL, SDL_MapRGB(Rect2Surface->format,43,43,43));
+    SDL_Rect Rect2Location = {850,0,0,0};
+    SDL_BlitSurface(Rect2Surface, NULL, surface, &Rect2Location);
+    SDL_FreeSurface(Rect2Surface);
 }
+
 
 std::string MusicBar::convertToString(int songIntTime)
 {
