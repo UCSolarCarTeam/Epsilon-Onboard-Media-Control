@@ -25,6 +25,9 @@ class MusicBar
     int musicbarSurfaceWidth;
     int musicbarSurfaceHeight;
     int xSongLocation;
+    double songTimeMark;
+    bool getTimeInitialization;
+    bool initialization;
 
 public:
     void update();

@@ -5,7 +5,10 @@ MusicBar::MusicBar(SongPlayer *songPlayer)
     mPlayer = songPlayer;
     musicbarSurfaceWidth = 1080;
     musicbarSurfaceHeight = 64;
-    xSongLocation = 300;
+    xSongLocation = 150;
+    getTimeInitialization = false;
+    initialization = false;
+    songTimeMark = 0;
     surface = SDL_CreateRGBSurface(0, musicbarSurfaceWidth, musicbarSurfaceHeight, 32, 0, 0, 0, 0);
     init();    
 }
@@ -67,14 +70,40 @@ void MusicBar::drawSongName()
     //SDL_BlitSurface(songSurface, NULL, surface, &songLocation);
     //SDL_FreeSurface(songSurface);
 
+    // Song Scrolling Prototype
+    
     double songCurrentTime;
     songCurrentTime = mPlayer->getCurrentTime();
     
     if (songCurrentTime >= 0 && songCurrentTime <= 2)
     {
         xSongLocation = 150;
+        initialization = false;
     }
 
+    if (xSongLocation > 800)
+    {
+        initialization = true;
+        getTimeInitialization = false;
+    }
+   
+    if (initialization == true)
+    {  
+        if (xSongLocation <= 150)
+        {
+            if (getTimeInitialization == false)
+            {
+                songTimeMark = songCurrentTime;
+                getTimeInitialization = true;
+            }   
+            if (songCurrentTime < (songTimeMark + 2)) 
+            {
+                xSongLocation = 150;
+            }       
+        }
+    }
+           
+    
     SDL_Surface *songSurface;
 
     SDL_Rect songLocation;
