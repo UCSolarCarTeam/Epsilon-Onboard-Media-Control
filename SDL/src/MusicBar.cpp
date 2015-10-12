@@ -75,7 +75,7 @@ void MusicBar::drawSongName()
     double songCurrentTime;
     songCurrentTime = mPlayer->getCurrentTime();
     
-    if (songCurrentTime >= 0 && songCurrentTime <= 2)
+    if (songCurrentTime >= 0 && songCurrentTime <= 3)
     {
         xSongLocation = 150;
         initialization = false;
@@ -96,7 +96,7 @@ void MusicBar::drawSongName()
                 songTimeMark = songCurrentTime;
                 getTimeInitialization = true;
             }   
-            if (songCurrentTime < (songTimeMark + 2)) 
+            if (songCurrentTime < (songTimeMark + 3)) 
             {
                 xSongLocation = 150;
             }       
@@ -114,14 +114,14 @@ void MusicBar::drawSongName()
 
     // SONG NAME BACKGROUND
     SDL_Surface *songOutline;
-    songOutline = SDL_CreateRGBSurface(0, 705, 52, 32, 0, 0, 0, 0);
+    songOutline = SDL_CreateRGBSurface(0, 700, 52, 32, 0, 0, 0, 0);
     SDL_FillRect(songOutline, NULL, SDL_MapRGB(songOutline->format,35,35,35));
-    SDL_Rect songOutlineLocation = {145, 6, 0, 0};
+    SDL_Rect songOutlineLocation = {150, 6, 0, 0};
     SDL_BlitSurface(songOutline, NULL, surface, &songOutlineLocation);
     SDL_FreeSurface(songOutline);
     // SONG NAME BACKGROUND
 
-    if (songWidth > 700)
+    if (songWidth >= 700)
     {    
         songLocation = {xSongLocation, musicbarSurfaceHeight/2 - songHeight/2, 0, 0}; 
         SDL_BlitSurface(songSurface, NULL, surface, &songLocation);
@@ -134,7 +134,7 @@ void MusicBar::drawSongName()
     } 
     else 
     {
-        songLocation = {300, musicbarSurfaceHeight/2 - songHeight/2, 0, 0}; //880 is start of volume bar, 50 is end of current time
+        songLocation = {(500) - (songWidth/2), musicbarSurfaceHeight/2 - songHeight/2, 0, 0}; //880 is start of volume bar, 50 is end of current time
         SDL_BlitSurface(songSurface, NULL, surface, &songLocation);
         SDL_FreeSurface(songSurface);
     }
