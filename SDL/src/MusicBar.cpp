@@ -102,7 +102,7 @@ void MusicBar::drawSongName()
             }       
         }
     }
-           
+    
     
     SDL_Surface *songSurface;
 
@@ -111,6 +111,15 @@ void MusicBar::drawSongName()
     SDL_Color songColor = {255, 255, 255}; 
     songSurface = TTF_RenderUTF8_Blended(songNameFont, songChar, songColor);
     TTF_SizeText(songNameFont, songChar, &songWidth, &songHeight);
+
+    // SONG NAME BACKGROUND
+    SDL_Surface *songOutline;
+    songOutline = SDL_CreateRGBSurface(0, 705, 52, 32, 0, 0, 0, 0);
+    SDL_FillRect(songOutline, NULL, SDL_MapRGB(songOutline->format,35,35,35));
+    SDL_Rect songOutlineLocation = {145, 6, 0, 0};
+    SDL_BlitSurface(songOutline, NULL, surface, &songOutlineLocation);
+    SDL_FreeSurface(songOutline);
+    // SONG NAME BACKGROUND
 
     if (songWidth > 700)
     {    
@@ -308,7 +317,7 @@ void MusicBar::drawVolumeBar()
     
         // Increments for changing bar size and gradient
         volumeBarHeight += 2; 
-        colorGreen -= 6; 
+        colorGreen -= 8; 
         volumeBarXLocation += 6; 
         volumeBarYLocation -= 2; 
     }
