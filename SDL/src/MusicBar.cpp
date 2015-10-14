@@ -5,9 +5,9 @@ MusicBar::MusicBar(SongPlayer *songPlayer)
     mPlayer = songPlayer;
     musicbarSurfaceWidth = 1080;
     musicbarSurfaceHeight = 64;
-    xSongLocation = 150;
-    getTimeInitialization = false;
-    initialization = false;
+    longSongNameLocation = 150;
+    getTimeInit = false;
+    longSongNameInit = false;
     songTimeMark = 0;
     surface = SDL_CreateRGBSurface(0, musicbarSurfaceWidth, musicbarSurfaceHeight, 32, 0, 0, 0, 0);
     init();    
@@ -60,98 +60,97 @@ void MusicBar::drawSongName()
     songName = songName.substr(12, songStringLength - 16); // removes SongLibrary/ and .mp3 from songName
     songChar = songName.c_str(); 
     
-    // SDL CALLS // 
-    
-   // SDL_Surface *songSurface;
-    //SDL_Color songColor = {255, 255, 255}; 
-    //songSurface = TTF_RenderUTF8_Blended(songNameFont, songChar, songColor);
-    //TTF_SizeText(songNameFont, songChar, &songWidth, &songHeight);
-    //SDL_Rect songLocation = {(880-50)/2 - songWidth/2, musicbarSurfaceHeight/2 - songHeight/2, 0, 0}; //880 is start of volume bar, 50 is end of current time
-    //SDL_BlitSurface(songSurface, NULL, surface, &songLocation);
-    //SDL_FreeSurface(songSurface);
-
-    // Song Scrolling Prototype
-    
     double songCurrentTime;
+    double songScrollDelay;
+    int songScrollSpeed;
+    int songStartPoint;
+    int songEndPoint;
+    int maxSongWidth;
+    int shortSongLocation;
+
+    songScrollSpeed = 5;
+    songScrollDelay = 3;
+    songStartPoint = 150;
+    songEndPoint = 850;
+    shortSongLocation = 500;
+    maxSongWidth = songEndPoint - songStartPoint;
+
     songCurrentTime = mPlayer->getCurrentTime();
     
-    if (songCurrentTime >= 0 && songCurrentTime <= 3)
+    if (songCurrentTime >= 0 && songCurrentTime <= songScrollDelay)
     {
-        xSongLocation = 150;
-        initialization = false;
+        longSongNameLocation = songStartPoint;
+        longSongNameInit = false;
     }
 
-    if (xSongLocation > 800)
+    if (longSongNameLocation >= songEndPoint)
     {
-        initialization = true;
-        getTimeInitialization = false;
+        longSongNameInit = true;
+        getTimeInit = false;
     }
    
-    if (initialization == true)
+    if (longSongNameInit == true)
     {  
-        if (xSongLocation <= 150)
+        if (longSongNameLocation <= songStartPoint)
         {
-            if (getTimeInitialization == false)
+            if (getTimeInit == false)
             {
                 songTimeMark = songCurrentTime;
-                getTimeInitialization = true;
+                getTimeInit = true;
             }   
-            if (songCurrentTime < (songTimeMark + 3)) 
+            if (songCurrentTime < (songTimeMark + songScrollDelay)) 
             {
-                xSongLocation = 150;
+                longSongNameLocation = songStartPoint;
             }       
         }
     }
     
-    
+    // Song Background Box Surface
+    SDL_Surface *songBoxSurface;
+    songBoxSurface = SDL_CreateRGBSurface(0, maxSongWidth, 52, 32, 0, 0, 0, 0);
+    SDL_FillRect(songBoxSurface, NULL, SDL_MapRGB(songBoxSurface->format,35,35,35));
+    SDL_Rect songBoxLocation = {songStartPoint, 6, 0, 0};
+    SDL_BlitSurface(songBoxSurface, NULL, surface, &songBoxLocation);
+    SDL_FreeSurface(songBoxSurface);
+
+    // Song Name Surface
     SDL_Surface *songSurface;
-
     SDL_Rect songLocation;
-
     SDL_Color songColor = {255, 255, 255}; 
     songSurface = TTF_RenderUTF8_Blended(songNameFont, songChar, songColor);
     TTF_SizeText(songNameFont, songChar, &songWidth, &songHeight);
 
-    // SONG NAME BACKGROUND
-    SDL_Surface *songOutline;
-    songOutline = SDL_CreateRGBSurface(0, 700, 52, 32, 0, 0, 0, 0);
-    SDL_FillRect(songOutline, NULL, SDL_MapRGB(songOutline->format,35,35,35));
-    SDL_Rect songOutlineLocation = {150, 6, 0, 0};
-    SDL_BlitSurface(songOutline, NULL, surface, &songOutlineLocation);
-    SDL_FreeSurface(songOutline);
-    // SONG NAME BACKGROUND
-
-    if (songWidth >= 700)
+    if (songWidth >= maxSongWidth)
     {    
-        songLocation = {xSongLocation, musicbarSurfaceHeight/2 - songHeight/2, 0, 0}; 
+        songLocation = {longSongNameLocation, musicbarSurfaceHeight/2 - songHeight/2, 0, 0}; 
         SDL_BlitSurface(songSurface, NULL, surface, &songLocation);
         SDL_FreeSurface(songSurface);
-        xSongLocation = xSongLocation - 4;
-        if (xSongLocation + songWidth < 150)
+        longSongNameLocation = longSongNameLocation - songScrollSpeed;
+        if (longSongNameLocation + songWidth < songStartPoint)
         {
-            xSongLocation = 880;
+            longSongNameLocation = songEndPoint;
         }
     } 
     else 
     {
-        songLocation = {(500) - (songWidth/2), musicbarSurfaceHeight/2 - songHeight/2, 0, 0}; //880 is start of volume bar, 50 is end of current time
+        songLocation = {shortSongLocation - (songWidth/2), musicbarSurfaceHeight/2 - songHeight/2, 0, 0}; //880 is start of volume bar, 50 is end of current time
         SDL_BlitSurface(songSurface, NULL, surface, &songLocation);
         SDL_FreeSurface(songSurface);
     }
     
-    SDL_Surface *Rect1Surface;
-    Rect1Surface = SDL_CreateRGBSurface(0, 150, 64, 32, 0, 0, 0, 0);
-    SDL_FillRect(Rect1Surface, NULL, SDL_MapRGB(Rect1Surface->format,43,43,43));
-    SDL_Rect Rect1Location = {0,0,0,0};
-    SDL_BlitSurface(Rect1Surface, NULL, surface, &Rect1Location);
-    SDL_FreeSurface(Rect1Surface);
+    SDL_Surface *leftMaskSurface;
+    leftMaskSurface = SDL_CreateRGBSurface(0, songStartPoint, musicbarSurfaceHeight, 32, 0, 0, 0, 0);
+    SDL_FillRect(leftMaskSurface, NULL, SDL_MapRGB(leftMaskSurface->format,43,43,43));
+    SDL_Rect leftMaskLocation = {0,0,0,0};
+    SDL_BlitSurface(leftMaskSurface, NULL, surface, &leftMaskLocation);
+    SDL_FreeSurface(leftMaskSurface);
 
-    SDL_Surface *Rect2Surface;
-    Rect2Surface = SDL_CreateRGBSurface(0, 1080-850, 64, 32, 0, 0, 0, 0);
-    SDL_FillRect(Rect2Surface, NULL, SDL_MapRGB(Rect2Surface->format,43,43,43));
-    SDL_Rect Rect2Location = {850,0,0,0};
-    SDL_BlitSurface(Rect2Surface, NULL, surface, &Rect2Location);
-    SDL_FreeSurface(Rect2Surface);
+    SDL_Surface *rightMaskSurface;
+    rightMaskSurface = SDL_CreateRGBSurface(0, musicbarSurfaceWidth - songEndPoint, musicbarSurfaceHeight, 32, 0, 0, 0, 0);
+    SDL_FillRect(rightMaskSurface, NULL, SDL_MapRGB(rightMaskSurface->format,43,43,43));
+    SDL_Rect rightMaskLocation = {songEndPoint,0,0,0};
+    SDL_BlitSurface(rightMaskSurface, NULL, surface, &rightMaskLocation);
+    SDL_FreeSurface(rightMaskSurface);
 }
 
 
@@ -278,12 +277,21 @@ void MusicBar::drawVolumeBar()
     int volumeBarNumber;
     int i;
     int colorGreen;
+    int volumeBarHeightIncrement;
+    int volumeBarXLocationIncrement;
+    int volumeBarYLocationIncrement;
+    int greenGradientIncrement;
 
     volumeBarNumber = 20; 
     volumeBarHeight = 4;
+    volumeBarHeightIncrement = 2;
     volumeBarXLocation = 880;
+    volumeBarXLocationIncrement = 6;
     volumeBarYLocation = 50;
-    
+    volumeBarYLocationIncrement = 2;
+    greenGradientIncrement = 8;
+
+
     for (i = 0; i < volumeBarNumber; i++)
     {
         volumeBackgroundSurface = SDL_CreateRGBSurface(0,4, volumeBarHeight,32,0,0,0,0);
@@ -293,9 +301,9 @@ void MusicBar::drawVolumeBar()
         SDL_FreeSurface(volumeBackgroundSurface);
 
         //Increments for changing bar size
-        volumeBarHeight += 2;
-        volumeBarXLocation += 6; 
-        volumeBarYLocation -= 2;
+        volumeBarHeight += volumeBarHeightIncrement;
+        volumeBarXLocation += volumeBarXLocationIncrement; 
+        volumeBarYLocation -= volumeBarYLocationIncrement;
     }
 
     // Volume bar
@@ -316,10 +324,10 @@ void MusicBar::drawVolumeBar()
         SDL_FreeSurface(volumeSurface);
     
         // Increments for changing bar size and gradient
-        volumeBarHeight += 2; 
-        colorGreen -= 8; 
-        volumeBarXLocation += 6; 
-        volumeBarYLocation -= 2; 
+        volumeBarHeight += volumeBarHeightIncrement; 
+        colorGreen -= greenGradientIncrement; 
+        volumeBarXLocation += volumeBarXLocationIncrement; 
+        volumeBarYLocation -= volumeBarYLocationIncrement; 
     }
 }
 
