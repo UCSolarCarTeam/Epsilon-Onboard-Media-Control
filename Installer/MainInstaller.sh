@@ -72,8 +72,3 @@ cd ../..
 make -j4
 make install -j4
 
-#WiringPi
-git clone git://git.drogon.net/wiringPi
-cd wiringPi
-git pull origin
-./build

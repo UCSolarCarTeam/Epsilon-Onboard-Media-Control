@@ -15,8 +15,15 @@ fi
 echo "You are running on the pi, we will set up Auto Launch"
 cd ..
 sudo mkdir /home/Music
+
 cp assets/*.ttf /usr/share/fonts
 cp SongLibrary/*.mp3 /home/Music
+
+#WiringPi
+git clone git://git.drogon.net/wiringPi
+cd wiringPi
+git pull origin
+./build
 
 FILECONTENTS=`grep -Eo "onboardmediacontrol" /etc/rc.local`
 echo "filecontents = $FILECONTENTS"
