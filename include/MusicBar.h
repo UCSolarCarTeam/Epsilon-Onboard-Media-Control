@@ -8,6 +8,7 @@
 #include <iostream>
 #include <sstream>
 
+
 class MusicBar
 {
     SDL_Surface* surface;
@@ -23,6 +24,10 @@ class MusicBar
 
     int musicbarSurfaceWidth;
     int musicbarSurfaceHeight;
+    int longSongNameLocation;
+    double songTimeMark;
+    bool getTimeInit;
+    bool longSongNameInit;
 
 public:
     void update();
