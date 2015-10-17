@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 
 echo "This script will download and install all dependencies for the Raspberry Pi running Raspbian (Debian)"
 

@@ -1,4 +1,4 @@
-#Ensures user is root
+#!/bin/bash -e
 
 USER=`whoami`
 if [ $USER = "root" ]
