@@ -13,8 +13,6 @@
 
 class SongPlayer : public MyThreadClass
 {
-    std::string message;
-    
     public:
         SongPlayer();
 
@@ -31,6 +29,7 @@ class SongPlayer : public MyThreadClass
         double getCurrentTime();
         double getSongLength();
         double getVolume();
+        double getMaxVolume();
         std::string currentSong();
 
         void songQuit();
@@ -38,23 +37,25 @@ class SongPlayer : public MyThreadClass
         void InternalThreadEntry();
 
     private: 
+        double MAX_VOLUME;
+
         int freeMusic();
         int loadSong(char* songName);
+        SongLoader loader;
+        double volume;
 
-        /*The Thread*/
-        //int songThread(void *data);
-        
+        /*mpg123 specific variables*/ 
         unsigned char *buffer;
         size_t buffer_size;
         bool loaded;
-        SongLoader loader;
         mpg123_handle *mh;
         ao_sample_format format;
         ao_device *dev;
         int channels, encoding;
         long rate;
         bool quitSong;
-        //The Modes the songThread can be in.
+
+        /*Modes*/
         enum threadMode { PLAY, NEXT, PREVIOUS, SHUFFLE, PAUSE};
         threadMode mode;
 };
