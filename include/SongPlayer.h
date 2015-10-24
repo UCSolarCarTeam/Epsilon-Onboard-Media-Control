@@ -37,7 +37,7 @@ class SongPlayer : public MyThreadClass
         void InternalThreadEntry();
 
     private: 
-        const double MAX_VOLUME = 0.4;
+        double MAX_VOLUME;
 
         int freeMusic();
         int loadSong(char* songName);

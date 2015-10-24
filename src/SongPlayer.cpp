@@ -4,6 +4,7 @@
 SongPlayer::SongPlayer()
 {
     SongLoader loader();
+    MAX_VOLUME = 0.4;
 
     loaded = false;
     quitSong = false;
@@ -16,6 +17,7 @@ SongPlayer::SongPlayer()
     mpg123_init();
     mode = PLAY;
     volume = MAX_VOLUME/3;
+
 }
 
 void SongPlayer::songQuit()
