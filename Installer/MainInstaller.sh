@@ -39,24 +39,29 @@ cd SDL2-2.0.3
 make -j4
 make install -j4
 cd ..
+sudo rm SDL2-2.0.3 -rf
 
 #SDL2_ttf
 wget https://www.libsdl.org/projects/SDL_ttf/release/SDL2_ttf-2.0.12.tar.gz
 tar -xzvf SDL2_ttf-2.0.12.tar.gz
+rm SDL_ttf-2.0.12.tar.gz
 cd SDL2_ttf-2.0.12
 ./configure
 make -j4
 make install -j4
 cd ..
+sudo rm SDL2_ttf-2.0.12 -rf 
 
 #SDL2_image
 wget https://www.libsdl.org/projects/SDL_image/release/SDL2_image-2.0.0.tar.gz
 tar -xzvf SDL2_image-2.0.0.tar.gz
+rm SDL2_image-2.0.0.tar.gz
 cd SDL2_image-2.0.0
 ./configure
 make -j4
 make install -j4
 cd ..
+sudo rm SDL2_image-2.0.0 -rf
 
 #SDL2_mixer
 wget https://www.libsdl.org/projects/SDL_mixer/release/SDL2_mixer-2.0.0.tar.gz
@@ -71,4 +76,7 @@ cd ../..
 ./configure
 make -j4
 make install -j4
+cd ..
+sudo rm SDL2_mixer-2.0.0 -rf
+
 
