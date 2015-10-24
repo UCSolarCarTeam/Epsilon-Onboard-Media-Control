@@ -29,7 +29,7 @@ apt-get install libudev-dev --yes
 #SDL stuff
 
 #removes all old folders of SDL2
-ls | grep SDL2 | sudo xargs rm -r
+#ls | grep SDL2 | sudo xargs rm -r
 
 #SDL2.0
 wget https://www.libsdl.org/release/SDL2-2.0.3.tar.gz
