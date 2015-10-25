@@ -37,10 +37,21 @@ fi
 
 echo "You are running on the pi, we will set up Auto Launch"
 cd ..
-sudo mkdir /home/Music
 
-cp assets/*.ttf /usr/share/fonts
-cp SongLibrary/*.mp3 /home/Music
+if [ -d "$HOME/Music" ]
+then 
+    echo "~/Music exists!"
+else 
+    echo "Creating ~/Music Directory"
+    mkdir ~/Music
+fi
+
+cp `pwd`/assets/*.ttf /usr/share/fonts
+
+if [ -d `pwd`/SongLibrary ]
+then
+    cp `pwd`/SongLibrary/*.mp3 ~/Music
+fi
 
 #WiringPi
 git clone git://git.drogon.net/wiringPi
