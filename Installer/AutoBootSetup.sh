@@ -1,4 +1,4 @@
-#!/bin/bash -e
+#!/bin/bash
 
 USER=`whoami`
 if [ $USER = "root" ]
@@ -9,12 +9,12 @@ else
         exit 0
 fi
 
-if [ -d "$HOME/Music" ]
+if [ -d "/home/Music" ]
 then 
-    echo "~/Music exists!"
+    echo "/home/Music exists!"
 else 
     echo "Creating ~/Music Directory"
-    mkdir ~/Music
+    mkdir /home/Music
 fi
 
 if [ -d `pwd`/../assets ]
@@ -25,7 +25,7 @@ fi
 
 if [ -d `pwd`/../SongLibrary ]
 then
-    cp `pwd`/../SongLibrary/*.mp3 ~/Music
+    cp `pwd`/../SongLibrary/*.mp3 /home/Music
     echo "Copied Music from ../SongLibrary to ~/Music directory"
 fi
 

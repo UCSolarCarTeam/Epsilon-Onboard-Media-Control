@@ -66,6 +66,7 @@ sudo rm SDL2_image-2.0.0 -rf
 #SDL2_mixer
 wget https://www.libsdl.org/projects/SDL_mixer/release/SDL2_mixer-2.0.0.tar.gz
 tar -xzvf SDL2_mixer-2.0.0.tar.gz
+rm SDL2_mixer-2.0.0.tar.gz
 cd SDL2_mixer-2.0.0
 #SMPEG
 cd external/smpeg2-2.0.0
