@@ -9,12 +9,6 @@ else
         exit 0
 fi
 
-#Sets up Autoboot
-
-
-echo "You are running on the pi, we will set up Auto Launch"
-cd ..
-
 if [ -d "$HOME/Music" ]
 then 
     echo "~/Music exists!"
@@ -23,22 +17,25 @@ else
     mkdir ~/Music
 fi
 
-cp `pwd`/assets/*.ttf /usr/share/fonts
-
-if [ -d `pwd`/SongLibrary ]
+if [ -d `pwd`/../assets ]
 then
-    cp `pwd`/SongLibrary/*.mp3 ~/Music
+    cp `pwd`/../assets/*.ttf /usr/share/fonts
+    echo "Copied fonts from ../assets/ to /usr/share/fonts directory"
 fi
 
-#WiringPi
-git clone git://git.drogon.net/wiringPi
-cd wiringPi
-git pull origin
-./build
+if [ -d `pwd`/../SongLibrary ]
+then
+    cp `pwd`/../SongLibrary/*.mp3 ~/Music
+    echo "Copied Music from ../SongLibrary to ~/Music directory"
+fi
 
-FILECONTENTS=`grep -Eo "onboardmediacontrol" /etc/rc.local`
-echo "filecontents = $FILECONTENTS"
-if [ -z $FILECONTENTS ]
+#echo "You are running on the pi, we will set up Auto Launch"
+cd ..
+
+#Sets up Autoboot
+FILECONTENTS=`grep -Eo "BackupCamera" /etc/rc.local`
+echo filecontents = ${FILECONTENTS[0]}
+if [ -z "${FILECONTENTS[0]}" ]
 then
         echo "Setting up AutoLaunch"
         sed -i '$ d' /etc/rc.local
@@ -48,11 +45,26 @@ else
         echo "Autolaunch already set up!"
 fi
 
-Sets up Fastboot
-apt-get install systemd
-FASTBOOT=`cat /boot/cmdline.txt`
-SYSTEMSET=`echo $FASTBOOT | grep -o "systemd"`
-if [ -z $SYSTEMSET ]
+ARCHITECTURE=`uname -m`
+if [ ARCHITECTURE = "armv7l" ]
 then
-sudo sh -c 'FASTBOOT=`cat /boot/cmdline.txt`; echo -n "$FASTBOOT init=/bin/systemd" > /boot/cmdline.txt'
-fi 
+    echo "You are running on armv7l. Assuming you are a Raspberry Pi"
+    #WiringPi
+    git clone git://git.drogon.net/wiringPi
+    cd wiringPi
+    git pull origin
+    ./build
+
+    #Sets up Fastboot
+    apt-get install systemd
+    FASTBOOT=`cat /boot/cmdline.txt`
+    SYSTEMSET=`echo $FASTBOOT | grep -o "systemd"`
+    if [ -z $SYSTEMSET ]
+    then
+    sudo sh -c 'FASTBOOT=`cat /boot/cmdline.txt`; echo -n "$FASTBOOT init=/bin/systemd" > /boot/cmdline.txt'
+    fi 
+else
+    echo "Not on armv7l. Assuming you are not a Raspberry Pi"
+fi
+
+
