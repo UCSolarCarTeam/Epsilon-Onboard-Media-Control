@@ -34,6 +34,7 @@ apt-get install libudev-dev --yes
 #SDL2.0
 wget https://www.libsdl.org/release/SDL2-2.0.3.tar.gz
 tar -xzvf SDL2-2.0.3.tar.gz
+rm SDL2-2.0.3.tar.gz
 cd SDL2-2.0.3
 ./configure --host=armv71-raspberry-linux-gnueabihf --target=arm-raspberry-linux-gnueabihf --disable-video-opengl --disable-video-x11
 make -j4
