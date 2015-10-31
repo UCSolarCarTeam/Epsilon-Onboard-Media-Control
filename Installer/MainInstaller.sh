@@ -14,8 +14,7 @@ fi
 apt-get update --yes
 #OpenCV (grabbing camera frames)
 #ao.h   (playing music)
-#mpg123 (loading music)
-#g++    (compiling)
+#mpg123 (loading music) #g++    (compiling)
 apt-get install libopencv-dev --yes
 apt-get install libao-dev --yes
 apt-get install g++ --yes
@@ -45,7 +44,7 @@ sudo rm SDL2-2.0.3 -rf
 #SDL2_ttf
 wget https://www.libsdl.org/projects/SDL_ttf/release/SDL2_ttf-2.0.12.tar.gz
 tar -xzvf SDL2_ttf-2.0.12.tar.gz
-rm SDL_ttf-2.0.12.tar.gz
+rm SDL2_ttf-2.0.12.tar.gz
 cd SDL2_ttf-2.0.12
 ./configure
 make -j4
