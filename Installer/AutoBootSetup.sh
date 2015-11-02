@@ -32,21 +32,9 @@ fi
 #echo "You are running on the pi, we will set up Auto Launch"
 cd ..
 
-#Sets up Autoboot
-FILECONTENTS=`grep -Eo "BackupCamera" /etc/rc.local`
-echo filecontents = ${FILECONTENTS[0]}
-if [ -z "${FILECONTENTS[0]}" ]
-then
-        echo "Setting up AutoLaunch"
-        sed -i '$ d' /etc/rc.local
-        sudo sh -c 'CAMERAPATH=`pwd`; echo "$CAMERAPATH/BackupCamera" >> /etc/rc.local'
-        echo "exit 0" >> /etc/rc.local
-else
-        echo "Autolaunch already set up!"
-fi
 
 ARCHITECTURE=`uname -m`
-if [ ARCHITECTURE = "armv7l" ]
+if [ ${ARCHITECTURE} = "armv7l" ]
 then
     echo "You are running on armv7l. Assuming you are a Raspberry Pi"
     #WiringPi
@@ -61,8 +49,22 @@ then
     SYSTEMSET=`echo $FASTBOOT | grep -o "systemd"`
     if [ -z $SYSTEMSET ]
     then
-    sudo sh -c 'FASTBOOT=`cat /boot/cmdline.txt`; echo -n "$FASTBOOT init=/bin/systemd" > /boot/cmdline.txt'
+        sudo sh -c 'FASTBOOT=`cat /boot/cmdline.txt`; echo -n "$FASTBOOT init=/bin/systemd" > /boot/cmdline.txt'
     fi 
+    
+    #Sets up Autoboot
+    FILECONTENTS=`grep -Eo "BackupCamera" /etc/rc.local`
+    echo filecontents = ${FILECONTENTS[0]}
+    if [ -z "${FILECONTENTS[0]}" ]
+    then
+            echo "Setting up AutoLaunch"
+            sed -i '$ d' /etc/rc.local
+            sudo sh -c 'CAMERAPATH=`pwd`; echo "$CAMERAPATH/BackupCamera" >> /etc/rc.local'
+            echo "exit 0" >> /etc/rc.local
+    else
+            echo "Autolaunch already set up!"
+    fi
+
 else
     echo "Not on armv7l. Assuming you are not a Raspberry Pi"
 fi
