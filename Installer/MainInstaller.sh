@@ -25,9 +25,6 @@ else
 fi
 
 apt-get update --yes
-#OpenCV (grabbing camera frames)
-#ao.h   (playing music)
-#mpg123 (loading music) #g++    (compiling)
 apt-get install libopencv-dev --yes
 apt-get install libao-dev --yes
 apt-get install g++ --yes
@@ -37,11 +34,6 @@ apt-get install libpulse-dev --yes
 
 apt-get install libdbus-1-dev --yes
 apt-get install libudev-dev --yes
-
-#SDL stuff
-
-#removes all old folders of SDL2
-#ls | grep SDL2 | sudo xargs rm -r
 
 #SDL2.0
 wget https://www.libsdl.org/release/SDL2-2.0.3.tar.gz
