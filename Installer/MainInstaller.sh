@@ -1,6 +1,19 @@
 #!/bin/bash -e
 
 
+function finish {
+	sudo rm SDL2-2.0.3.tar.gz || true
+	sudo rm -rf SDL2-2.0.3 || true
+	sudo rm SDL2_ttf-2.0.12.tar.gz || true
+	sudo rm -rf SDL2_ttf-2.0.12  || true
+	sudo rm SDL2_image-2.0.0.tar.gz || true
+	sudo rm -rf SDL2_image-2.0.0  || true
+	sudo rm SDL2_mixer-2.0.0.tar.gz || true
+	sudo rm -rf SDL2_mixer-2.0.0 || true
+}
+
+trap finish EXIT
+
 USER=`whoami`
 if [ $USER = "root" ]
     then
@@ -32,7 +45,6 @@ apt-get install libudev-dev --yes
 #SDL2.0
 wget https://www.libsdl.org/release/SDL2-2.0.3.tar.gz
 tar -xzvf SDL2-2.0.3.tar.gz
-rm SDL2-2.0.3.tar.gz
 cd SDL2-2.0.3
 ARCHITECTURE=`uname -m`
 if [ ${ARCHITECTURE} = "armv7l"]
@@ -47,34 +59,27 @@ fi
 make -j4
 make install -j4
 cd ..
-sudo rm -rf SDL2-2.0.3
 
 #SDL2_ttf
 wget https://www.libsdl.org/projects/SDL_ttf/release/SDL2_ttf-2.0.12.tar.gz
 tar -xzvf SDL2_ttf-2.0.12.tar.gz
-rm SDL2_ttf-2.0.12.tar.gz
 cd SDL2_ttf-2.0.12
 ./configure
 make -j4
 make install -j4
 cd ..
-sudo rm -rf SDL2_ttf-2.0.12 
 
 #SDL2_image
 wget https://www.libsdl.org/projects/SDL_image/release/SDL2_image-2.0.0.tar.gz
 tar -xzvf SDL2_image-2.0.0.tar.gz
-rm SDL2_image-2.0.0.tar.gz
 cd SDL2_image-2.0.0
 ./configure
 make -j4
 make install -j4
 cd ..
-sudo rm -rf SDL2_image-2.0.0 
-
 #SDL2_mixer
 wget https://www.libsdl.org/projects/SDL_mixer/release/SDL2_mixer-2.0.0.tar.gz
 tar -xzvf SDL2_mixer-2.0.0.tar.gz
-rm SDL2_mixer-2.0.0.tar.gz
 cd SDL2_mixer-2.0.0
 #SMPEG
 cd external/smpeg2-2.0.0
@@ -86,4 +91,3 @@ cd ../..
 make -j4
 make install -j4
 cd ..
-sudo rm -rf SDL2_mixer-2.0.0
