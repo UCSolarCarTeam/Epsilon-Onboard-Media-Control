@@ -1,16 +1,18 @@
 #!/bin/bash -e
 
+DIR=`pwd`
 
 function finish {
-	rm SDL2-2.0.3.tar.gz || true
-	rm -rf SDL2-2.0.3 || true
-	rm SDL2_ttf-2.0.12.tar.gz || true
-	rm -rf SDL2_ttf-2.0.12  || true
-	rm SDL2_image-2.0.0.tar.gz || true
-	rm -rf SDL2_image-2.0.0  || true
-	rm SDL2_mixer-2.0.0.tar.gz || true
-	rm -rf SDL2_mixer-2.0.0 || true
-	rm -rf wiringPi/
+	echo "Cleaning up..."
+	rm $DIR/SDL2-2.0.3.tar.gz || true
+	rm $DIR/SDL2_ttf-2.0.12.tar.gz || true
+	rm $DIR/SDL2_image-2.0.0.tar.gz || true
+	rm $DIR/SDL2_mixer-2.0.0.tar.gz || true
+	rm -rf $DIR/SDL2_image-2.0.0  || true
+	rm -rf $DIR/SDL2_ttf-2.0.12  || true
+	rm -rf $DIR/SDL2-2.0.3 || true
+	rm -rf $DIR/SDL2_mixer-2.0.0 || true
+	rm -rf $DIR/wiringPi/ || true
 }
 
 trap finish EXIT
