@@ -37,11 +37,6 @@ ARCHITECTURE=`uname -m`
 if [ ${ARCHITECTURE} = "armv7l" ]
 then
     echo "You are running on armv7l. Assuming you are a Raspberry Pi"
-    #WiringPi
-    git clone git://git.drogon.net/wiringPi
-    cd wiringPi
-    git pull origin
-    ./build
 
     #Sets up Fastboot
     apt-get install systemd
