@@ -78,7 +78,7 @@ bool init_SDL()
             {
                 printf("Renderer could not be created. SDL_Error: %s \n", SDL_GetError());
                 printf("Creating a software renderer instead\n");
-                renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_SOFTWARE | SDL_RENDERER_ACCELERATED);
+                renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_SOFTWARE);
                 if (renderer == NULL)
                 {
                     printf("Renderer could not be created. SDL_Error: %s \n", SDL_GetError());
