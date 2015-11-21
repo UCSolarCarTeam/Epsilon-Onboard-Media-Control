@@ -139,6 +139,23 @@ int show_Camera()
     return 0;
 }
 
+int showMusicBar()
+{
+    SDL_Surface* surfaceBar;
+    gordonMusic.update();
+    surfaceBar = gordonMusic.returnMusicBar();
+    SDL_Texture* textureMusicBar = SDL_CreateTextureFromSurface(renderer, surfaceBar);
+    #ifdef RUNNINGONPI
+    SDL_RendererFlip flip = SDL_RendererFlip((int)SDL_FLIP_HORIZONTAL | (int)SDL_FLIP_VERTICAL);
+    #else
+    SDL_RendererFlip flip = SDL_FLIP_NONE;
+    #endif
+    SDL_RenderCopyEx(renderer, textureMusicBar, NULL, &musicBarRect ,0, NULL, flip);
+    SDL_DestroyTexture(textureMusicBar);
+    
+    return 0;
+}
+
 void processEvents()
 {
     SDL_Event event;
@@ -224,25 +241,6 @@ void close()
     SDL_Quit();
     exit(0);
 }
-
-int showMusicBar()
-{
-
-    SDL_Surface* surfaceBar;
-    gordonMusic.update();
-    surfaceBar = gordonMusic.returnMusicBar();
-    SDL_Texture* textureMusicBar = SDL_CreateTextureFromSurface(renderer, surfaceBar);
-    #ifdef RUNNINGONPI
-    SDL_RendererFlip flip = SDL_RendererFlip((int)SDL_FLIP_HORIZONTAL | (int)SDL_FLIP_VERTICAL);
-    #else
-    SDL_RendererFlip flip = SDL_FLIP_NONE;
-    #endif
-    SDL_RenderCopyEx(renderer, textureMusicBar, NULL, &musicBarRect ,0, NULL, flip);
-    SDL_DestroyTexture(textureMusicBar);
-    
-    return 0;
-}
-
 
 int main(int argc, char* argv[])
 {
