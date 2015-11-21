@@ -20,25 +20,23 @@ int MusicBar::init()
     
     songNameFontSize = 45;
     timeFontSize = 25;
-    
+   
     if (TTF_Init() !=0)
     {
         fprintf(stderr, "TTF_Init Failed%s\n", TTF_GetError());
         SDL_Quit();
         exit(1);
     }
-
-    songNameFont = TTF_OpenFont("/usr/share/fonts/ArialUni.ttf", songNameFontSize);
-    if (songNameFont == NULL)
-    {
-        fprintf(stderr, "TTF_OpenFont Failed%s\n", TTF_GetError());
-        TTF_Quit();
-        SDL_Quit();
-        exit(1);
-    }
     
-    timeFont = TTF_OpenFont("/usr/share/fonts/ArialUni.ttf", timeFontSize);
-    if (timeFont == NULL)
+    setFont(&songNameFont, songNameFontSize);
+    setFont(&timeFont, timeFontSize);
+    
+}
+
+void MusicBar::setFont(TTF_Font **musicBarFont, int fontSize)
+{
+    *musicBarFont = TTF_OpenFont("/usr/share/fonts/ArialUni.ttf", fontSize);
+    if (*musicBarFont == NULL)
     {
         fprintf(stderr, "TTF_OpenFont Failed%s\n", TTF_GetError());
         TTF_Quit();
@@ -47,8 +45,16 @@ int MusicBar::init()
     }
 }
 
-void MusicBar::drawSongName()
+void MusicBar::createGeometricSurface(SDL_Surface* geometricSurface, int surfaceWidth, int surfaceHeight, SDL_Rect surfaceLocation, int surfaceRed, int surfaceGreen, int surfaceBlue)
 {
+    geometricSurface = SDL_CreateRGBSurface(0, surfaceWidth, surfaceHeight, 32, 0, 0, 0, 0);
+    SDL_FillRect(geometricSurface, NULL, SDL_MapRGB(geometricSurface->format,surfaceRed,surfaceGreen,surfaceBlue));
+    SDL_BlitSurface(geometricSurface, NULL, surface, &surfaceLocation);
+    SDL_FreeSurface(geometricSurface);
+}
+
+void MusicBar::drawSongName()
+{ 
     std::string songName;
     int songStringLength;
     const char * songChar;
@@ -107,12 +113,17 @@ void MusicBar::drawSongName()
     
     // Song Background Box Surface
     SDL_Surface *songBoxSurface;
-    songBoxSurface = SDL_CreateRGBSurface(0, maxSongWidth, 52, 32, 0, 0, 0, 0);
+    SDL_Rect songBoxLocation = {songStartPoint, 6, 0, 0};
+    
+    /*songBoxSurface = SDL_CreateRGBSurface(0, maxSongWidth, 52, 32, 0, 0, 0, 0);
     SDL_FillRect(songBoxSurface, NULL, SDL_MapRGB(songBoxSurface->format,35,35,35));
     SDL_Rect songBoxLocation = {songStartPoint, 6, 0, 0};
     SDL_BlitSurface(songBoxSurface, NULL, surface, &songBoxLocation);
     SDL_FreeSurface(songBoxSurface);
+    */
 
+    createGeometricSurface(songBoxSurface, maxSongWidth, 52, songBoxLocation, 35,35,35);
+    
     // Song Name Surface
     SDL_Surface *songSurface;
     SDL_Rect songLocation;
@@ -139,6 +150,11 @@ void MusicBar::drawSongName()
     }
     
     SDL_Surface *leftMaskSurface;
+    SDL_Rect leftMaskLocation = {0,0,0,0};
+
+    SDL_Surface *rightMaskSurface;
+    SDL_Rect rightMaskLocation = {songEndPoint,0,0,0};
+/*
     leftMaskSurface = SDL_CreateRGBSurface(0, songStartPoint, musicbarSurfaceHeight, 32, 0, 0, 0, 0);
     SDL_FillRect(leftMaskSurface, NULL, SDL_MapRGB(leftMaskSurface->format,43,43,43));
     SDL_Rect leftMaskLocation = {0,0,0,0};
@@ -151,6 +167,9 @@ void MusicBar::drawSongName()
     SDL_Rect rightMaskLocation = {songEndPoint,0,0,0};
     SDL_BlitSurface(rightMaskSurface, NULL, surface, &rightMaskLocation);
     SDL_FreeSurface(rightMaskSurface);
+*/
+    createGeometricSurface(leftMaskSurface, songStartPoint, musicbarSurfaceHeight, leftMaskLocation, 43,43,43);
+    createGeometricSurface(rightMaskSurface, musicbarSurfaceWidth - songEndPoint, musicbarSurfaceHeight, rightMaskLocation, 43, 43, 43);
 }
 
 
@@ -251,11 +270,20 @@ void MusicBar::drawSongTime()
     SDL_FreeSurface(songTotalTimeSurface);
 
     SDL_Surface *songTimebarSurface;
+    SDL_Rect songTimebarLocation = {0, 0, 0, 0};
+    /*
     songTimebarSurface = SDL_CreateRGBSurface(0, 0 + songCurrentPercent*musicbarSurfaceWidth, 3, 32, 0, 0, 0, 0); 
     SDL_FillRect(songTimebarSurface, NULL, SDL_MapRGB(songTimebarSurface->format,0,162,255));
     SDL_Rect songTimebarLocation = {0, 0, 0, 0};
     SDL_BlitSurface(songTimebarSurface, NULL, surface, &songTimebarLocation);
     SDL_FreeSurface(songTimebarSurface);
+    */
+    
+    createGeometricSurface(songTimebarSurface,
+            0 + songCurrentPercent*musicbarSurfaceWidth,
+            3,
+            songTimebarLocation,
+            0,162,255);
 }
 
 void MusicBar::drawVolumeBar()
@@ -334,6 +362,7 @@ void MusicBar::drawVolumeBar()
 void MusicBar::update()
 {
     SDL_FillRect(surface, NULL, SDL_MapRGB(surface->format,43,43,43)); 
+    
     drawSongName();
     drawSongTime();
     drawVolumeBar();
