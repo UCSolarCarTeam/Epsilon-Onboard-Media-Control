@@ -36,6 +36,7 @@
 
 class MusicBar
 {
+private:
     SDL_Surface* surface;
     TTF_Font *songNameFont;
     TTF_Font *timeFont;
@@ -45,6 +46,8 @@ class MusicBar
     void drawSongTime();  
     void drawVolumeBar();
     std::string convertToString(int songIntTime);
+    void setFont(TTF_Font** musicBarFont, int FontSize);
+    void createGeometricSurface(SDL_Surface* geometricSurface, int surfaceWidth, int surfaceHeight, SDL_Rect surfaceLocation, int surfaceRed, int surfaceGreen, int surfaceBlue);
     int init();
 
     int musicbarSurfaceWidth;

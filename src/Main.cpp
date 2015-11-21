@@ -65,12 +65,12 @@ SDL_Window* window = NULL;
 
 SDL_Rect videoRect;
 SDL_Rect musicBarRect;
-int noSongs;
 
 VideoStream backupCamera;
 
 int quit;
 
+int noSongs;
 SongPlayer musicPlayer;
 MusicBar gordonMusic(&musicPlayer);
 
@@ -134,7 +134,6 @@ bool init_CameraSettings()
     return success;
 }
 
-
 // Shows an individual frame of the supplied video
 int show_Camera()
 {
@@ -162,6 +161,27 @@ int show_Camera()
         SDL_DestroyTexture(texture);
         return 1;
     }
+    return 0;
+}
+
+int showMusicBar()
+{
+    if (!noSongs)
+    {
+        SDL_Surface* surfaceBar;
+        gordonMusic.update();
+        surfaceBar = gordonMusic.returnMusicBar();
+        SDL_Texture* textureMusicBar = SDL_CreateTextureFromSurface(renderer, surfaceBar);
+        #ifdef RUNNINGONPI
+        SDL_RendererFlip flip = SDL_RendererFlip((int)SDL_FLIP_HORIZONTAL | (int)SDL_FLIP_VERTICAL);
+        #else
+        SDL_RendererFlip flip = SDL_FLIP_NONE;
+        #endif
+        SDL_RenderCopyEx(renderer, textureMusicBar, NULL, &musicBarRect ,0, NULL, flip);
+        SDL_DestroyTexture(textureMusicBar);
+    }
+    
+
     return 0;
 }
 
@@ -256,7 +276,7 @@ int main(int argc, char* argv[])
     #ifdef RUNNINGONPI
         WiringPiButtons buttonManager;
     #endif  
-
+    
     if (!init_SDL())
     {
         fprintf(stderr, "Could not initialize SDL!\n");
@@ -270,6 +290,7 @@ int main(int argc, char* argv[])
 
     if (musicPlayer.initSongPlayer())
     {
+        noSongs = true;
         fprintf(stderr, "No SongLibrary Folder! Not creating Music Thread!\n");
     }
     else 
@@ -277,7 +298,6 @@ int main(int argc, char* argv[])
         musicPlayer.StartThread();
     }
     backupCamera.StartThread();
-
 
     while (!quit)
     {
@@ -288,21 +308,16 @@ int main(int argc, char* argv[])
 
         if (show_Camera())
         {
-            SDL_Surface* surfaceBar;
-            gordonMusic.update();
-            surfaceBar = gordonMusic.returnMusicBar();
             #ifdef RUNNINGONPI
             SDL_RendererFlip flip = SDL_RendererFlip((int)SDL_FLIP_HORIZONTAL | (int)SDL_FLIP_VERTICAL);
             #else
             SDL_RendererFlip flip = SDL_FLIP_NONE;
             #endif
-            SDL_Texture* textureMusicBar = SDL_CreateTextureFromSurface(renderer, surfaceBar);
-            SDL_RenderCopyEx(renderer, textureMusicBar, NULL, &musicBarRect ,0, NULL, flip);
-            SDL_DestroyTexture(textureMusicBar);
+            showMusicBar();
             SDL_RenderPresent(renderer);
             SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
             SDL_RenderClear(renderer);
-        }
+            }
     }
 
     musicPlayer.WaitForThreadToExit();
