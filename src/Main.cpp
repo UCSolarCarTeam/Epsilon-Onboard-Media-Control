@@ -274,9 +274,9 @@ int main(int argc, char* argv[])
     }
     else 
     {
-        musicPlayer.StartInternalThread();
+        musicPlayer.StartThread();
     }
-    backupCamera.StartInternalThread();
+    backupCamera.StartThread();
 
 
     while (!quit)
@@ -305,7 +305,7 @@ int main(int argc, char* argv[])
         }
     }
 
-    musicPlayer.WaitForInternalThreadToExit();
-    backupCamera.WaitForInternalThreadToExit();
+    musicPlayer.WaitForThreadToExit();
+    backupCamera.WaitForThreadToExit();
     return 0;
 }

@@ -32,7 +32,7 @@
 
 using namespace cv;
 
-class VideoStream : public MyThreadClass
+class VideoStream : public I_ThreadClass
 {
     public:
         VideoStream();
@@ -42,7 +42,7 @@ class VideoStream : public MyThreadClass
 
 
     protected:
-        void InternalThreadEntry();
+        void ThreadFunction();
 
     private:
         Mat m_frame;

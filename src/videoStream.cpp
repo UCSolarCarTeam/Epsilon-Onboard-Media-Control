@@ -39,7 +39,7 @@ void VideoStream::signalToQuit()
 }
 
 
-void VideoStream::InternalThreadEntry()
+void VideoStream::ThreadFunction()
 {
     VideoCapture cap(0);
     while (!m_quit)

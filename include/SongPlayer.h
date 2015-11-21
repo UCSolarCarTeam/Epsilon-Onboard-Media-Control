@@ -36,7 +36,7 @@
 
 #define BITS 8
 
-class SongPlayer : public MyThreadClass
+class SongPlayer : public I_ThreadClass
 {
     public:
         SongPlayer();
@@ -59,7 +59,7 @@ class SongPlayer : public MyThreadClass
 
         void songQuit();
     protected:
-        void InternalThreadEntry();
+        void ThreadFunction();
 
     private: 
         double MAX_VOLUME;

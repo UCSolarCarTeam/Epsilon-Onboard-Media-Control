@@ -23,43 +23,48 @@
  *  For further contact, email <software@calgarysolarcar.ca>
  */
 
-#ifndef THREADCLASS_H
-#define THREADCLASS_H
+#ifndef I_THREADCLASS_H
+#define I_THREADCLASS_H
 
 #include <thread>
 
-/** CREDIT: http://stackoverflow.com/a/1151615 **/
 
-class MyThreadClass
+class I_ThreadClass
 {
 public:
-   MyThreadClass() {/* empty */}
-   virtual ~MyThreadClass() {/* empty */}
+    I_ThreadClass() { }
+    virtual ~I_ThreadClass() { }
 
-   /** Returns true if the thread was successfully started, false if there was an error starting the thread */
-   bool StartInternalThread()
-   {
-      return (pthread_create(&_thread, NULL, InternalThreadEntryFunc, this) == 0);
-   }
+    bool StartThread()
+    {
+        if (pthread_create(&thread_tracker, NULL, ThreadReference, this) == 0)
+        {
+            return true;
+        }
+        else 
+        {
+            return false;
+        }
+    }
 
-   /** Will not return until the internal thread has exited. */
-   void WaitForInternalThreadToExit()
-   {
-      (void) pthread_join(_thread, NULL);
-   }
+    void WaitForThreadToExit()
+    {
+        pthread_join(thread_tracker, NULL);
+    }
 
-protected:
-   /** Implement this method in your subclass with the code you want your thread to run. */
-   virtual void InternalThreadEntry() = 0;
 
+
+protected: 
+    /** Anything inheriting this class must define this function */
+    virtual void ThreadFunction() = 0; 
+    
 private:
-   static void * InternalThreadEntryFunc(void * This) 
-   {
-       ((MyThreadClass *)This)->InternalThreadEntry();
-       return NULL;
-   }
+    static void * ThreadReference(void * thread_id)
+    {
+        ((I_ThreadClass *)thread_id)->ThreadFunction();
+        return NULL;
+    }
 
-   pthread_t _thread;
+    pthread_t thread_tracker;
 };
-
 #endif

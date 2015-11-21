@@ -205,7 +205,7 @@ void SongPlayer::closeSongPlayer()
     -buffer_size is also changed according to frame size
     -dev is re-created accorprependNameding to the song mh.
 */
-void SongPlayer::InternalThreadEntry()
+void SongPlayer::ThreadFunction()
 {
     size_t done;
 
