@@ -1,5 +1,0 @@
-sudo: required
-install 
-	= ./Installer/MainInstaller.sh
-	= ./Installer/AutoBootSetup.sh
-language: cpp
