@@ -102,11 +102,14 @@ bool init_SDL()
             if (renderer == NULL)
             {
                 printf("Renderer could not be created. SDL_Error: %s \n", SDL_GetError());
-                success = false;
-            }
-            else
-            {
-                SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
+                printf("Creating a software renderer instead\n");
+                renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_SOFTWARE);
+                if (renderer == NULL)
+                {
+                    printf("Renderer could not be created. SDL_Error: %s \n", SDL_GetError());
+                    success = false;                    
+                    //SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
+                }
             }
         }
     }
