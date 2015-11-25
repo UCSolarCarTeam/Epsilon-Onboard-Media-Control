@@ -4,6 +4,7 @@ install:
     - sudo bash ./Installer/MainInstaller.sh
     - sudo bash ./Installer/AutoBootSetup.sh
     - dpkg -s libmpg123-dev | grep 'Version'
+    - sudo apt-cache policy libmpg123-dev
 script: make
 
 language: cpp
