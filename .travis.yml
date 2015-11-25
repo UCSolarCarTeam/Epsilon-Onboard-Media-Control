@@ -7,6 +7,8 @@ install:
     - pkg-config --cflags opencv
     - pkg-config --libs opencv
     - ls /usr/include/opencv
+    - sudo updatedb
+    - locate cv.h
 
 script: make
 
