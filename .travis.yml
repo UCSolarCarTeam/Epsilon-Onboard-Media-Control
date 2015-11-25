@@ -3,7 +3,7 @@ sudo: required
 install:
     - sudo bash ./Installer/MainInstaller.sh
     - sudo bash ./Installer/AutoBootSetup.sh
-    - dpkg -s libmpg123-dev | grep 'Version
+    - dpkg -s libmpg123-dev | grep 'Version'
 script: make
 
 language: cpp
