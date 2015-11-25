@@ -2,6 +2,8 @@ sudo: required
 
 install:
     - sudo echo "deb http://archive.ubuntu.com/ubuntu/ trusty/universe amd64 Packages" | sudo tee -a /etc/apt/sources.list
+    - sudo apt-get update
+    - sudo apt-get install libmpg123-dev
     # - sudo bash ./Installer/MainInstaller.sh
     # - sudo bash ./Installer/AutoBootSetup.sh
     - dpkg -s libmpg123-dev | grep 'Version'
