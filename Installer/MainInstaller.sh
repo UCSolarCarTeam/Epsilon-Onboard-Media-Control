@@ -50,6 +50,7 @@ else
 fi
 
 apt-get update --yes
+apt-get install libcv-dev
 apt-get install libopencv-dev --yes
 apt-get install libao-dev --yes
 apt-get install g++ --yes
