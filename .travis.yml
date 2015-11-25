@@ -6,7 +6,7 @@ install:
     - pkg-config --modversion opencv
     - pkg-config --cflags opencv
     - pkg-config --libs opencv
-    - ls /usr/include/opencv
+    # - ls /usr/include/opencv
     - sudo updatedb
     - locate cv.h
 
