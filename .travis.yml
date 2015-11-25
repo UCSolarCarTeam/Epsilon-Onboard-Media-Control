@@ -3,14 +3,6 @@ sudo: required
 install:
     - sudo bash ./Installer/MainInstaller.sh
     - sudo bash ./Installer/AutoBootSetup.sh
-    - pkg-config --modversion opencv
-    - pkg-config --cflags opencv
-    - pkg-config --libs opencv
-    # - ls /usr/include/opencv
-    # - sudo drush updatedb
-    - sudo apt-get install mlocate
-    - sudo updatedb
-    - locate cv.h
 
 script: make
 

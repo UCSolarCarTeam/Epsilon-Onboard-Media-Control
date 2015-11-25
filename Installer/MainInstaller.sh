@@ -55,7 +55,6 @@ apt-get install libopencv-dev --yes
 apt-get install libao-dev --yes
 apt-get install g++ --yes
 apt-get install libmpg123-dev --yes
-apt-get install libmpg123-0 --yes
 apt-get install libasound2-dev --yes
 apt-get install libpulse-dev --yes
 
