@@ -5,6 +5,9 @@ install:
     - sudo bash ./Installer/AutoBootSetup.sh
     - export LD_LIBRARY_PATH=/home/opencv/lib:$LD_LIBRARY_PATH
     - export PKG_CONFIG_PATH=/home/opencv/lib/pkgconfig:$PKG_CONFIG_PATH
+    - pkg-config --modversion opencv
+    - pkg-config --cflags opencv
+    - pkg-config --libs opencv
 
 script: make
 
