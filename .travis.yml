@@ -2,12 +2,11 @@ sudo: required
 
 install:
     - sudo echo "deb http://us.archive.ubuntu.com/ubuntu vivid main universe" | sudo tee -a /etc/apt/sources.list
-    - sudo apt-get update
-    - sudo apt-get install libmpg123-dev
-    # - sudo bash ./Installer/MainInstaller.sh
-    # - sudo bash ./Installer/AutoBootSetup.sh
+    - sudo bash ./Installer/MainInstaller.sh
+    - sudo bash ./Installer/AutoBootSetup.sh
     - dpkg -s libmpg123-dev | grep 'Version'
     - sudo apt-cache policy libmpg123-dev
+
 script: make
 
 language: cpp
