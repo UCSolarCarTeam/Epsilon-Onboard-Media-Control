@@ -36,6 +36,7 @@ function finish {
 	rm -rf $DIR/SDL2-2.0.3 || true
 	rm -rf $DIR/SDL2_mixer-2.0.0 || true
 	rm -rf $DIR/wiringPi/ || true
+	rm -rf $DIR/libmpg123/ || true
 }
 
 trap finish EXIT
