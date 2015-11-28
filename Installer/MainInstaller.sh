@@ -49,6 +49,13 @@ else
     exit 0
 fi
 
+git clone https://github.com/gypified/libmpg123.git
+cd libmpg123
+./configure
+make
+sudo make install
+cd ..
+
 apt-get update --yes
 apt-get install libcv-dev --yes
 apt-get install libopencv-dev --yes
