@@ -1,5 +1,13 @@
 sudo: required
 
+before-install:
+	- git clone https://github.com/gypified/libmpg123.git
+	- cd libmpg123
+	- ./configure
+	- make
+	- make install
+	- cd ..
+
 install:
     - sudo bash ./Installer/MainInstaller.sh
     - sudo bash ./Installer/AutoBootSetup.sh
