@@ -49,12 +49,12 @@ else
     exit 0
 fi
 
-sudo echo "deb http://us.archive.ubuntu.com/ubuntu vivid main universe" | sudo tee -a /etc/apt/sources.list
 apt-get update --yes
 apt-get install libcv-dev --yes
 apt-get install libopencv-dev --yes
 apt-get install libao-dev --yes
 apt-get install g++ --yes
+apt-get install libmpg123-0 --yes
 apt-get install libmpg123-dev --yes
 apt-get install libasound2-dev --yes
 apt-get install libpulse-dev --yes
