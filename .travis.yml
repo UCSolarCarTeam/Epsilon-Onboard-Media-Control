@@ -1,6 +1,6 @@
 sudo: required
 
-before-install:
+before_install:
 	- git clone https://github.com/gypified/libmpg123.git
 	- cd libmpg123
 	- ./configure
