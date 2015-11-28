@@ -5,7 +5,7 @@ before_install:
     - cd libmpg123
     - ./configure
     - make
-    - make install
+    - sudo make install
     - cd ..
 
 install:
