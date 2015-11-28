@@ -1,3 +1,4 @@
+#!/bin/bash -e
 #  Schulich Delta OnBoard Media Control
 #  Copyright (C) 2015 University of Calgary Solar Car Team
 #
@@ -21,7 +22,6 @@
 #
 #  For further contact, email <software@calgarysolarcar.ca>
 
-#!/bin/bash -e
 
 DIR=`pwd`
 
