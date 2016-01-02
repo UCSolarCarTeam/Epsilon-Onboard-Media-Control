@@ -50,6 +50,9 @@ else
     exit 0
 fi
 
+apt-get update --yes
+apt-get install build-essential
+
 git clone https://github.com/gypified/libmpg123.git
 cd libmpg123
 ./configure
@@ -57,11 +60,9 @@ make
 sudo make install
 cd ..
 
-apt-get update --yes
 apt-get install libcv-dev --yes
 apt-get install libopencv-dev --yes
 apt-get install libao-dev --yes
-apt-get install g++ --yes
 apt-get install libasound2-dev --yes
 apt-get install libpulse-dev --yes
 
