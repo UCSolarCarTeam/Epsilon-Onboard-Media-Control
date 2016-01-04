@@ -25,6 +25,207 @@
 
 #include "MusicBar.h"
 
+// if no songs default constructor
+MusicBar::MusicBar()   
+{
+    init();
+}
+
+// if there is songs call constructor
+MusicBar::MusicBar(SongPlayer *songPlayer)
+{
+    musicPlayer = songPlayer; // C-Var
+    init();
+
+}
+
+void MusicBar::init()
+{
+    drawMusicBar();
+    //setFont();
+}
+
+void MusicBar::drawMusicBar()
+{
+     
+    surfaceValue musicBarValue = {0, 0, 1080, 64};
+    musicbarSurface = SDL_CreateRGBSurface(0, musicBarValue.sW, musicBarValue.sH, 32, 0, 0, 0, 0); // C Value
+    SDL_FillRect(musicbarSurface, NULL, SDL_MapRGB(musicbarSurface->format,43,43,43)); 
+    drawSongBar();
+    drawVolumeBGBar();
+}
+
+#if 1
+void MusicBar::setFont()
+{
+    songNameFont = TTF_OpenFont("/usr/share/fonts/ArialUni.ttf", 45); // C-Var
+    timeFont = TTF_OpenFont("/usr/share/fonts/ArialUni.ttf", 25); // C-Var
+
+    if (!(songNameFont && timeFont)) // (songNameFont == NULL || timeFont == NULL) same as !songNameFont || !timeFont THEN equivalent deMorgan
+    {
+        fprintf(stderr, "TTF_OpenFont Failed%s\n", TTF_GetError());
+        TTF_Quit();
+        SDL_Quit();
+        exit(1);
+    }
+}
+#endif
+
+#if 1
+void MusicBar::drawSongBar()
+{
+    SDL_Surface *songBarSurface = NULL;
+    surfaceValue songBarValue = {150, 6, 700, 150};
+
+    drawSurface(songBarSurface, &songBarValue, 35, 35, 35); 
+}
+#endif
+
+#if 1
+void MusicBar::drawVolumeBGBar()
+{
+    SDL_Surface *volBGBarSurface;
+    surfaceValue volBGBarValue = {880, 50, 4, 4};
+    int volBarNumber = 20;
+    
+    for (int i = 0; i < volBarNumber; i++)
+    {
+        drawSurface(volBGBarSurface, &volBGBarValue, 0, 0, 0);
+
+        volBGBarValue.sX += 6;  // volBgBarVaue.surfaceX
+        volBGBarValue.sY -= 2;
+        volBGBarValue.sH += 2;
+    }
+}
+#endif 
+#if 0
+void MusicBar::updateSongName() 
+{
+    char songName = (musicPlayer->currentSong()).c_str();
+    int songStringLength = songName.length();
+
+    songName = songName.substr(12, songStringLength - 16);
+
+    SDL_Surface *songNameSurface;
+    SDL_Color songColor = {255, 255, 255};
+    songNameSurface = TTF_RenderUTF8_Blended(songNameFont, songName, songColor);
+    surfaceValue songNameValue = {0, 0, 0, 0}; // Needs to be changed for later
+
+    TTF_SizeText(songNameFont, songName, &songNameValue.sW, &songNameValue.sH);
+    
+    drawSurface(songNameSurface, songNameValue, 0, 0, 0);
+}
+#endif
+#if 0
+void MusicBar::updateSongTime()
+{
+    songCurrentTime = musicPlayer->getCurrentTime(); // CLASS VARIABLE
+    songLengthTime = musicPlayer->getSongLength(); // CLASS VARIABLE
+    timeValue currentTime = {songCurrentTime / 60, songCurrentTime % 60};
+    timeValue lengthTime = {songLengthTime / 60, songLengthTime % 60};
+
+    surfaceValue songCurrentTimeValue = {0, 4, 0, 0};
+    SDL_Surface songCurrentTimeSurface = createTimeSurface(&currentTime, &songCurrentTimeValue);
+    
+    drawSurface(songCurrentTimeSurface, songCurrentTimeValue, 0, 0, 0);
+
+    surfaceValue songLengthTimeValue = {0, 4, 0, 0};
+    SDL_Surface songLengthTimeSurface = createTimeSurface(&lengthTime, &songLengthTimeValue);
+    songLengthTimeValue.sX = 1080 - songLengthTimeValue.sW;
+
+    drawSurface(songLengthTimeSurface, songLengthTimeValue, 0, 0, 0);
+
+    updateTimeBar();
+}
+
+void MusicBar::updateTimeBar(timeValue* songTime)
+{
+    SDL_Surface songTimeBGBarSurface;
+    surfaceValue songTimeBGBarValue = {0, 0, 1080, 3};
+
+    drawSurface(songTimeBGBarSurface, songTimeBGBarValue, 0, 0, 0);
+
+    double songTimePercent = songCurrentTime / songLengthTime;
+
+    SDL_Surface songTimeBarSurface;
+    surfaceValue songTimeBarValue = {0, 0, 0 + songTimePercent*1080, 3};
+   
+    drawSurface(songTimeBarSurface, songTimeBarValue, 0, 162, 255);
+}
+
+void MusicBar::updateVolumeBar()
+{
+    int volBarNumber = 20;
+    double songMaxVol = 0.4;
+    double = songCurrentVol = musicPlayer->getVolume();
+    double = songPercentVol = (songCurrentVol / songMaxVol) *volBarNumber - 0.1;
+    int green = 162;
+    SDL_Surface *volBarSurface;
+    
+    surfaceValue volBarValue = {880, 50, 4, 4};
+
+    for (int i = 0; i < songPercentVol; i++)
+    {
+        drawSurface = (volBarSurface, volBarValue, 255, green, 0);
+
+        volBarValue.sX += 6;
+        volBarValue.sY -= 2;
+        volBarValue.sH += 2;
+        green += 8;
+    }
+}
+#endif
+
+#if 1
+void MusicBar::update()
+{
+    //updateSongName();
+    //updateSongTime();
+    //updateVolumeBar(); 
+}
+#endif
+
+SDL_Surface* MusicBar::returnMusicBar()
+{
+    return musicbarSurface;
+}
+
+#if 0
+SDL_Surface MusicBar::createTimeSurface(timeValue *songTime, surfaceValue *values)  // HELPER FUNCTION
+{
+    char cSongTime;
+
+    if (songCurrentTime.iSecs < 10)
+        cSongTime = (char)songTime.iMins + ":0" + (char)songTime.iSecs;
+    else
+        cSongTime = (char)songTime.iMins + ":" + (char)songTime.iSecs;
+
+    SDL_Surface *songTimeSurface;
+    SDL_Color songTimeColor = {255, 255, 255};
+    songTimeSurface = TTF_RenderText_Blended(timeFont, cSongTime, songTimeColor);
+    TTF_SizeText(timeFont, cSongTime, &(values->sW), &(values->sH));
+
+    return songTimeSurface;
+}
+#endif
+#if 1
+SDL_Surface MusicBar::drawSurface(SDL_Surface *surface, surfaceValue *values, int r, int g , int b) // HELPER FUNCTION
+{
+    SDL_Rect surfaceLocation = {values->sX, values->sY, 0, 0};
+    if (surface == NULL) 
+    {
+        surface = SDL_CreateRGBSurface(0, values->sW, values->sH, 32, 0, 0, 0, 0);
+        SDL_FillRect(surface, NULL, SDL_MapRGB(surface->format, r, g, b));
+    }
+    SDL_BlitSurface(surface, NULL, musicbarSurface, &surfaceLocation);
+    SDL_FreeSurface(surface);
+}
+#endif
+
+
+
+
+#if 0
 MusicBar::MusicBar(SongPlayer *songPlayer)
 {
     mPlayer = songPlayer;
@@ -387,7 +588,7 @@ void MusicBar::drawVolumeBar()
 void MusicBar::update()
 {
     SDL_FillRect(surface, NULL, SDL_MapRGB(surface->format,43,43,43)); 
-    
+   
     drawSongName();
     drawSongTime();
     drawVolumeBar();
@@ -397,7 +598,7 @@ SDL_Surface* MusicBar::returnMusicBar()
 {
     return surface;
 }
-
+#endif
 
 
 

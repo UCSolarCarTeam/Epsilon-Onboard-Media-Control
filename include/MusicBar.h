@@ -37,6 +37,46 @@
 class MusicBar
 {
 private:
+
+    struct surfaceValue {
+        int sX;
+        int sY;
+        int sW;
+        int sH;
+    };
+
+    struct timeValue {
+        int iMins;
+        int iSecs;
+    };
+    
+    struct charTimeValue {
+        char cMins;
+        char cSecs;
+    };
+
+    SDL_Surface *musicbarSurface;
+    SongPlayer *musicPlayer;
+    TTF_Font *songNameFont;
+    TTF_Font *timeFont;
+
+    double songCurrentTime;
+    double songLengthTime;
+
+    void init();
+    void drawMusicBar();
+    void setFont();
+    void drawSongBar();
+    void drawVolumeBGBar();
+    void updateSongName();
+    void updateSongTime();
+    void updateTimeBar(timeValue* songTime);
+    void updateVolumeBar();
+
+    SDL_Surface createTimeSurface(timeValue *songTime, surfaceValue *values);
+    SDL_Surface drawSurface(SDL_Surface *surface, surfaceValue *values, int r, int g, int b);
+ 
+ /*    
     SDL_Surface* surface;
     TTF_Font *songNameFont;
     TTF_Font *timeFont;
@@ -56,12 +96,14 @@ private:
     double songTimeMark;
     bool getTimeInit;
     bool longSongNameInit;
-
+*/
 public:
     void update();
+    MusicBar();
     MusicBar(SongPlayer *songPlayer);
     SDL_Surface* returnMusicBar();
 
 };
+
 
 #endif
