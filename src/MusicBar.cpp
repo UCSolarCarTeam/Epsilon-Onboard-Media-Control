@@ -25,6 +25,8 @@
 
 #include "MusicBar.h"
 
+// ************ CONSTRUCTORS ****************
+
 // if no songs default constructor
 MusicBar::MusicBar()   
 {
@@ -38,6 +40,8 @@ MusicBar::MusicBar(SongPlayer *songPlayer)
     init();
 
 }
+
+// ************** INITIALIZATION ***********
 
 void MusicBar::init()
 {
@@ -70,6 +74,8 @@ void MusicBar::setFont()
     }
 }
 #endif
+
+// ************** FEATURE FUNCTIONS ************
 
 #if 1
 void MusicBar::drawSongBar()
@@ -176,6 +182,8 @@ void MusicBar::updateVolumeBar()
 }
 #endif
 
+// ********* MAIN FUNCTIONS ***********
+
 #if 1
 void MusicBar::update()
 {
@@ -189,6 +197,9 @@ SDL_Surface* MusicBar::returnMusicBar()
 {
     return musicbarSurface;
 }
+
+// ******** HELPER FUNCTIONS ***********
+
 
 #if 0
 SDL_Surface MusicBar::createTimeSurface(timeValue *songTime, surfaceValue *values)  // HELPER FUNCTION
@@ -222,7 +233,7 @@ SDL_Surface MusicBar::drawSurface(SDL_Surface *surface, surfaceValue *values, in
 }
 #endif
 
-
+// ************* OLD STUFF **************
 
 
 #if 0
