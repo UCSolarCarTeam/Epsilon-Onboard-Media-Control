@@ -65,7 +65,7 @@ private:
 
     void init();
     void drawMusicBar();
-    void setFont();
+    void initTTF();
     void drawSongBar();
     void drawVolumeBGBar();
     void updateSongName();

@@ -46,28 +46,42 @@ MusicBar::MusicBar(SongPlayer *songPlayer)
 void MusicBar::init()
 {
     drawMusicBar();
-    //setFont();
+    initTTF();
 }
 
 void MusicBar::drawMusicBar()
 {
-     
     surfaceValue musicBarValue = {0, 0, 1080, 64};
     musicbarSurface = SDL_CreateRGBSurface(0, musicBarValue.sW, musicBarValue.sH, 32, 0, 0, 0, 0); // C Value
+    update();
+    # if 0
     SDL_FillRect(musicbarSurface, NULL, SDL_MapRGB(musicbarSurface->format,43,43,43)); 
     drawSongBar();
     drawVolumeBGBar();
+    #endif
 }
 
 #if 1
-void MusicBar::setFont()
+void MusicBar::initTTF()
 {
-    songNameFont = TTF_OpenFont("/usr/share/fonts/ArialUni.ttf", 45); // C-Var
-    timeFont = TTF_OpenFont("/usr/share/fonts/ArialUni.ttf", 25); // C-Var
-
-    if (!(songNameFont && timeFont)) // (songNameFont == NULL || timeFont == NULL) same as !songNameFont || !timeFont THEN equivalent deMorgan
+    if (TTF_Init() != 0)
     {
-        fprintf(stderr, "TTF_OpenFont Failed%s\n", TTF_GetError());
+        fprintf(stderr, "ERROR: TTF_Init Failed: %s \n", TTF_GetError());
+        SDL_Quit();
+        exit(1);
+    }
+
+    if (!(songNameFont = TTF_OpenFont("/usr/share/fonts/ArialUni.ttf", 45))) // C-Var
+    {
+        fprintf(stderr, "ERROR TTF_OpenFont songNameFont Failed: %s \n", TTF_GetError());
+        TTF_Quit();
+        SDL_Quit();
+        exit(1);
+    }
+
+    if (!(timeFont = TTF_OpenFont("/usr/share/fonts/ArialUni.ttf", 25))) // C-Var
+    {
+        fprintf(stderr, "ERROR TTF_OpenFont timeFont Failed: %s \n", TTF_GetError());
         TTF_Quit();
         SDL_Quit();
         exit(1);
@@ -104,22 +118,25 @@ void MusicBar::drawVolumeBGBar()
     }
 }
 #endif 
-#if 0
+#if 1
 void MusicBar::updateSongName() 
 {
-    char songName = (musicPlayer->currentSong()).c_str();
-    int songStringLength = songName.length();
+    int songStringLength = (musicPlayer->currentSong()).length();
+    const char *songName = (musicPlayer->currentSong()).substr(12, songStringLength - 16).c_str();
 
-    songName = songName.substr(12, songStringLength - 16);
-
+     
     SDL_Surface *songNameSurface;
     SDL_Color songColor = {255, 255, 255};
-    songNameSurface = TTF_RenderUTF8_Blended(songNameFont, songName, songColor);
-    surfaceValue songNameValue = {0, 0, 0, 0}; // Needs to be changed for later
-
+    #if 1
+    if (!(songNameSurface = TTF_RenderUTF8_Blended(songNameFont, songName, songColor))) 
+    {
+        fprintf(stderr, "ERROR: TTF_RenderUTF8_Blended songNameSurface Failed: %s \n", TTF_GetError());
+    }
+    #endif
+    surfaceValue songNameValue = {0, 0, 0, 0}; // EDIT THIS AND THEN DONE    
     TTF_SizeText(songNameFont, songName, &songNameValue.sW, &songNameValue.sH);
-    
-    drawSurface(songNameSurface, songNameValue, 0, 0, 0);
+
+    drawSurface(songNameSurface, &songNameValue, 0, 0, 0);
 }
 #endif
 #if 0
@@ -186,8 +203,12 @@ void MusicBar::updateVolumeBar()
 
 #if 1
 void MusicBar::update()
-{
-    //updateSongName();
+{ 
+    SDL_FillRect(musicbarSurface, NULL, SDL_MapRGB(musicbarSurface->format,43,43,43)); 
+    drawSongBar();
+    drawVolumeBGBar();
+    
+    updateSongName();
     //updateSongTime();
     //updateVolumeBar(); 
 }
@@ -220,7 +241,7 @@ SDL_Surface MusicBar::createTimeSurface(timeValue *songTime, surfaceValue *value
 }
 #endif
 #if 1
-SDL_Surface MusicBar::drawSurface(SDL_Surface *surface, surfaceValue *values, int r, int g , int b) // HELPER FUNCTION
+SDL_Surface MusicBar::drawSurface(SDL_Surface *surface, surfaceValue *values, int r, int g, int b) // HELPER FUNCTION
 {
     SDL_Rect surfaceLocation = {values->sX, values->sY, 0, 0};
     if (surface == NULL) 
