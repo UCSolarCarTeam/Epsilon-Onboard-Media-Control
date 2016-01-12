@@ -31,6 +31,7 @@
 MusicBar::MusicBar()   
 {
     init();
+    drawMusicBar();
 }
 
 // if there is songs call constructor
@@ -38,7 +39,6 @@ MusicBar::MusicBar(SongPlayer *songPlayer)
 {
     musicPlayer = songPlayer; // C-Var
     init();
-
 }
 
 // ************** INITIALIZATION ***********
@@ -53,7 +53,6 @@ void MusicBar::drawMusicBar()
 {
     surfaceValue musicBarValue = {0, 0, 1080, 64};
     musicbarSurface = SDL_CreateRGBSurface(0, musicBarValue.sW, musicBarValue.sH, 32, 0, 0, 0, 0); // C Value
-    update();
     # if 0
     SDL_FillRect(musicbarSurface, NULL, SDL_MapRGB(musicbarSurface->format,43,43,43)); 
     drawSongBar();
@@ -95,7 +94,7 @@ void MusicBar::initTTF()
 void MusicBar::drawSongBar()
 {
     SDL_Surface *songBarSurface = NULL;
-    surfaceValue songBarValue = {150, 6, 700, 150};
+    surfaceValue songBarValue = {150, 6, 700, 52};
 
     drawSurface(songBarSurface, &songBarValue, 35, 35, 35); 
 }
@@ -121,22 +120,41 @@ void MusicBar::drawVolumeBGBar()
 #if 1
 void MusicBar::updateSongName() 
 {
-    int songStringLength = (musicPlayer->currentSong()).length();
-    const char *songName = (musicPlayer->currentSong()).substr(12, songStringLength - 16).c_str();
+    #if 0
+    SDL_Surface *some_surface;
+    SDL_Rect some_surface_loc = {0,0,800,64};
+    some_surface = SDL_CreateRGBSurface(0, 1080, 64, 32, 0, 0, 0, 0);
+    SDL_FillRect(some_surface, NULL, SDL_MapRGB(some_surface->format, 80, 0, 0));
+    SDL_BlitSurface(some_surface, NULL, musicbarSurface, &some_surface_loc);
+    #endif
 
-     
+    std::string strSongName = musicPlayer->currentSong();
+    size_t strSongLength = strSongName.length() - strSongName.find_last_of("/Music/") - sizeof(".mp3");
+    strSongName = strSongName.substr(strSongName.find_last_of("/Music/") + 1, strSongLength); 
+    const char *songName = strSongName.c_str();
+
     SDL_Surface *songNameSurface;
     SDL_Color songColor = {255, 255, 255};
-    #if 1
+    
+    surfaceValue songNameValue = {150, 0, 0, 0};
+    
     if (!(songNameSurface = TTF_RenderUTF8_Blended(songNameFont, songName, songColor))) 
     {
         fprintf(stderr, "ERROR: TTF_RenderUTF8_Blended songNameSurface Failed: %s \n", TTF_GetError());
-    }
-    #endif
-    surfaceValue songNameValue = {0, 0, 0, 0}; // EDIT THIS AND THEN DONE    
-    TTF_SizeText(songNameFont, songName, &songNameValue.sW, &songNameValue.sH);
+    }   
 
-    drawSurface(songNameSurface, &songNameValue, 0, 0, 0);
+    TTF_SizeText(songNameFont, songName, &songNameValue.sW, &songNameValue.sH);
+    if (songNameValue.sW > 700)
+        songNameValue.sW = 700;
+    songNameValue.sY = 64/2 - songNameValue.sH/2;
+
+    #if 1 // EDIT FUNCTIONS TO ACCOMDATE A SRCRECT
+    SDL_Rect song_location = {0,0,800,songNameValue.sH};
+    SDL_Rect song_location2 = {150, songNameValue.sY, 0, 0};
+    SDL_BlitSurface(songNameSurface, &song_location, musicbarSurface, &song_location2);
+    #endif
+
+    //drawSurface(songNameSurface, &songNameValue, 0, 0, 0);
 }
 #endif
 #if 0
@@ -243,7 +261,7 @@ SDL_Surface MusicBar::createTimeSurface(timeValue *songTime, surfaceValue *value
 #if 1
 SDL_Surface MusicBar::drawSurface(SDL_Surface *surface, surfaceValue *values, int r, int g, int b) // HELPER FUNCTION
 {
-    SDL_Rect surfaceLocation = {values->sX, values->sY, 0, 0};
+    SDL_Rect surfaceLocation = {values->sX, values->sY, values->sW, values->sH};
     if (surface == NULL) 
     {
         surface = SDL_CreateRGBSurface(0, values->sW, values->sH, 32, 0, 0, 0, 0);
