@@ -162,7 +162,7 @@ void MusicBar::updateSongName()
     drawSurface(songNameSurface, &songNameSrcRect, songNameRect, 0, 0, 0);
 }
 #endif
-#if 0
+#if 1
 void MusicBar::updateSongTime()
 {
     songCurrentTime = musicPlayer->getCurrentTime(); // CLASS VARIABLE
@@ -170,20 +170,23 @@ void MusicBar::updateSongTime()
     timeValue currentTime = {songCurrentTime / 60, songCurrentTime % 60};
     timeValue lengthTime = {songLengthTime / 60, songLengthTime % 60};
 
-    surfaceValue songCurrentTimeValue = {0, 4, 0, 0};
-    SDL_Surface songCurrentTimeSurface = createTimeSurface(&currentTime, &songCurrentTimeValue);
+    SDL_Rect songCurrentTimeRect = {0, 4, 0, 0};
+    SDL_Surface* songCurrentTimeSurface = createTimeSurface(currentTime, songCurrentTimeRect);
     
-    drawSurface(songCurrentTimeSurface, songCurrentTimeValue, 0, 0, 0);
+    drawSurface(songCurrentTimeSurface, NULL, songCurrentTimeRect, 0, 0, 0);
 
-    surfaceValue songLengthTimeValue = {0, 4, 0, 0};
-    SDL_Surface songLengthTimeSurface = createTimeSurface(&lengthTime, &songLengthTimeValue);
-    songLengthTimeValue.sX = 1080 - songLengthTimeValue.sW;
+    #if 1
+    SDL_Rect songLengthTimeRect = {0, 4, 0, 0};
+    SDL_Surface* songLengthTimeSurface = createTimeSurface(lengthTime, songLengthTimeRect);
+    songLengthTimeRect.x = 1080 - songLengthTimeRect.w;
 
-    drawSurface(songLengthTimeSurface, songLengthTimeValue, 0, 0, 0);
+    drawSurface(songLengthTimeSurface, NULL, songLengthTimeRect, 0, 0, 0);
 
-    updateTimeBar();
+    //updateTimeBar();
+    #endif
 }
-
+#endif
+#if 0
 void MusicBar::updateTimeBar(timeValue* songTime)
 {
     SDL_Surface songTimeBGBarSurface;
@@ -232,7 +235,7 @@ void MusicBar::update()
     drawVolumeBGBar();
     
     updateSongName();
-    //updateSongTime();
+    updateSongTime();
     //updateVolumeBar(); 
 }
 #endif
@@ -245,20 +248,26 @@ SDL_Surface* MusicBar::returnMusicBar()
 // ******** HELPER FUNCTIONS ***********
 
 
-#if 0
-SDL_Surface MusicBar::createTimeSurface(timeValue *songTime, surfaceValue *values)  // HELPER FUNCTION
+#if 1
+SDL_Surface* MusicBar::createTimeSurface(timeValue& songTime, SDL_Rect& surfaceRect)  // HELPER FUNCTION
 {
-    char cSongTime;
+    const char * cSongTime;
 
-    if (songCurrentTime.iSecs < 10)
-        cSongTime = (char)songTime.iMins + ":0" + (char)songTime.iSecs;
+    #if 1 
+    if (songTime.secs < 10)
+        cSongTime = (std::to_string(songTime.mins) + ":0" + std::to_string(songTime.secs)).c_str();
     else
-        cSongTime = (char)songTime.iMins + ":" + (char)songTime.iSecs;
+        cSongTime = (std::to_string(songTime.mins) + ":" + std::to_string(songTime.secs)).c_str();
+    #endif
 
     SDL_Surface *songTimeSurface;
     SDL_Color songTimeColor = {255, 255, 255};
-    songTimeSurface = TTF_RenderText_Blended(timeFont, cSongTime, songTimeColor);
-    TTF_SizeText(timeFont, cSongTime, &(values->sW), &(values->sH));
+    if (!(songTimeSurface = TTF_RenderText_Blended(timeFont, cSongTime, songTimeColor))) 
+    {
+        fprintf(stderr, "ERROR: TTF_RenderUTF8_Blended songTimeSurface Failed: %s \n", TTF_GetError());
+    }   
+    TTF_SizeText(timeFont, cSongTime, &surfaceRect.w, &surfaceRect.h);
+
 
     return songTimeSurface;
 }

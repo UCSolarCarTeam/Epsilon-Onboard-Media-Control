@@ -32,6 +32,7 @@
 #include <SDL2/SDL_ttf.h>
 #include <iostream>
 #include <sstream>
+#include <string>
 
 
 class MusicBar
@@ -48,22 +49,24 @@ private:
     #endif
 
     struct timeValue {
-        int iMins;
-        int iSecs;
+        int mins;
+        int secs;
     };
-    
+   
+    #if 0
     struct charTimeValue {
         char cMins;
         char cSecs;
     };
+    #endif
 
     SDL_Surface *musicbarSurface;
     SongPlayer *musicPlayer;
     TTF_Font *songNameFont;
     TTF_Font *timeFont;
 
-    double songCurrentTime;
-    double songLengthTime;
+    int songCurrentTime;
+    int songLengthTime;
 
     void init();
     void drawMusicBar();
@@ -75,7 +78,7 @@ private:
     void updateTimeBar(timeValue* songTime);
     void updateVolumeBar();
 
-    //SDL_Surface createTimeSurface(timeValue *songTime, surfaceValue *values);
+    SDL_Surface* createTimeSurface(timeValue& songTime, SDL_Rect& surfaceRect);
     SDL_Surface drawSurface(SDL_Surface *surface, const SDL_Rect *srcRect, SDL_Rect& destRect, int r, int g, int b);
  
  /*    
