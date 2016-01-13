@@ -51,8 +51,9 @@ void MusicBar::init()
 
 void MusicBar::drawMusicBar()
 {
-    surfaceValue musicBarValue = {0, 0, 1080, 64};
-    musicbarSurface = SDL_CreateRGBSurface(0, musicBarValue.sW, musicBarValue.sH, 32, 0, 0, 0, 0); // C Value
+    SDL_Rect musicBarRect = {0, 0, 1080, 64};
+    //surfaceValue musicBarValue = {0, 0, 1080, 64};
+    musicbarSurface = SDL_CreateRGBSurface(0, musicBarRect.w, musicBarRect.h, 32, 0, 0, 0, 0); // C Value
     # if 0
     SDL_FillRect(musicbarSurface, NULL, SDL_MapRGB(musicbarSurface->format,43,43,43)); 
     drawSongBar();
@@ -94,9 +95,10 @@ void MusicBar::initTTF()
 void MusicBar::drawSongBar()
 {
     SDL_Surface *songBarSurface = NULL;
-    surfaceValue songBarValue = {150, 6, 700, 52};
+    SDL_Rect songBarRect = {150, 6, 700, 52};
+    //surfaceValue songBarValue = {150, 6, 700, 52};
 
-    drawSurface(songBarSurface, &songBarValue, 35, 35, 35); 
+    drawSurface(songBarSurface, NULL, songBarRect, 35, 35, 35); 
 }
 #endif
 
@@ -104,16 +106,17 @@ void MusicBar::drawSongBar()
 void MusicBar::drawVolumeBGBar()
 {
     SDL_Surface *volBGBarSurface;
-    surfaceValue volBGBarValue = {880, 50, 4, 4};
+    SDL_Rect volBGBarRect = {880, 50, 4, 4};
+    //surfaceValue volBGBarValue = {880, 50, 4, 4};
     int volBarNumber = 20;
     
     for (int i = 0; i < volBarNumber; i++)
     {
-        drawSurface(volBGBarSurface, &volBGBarValue, 0, 0, 0);
+        drawSurface(volBGBarSurface, NULL, volBGBarRect, 0, 0, 0);
 
-        volBGBarValue.sX += 6;  // volBgBarVaue.surfaceX
-        volBGBarValue.sY -= 2;
-        volBGBarValue.sH += 2;
+        volBGBarRect.x += 6;  // volBgBarVaue.surfaceX
+        volBGBarRect.y -= 2;
+        volBGBarRect.h += 2;
     }
 }
 #endif 
@@ -136,25 +139,27 @@ void MusicBar::updateSongName()
     SDL_Surface *songNameSurface;
     SDL_Color songColor = {255, 255, 255};
     
-    surfaceValue songNameValue = {150, 0, 0, 0};
+    SDL_Rect songNameRect = {150, 0, 0, 0};
+    //surfaceValue songNameValue = {150, 0, 0, 0};
     
     if (!(songNameSurface = TTF_RenderUTF8_Blended(songNameFont, songName, songColor))) 
     {
         fprintf(stderr, "ERROR: TTF_RenderUTF8_Blended songNameSurface Failed: %s \n", TTF_GetError());
     }   
 
-    TTF_SizeText(songNameFont, songName, &songNameValue.sW, &songNameValue.sH);
-    if (songNameValue.sW > 700)
-        songNameValue.sW = 700;
-    songNameValue.sY = 64/2 - songNameValue.sH/2;
+    TTF_SizeText(songNameFont, songName, &songNameRect.w, &songNameRect.h);
+    if (songNameRect.w > 700)
+        songNameRect.w = 700;
+    songNameRect.y = 64/2 - songNameRect.h/2;
 
-    #if 1 // EDIT FUNCTIONS TO ACCOMDATE A SRCRECT
-    SDL_Rect song_location = {0,0,800,songNameValue.sH};
-    SDL_Rect song_location2 = {150, songNameValue.sY, 0, 0};
-    SDL_BlitSurface(songNameSurface, &song_location, musicbarSurface, &song_location2);
+    SDL_Rect songNameSrcRect = {0, 0, 700, songNameRect.h};
+
+    #if 0 // EDIT FUNCTIONS TO ACCOMDATE A SRCRECT
+    SDL_Rect songNameSrcRect = {0,0,800,songNameRect.h};
+    SDL_BlitSurface(songNameSurface, &songNameSrcRect, musicbarSurface, &songNameRect);
     #endif
 
-    //drawSurface(songNameSurface, &songNameValue, 0, 0, 0);
+    drawSurface(songNameSurface, &songNameSrcRect, songNameRect, 0, 0, 0);
 }
 #endif
 #if 0
@@ -259,15 +264,18 @@ SDL_Surface MusicBar::createTimeSurface(timeValue *songTime, surfaceValue *value
 }
 #endif
 #if 1
-SDL_Surface MusicBar::drawSurface(SDL_Surface *surface, surfaceValue *values, int r, int g, int b) // HELPER FUNCTION
+SDL_Surface MusicBar::drawSurface(SDL_Surface *surface, const SDL_Rect *srcRect, SDL_Rect& destRect, int r, int g, int b) // HELPER FUNCTION
 {
-    SDL_Rect surfaceLocation = {values->sX, values->sY, values->sW, values->sH};
+    //SDL_Rect surfaceLocation = {values->sX, values->sY, values->sW, values->sH};
     if (surface == NULL) 
     {
-        surface = SDL_CreateRGBSurface(0, values->sW, values->sH, 32, 0, 0, 0, 0);
+        surface = SDL_CreateRGBSurface(0, destRect.w, destRect.h, 32, 0, 0, 0, 0);
         SDL_FillRect(surface, NULL, SDL_MapRGB(surface->format, r, g, b));
     }
-    SDL_BlitSurface(surface, NULL, musicbarSurface, &surfaceLocation);
+    if (srcRect != NULL)
+        SDL_BlitSurface(surface, &(*srcRect), musicbarSurface, &destRect);
+    else
+        SDL_BlitSurface(surface, NULL, musicbarSurface, &destRect);
     SDL_FreeSurface(surface);
 }
 #endif

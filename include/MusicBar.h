@@ -38,12 +38,14 @@ class MusicBar
 {
 private:
 
+    #if 0 // to removed
     struct surfaceValue {
         int sX;
         int sY;
         int sW;
         int sH;
     };
+    #endif
 
     struct timeValue {
         int iMins;
@@ -73,8 +75,8 @@ private:
     void updateTimeBar(timeValue* songTime);
     void updateVolumeBar();
 
-    SDL_Surface createTimeSurface(timeValue *songTime, surfaceValue *values);
-    SDL_Surface drawSurface(SDL_Surface *surface, surfaceValue *values, int r, int g, int b);
+    //SDL_Surface createTimeSurface(timeValue *songTime, surfaceValue *values);
+    SDL_Surface drawSurface(SDL_Surface *surface, const SDL_Rect *srcRect, SDL_Rect& destRect, int r, int g, int b);
  
  /*    
     SDL_Surface* surface;
