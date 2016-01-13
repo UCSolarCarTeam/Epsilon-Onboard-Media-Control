@@ -75,11 +75,11 @@ private:
     void drawVolumeBGBar();
     void updateSongName();
     void updateSongTime();
-    void updateTimeBar(timeValue* songTime);
+    void updateTimeBar(double songCurrentTime, double songLengthTime);
     void updateVolumeBar();
 
     SDL_Surface* createTimeSurface(timeValue& songTime, SDL_Rect& surfaceRect);
-    SDL_Surface drawSurface(SDL_Surface *surface, const SDL_Rect *srcRect, SDL_Rect& destRect, int r, int g, int b);
+    void drawSurface(SDL_Surface *surface, const SDL_Rect *srcRect, SDL_Rect& destRect, int r, int g, int b);
  
  /*    
     SDL_Surface* surface;

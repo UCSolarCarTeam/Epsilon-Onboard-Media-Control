@@ -182,25 +182,45 @@ void MusicBar::updateSongTime()
 
     drawSurface(songLengthTimeSurface, NULL, songLengthTimeRect, 0, 0, 0);
 
-    //updateTimeBar();
+    updateTimeBar(songCurrentTime, songLengthTime);
     #endif
 }
 #endif
-#if 0
-void MusicBar::updateTimeBar(timeValue* songTime)
+#if 1
+void MusicBar::updateTimeBar(double songCurrentTime, double songLengthTime)
 {
-    SDL_Surface songTimeBGBarSurface;
-    surfaceValue songTimeBGBarValue = {0, 0, 1080, 3};
-
-    drawSurface(songTimeBGBarSurface, songTimeBGBarValue, 0, 0, 0);
+    SDL_Surface* songTimeBGBarSurface;
+    SDL_Rect songTimeBGBarRect = {0, 0, 1080, 3};
 
     double songTimePercent = songCurrentTime / songLengthTime;
 
-    SDL_Surface songTimeBarSurface;
-    surfaceValue songTimeBarValue = {0, 0, 0 + songTimePercent*1080, 3};
+    drawSurface(songTimeBGBarSurface, NULL, songTimeBGBarRect, 0, 0, 0);
+
+    #if 0 // SEG FAULT CODE BELOW
+    
+    SDL_Surface* songTimeBarSurface;    
+    SDL_Rect songTimeBarRect = {0, 0, 80, 3};
+    drawSurface(songTimeBarSurface, NULL, songTimeBarRect, 100, 0, 0);
+
+    #endif
+
+    #if 0
+
+    SDL_Surface* songTimeBarSurface;
+    //SDL_Rect songTimeBarRect = {0, 0, 0 + songTimePercent*1080, 3};
+    
+    
+    SDL_Rect songTimeBarRect = {0, 0, 500, 3};
+
+    //std::cout << "breaks here";
    
-    drawSurface(songTimeBarSurface, songTimeBarValue, 0, 162, 255);
+    drawSurface(songTimeBarSurface, NULL, songTimeBarRect, 0, 162, 255);
+
+    #endif
 }
+#endif
+
+#if 0
 
 void MusicBar::updateVolumeBar()
 {
@@ -273,7 +293,7 @@ SDL_Surface* MusicBar::createTimeSurface(timeValue& songTime, SDL_Rect& surfaceR
 }
 #endif
 #if 1
-SDL_Surface MusicBar::drawSurface(SDL_Surface *surface, const SDL_Rect *srcRect, SDL_Rect& destRect, int r, int g, int b) // HELPER FUNCTION
+void MusicBar::drawSurface(SDL_Surface *surface, const SDL_Rect *srcRect, SDL_Rect& destRect, int r, int g, int b) // HELPER FUNCTION
 {
     //SDL_Rect surfaceLocation = {values->sX, values->sY, values->sW, values->sH};
     if (surface == NULL) 
