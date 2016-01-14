@@ -79,7 +79,7 @@ private:
     void updateVolumeBar();
 
     SDL_Surface* createTimeSurface(timeValue& songTime, SDL_Rect& surfaceRect);
-    void drawSurface(SDL_Surface *surface, const SDL_Rect *srcRect, SDL_Rect& destRect, int r, int g, int b);
+    int drawSurface(SDL_Surface *surface, const SDL_Rect *srcRect, SDL_Rect& destRect, int r, int g, int b);
  
  /*    
     SDL_Surface* surface;

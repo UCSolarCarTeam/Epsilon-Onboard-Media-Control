@@ -194,7 +194,8 @@ void MusicBar::updateTimeBar(double songCurrentTime, double songLengthTime)
 
     double songTimePercent = songCurrentTime / songLengthTime;
 
-    drawSurface(songTimeBGBarSurface, NULL, songTimeBGBarRect, 0, 0, 0);
+    if (drawSurface(songTimeBGBarSurface, NULL, songTimeBGBarRect, 0, 0, 0))
+        fprintf(stderr, "Failed to draw songTimeBGBarSurface\n");
 
     #if 0 // SEG FAULT CODE BELOW
     
@@ -293,19 +294,29 @@ SDL_Surface* MusicBar::createTimeSurface(timeValue& songTime, SDL_Rect& surfaceR
 }
 #endif
 #if 1
-void MusicBar::drawSurface(SDL_Surface *surface, const SDL_Rect *srcRect, SDL_Rect& destRect, int r, int g, int b) // HELPER FUNCTION
+int MusicBar::drawSurface(SDL_Surface *surface, const SDL_Rect *srcRect, SDL_Rect& destRect, int r, int g, int b) // HELPER FUNCTION
 {
     //SDL_Rect surfaceLocation = {values->sX, values->sY, values->sW, values->sH};
     if (surface == NULL) 
     {
         surface = SDL_CreateRGBSurface(0, destRect.w, destRect.h, 32, 0, 0, 0, 0);
+        if (surface == NULL)
+            fprintf(stderr, "CreateRGBSurface failed: %s\n", SDL_GetError());
         SDL_FillRect(surface, NULL, SDL_MapRGB(surface->format, r, g, b));
     }
     if (srcRect != NULL)
-        SDL_BlitSurface(surface, &(*srcRect), musicbarSurface, &destRect);
+    {
+        if (SDL_BlitSurface(surface, &(*srcRect), musicbarSurface, &destRect))
+            fprintf(stderr, "BlitSurface failed: %s\n", SDL_GetError());
+    }
     else
-        SDL_BlitSurface(surface, NULL, musicbarSurface, &destRect);
+    {
+        if (SDL_BlitSurface(surface, &(*srcRect), musicbarSurface, &destRect))
+            fprintf(stderr, "BlitSurface failed: %s\n", SDL_GetError());
+    }
     SDL_FreeSurface(surface);
+
+    return 0;
 }
 #endif
 
