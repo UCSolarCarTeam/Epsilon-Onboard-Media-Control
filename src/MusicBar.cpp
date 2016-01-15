@@ -254,6 +254,20 @@ void MusicBar::updateVolumeBar()
 }
 #endif
 
+void songNameScroll(SDL_Surface* songNameSurface)
+
+    SDL_Rect songNameSrcRect = {0,0,0,0};
+    SDL_Rect songNameDestRect = {0,0,0,0};
+
+    while (songNameDestRect < 850)
+    {
+        songNameDestRect.x += 1;
+        drawSurface(SDL_Surface* songNameSurface, songNameSrcRect, songNameDestRect, 0, 0, 0}
+
+        if songNameRect
+
+    }
+    
 // ********* MAIN FUNCTIONS ***********
 
 #if 1
