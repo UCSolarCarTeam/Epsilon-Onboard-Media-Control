@@ -158,8 +158,7 @@ void MusicBar::updateSongName()
     }   
 
     TTF_SizeText(songNameFont, songName, &songNameRect.w, &songNameRect.h);
-    if (songNameRect.w > 700)
-        songNameRect.w = 700;
+
     songNameRect.y = 64/2 - songNameRect.h/2;
 
     SDL_Rect songNameSrcRect = {0, 0, 700, songNameRect.h};
@@ -233,7 +232,7 @@ void MusicBar::updateVolumeBar()
     double songMaxVol = 0.4;
     double songCurrentVol = musicPlayer->getVolume();
     double songPercentVol = (songCurrentVol / songMaxVol) *volBarNumber - 0.1;
-    size_t green = 180;
+    int green = 162;
     SDL_Surface* volBarSurface = NULL;
     
     SDL_Rect volBarRect = {880, 50, 4, 4};
@@ -247,26 +246,12 @@ void MusicBar::updateVolumeBar()
         volBarRect.x += 6;
         volBarRect.y -= 2;
         volBarRect.h += 2;
-        green += 8;
+        green -= 8;
     }
 
     #endif
 }
 #endif
-
-void songNameScroll(SDL_Surface* songNameSurface)
-
-    SDL_Rect songNameSrcRect = {0,0,0,0};
-    SDL_Rect songNameDestRect = {0,0,0,0};
-
-    while (songNameDestRect < 850)
-    {
-        songNameDestRect.x += 1;
-        drawSurface(SDL_Surface* songNameSurface, songNameSrcRect, songNameDestRect, 0, 0, 0}
-
-        if songNameRect
-
-    }
     
 // ********* MAIN FUNCTIONS ***********
 
