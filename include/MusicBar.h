@@ -39,27 +39,11 @@ class MusicBar
 {
 private:
 
-    #if 0 // to removed
-    struct surfaceValue {
-        int sX;
-        int sY;
-        int sW;
-        int sH;
-    };
-    #endif
-
     struct timeValue {
         int mins;
         int secs;
     };
    
-    #if 0
-    struct charTimeValue {
-        char cMins;
-        char cSecs;
-    };
-    #endif
-
     SDL_Surface *musicbarSurface;
     SongPlayer *musicPlayer;
     TTF_Font *songNameFont;
@@ -81,31 +65,11 @@ private:
     SDL_Surface* createTimeSurface(timeValue& songTime, SDL_Rect& surfaceRect);
     int drawSurface(SDL_Surface *surface, const SDL_Rect *srcRect, SDL_Rect& destRect, int r, int g, int b);
  
- /*    
-    SDL_Surface* surface;
-    TTF_Font *songNameFont;
-    TTF_Font *timeFont;
-    SongPlayer *mPlayer;
-    
-    void drawSongName();
-    void drawSongTime();  
-    void drawVolumeBar();
-    std::string convertToString(int songIntTime);
-    void setFont(TTF_Font** musicBarFont, int FontSize);
-    void createGeometricSurface(SDL_Surface* geometricSurface, int surfaceWidth, int surfaceHeight, SDL_Rect surfaceLocation, int surfaceRed, int surfaceGreen, int surfaceBlue);
-    int init();
-
-    int musicbarSurfaceWidth;
-    int musicbarSurfaceHeight;
-    int longSongNameLocation;
-    double songTimeMark;
-    bool getTimeInit;
-    bool longSongNameInit;
-*/
 public:
-    void update();
+    
     MusicBar();
     MusicBar(SongPlayer *songPlayer);
+    void update();
     SDL_Surface* returnMusicBar();
 
 };
