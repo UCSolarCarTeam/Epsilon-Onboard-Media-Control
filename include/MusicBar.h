@@ -28,12 +28,7 @@
 
 #include "SongPlayer.h"
 #include <SDL2/SDL.h>
-#include <stdio.h>
 #include <SDL2/SDL_ttf.h>
-#include <iostream>
-#include <sstream>
-#include <string>
-
 
 class MusicBar
 {
@@ -73,6 +68,4 @@ public:
     SDL_Surface* returnMusicBar();
 
 };
-
-
 #endif
