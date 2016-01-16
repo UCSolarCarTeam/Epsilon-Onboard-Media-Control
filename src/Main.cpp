@@ -102,11 +102,14 @@ bool init_SDL()
             if (renderer == NULL)
             {
                 printf("Renderer could not be created. SDL_Error: %s \n", SDL_GetError());
-                success = false;
-            }
-            else
-            {
-                SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
+                printf("Creating a software renderer instead\n");
+                renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_SOFTWARE);
+                if (renderer == NULL)
+                {
+                    printf("Renderer could not be created. SDL_Error: %s \n", SDL_GetError());
+                    success = false;                    
+                    //SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
+                }
             }
         }
     }
@@ -166,18 +169,22 @@ int show_Camera()
 
 int showMusicBar()
 {
-    SDL_Surface* surfaceBar;
-    gordonMusic.update();
-    surfaceBar = gordonMusic.returnMusicBar();
-    SDL_Texture* textureMusicBar = SDL_CreateTextureFromSurface(renderer, surfaceBar);
-    #ifdef RUNNINGONPI
-    SDL_RendererFlip flip = SDL_RendererFlip((int)SDL_FLIP_HORIZONTAL | (int)SDL_FLIP_VERTICAL);
-    #else
-    SDL_RendererFlip flip = SDL_FLIP_NONE;
-    #endif
-    SDL_RenderCopyEx(renderer, textureMusicBar, NULL, &musicBarRect ,0, NULL, flip);
-    SDL_DestroyTexture(textureMusicBar);
+    if (!noSongs)
+    {
+        SDL_Surface* surfaceBar;
+        gordonMusic.update();
+        surfaceBar = gordonMusic.returnMusicBar();
+        SDL_Texture* textureMusicBar = SDL_CreateTextureFromSurface(renderer, surfaceBar);
+        #ifdef RUNNINGONPI
+        SDL_RendererFlip flip = SDL_RendererFlip((int)SDL_FLIP_HORIZONTAL | (int)SDL_FLIP_VERTICAL);
+        #else
+        SDL_RendererFlip flip = SDL_FLIP_NONE;
+        #endif
+        SDL_RenderCopyEx(renderer, textureMusicBar, NULL, &musicBarRect ,0, NULL, flip);
+        SDL_DestroyTexture(textureMusicBar);
+    }
     
+
     return 0;
 }
 
@@ -309,10 +316,7 @@ int main(int argc, char* argv[])
             #else
             SDL_RendererFlip flip = SDL_FLIP_NONE;
             #endif
-            if (!noSongs)
-            { 
-                showMusicBar();
-            }  
+            showMusicBar();
             SDL_RenderPresent(renderer);
             SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
             SDL_RenderClear(renderer);

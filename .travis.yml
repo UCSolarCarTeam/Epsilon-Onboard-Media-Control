@@ -1,0 +1,9 @@
+sudo: required
+
+install:
+    - sudo bash ./Installer/MainInstaller.sh
+    - sudo bash ./Installer/AutoBootSetup.sh
+
+script: make
+
+language: cpp
