@@ -109,7 +109,6 @@ void MusicBar::drawVolumeBGBar()
 
 void MusicBar::updateSongName() 
 {
-
     std::string strSongName = musicPlayer->currentSong();
     size_t strSongLength = strSongName.length() - strlen("/home/Music/") - strlen(".mp3");
     strSongName = strSongName.substr(strlen("/home/Music/"), strSongLength); 
@@ -117,8 +116,8 @@ void MusicBar::updateSongName()
 
     SDL_Surface *songNameSurface = NULL;
     SDL_Color songColor = {255, 255, 255};
-    
     SDL_Rect songNameRect = {150, 0, 0, 0};
+    SDL_Rect songNameSrcRect = {0, 0, 700, 0};
     
     if (!(songNameSurface = TTF_RenderUTF8_Blended(songNameFont, songName, songColor))) 
     {
@@ -128,12 +127,11 @@ void MusicBar::updateSongName()
     TTF_SizeText(songNameFont, songName, &songNameRect.w, &songNameRect.h);
 
     songNameRect.y = 64/2 - songNameRect.h/2;
-
-    SDL_Rect songNameSrcRect = {0, 0, 700, songNameRect.h};
-
+    songNameSrcRect.h = songNameRect.h;
 
     drawSurface(songNameSurface, &songNameSrcRect, songNameRect, 0, 0, 0);
 }
+
 void MusicBar::updateSongTime()
 {
     songCurrentTime = musicPlayer->getCurrentTime(); 
@@ -154,6 +152,7 @@ void MusicBar::updateSongTime()
 
     updateTimeBar(songCurrentTime, songLengthTime);
 }
+
 void MusicBar::updateTimeBar(double songCurrentTime, double songLengthTime)
 {
     SDL_Surface* songTimeBGBarSurface = NULL;
@@ -162,14 +161,11 @@ void MusicBar::updateTimeBar(double songCurrentTime, double songLengthTime)
     if (drawSurface(songTimeBGBarSurface, NULL, songTimeBGBarRect, 0, 0, 0))
         fprintf(stderr, "Failed to draw songTimeBGBarSurface\n");
 
-
-
     SDL_Surface* songTimeBarSurface = NULL;
     double songTimePercent = songCurrentTime / songLengthTime;
     SDL_Rect songTimeBarRect = {0, 0, 0 + songTimePercent*1080, 3};
 
     drawSurface(songTimeBarSurface, NULL, songTimeBarRect, 0, 162, 255);
-
 }
 
 
@@ -181,7 +177,6 @@ void MusicBar::updateVolumeBar()
     double songPercentVol = (songCurrentVol / songMaxVol) *volBarNumber - 0.1;
     int green = 162;
     SDL_Surface* volBarSurface = NULL;
-    
     SDL_Rect volBarRect = {880, 50, 4, 4};
 
     for (int i = 0; i < songPercentVol; i++)
@@ -216,7 +211,6 @@ SDL_Surface* MusicBar::returnMusicBar()
 
 // ******** HELPER FUNCTIONS ***********
 
-
 SDL_Surface* MusicBar::createTimeSurface(timeValue& songTime, SDL_Rect& surfaceRect) 
 {
     const char * cSongTime;
@@ -228,17 +222,19 @@ SDL_Surface* MusicBar::createTimeSurface(timeValue& songTime, SDL_Rect& surfaceR
 
     TTF_SizeText(timeFont, cSongTime, &surfaceRect.w, &surfaceRect.h);
     
-
     SDL_Surface *songTimeSurface;
     SDL_Color songTimeColor = {255, 255, 255};
+    
     if (!(songTimeSurface = TTF_RenderText_Blended(timeFont, cSongTime, songTimeColor))) 
     {
         fprintf(stderr, "ERROR: TTF_RenderUTF8_Blended songTimeSurface Failed: %s \n", TTF_GetError());
     }   
+    
     TTF_SizeText(timeFont, cSongTime, &surfaceRect.w, &surfaceRect.h);
 
     return songTimeSurface;
 }
+
 int MusicBar::drawSurface(SDL_Surface *surface, const SDL_Rect *srcRect, SDL_Rect& destRect, int r, int g, int b) 
 {
     if (surface == NULL) 
@@ -248,6 +244,7 @@ int MusicBar::drawSurface(SDL_Surface *surface, const SDL_Rect *srcRect, SDL_Rec
             fprintf(stderr, "CreateRGBSurface failed: %s\n", SDL_GetError());
         SDL_FillRect(surface, NULL, SDL_MapRGB(surface->format, r, g, b));
     }
+
     if (srcRect != NULL)
     {
         if (SDL_BlitSurface(surface, &(*srcRect), musicbarSurface, &destRect))
@@ -258,6 +255,7 @@ int MusicBar::drawSurface(SDL_Surface *surface, const SDL_Rect *srcRect, SDL_Rec
         if (SDL_BlitSurface(surface, &(*srcRect), musicbarSurface, &destRect))
             fprintf(stderr, "BlitSurface failed: %s\n", SDL_GetError());
     }
+    
     SDL_FreeSurface(surface);
     surface = NULL;
 
