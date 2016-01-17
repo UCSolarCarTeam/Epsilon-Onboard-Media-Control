@@ -117,17 +117,17 @@ int SongPlayer::loadSong(char* songName)
     printf("SongPlayer::loadSong: Loaded %s!\n",songName);
     return 0;
 }
-int SongPlayer::previousSong()
+void SongPlayer::previousSong()
 {
     mode = PREVIOUS;
 }
 
-int SongPlayer::nextSong()
+void SongPlayer::nextSong()
 {
     mode = NEXT;
 }
 
-int SongPlayer::playPause()
+void SongPlayer::playPause()
 {
     if(mode == PAUSE)
     {
@@ -184,7 +184,7 @@ double SongPlayer::getSongLength()
     }
 }
 
-int SongPlayer::freeMusic()
+void SongPlayer::freeMusic()
 {
     free(buffer);
     ao_close(dev);

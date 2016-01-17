@@ -163,7 +163,7 @@ void MusicBar::updateTimeBar(double songCurrentTime, double songLengthTime)
 
     SDL_Surface* songTimeBarSurface = NULL;
     double songTimePercent = songCurrentTime / songLengthTime;
-    SDL_Rect songTimeBarRect = {0, 0, 0 + songTimePercent*1080, 3};
+    SDL_Rect songTimeBarRect = {0, 0, 0 + int(songTimePercent*1080), 3};
 
     drawSurface(songTimeBarSurface, NULL, songTimeBarRect, 0, 162, 255);
 }
