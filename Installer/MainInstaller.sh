@@ -51,7 +51,7 @@ else
 fi
 
 apt-get update --yes
-apt-get install build-essential
+apt-get install build-essential --yes
 
 git clone https://github.com/gypified/libmpg123.git
 cd libmpg123
