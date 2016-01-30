@@ -45,9 +45,9 @@ class SongPlayer : public I_ThreadClass
         void closeSongPlayer();
 
         /*Song Control*/
-        int previousSong();
-        int nextSong();
-        int playPause();
+        void previousSong();
+        void nextSong();
+        void playPause();
         void changeVolume(double change);
 
         /*For the time bar*/
@@ -64,7 +64,7 @@ class SongPlayer : public I_ThreadClass
     private: 
         double MAX_VOLUME;
 
-        int freeMusic();
+        void freeMusic();
         int loadSong(char* songName);
         SongLoader loader;
         double volume;

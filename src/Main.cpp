@@ -75,8 +75,8 @@ SongPlayer musicPlayer;
 MusicBar gordonMusic(&musicPlayer);
 
 /***********************************************************************
-/*                          SDL functions
-/***********************************************************************/
+                          SDL functions
+***********************************************************************/
 // Initializes SDL window / renderer for use
 
 bool init_SDL()

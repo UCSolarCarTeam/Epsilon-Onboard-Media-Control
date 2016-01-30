@@ -28,40 +28,44 @@
 
 #include "SongPlayer.h"
 #include <SDL2/SDL.h>
-#include <stdio.h>
-#include <SDL_ttf.h>
-#include <iostream>
-#include <sstream>
-
+#include <SDL2/SDL_ttf.h>
 
 class MusicBar
 {
 private:
-    SDL_Surface* surface;
+
+    struct timeValue {
+        int mins;
+        int secs;
+    };
+   
+    SDL_Surface *musicbarSurface;
+    SongPlayer *musicPlayer;
     TTF_Font *songNameFont;
     TTF_Font *timeFont;
-    SongPlayer *mPlayer;
-    
-    void drawSongName();
-    void drawSongTime();  
-    void drawVolumeBar();
-    std::string convertToString(int songIntTime);
-    void setFont(TTF_Font** musicBarFont, int FontSize);
-    void createGeometricSurface(SDL_Surface* geometricSurface, int surfaceWidth, int surfaceHeight, SDL_Rect surfaceLocation, int surfaceRed, int surfaceGreen, int surfaceBlue);
-    int init();
 
-    int musicbarSurfaceWidth;
-    int musicbarSurfaceHeight;
-    int longSongNameLocation;
-    double songTimeMark;
-    bool getTimeInit;
-    bool longSongNameInit;
+    int songCurrentTime;
+    int songLengthTime;
 
+    void init();
+    void drawMusicBar();
+    void initTTF();
+    void drawSongBar();
+    void drawVolumeBGBar();
+    void updateSongName();
+    void updateSongTime();
+    void updateTimeBar(double songCurrentTime, double songLengthTime);
+    void updateVolumeBar();
+
+    SDL_Surface* createTimeSurface(timeValue& songTime, SDL_Rect& surfaceRect);
+    int drawSurface(SDL_Surface *surface, const SDL_Rect *srcRect, SDL_Rect& destRect, int r, int g, int b);
+ 
 public:
-    void update();
+    
+    MusicBar();
     MusicBar(SongPlayer *songPlayer);
+    void update();
     SDL_Surface* returnMusicBar();
 
 };
-
 #endif
