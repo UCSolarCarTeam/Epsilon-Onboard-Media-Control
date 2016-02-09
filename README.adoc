@@ -1,4 +1,8 @@
-= Steps to Setup Proper Camera Streaming Environment on a Fresh SD Card 
+= Schulich Delta Onboard Media Control
+
+This program is an onboard media control for the University of Calgary's Solar Car Team in Schulich Delta. The program features a backup camera and a music player on a raspberry pi.
+
+==  Steps to Setup Proper Camera Streaming Environment on a Fresh SD Card 
 
 . Run MainInstaller.sh as root (found in the installer directory).
 +
