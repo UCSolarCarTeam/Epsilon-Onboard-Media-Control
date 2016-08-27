@@ -13,12 +13,12 @@ TARGET = song_loader
 TEMPLATE = app
 
 
-SOURCES += main.cpp\
+SOURCES += ../OnBoard-Media-Control/main.cpp\
         songloader.cpp
 
 HEADERS  += songloader.h \
     i_song_loader_observer.h \
-    i_threadable.h \
-    observable.h
+    ../OnBoard-Media-Control/i_threadable.h \
+    ../OnBoard-Media-Control/observable.h
 
 FORMS    += songloader.ui
