@@ -7,9 +7,9 @@
 #include <errno.h>
 #include <iostream>
 #include <stdio.h>
-#include "I_song_loader_observer.h"
+#include "../OnBoard-Media-Control/i_song_loader_observer.h"
 //#include "I_io_event_observer.h"
-#include "../OnBoard-Media-Control/Observable.h"
+#include "../OnBoard-Media-Control/observable.h"
 //#include "config.h"
 #include <algorithm>
 #include <vector>
