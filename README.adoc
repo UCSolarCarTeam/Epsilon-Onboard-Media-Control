@@ -1,11 +1,14 @@
 = Schulich Epsilon Onboard Media Control
 
-This program is an onboard media control for the University of Calgary's Solar Car Team in Schulich Epsilon. The program features a music player on the raspberry pi.
+This program is an onboard media control for the University of Calgary's Solar Car Team in Schulich Epsilon. The program features a music player on the Raspberry Pi.
 
-Add new plan image here.
+== The Plan
+:imagesdir: assets/images
+image::plan.jpg[Plan]
 
-Add how to run the onboard media control. 
-
-Add media control features here after it is finished. 
+.TODO list  
+- Add requirements to get onboard media control running.
+- Add how to run the onboard media control. 
+- Add media control features here after it is finished. 
 
 
