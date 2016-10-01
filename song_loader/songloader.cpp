@@ -1,54 +1,35 @@
 #include "songloader.h"
-#include "ui_songloader.h"
 
-
-
-SongLoader::SongLoader(QWidget *parent) :
-    QMainWindow(parent),
-    ui(new Ui::SongLoader)
+SongLoader::SongLoader()
 {
     std::string dir = std::string(".");
-    ui->setupUi(this);
 }
 
-SongLoader::~SongLoader()
-{
-    delete ui;
-}
-
-void SongLoader::notify_listeners(std::string song_path)
-{
-    for(I_SongLoaderObserver*listener:listeners)
-    {
-        listener->current_song(song_path);
-    }
-}
-
-void SongLoader::next_song()
+std::string SongLoader::next_song()
 {
     current_song_index = (current_song_index + 1)%files.size();
-    notify_listeners(files[current_song_index]);
+    return files[current_song_index];
 }
 
-void SongLoader::previous_song()
+std::string SongLoader::previous_song()
 {
     current_song_index = (current_song_index - 1)%files.size();
-    notify_listeners(files[current_song_index]);
+    return files[current_song_index];
 }
 
-void SongLoader::next_song_name()
+std::string SongLoader::next_song_name()
 {
-    notify_listeners(files[(current_song_index + 1)%files.size()]);
+    return files[(current_song_index + 1)%files.size()];
 }
 
-void SongLoader::previous_song_name()
+std::string SongLoader::previous_song_name()
 {
-    notify_listeners(files[(current_song_index - 1)%files.size()]);
+    return files[(current_song_index - 1)%files.size()];
 }
 
-void SongLoader::current_song()
+std::string SongLoader::current_song()
 {
-    notify_listeners(files[(current_song_index)%files.size()]);
+    return (files[(current_song_index)%files.size()]);
 }
 
 void SongLoader::io_event(int io_command)

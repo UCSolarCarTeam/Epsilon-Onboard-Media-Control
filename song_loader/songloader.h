@@ -7,10 +7,6 @@
 #include <errno.h>
 #include <iostream>
 #include <stdio.h>
-#include "../OnBoard-Media-Control/i_song_loader_observer.h"
-//#include "I_io_event_observer.h"
-#include "../OnBoard-Media-Control/observable.h"
-//#include "config.h"
 #include <algorithm>
 #include <vector>
 #include <random>
@@ -21,22 +17,20 @@ namespace Ui {
 class SongLoader;
 }
 
-class SongLoader : public QMainWindow, public Observable<I_SongLoaderObserver>//,public I_IoEventObserver
+class SongLoader : public QMainWindow
 {
     Q_OBJECT
 
 public:
-    explicit SongLoader(QWidget *parent = 0);
-    ~SongLoader();
+    SongLoader();
     bool song_exists();
-    void next_song_name();
-    void previous_song_name();
+    std::string next_song_name();
+    std::string previous_song_name();
     void io_event(int io_command);
-    void next_song();
-    void previous_song();
-    void shuffle_songs();
-    void current_song();
-    int libraryLoad();
+    std::string next_song();
+    std::string previous_song();
+    std::string current_song();
+    std::string libraryLoad();
 
 private:
     Ui::SongLoader *ui;
