@@ -11,15 +11,12 @@
 #include <vector>
 #include <random>
 
-#include <QMainWindow>
-
 namespace Ui {
 class SongLoader;
 }
 
-class SongLoader : public QMainWindow
+class SongLoader
 {
-    Q_OBJECT
 
 public:
     SongLoader();
