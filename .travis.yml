@@ -7,7 +7,7 @@ install:
     - rm astyle -rf
 
 script: 
-    - "! (astyle *.h *.c -r --dry-run --options=astylerc | grep formatted)"
+    - "! (astyle *.h *.cpp -r --dry-run --options=astylerc | grep formatted)"
     - make
 
 language: cpp
