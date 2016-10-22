@@ -6,8 +6,7 @@ install:
     - (cd astyle/build/gcc && make release && sudo make install)
     - rm astyle -rf
 
-script: 
+script:
     - "! (astyle *.h *.cpp -r --dry-run --options=astylerc | grep formatted)"
-    - make
 
 language: cpp
