@@ -5,19 +5,15 @@ SongPlayer::SongPlayer()
 {
     SongLoader loader();
     MAX_VOLUME = 0.4;
-
     loaded = false;
     quitSong = false;
     dev = NULL;
     mh = NULL;
     buffer = NULL;
-
     ao_initialize();
-
     mpg123_init();
     mode = PLAY;
-    volume = MAX_VOLUME/3;
-
+    volume = MAX_VOLUME / 3;
 }
 
 void SongPlayer::songQuit()
@@ -33,10 +29,13 @@ int SongPlayer::initSongPlayer()
 void SongPlayer::changeVolume(double change)
 {
     volume += change;
+
     if (volume > MAX_VOLUME)
     {
         volume = MAX_VOLUME;
-    } else if (volume < 0) {
+    }
+    else if (volume < 0)
+    {
         volume = 0;
     }
 
@@ -56,13 +55,15 @@ double SongPlayer::getMaxVolume()
 //Will load the songName into buffer
 int SongPlayer::loadSong(char* songName)
 {
-    printf("SongPlayer::loadSong: Trying to load %s\n",songName);
+    printf("SongPlayer::loadSong: Trying to load %s\n", songName);
+
     if (NULL == songName || 0 == strcmp("", songName))
     {
         return -1;
     }
 
-    if(loaded){
+    if (loaded)
+    {
         printf("SongPlayer::loadSong: calling freeMusic()\n");
         freeMusic();
     }
@@ -77,19 +78,16 @@ int SongPlayer::loadSong(char* songName)
     mpg123_getformat(mh, &rate, &channels, &encoding); // error: Invalid UTF16 surrogate pair at 10 (0xff08). when running this line
     buffer_size = mpg123_outblock(mh);
     buffer = (unsigned char*) malloc(buffer_size * sizeof(unsigned char));
-
     // set the output format and open the output device
     format.bits = mpg123_encsize(encoding) * BITS;
     format.rate = rate;
     format.channels = channels;
     format.byte_format = AO_FMT_NATIVE;
     format.matrix = 0;
-
     // most important thing used in thread later
     dev = ao_open_live(driver, &format, NULL);
-
     loaded = true;
-    printf("SongPlayer::loadSong: Loaded %s!\n",songName);
+    printf("SongPlayer::loadSong: Loaded %s!\n", songName);
     return 0;
 }
 void SongPlayer::previousSong()
@@ -104,7 +102,7 @@ void SongPlayer::nextSong()
 
 void SongPlayer::playPause()
 {
-    if(mode == PAUSE)
+    if (mode == PAUSE)
     {
         mode = PLAY;
     }
@@ -123,17 +121,16 @@ std::string SongPlayer::currentSong()
 
 double SongPlayer::getCurrentTime()
 {
-    if(loaded)
+    if (loaded)
     {
         off_t length;
         double times;
         int timem;
         length = mpg123_tell(mh);
-        times = (double)(length/rate)/60;
+        times = (double)(length / rate) / 60;
         timem = times;
         times = (times - (double)timem) * 60;
-        return timem*60 + times;
-
+        return timem * 60 + times;
     }
     else
     {
@@ -142,16 +139,16 @@ double SongPlayer::getCurrentTime()
 }
 double SongPlayer::getSongLength()
 {
-    if(loaded)
+    if (loaded)
     {
         off_t length;
         double times;
         int timem;
         length = mpg123_length(mh);
-        times = (double)(length/rate)/60; //time in minutes.minutes (e.g 5.3 minutes)
+        times = (double)(length / rate) / 60; //time in minutes.minutes (e.g 5.3 minutes)
         timem = times;                          //time in minutes (5)
         times = (times - (double)timem) * 60; //time in seconds (.3*60)
-        return timem*60+times;
+        return timem * 60 + times;
     }
     else
     {
@@ -186,35 +183,38 @@ void SongPlayer::ThreadFunction()
 
     while (!quitSong)
     {
+        switch (mode)
+        {
+            case PLAY:
+                if (mpg123_read(mh, buffer, buffer_size, &done) == MPG123_OK)
+                {
+                    ao_play(dev, (char*)buffer, done);
+                }
 
-        switch(mode){
+                if (getCurrentTime() >= getSongLength())
+                {
+                    mode = NEXT;
+                }
 
-        case PLAY:
-            if (mpg123_read(mh, buffer, buffer_size, &done) == MPG123_OK)
-                ao_play(dev, (char*)buffer, done);
+                break;
 
-            if (getCurrentTime() >= getSongLength())
-                mode = NEXT;
-            break;
+            case NEXT:
+                loadSong((char*)loader.nextSong().c_str());
+                mode = PLAY;
+                break;
 
-        case NEXT:
-            loadSong((char*)loader.nextSong().c_str());
-            mode = PLAY;
-            break;
+            case PREVIOUS:
+                loadSong((char*)loader.previousSong().c_str());
+                mode = PLAY;
+                break;
 
-        case PREVIOUS:
-            loadSong((char*)loader.previousSong().c_str());
-            mode = PLAY;
-            break;
+            case SHUFFLE:
+                break;
 
-        case SHUFFLE:
-
-            break;
-
-        case PAUSE:
-            //Keeps the thread looping every 0.2 seconds (So we don't kill CPU cycles on this thread)
-            usleep(200000);
-            break;
+            case PAUSE:
+                //Keeps the thread looping every 0.2 seconds (So we don't kill CPU cycles on this thread)
+                usleep(200000);
+                break;
         }
     }
 }

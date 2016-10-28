@@ -12,7 +12,7 @@
 
 class SongLoader
 {
-    int counter, song, noLibrary; 
+    int counter, song, noLibrary;
     std::vector<std::string> container;
     std::string CurrentSong;
     int readSongNames(); //Read all the songs in the directory
