@@ -14,11 +14,9 @@ TEMPLATE = app
 
 
 SOURCES += ../OnBoard-Media-Control/main.cpp\
-        songloader.cpp
+songloader.cpp
 
 HEADERS  += songloader.h \
-    i_song_loader_observer.h \
-    ../OnBoard-Media-Control/i_threadable.h \
-    ../OnBoard-Media-Control/observable.h
+../OnBoard-Media-Control/i_threadable.h \
 
 FORMS    += songloader.ui

@@ -1,5 +1,4 @@
-#ifndef SONGLOADER_H
-#define SONGLOADER_H
+#pragma once
 
 #include <string>
 #include <stdlib.h>
@@ -11,12 +10,17 @@
 #include <vector>
 #include <random>
 
-namespace Ui {
+#include <QObject>
+
+namespace Ui
+{
 class SongLoader;
 }
 
 class SongLoader
 {
+
+    Q_OBJECT
 
 public:
     SongLoader();
@@ -31,11 +35,9 @@ public:
 
 private:
     Ui::SongLoader *ui;
-    std::vector<std::string> files =std::vector<std::string>();
+    std::vector<std::string> files = std::vector<std::string>();
     int current_song_index;
     bool check_library;
     bool read_song_names(std::string dir, std::vector<std::string> &files);
     void notify_listeners(std::string song_path);
 };
-
-#endif // SONGLOADER_H
