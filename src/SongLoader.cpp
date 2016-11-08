@@ -1,124 +1,79 @@
-#include "SongLoader.h"
-
+#include "songloader.h"
 
 SongLoader::SongLoader()
 {
-    counter = 0;
-    song = -1;
-    noLibrary = readSongNames();
-    shuffleSongNames();
+    std::string dir = std::string(".");
 }
 
-int SongLoader::libraryLoad()
+std::string SongLoader::next_song()
 {
-    return noLibrary;
+    current_song_index = (current_song_index + 1) % files.size();
+    return files[current_song_index];
 }
 
-int SongLoader::readSongNames()
+std::string SongLoader::previous_song()
 {
-    DIR* dir;
-    struct dirent* ent;
+    current_song_index = (current_song_index - 1) % files.size();
+    return files[current_song_index];
+}
 
-    // Change string to directory with songs in it
-    if ((dir = opendir("/home/Music")) != NULL)
+std::string SongLoader::next_song_name()
+{
+    return files[(current_song_index + 1) % files.size()];
+}
+
+std::string SongLoader::previous_song_name()
+{
+    return files[(current_song_index - 1) % files.size()];
+}
+
+std::string SongLoader::current_song()
+{
+    return (files[(current_song_index) % files.size()]);
+}
+
+void SongLoader::io_event(int io_command)
+{
+    switch (io_command)
     {
-        while ((ent = readdir(dir)) != NULL)
+    case 1:
+        next_song();
+
+    case 2:
+        previous_song();
+
+    case 3:
+        next_song_name();
+
+    case 4:
+        previous_song_name();
+    }
+}
+
+bool has_suffix(const std::string& s, const std::string& suffix)
+{
+    return (s.size() >= suffix.size()) && equal(suffix.rbegin(), suffix.rend(), s.rbegin());
+}
+
+bool SongLoader::read_song_names(std::string dir, std::vector<std::string> &files)
+{
+    DIR *dp;
+    std::string filepath;
+    dir = "/home/Music";
+    struct dirent *dirp;
+    if ((dp  = opendir("/home/Music")) == NULL)
+    {
+        return false;
+    }
+
+    while ((dirp = readdir(dp)) != NULL)
+    {
+        if (has_suffix(dirp->d_name, ".mp3"))
         {
-            if (ent->d_name[0] != '.')
-            {
-                container.push_back(ent->d_name);
-                counter++;
-            }
+            filepath = dir + "/" + dirp->d_name;
+            files.push_back(std::string(filepath));
         }
     }
-    else
-    {
-        return 1;
-    }
-
-    return 0;
+    closedir(dp);
+    return true;
 }
-
-int SongLoader::shuffleSongNames()
-{
-    if (counter != 0)
-    {
-        std::random_device rd;
-        std::mt19937 g(rd());
-        std::shuffle ( container.begin(), container.end(), g );
-        song = -1;
-        return 0;
-    }
-
-    return 1;
-}
-
-
-std::string SongLoader::nextSong()
-{
-    if (song >= (counter - 1))
-    {
-        shuffleSongNames();
-        song = 0;
-    }
-    else
-    {
-        song++;
-    }
-
-    CurrentSong = container[song];
-
-    if (counter == 0)
-    {
-        return "";
-    }
-
-    return ("/home/Music/" + CurrentSong);
-}
-
-std::string SongLoader::previousSong()
-{
-    if (song <= 0)
-    {
-        song = counter - 1;
-    }
-    else
-    {
-        song--;
-    }
-
-    CurrentSong = container[song];
-
-    if (counter == 0)
-    {
-        return "";
-    }
-
-    return ("/home/Music/" + CurrentSong);
-}
-
-std::string SongLoader::currentSong()
-{
-    if (song == -1)
-    {
-        song++;
-    }
-
-    if (counter == 0)
-    {
-        return "";
-    }
-
-    return ("/home/Music/" + container[song]);
-}
-
-
-
-
-
-
-
-
-
-
-
