@@ -1,9 +1,12 @@
 sudo: required
 
 install:
-    - sudo bash ./Installer/MainInstaller.sh
-    - sudo bash ./Installer/AutoBootSetup.sh
+    - wget 'https://sourceforge.net/projects/astyle/files/latest/download'
+    - tar -zxvf download
+    - (cd astyle/build/gcc && make release && sudo make install)
+    - rm astyle -rf
 
-script: make
+script:
+    - "! (astyle *.h *.cpp -r --dry-run --options=astylerc | grep formatted)"
 
 language: cpp
