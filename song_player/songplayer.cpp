@@ -14,7 +14,7 @@ MusicPlayer::MusicPlayer(QWidget *parent) : QWidget(parent)
 void MusicPlayer::openFile()
 {
     const QStringList musicPaths = QStandardPaths::standardLocations(QStandardPaths::MusicLocation);
-    const QString filePath = "/home/benjamin/Documents/SolarCar/Epsilon-Onboard-Media-Control/SongLibrary";
+    const QString filePath =
     QFileDialog::getOpenFileName(this, tr("open file"),
                                      musicPaths.isEmpty() ? QDir::homePath() : musicPaths.first(),
                                      tr("mp3 files (*.mp3);;all files (*.*)"));

@@ -39,16 +39,12 @@ protected:
     void mouseReleaseEvent(QMouseEvent *event);
 
 private slots:
-    void stylize();
     void updateState(QMediaPlayer::State state);
     void updatePosition(qint64 position);
     void updateDuration(qint64 duration);
     void setPosition(int position);
     void updateInfo();
     void handleError();
-
-    void updateTaskbar();
-    void updateThumbnailToolBar();
 
 private:
     void createWidgets();
