@@ -1,6 +1,14 @@
-.tags
-.tags_sorted_by_file
-*.out
-BackupCamera
-*.swp
-*un~
+#Untracked files
+#Makefile
+#.pro.user
+#i_threadable.h
+#moc_songplayer.cpp
+#moc_songplayer.o
+#ui_songplayer.h
+
+*.pro.user
+Makefile
+i_threadable.h
+moc_songplayer.cpp
+moc_songplayer.o
+ui_songplayer.h
