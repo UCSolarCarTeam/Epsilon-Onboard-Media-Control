@@ -20,8 +20,6 @@ class SongLoader;
 class SongLoader
 {
 
-    Q_OBJECT
-
 public:
     SongLoader();
     bool song_exists();
