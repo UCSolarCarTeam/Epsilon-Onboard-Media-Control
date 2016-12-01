@@ -1,4 +1,4 @@
-#include "../song_player/songplayer.h"
+#include "../song_player/SongPlayer.h"
 
 #include <QApplication>
 #include <QFileInfo>
@@ -36,7 +36,7 @@ int main(int argc, char *argv[])
 
     associateFileTypes(QStringList(".mp3"));
 
-    MusicPlayer player;
+    SongPlayer player;
     const QStringList arguments = QCoreApplication::arguments();
     if (arguments.size() > 1)
         player.playFile(arguments.at(1));

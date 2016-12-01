@@ -16,14 +16,11 @@
 #include <QMouseEvent>
 #include <QStyle>
 
-QT_FORWARD_DECLARE_CLASS(QLabel)
-QT_FORWARD_DECLARE_CLASS(QSlider)
-
-class MusicPlayer : public QWidget
+class SongPlayer : public QWidget
 {
     Q_OBJECT
 public:
-    MusicPlayer(QWidget *parent = 0);
+    SongPlayer(QWidget *parent = 0);
 
 public slots:
     void openFile();
