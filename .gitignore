@@ -2,6 +2,5 @@
 Makefile
 moc_songplayer.cpp
 moc_songplayer.o
-ui_songplayer.h
-
+song_player/ui_songplayer.h
 
