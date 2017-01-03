@@ -16,6 +16,6 @@ TEMPLATE = app
 SOURCES += OnBoard-Media-Control/main.cpp\
 song_player/SongPlayer.cpp\
 
-HEADERS  += song_player/SongPlayer.h\
+HEADERS  += song_player/SongPlayer.h
 
 FORMS    += song_player/SongPlayer.ui

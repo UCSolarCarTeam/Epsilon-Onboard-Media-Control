@@ -217,7 +217,7 @@ first: all
 
 ####### Build rules
 
-$(TARGET): ui_songplayer.h $(OBJECTS)  
+$(TARGET): ui_SongPlayer.h $(OBJECTS)  
 	$(LINK) $(LFLAGS) -o $(TARGET) $(OBJECTS) $(OBJCOMP) $(LIBS)
 
 Makefile: OnBoardMediaControl.pro ../../../../Qt/5.5/gcc_64/mkspecs/linux-g++/qmake.conf ../../../../Qt/5.5/gcc_64/mkspecs/features/spec_pre.prf \
@@ -519,7 +519,7 @@ distdir: FORCE
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents song_player/SongPlayer.h $(DISTDIR)/
 	$(COPY_FILE) --parents OnBoard-Media-Control/main.cpp song_player/SongPlayer.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents song_player/songplayer.ui $(DISTDIR)/
+	$(COPY_FILE) --parents song_player/SongPlayer.ui $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -701,11 +701,11 @@ moc_SongPlayer.cpp: ../../../../Qt/5.5/gcc_64/include/QtWidgets/QWidget \
 
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
-compiler_uic_make_all: ui_songplayer.h
+compiler_uic_make_all: ui_SongPlayer.h
 compiler_uic_clean:
-	-$(DEL_FILE) ui_songplayer.h
-ui_songplayer.h: song_player/songplayer.ui
-	/home/ben/Qt/5.5/gcc_64/bin/uic song_player/songplayer.ui -o ui_songplayer.h
+	-$(DEL_FILE) ui_SongPlayer.h
+ui_SongPlayer.h: song_player/SongPlayer.ui
+	/home/ben/Qt/5.5/gcc_64/bin/uic song_player/SongPlayer.ui -o ui_SongPlayer.h
 
 compiler_yacc_decl_make_all:
 compiler_yacc_decl_clean:
@@ -717,9 +717,10 @@ compiler_clean: compiler_moc_header_clean compiler_uic_clean
 
 ####### Compile
 
-main.o: OnBoard-Media-Control/main.cpp ../../../../Qt/5.5/gcc_64/include/QtWidgets/QApplication \
-		../../../../Qt/5.5/gcc_64/include/QtWidgets/qapplication.h \
-		../../../../Qt/5.5/gcc_64/include/QtCore/qcoreapplication.h \
+main.o: OnBoard-Media-Control/main.cpp song_player/SongPlayer.h \
+		../../../../Qt/5.5/gcc_64/include/QtWidgets/QWidget \
+		../../../../Qt/5.5/gcc_64/include/QtWidgets/qwidget.h \
+		../../../../Qt/5.5/gcc_64/include/QtGui/qwindowdefs.h \
 		../../../../Qt/5.5/gcc_64/include/QtCore/qglobal.h \
 		../../../../Qt/5.5/gcc_64/include/QtCore/qconfig.h \
 		../../../../Qt/5.5/gcc_64/include/QtCore/qfeatures.h \
@@ -748,16 +749,17 @@ main.o: OnBoard-Media-Control/main.cpp ../../../../Qt/5.5/gcc_64/include/QtWidge
 		../../../../Qt/5.5/gcc_64/include/QtCore/qglobalstatic.h \
 		../../../../Qt/5.5/gcc_64/include/QtCore/qmutex.h \
 		../../../../Qt/5.5/gcc_64/include/QtCore/qnumeric.h \
+		../../../../Qt/5.5/gcc_64/include/QtCore/qobjectdefs.h \
+		../../../../Qt/5.5/gcc_64/include/QtCore/qnamespace.h \
+		../../../../Qt/5.5/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		../../../../Qt/5.5/gcc_64/include/QtGui/qwindowdefs_win.h \
+		../../../../Qt/5.5/gcc_64/include/QtCore/qobject.h \
 		../../../../Qt/5.5/gcc_64/include/QtCore/qstring.h \
 		../../../../Qt/5.5/gcc_64/include/QtCore/qchar.h \
 		../../../../Qt/5.5/gcc_64/include/QtCore/qbytearray.h \
 		../../../../Qt/5.5/gcc_64/include/QtCore/qrefcount.h \
-		../../../../Qt/5.5/gcc_64/include/QtCore/qnamespace.h \
 		../../../../Qt/5.5/gcc_64/include/QtCore/qarraydata.h \
 		../../../../Qt/5.5/gcc_64/include/QtCore/qstringbuilder.h \
-		../../../../Qt/5.5/gcc_64/include/QtCore/qobject.h \
-		../../../../Qt/5.5/gcc_64/include/QtCore/qobjectdefs.h \
-		../../../../Qt/5.5/gcc_64/include/QtCore/qobjectdefs_impl.h \
 		../../../../Qt/5.5/gcc_64/include/QtCore/qlist.h \
 		../../../../Qt/5.5/gcc_64/include/QtCore/qalgorithms.h \
 		../../../../Qt/5.5/gcc_64/include/QtCore/qiterator.h \
@@ -772,17 +774,11 @@ main.o: OnBoard-Media-Control/main.cpp ../../../../Qt/5.5/gcc_64/include/QtWidge
 		../../../../Qt/5.5/gcc_64/include/QtCore/qcontainerfwd.h \
 		../../../../Qt/5.5/gcc_64/include/QtCore/qisenum.h \
 		../../../../Qt/5.5/gcc_64/include/QtCore/qobject_impl.h \
-		../../../../Qt/5.5/gcc_64/include/QtCore/qeventloop.h \
-		../../../../Qt/5.5/gcc_64/include/QtGui/qwindowdefs.h \
-		../../../../Qt/5.5/gcc_64/include/QtGui/qwindowdefs_win.h \
-		../../../../Qt/5.5/gcc_64/include/QtCore/qpoint.h \
-		../../../../Qt/5.5/gcc_64/include/QtCore/qsize.h \
-		../../../../Qt/5.5/gcc_64/include/QtGui/qcursor.h \
-		../../../../Qt/5.5/gcc_64/include/QtWidgets/qdesktopwidget.h \
-		../../../../Qt/5.5/gcc_64/include/QtWidgets/qwidget.h \
 		../../../../Qt/5.5/gcc_64/include/QtCore/qmargins.h \
 		../../../../Qt/5.5/gcc_64/include/QtGui/qpaintdevice.h \
 		../../../../Qt/5.5/gcc_64/include/QtCore/qrect.h \
+		../../../../Qt/5.5/gcc_64/include/QtCore/qsize.h \
+		../../../../Qt/5.5/gcc_64/include/QtCore/qpoint.h \
 		../../../../Qt/5.5/gcc_64/include/QtGui/qpalette.h \
 		../../../../Qt/5.5/gcc_64/include/QtGui/qcolor.h \
 		../../../../Qt/5.5/gcc_64/include/QtGui/qrgb.h \
@@ -808,6 +804,7 @@ main.o: OnBoard-Media-Control/main.cpp ../../../../Qt/5.5/gcc_64/include/QtWidge
 		../../../../Qt/5.5/gcc_64/include/QtGui/qfontmetrics.h \
 		../../../../Qt/5.5/gcc_64/include/QtGui/qfontinfo.h \
 		../../../../Qt/5.5/gcc_64/include/QtWidgets/qsizepolicy.h \
+		../../../../Qt/5.5/gcc_64/include/QtGui/qcursor.h \
 		../../../../Qt/5.5/gcc_64/include/QtGui/qkeysequence.h \
 		../../../../Qt/5.5/gcc_64/include/QtGui/qevent.h \
 		../../../../Qt/5.5/gcc_64/include/QtCore/qvariant.h \
@@ -823,16 +820,64 @@ main.o: OnBoard-Media-Control/main.cpp ../../../../Qt/5.5/gcc_64/include/QtWidge
 		../../../../Qt/5.5/gcc_64/include/QtCore/qfiledevice.h \
 		../../../../Qt/5.5/gcc_64/include/QtGui/qvector2d.h \
 		../../../../Qt/5.5/gcc_64/include/QtGui/qtouchdevice.h \
+		../../../../Qt/5.5/gcc_64/include/QtMultimedia/QMediaPlayer \
+		../../../../Qt/5.5/gcc_64/include/QtMultimedia/qmediaplayer.h \
+		../../../../Qt/5.5/gcc_64/include/QtMultimedia/qmediaobject.h \
+		../../../../Qt/5.5/gcc_64/include/QtMultimedia/qtmultimediadefs.h \
+		../../../../Qt/5.5/gcc_64/include/QtMultimedia/qmultimedia.h \
+		../../../../Qt/5.5/gcc_64/include/QtMultimedia/qmediacontent.h \
+		../../../../Qt/5.5/gcc_64/include/QtMultimedia/qmediaresource.h \
+		../../../../Qt/5.5/gcc_64/include/QtNetwork/qnetworkrequest.h \
+		../../../../Qt/5.5/gcc_64/include/QtCore/QSharedDataPointer \
+		../../../../Qt/5.5/gcc_64/include/QtCore/QString \
+		../../../../Qt/5.5/gcc_64/include/QtCore/QUrl \
+		../../../../Qt/5.5/gcc_64/include/QtCore/QVariant \
+		../../../../Qt/5.5/gcc_64/include/QtMultimedia/qmediaenumdebug.h \
+		../../../../Qt/5.5/gcc_64/include/QtCore/qmetaobject.h \
+		../../../../Qt/5.5/gcc_64/include/QtNetwork/qnetworkconfiguration.h \
+		../../../../Qt/5.5/gcc_64/include/QtWidgets/QAbstractButton \
+		../../../../Qt/5.5/gcc_64/include/QtWidgets/qabstractbutton.h \
+		../../../../Qt/5.5/gcc_64/include/QtGui/qicon.h \
+		../../../../Qt/5.5/gcc_64/include/QtWidgets/QBoxLayout \
+		../../../../Qt/5.5/gcc_64/include/QtWidgets/qboxlayout.h \
+		../../../../Qt/5.5/gcc_64/include/QtWidgets/qlayout.h \
+		../../../../Qt/5.5/gcc_64/include/QtWidgets/qlayoutitem.h \
+		../../../../Qt/5.5/gcc_64/include/QtWidgets/qgridlayout.h \
+		../../../../Qt/5.5/gcc_64/include/QtCore/QStandardPaths \
+		../../../../Qt/5.5/gcc_64/include/QtCore/qstandardpaths.h \
+		../../../../Qt/5.5/gcc_64/include/QtWidgets/QFileDialog \
+		../../../../Qt/5.5/gcc_64/include/QtWidgets/qfiledialog.h \
+		../../../../Qt/5.5/gcc_64/include/QtCore/qdir.h \
+		../../../../Qt/5.5/gcc_64/include/QtCore/qfileinfo.h \
+		../../../../Qt/5.5/gcc_64/include/QtWidgets/qdialog.h \
+		../../../../Qt/5.5/gcc_64/include/QtCore/QFileInfo \
+		../../../../Qt/5.5/gcc_64/include/QtWidgets/QShortcut \
+		../../../../Qt/5.5/gcc_64/include/QtWidgets/qshortcut.h \
+		../../../../Qt/5.5/gcc_64/include/QtCore/QCoreApplication \
+		../../../../Qt/5.5/gcc_64/include/QtCore/qcoreapplication.h \
+		../../../../Qt/5.5/gcc_64/include/QtCore/qeventloop.h \
+		../../../../Qt/5.5/gcc_64/include/QtWidgets/QToolButton \
+		../../../../Qt/5.5/gcc_64/include/QtWidgets/qtoolbutton.h \
+		../../../../Qt/5.5/gcc_64/include/QtCore/QTime \
+		../../../../Qt/5.5/gcc_64/include/QtCore/qdatetime.h \
+		../../../../Qt/5.5/gcc_64/include/QtWidgets/QSlider \
+		../../../../Qt/5.5/gcc_64/include/QtWidgets/qslider.h \
+		../../../../Qt/5.5/gcc_64/include/QtWidgets/qabstractslider.h \
+		../../../../Qt/5.5/gcc_64/include/QtWidgets/QLabel \
+		../../../../Qt/5.5/gcc_64/include/QtWidgets/qlabel.h \
+		../../../../Qt/5.5/gcc_64/include/QtWidgets/qframe.h \
+		../../../../Qt/5.5/gcc_64/include/QtGui/QMouseEvent \
+		../../../../Qt/5.5/gcc_64/include/QtWidgets/QStyle \
+		../../../../Qt/5.5/gcc_64/include/QtWidgets/qstyle.h \
+		../../../../Qt/5.5/gcc_64/include/QtWidgets/QApplication \
+		../../../../Qt/5.5/gcc_64/include/QtWidgets/qapplication.h \
+		../../../../Qt/5.5/gcc_64/include/QtWidgets/qdesktopwidget.h \
 		../../../../Qt/5.5/gcc_64/include/QtGui/qguiapplication.h \
 		../../../../Qt/5.5/gcc_64/include/QtGui/qinputmethod.h \
-		../../../../Qt/5.5/gcc_64/include/QtCore/QFileInfo \
-		../../../../Qt/5.5/gcc_64/include/QtCore/qfileinfo.h \
 		../../../../Qt/5.5/gcc_64/include/QtCore/QSettings \
 		../../../../Qt/5.5/gcc_64/include/QtCore/qsettings.h \
 		../../../../Qt/5.5/gcc_64/include/QtGui/QIcon \
-		../../../../Qt/5.5/gcc_64/include/QtGui/qicon.h \
-		../../../../Qt/5.5/gcc_64/include/QtCore/QDir \
-		../../../../Qt/5.5/gcc_64/include/QtCore/qdir.h
+		../../../../Qt/5.5/gcc_64/include/QtCore/QDir
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o OnBoard-Media-Control/main.cpp
 
 SongPlayer.o: song_player/SongPlayer.cpp song_player/SongPlayer.h \
