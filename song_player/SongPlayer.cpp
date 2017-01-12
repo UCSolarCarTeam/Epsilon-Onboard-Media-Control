@@ -1,5 +1,12 @@
 #include "SongPlayer.h"
 
+namespace
+{
+    const int MS_TO_MINUTES = 60000;
+    const double MS_TO_SECONDS = 1000.0;
+    const int PAGE_STEP_INCREMENTS = 10;
+}
+
 SongPlayer::SongPlayer(QWidget *parent) : QWidget(parent)
 {
     createWidgets();
@@ -102,7 +109,7 @@ void SongPlayer::updatePosition(qint64 position)
 {
     positionSlider->setValue(position);
 
-    QTime duration(0, position / 60000, qRound((position % 60000) / 1000.0));
+    QTime duration(0, position / MS_TO_MINUTES, qRound((position % MS_TO_MINUTES) / MS_TO_SECONDS));
     positionLabel->setText(duration.toString(tr("mm:ss")));
 }
 
@@ -110,7 +117,7 @@ void SongPlayer::updateDuration(qint64 duration)
 {
     positionSlider->setRange(0, duration);
     positionSlider->setEnabled(duration > 0);
-    positionSlider->setPageStep(duration / 10);
+    positionSlider->setPageStep(duration / PAGE_STEP_INCREMENTS);
 }
 
 void SongPlayer::setPosition(int position)

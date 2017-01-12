@@ -1,20 +1,20 @@
 #pragma once
 
-#include <QWidget>
-#include <QMediaPlayer>
 #include <QAbstractButton>
 #include <QBoxLayout>
-#include <QStandardPaths>
+#include <QCoreApplication>
 #include <QFileDialog>
 #include <QFileInfo>
-#include <QShortcut>
-#include <QCoreApplication>
-#include <QToolButton>
-#include <QTime>
-#include <QSlider>
 #include <QLabel>
+#include <QMediaPlayer>
 #include <QMouseEvent>
+#include <QShortcut>
+#include <QSlider>
+#include <QStandardPaths>
 #include <QStyle>
+#include <QTime>
+#include <QToolButton>
+#include <QWidget>
 
 class SongPlayer : public QWidget
 {
@@ -46,9 +46,6 @@ private slots:
 private:
     void createWidgets();
     void createShortcuts();
-    void createJumpList();
-    void createTaskbar();
-    void createThumbnailToolBar();
 
 
     QMediaPlayer mediaPlayer;

@@ -20,7 +20,6 @@ static void associateFileTypes(const QStringList &fileTypes)
         settings.setValue(fileType, QString());
     settings.endGroup();
 
-    settings.beginGroup("shell");
     settings.beginGroup("open");
     settings.setValue("SongPlayer", displayName);
     settings.beginGroup("Command");
@@ -31,7 +30,7 @@ int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
     app.setApplicationName("MusicPlayer");
-    app.setOrganizationDomain("qt-project.org");
+    app.setOrganizationDomain("www.calgarysolarcar.ca");
     app.setApplicationDisplayName("Music Player");
 
     associateFileTypes(QStringList(".mp3"));
