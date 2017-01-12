@@ -2,9 +2,9 @@
 
 namespace
 {
-    const int MS_TO_MINUTES = 60000;
-    const double MS_TO_SECONDS = 1000.0;
-    const int PAGE_STEP_INCREMENTS = 10;
+const int MS_TO_MINUTES = 60000;
+const double MS_TO_SECONDS = 1000.0;
+const int PAGE_STEP_INCREMENTS = 10;
 }
 
 SongPlayer::SongPlayer(QWidget *parent) : QWidget(parent)
@@ -22,7 +22,7 @@ void SongPlayer::openFile()
 {
     const QStringList musicPaths = QStandardPaths::standardLocations(QStandardPaths::MusicLocation);
     const QString filePath =
-    QFileDialog::getOpenFileName(this, tr("open file"),
+        QFileDialog::getOpenFileName(this, tr("open file"),
                                      musicPaths.isEmpty() ? QDir::homePath() : musicPaths.first(),
                                      tr("mp3 files (*.mp3);;all files (*.*)"));
     if (!filePath.isEmpty())
