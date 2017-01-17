@@ -17,6 +17,6 @@ install:
 script:
     - qmake
     - make
-    - "! (astyle "*.h" "*.cpp" -r --dry-run --options=astylerc | grep formatted)"
+    - "! (astyle *.h *.cpp -r --dry-run --options=astylerc | grep formatted)"
 
 language: cpp
