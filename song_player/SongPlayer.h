@@ -3,8 +3,8 @@
 #include <QAbstractButton>
 #include <QBoxLayout>
 #include <QCoreApplication>
+#include <QDebug>
 #include <QFileDialog>
-#include <QFileInfo>
 #include <QLabel>
 #include <QMediaPlayer>
 #include <QMouseEvent>
@@ -48,10 +48,10 @@ private:
     void createShortcuts();
 
 
-    QMediaPlayer mediaPlayer;
-    QAbstractButton *playButton;
-    QSlider *positionSlider;
-    QLabel *positionLabel;
-    QLabel *infoLabel;
-    QPoint offset;
+    QMediaPlayer mediaPlayer_;
+    QAbstractButton *playButton_;
+    QSlider *positionSlider_;
+    QLabel *positionLabel_;
+    QLabel *infoLabel_;
+    QPoint offset_;
 };
