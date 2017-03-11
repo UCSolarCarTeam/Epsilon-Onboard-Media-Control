@@ -28,6 +28,7 @@ public slots:
     void togglePlayback();
     void seekForward();
     void seekBackward();
+    void setPosition(int position);
 
 protected:
     bool event(QEvent *event);
@@ -39,7 +40,6 @@ private slots:
     void updateState(QMediaPlayer::State state);
     void updatePosition(qint64 position);
     void updateDuration(qint64 duration);
-    void setPosition(int position);
     void updateInfo();
     void handleError();
 

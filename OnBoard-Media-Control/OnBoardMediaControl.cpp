@@ -1,5 +1,5 @@
 #include "OnBoardMediaControl.h"
-#include "../song_player/SongPlayer.h"
+#include "../SongPlayer//SongPlayer.h"
 
 OnBoardMediaControl::OnBoardMediaControl(int &argc, char **argv)
     : QApplication(argc, argv)

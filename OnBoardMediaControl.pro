@@ -1,23 +1,11 @@
-#-------------------------------------------------
-#
-# Project created by QtCreator 2016-11-23T18:42:05
-#
-#-------------------------------------------------
+TEMPLATE = subdirs
 
-QT       += core widgets multimedia
-CONFIG += c++11
+CONFIG += ordered static
 
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+message(University of Calgary Solar Car Team Epsilon Onboard Media Control)
 
-TARGET = OnBoardMediaControl
-TEMPLATE = app
-
-
-SOURCES += OnBoard-Media-Control/main.cpp\
-song_player/SongPlayer.cpp\
-OnBoard-Media-Control/OnBoardMediaControl.cpp
-
-HEADERS  += song_player/SongPlayer.h\
-OnBoard-Media-Control/OnBoardMediaControl.h
-
-FORMS    += song_player/SongPlayer.ui
+SUBDIRS = \
+ViewLayer\
+BusinuessLayer\
+DataLayer \
+OnBoardMediaControl

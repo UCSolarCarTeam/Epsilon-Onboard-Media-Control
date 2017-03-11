@@ -1,4 +1,4 @@
-#include "../song_player/SongPlayer.h"
+#include "../SongPlayer/SongPlayer.h"
 #include "OnBoardMediaControl.h"
 
 int main(int argc, char *argv[])
@@ -12,7 +12,7 @@ int main(int argc, char *argv[])
     if (arguments.size() > 1)
         player.playFile(arguments.at(1));
 
-    player.resize(300, 60);
+    player.resize(683, 384);
     player.show();
 
     return app->exec();

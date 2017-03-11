@@ -2,9 +2,9 @@
 
 namespace
 {
-const int MS_TO_MINUTES = 60000;
-const double MS_TO_SECONDS = 1000.0;
-const int PAGE_STEP_INCREMENTS = 10;
+    const int MS_TO_MINUTES = 60000;
+    const double MS_TO_SECONDS = 1000.0;
+    const int PAGE_STEP_INCREMENTS = 10;
 }
 
 SongPlayer::SongPlayer(QWidget *parent) : QWidget(parent)
@@ -12,9 +12,9 @@ SongPlayer::SongPlayer(QWidget *parent) : QWidget(parent)
     createWidgets();
     createShortcuts();
 
-    connect(&mediaPlayer_, &QMediaPlayer::positionChanged, this, &SongPlayer::updatePosition);
-    connect(&mediaPlayer_, &QMediaPlayer::durationChanged, this, &SongPlayer::updateDuration);
-    connect(&mediaPlayer_, &QMediaObject::metaDataAvailableChanged, this, &SongPlayer::updateInfo);
+    connect(&mediaPlayer, &QMediaPlayer::positionChanged, this, &SongPlayer::updatePosition);
+    connect(&mediaPlayer, &QMediaPlayer::durationChanged, this, &SongPlayer::updateDuration);
+    connect(&mediaPlayer, &QMediaObject::metaDataAvailableChanged, this, &SongPlayer::updateInfo);
 
 }
 
@@ -22,53 +22,49 @@ void SongPlayer::openFile()
 {
     const QStringList musicPaths = QStandardPaths::standardLocations(QStandardPaths::MusicLocation);
     const QString filePath =
-        QFileDialog::getOpenFileName(this, tr("open file"),
+    QFileDialog::getOpenFileName(this, tr("open file"),
                                      musicPaths.isEmpty() ? QDir::homePath() : musicPaths.first(),
                                      tr("mp3 files (*.mp3);;all files (*.*)"));
     if (!filePath.isEmpty())
     {
         playFile(filePath);
     }
-    else
-    {
-        qDebug() << "File path is empty";
-    }
 }
 
 void SongPlayer::playFile(const QString &filePath)
 {
-    playButton_->setEnabled(true);
-    infoLabel_->setText(QFileInfo(filePath).fileName());
+    playButton->setEnabled(true);
+    infoLabel->setText(QFileInfo(filePath).fileName());
 
-    mediaPlayer_.setMedia(QUrl::fromLocalFile(filePath));
-    mediaPlayer_.play();
+    mediaPlayer.setMedia(QUrl::fromLocalFile(filePath));
+    mediaPlayer.play();
 }
 
 void SongPlayer::togglePlayback()
 {
-    if (mediaPlayer_.mediaStatus() == QMediaPlayer::NoMedia)
+    if (mediaPlayer.mediaStatus() == QMediaPlayer::NoMedia)
     {
         openFile();
     }
-    else if (mediaPlayer_.state() == QMediaPlayer::PlayingState)
+    else if (mediaPlayer.state() == QMediaPlayer::PlayingState)
     {
-        mediaPlayer_.pause();
+        mediaPlayer.pause();
     }
     else
     {
-        mediaPlayer_.play();
+        mediaPlayer.play();
     }
 
 }
 
 void SongPlayer::seekForward()
 {
-    positionSlider_->triggerAction(QSlider::SliderPageStepAdd);
+    positionSlider->triggerAction(QSlider::SliderPageStepAdd);
 }
 
 void SongPlayer::seekBackward()
 {
-    positionSlider_->triggerAction(QSlider::SliderPageStepSub);
+    positionSlider->triggerAction(QSlider::SliderPageStepSub);
 }
 
 bool SongPlayer::event(QEvent *event)
@@ -79,19 +75,19 @@ bool SongPlayer::event(QEvent *event)
 void SongPlayer::mousePressEvent(QMouseEvent *event)
 {
 
-    offset_ = event->globalPos() - pos();
+    offset = event->globalPos() - pos();
     event->accept();
 }
 
 void SongPlayer::mouseMoveEvent(QMouseEvent *event)
 {
-    move(event->globalPos() - offset_);
+    move(event->globalPos() - offset);
     event->accept();
 }
 
 void SongPlayer::mouseReleaseEvent(QMouseEvent *event)
 {
-    offset_ = QPoint();
+    offset = QPoint();
     event->accept();
 }
 
@@ -99,97 +95,97 @@ void SongPlayer::updateState(QMediaPlayer::State state)
 {
     if (state == QMediaPlayer::PlayingState)
     {
-        playButton_->setToolTip(tr("Pause"));
-        playButton_->setIcon(style()->standardIcon(QStyle::SP_MediaPause));
+        playButton->setToolTip(tr("Pause"));
+        playButton->setIcon(style()->standardIcon(QStyle::SP_MediaPause));
     }
     else
     {
-        playButton_->setToolTip(tr("Play"));
-        playButton_->setIcon(style()->standardIcon(QStyle::SP_MediaPlay));
+        playButton->setToolTip(tr("Play"));
+        playButton->setIcon(style()->standardIcon(QStyle::SP_MediaPlay));
     }
 }
 
 void SongPlayer::updatePosition(qint64 position)
 {
-    positionSlider_->setValue(position);
+    positionSlider->setValue(position);
 
     QTime duration(0, position / MS_TO_MINUTES, qRound((position % MS_TO_MINUTES) / MS_TO_SECONDS));
-    positionLabel_->setText(duration.toString(tr("mm:ss")));
+    positionLabel->setText(duration.toString(tr("mm:ss")));
 }
 
 void SongPlayer::updateDuration(qint64 duration)
 {
-    positionSlider_->setRange(0, duration);
-    positionSlider_->setEnabled(duration > 0);
-    positionSlider_->setPageStep(duration / PAGE_STEP_INCREMENTS);
+    positionSlider->setRange(0, duration);
+    positionSlider->setEnabled(duration > 0);
+    positionSlider->setPageStep(duration / PAGE_STEP_INCREMENTS);
 }
 
 void SongPlayer::setPosition(int position)
 {
     // avoid seeking when the slider valuechange is triggered from updatePosition()
-    if (qAbs(mediaPlayer_.position() - position) > 99)
+    if (qAbs(mediaPlayer.position() - position) > 99)
     {
-        mediaPlayer_.setPosition(position);
+        mediaPlayer.setPosition(position);
     }
 }
 
 void SongPlayer::updateInfo()
 {
     QStringList info;
-    QString author = mediaPlayer_.metaData("Author").toString();
+    QString author = mediaPlayer.metaData("Author").toString();
     if (!author.isEmpty())
     {
         info += author;
     }
-    QString title = mediaPlayer_.metaData("Title").toString();
+    QString title = mediaPlayer.metaData("Title").toString();
     if (!title.isEmpty())
     {
         info += title;
     }
     if (!info.isEmpty())
     {
-        infoLabel_->setText(info.join(tr(" - ")));
+        infoLabel->setText(info.join(tr(" - ")));
     }
 }
 
 void SongPlayer::handleError()
 {
-    playButton_->setEnabled(false);
-    infoLabel_->setText(tr("Error: %1").arg(mediaPlayer_.errorString()));
+    playButton->setEnabled(false);
+    infoLabel->setText(tr("Error: %1").arg(mediaPlayer.errorString()));
 }
 
 void SongPlayer::createWidgets()
 {
-    playButton_ = new QToolButton(this);
-    playButton_->setEnabled(false);
-    playButton_->setToolTip(tr("Play"));
-    playButton_->setIcon(style()->standardIcon(QStyle::SP_MediaPlay));
-    connect(playButton_, &QAbstractButton::clicked, this, &SongPlayer::togglePlayback);
+    playButton = new QToolButton(this);
+    playButton->setEnabled(false);
+    playButton->setToolTip(tr("Play"));
+    playButton->setIcon(style()->standardIcon(QStyle::SP_MediaPlay));
+    connect(playButton, &QAbstractButton::clicked, this, &SongPlayer::togglePlayback);
 
     QAbstractButton *openButton = new QToolButton(this);
     openButton->setText(tr("..."));
     openButton->setToolTip(tr("Open a file..."));
-    openButton->setFixedSize(playButton_->sizeHint());
+    openButton->setFixedSize(playButton->sizeHint());
     connect(openButton, &QAbstractButton::clicked, this, &SongPlayer::openFile);
 
-    positionSlider_ = new QSlider(Qt::Horizontal, this);
-    positionSlider_->setEnabled(false);
-    positionSlider_->setToolTip(tr("Seek"));
-    connect(positionSlider_, &QAbstractSlider::valueChanged, this, &SongPlayer::setPosition);
+    positionSlider = new QSlider(Qt::Horizontal, this);
+    positionSlider->setEnabled(false);
+    positionSlider->setToolTip(tr("Seek"));
+    connect(positionSlider, &QAbstractSlider::valueChanged, this, &SongPlayer::setPosition);
 
-    infoLabel_ = new QLabel(this);
-    positionLabel_ = new QLabel(tr("00:00"), this);
-    positionLabel_->setMinimumWidth(positionLabel_->sizeHint().width());
+    infoLabel = new QLabel(this);
+    positionLabel = new QLabel(tr("00:00"), this);
+    positionLabel->setMinimumWidth(positionLabel->sizeHint().width());
 
     QBoxLayout *controlLayout = new QHBoxLayout;
     controlLayout->setMargin(0);
     controlLayout->addWidget(openButton);
-    controlLayout->addWidget(playButton_);
-    controlLayout->addWidget(positionSlider_);
-    controlLayout->addWidget(positionLabel_);
+    controlLayout->addWidget(playButton);
+    controlLayout->addWidget(positionSlider);
+    controlLayout->addWidget(positionLabel);
 
     QBoxLayout *mainLayout = new QVBoxLayout(this);
-    mainLayout->addWidget(infoLabel_);
+    mainLayout->addWidget(infoLabel);
     mainLayout->addLayout(controlLayout);
 
 }
