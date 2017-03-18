@@ -1,4 +1,6 @@
 #include "SongPlayer.h"
+#include "SongControl/SongControl.h"
+#include "SongControl/SongControl.cpp"
 
 namespace
 {
@@ -17,7 +19,6 @@ void SongPlayer::playFile(const QString &filePath)
     infoLabel_->setText(QFileInfo(filePath).fileName());
 
     mediaPlayer_.setMedia(QUrl::fromLocalFile(filePath));
-    mediaPlayer_.play();
 }
 
 void SongPlayer::togglePlayback()
@@ -35,4 +36,23 @@ void SongPlayer::togglePlayback()
         mediaPlayer_.play();
     }
 
+}
+
+void SongPlayer::updateState(QMediaPlayer::State state)
+{
+    if (state == QMediaPlayer::PlayingState)
+    {
+        playButton->setTooTip(tr("Pause"));
+        playButton->setIcon(Style()->standardIcon(QStyle::SP_MediaPause));
+    }
+    else
+    {
+        playButton->setToolTip(tr("Play"));
+        playButton->setIcon(style()->standardIcon(QStyle::SP_MediaPlay));
+    }
+    if (mediaPlayer.position() >= mediaPlayer.duration() && mediaPlayer.duratoin() != -1)
+    {
+        openNext();
+        togglePlayback();
+    }
 }

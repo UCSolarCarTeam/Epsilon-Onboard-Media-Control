@@ -23,11 +23,13 @@ public:
     SongPlayer(QWidget *parent = 0);
 
 public slots:
+    void openFile();
+    void openNext();
     void playFile(const QString& filePath);
-    void togglePlayback();
-    void seekForward();
     void seekBackward();
+    void seekForward();
     void setPosition(int position);
+    void togglePlayback();
 
 protected:
     bool event(QEvent *event);

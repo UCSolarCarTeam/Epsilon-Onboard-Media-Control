@@ -16,3 +16,16 @@ void SongPlayer::openFile()
         qDebug() << "File path is empty";
     }
 }
+
+void SongPlayer::openNext()
+{
+    const QString filePath = QString::fromStdString(controller.next_song());
+    if(!filePath.isEmpty())
+    {
+       playFile(filePath); 
+    }
+    else
+    {
+        qDebug() << "Warning filepath is empty";
+    }
+}

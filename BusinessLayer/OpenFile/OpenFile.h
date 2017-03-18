@@ -8,4 +8,5 @@ class OpenFile : public QWidget
     Q_OBJECT
 public slots:
     void openFile();
+    void openNext();
 }
