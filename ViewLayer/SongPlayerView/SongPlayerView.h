@@ -4,13 +4,13 @@
 class SongPlayer;
 class I_SongPlayerUi;
 
-class SongPlayerView : public QObject
+class SongPlayerView : public I_SongPlayerUi
 {
 public:
     SongPlayerView(SongPlayer& songPlayer, I_SongPlayerUi ui);
     void handlePlayPauseClicked();
 
 private:
-    SongPlayerUi& ui_;
+    I_SongPlayerUi& ui_;
     SongPlayer& songPlayer_;
 };

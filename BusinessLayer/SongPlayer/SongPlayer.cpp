@@ -42,15 +42,15 @@ void SongPlayer::updateState(QMediaPlayer::State state)
 {
     if (state == QMediaPlayer::PlayingState)
     {
-        playButton->setTooTip(tr("Pause"));
-        playButton->setIcon(Style()->standardIcon(QStyle::SP_MediaPause));
+        playButton_->setToolTip(tr("Pause"));
+       // playButton_->setIcon(Style()->standardIcon(QStyle::SP_MediaPause));
     }
     else
     {
-        playButton->setToolTip(tr("Play"));
-        playButton->setIcon(style()->standardIcon(QStyle::SP_MediaPlay));
+        playButton_->setToolTip(tr("Play"));
+        playButton_->setIcon(style()->standardIcon(QStyle::SP_MediaPlay));
     }
-    if (mediaPlayer.position() >= mediaPlayer.duration() && mediaPlayer.duratoin() != -1)
+    if (mediaPlayer_.position() >= mediaPlayer_.duration() && mediaPlayer_.duration() != -1)
     {
         openNext();
         togglePlayback();

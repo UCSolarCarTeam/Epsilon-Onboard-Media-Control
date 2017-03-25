@@ -18,7 +18,7 @@ QPushButton& SongPlayerUi::PlayButton()
     return *ui->PlayButton;
 }
 
-QPushButton& ttsongplayerui::OpenButton()
+QPushButton& SongPlayerUi::OpenButton()
 {
     return *ui->OpenButton;
 }

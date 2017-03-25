@@ -2,23 +2,20 @@ TEMPLATE = lib
 CONFIG += staticlib
 
 ! include(../common.pri){
-error("Could not find common.pri file!")
+    error("Could not find common.pri file!")
 }
-
-PRE_TARGETDEPS += \
-    ../../build/.lib/*
 
 DESTDIR = ../../build/.lib
 
 HEADERS += \
-    ViewContainer.h \
-    SongPlayerView/SongPlayerView.h \
     SongPlayerUI/SongPlayerUi.h \
+    SongPlayerView/SongPlayerView.h \
+    ViewContainer.h \
 
-SOURCES += \
-    ViewContainer.cpp \
+SOURCES += \ 
     SongPlayerUI/SongPlayerUi.cpp \
-    SongPlayerView/SongPlayerView.cpp
+    SongPlayerView/SongPlayerView.cpp \
+    ViewContainer.cpp \
 
 FORMS += \
-    SongPlayerUI.ui
+    SongPlayerUi.ui \

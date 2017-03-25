@@ -1,7 +1,7 @@
 #pragma once
 
 #include <QObject>
-#include <algorith>
+#include <algorithm>
 #include <dirent.h>
 #include <errno.h>
 #include <iostream>
@@ -34,4 +34,4 @@ private:
     int current_song_index;
     bool check_library;
     bool read_song_names(std::string dir, std::vector<std::string> &files);
-}
+};

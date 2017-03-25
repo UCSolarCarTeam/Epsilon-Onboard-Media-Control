@@ -10,13 +10,13 @@ SongControl::SongControl()
 
 std::string SongControl::next_song()
 {
-    current_sing_index = (current_song_index + 1) % files.size();
+    current_song_index = (current_song_index + 1) % files.size();
     return files[current_song_index];
 }
 
 std::string SongControl::previous_song()
 {
-    current_song_index = (current_song_index - 1) % file.size();
+    current_song_index = (current_song_index - 1) % files.size();
     return files[current_song_index];
 }
 
@@ -47,7 +47,7 @@ bool SongControl::read_song_names(std::string dir, std::vector<std::string> &fil
     DIR *dp;
     std::string filepath;
     dir = "/home/ben/Music";
-    stuct dirent *dirp;
+    struct dirent *dirp;
     if ((dp = opendir("/home/ben/Music")) == NULL)
     {
         return false;

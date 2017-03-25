@@ -1,6 +1,6 @@
 #include "SongPlayerView.h"
-#include "SongPlayerUi.h"
-#include "SongPlayer.h"
+#include "../SongPlayerUI/SongPlayerUi.h"
+#include "../BusinessLayer/SongPlayer/SongPlayer.h"
 
 SongPlayerView::SongPlayerView(SongPlayer& songPlayer, SongPlayerUi& ui)
     :songPlayer_(songPlayer)

@@ -9,4 +9,4 @@ class OpenFile : public QWidget
 public slots:
     void openFile();
     void openNext();
-}
+};

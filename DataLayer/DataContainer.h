@@ -1,10 +1,10 @@
 #pragma once
 
-#include <QSscopedPointer>
+#include <QScopedPointer>
 
 class DataContainer
 {
 public:
     DataContainer();
     ~DataContainer();
-}
+};

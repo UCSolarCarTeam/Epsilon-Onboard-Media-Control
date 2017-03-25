@@ -1,6 +1,8 @@
+#include <QFileDialog>
+#include <QDebug>
 #include "OpenFile.h"
 
-void SongPlayer::openFile()
+void OpenFile::openFile()
 {
     const QStringList musicPaths = QStandardPaths::standardLocations(QStandardPaths::MusicLocation);
     const QString filePath =
@@ -9,7 +11,7 @@ void SongPlayer::openFile()
                                      tr("mp3 files (*.mp3);;all files (*.*)"));
     if (!filePath.isEmpty())
     {
-        playFile(filePath);
+  //      playFile(filePath);
     }
     else
     {
@@ -17,8 +19,8 @@ void SongPlayer::openFile()
     }
 }
 
-void SongPlayer::openNext()
-{
+void OpenFile::openNext()
+{/*
     const QString filePath = QString::fromStdString(controller.next_song());
     if(!filePath.isEmpty())
     {
@@ -27,5 +29,5 @@ void SongPlayer::openNext()
     else
     {
         qDebug() << "Warning filepath is empty";
-    }
+    }*/
 }
