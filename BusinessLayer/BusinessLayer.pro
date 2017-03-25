@@ -1,18 +1,23 @@
 TEMPLATE = lib
 CONFIG += staticlib
 
-! inlcude(../common.pri){
+! include(../common.pri){
 error("Could not find common.pri file!")
 }
+
+PRE_TARGETDEPS += \
+    ../../build/.lib/*
 
 DESTDIR = ../../build/.lib
 
 HEADERS += \
-BusinessContainer.h \
-SongPlayer/SongPlayer.h \
-OpenFile/OpenFile.h
+    BusinessContainer.h \
+    SongPlayer/SongPlayer.h \
+    OpenFile/OpenFile.h \
+    SongControl/SongControl.h
 
 SOURCES += \
-BusinessCOntainer.cpp \
-SongPlayer/SongPlayer.cpp \
-OpenFile/OpenFile.cpp
+    BusinessContainer.cpp \
+    SongPlayer/SongPlayer.cpp \
+    OpenFile/OpenFile.cpp \
+    SongControl/SongControl.cpp

@@ -2,16 +2,15 @@
 #include <QObject>
 
 class SongPlayer;
-class SongPlayerUi;
+class I_SongPlayerUi;
 
 class SongPlayerView : public QObject
 {
 public:
-    SongPlayerView(SongPlayer& songPlayer, SongPlayerUi& ui);
-    void handlePlayButtonClicked();
+    SongPlayerView(SongPlayer& songPlayer, I_SongPlayerUi ui);
+    void handlePlayPauseClicked();
 
 private:
-
     SongPlayerUi& ui_;
     SongPlayer& songPlayer_;
 };

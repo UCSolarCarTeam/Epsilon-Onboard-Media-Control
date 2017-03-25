@@ -5,10 +5,13 @@ CONFIG += staticlib
 error("Could not find common.pri file!")
 }
 
+PRE_TARGETDEPS += \
+    ../../build/.lib/*
+
 DESTDIR = ../../build.lib
 
 HEADERS += \
-DataContainer.h \
+    DataContainer.h \
 
 SOURCES += \
-DataContianer.cpp\
+    DataContianer.cpp\

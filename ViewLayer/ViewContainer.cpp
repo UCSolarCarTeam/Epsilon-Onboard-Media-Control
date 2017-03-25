@@ -3,9 +3,9 @@
 #include "../BusinessLayer/BusinessContainer.h"
 #include "ViewContainer.h"
 
-ViewContainer::ViewContainer(BusinessContainer& BusinessContainer)
-    : SongPlayerUI_(new SongPlayerUI())
-    , SongPlayerView_(new SongPlayerView(
+ViewContainer::ViewContainer(BusinessContainer& businessContainer)
+    : SongPlayerUI_(new SongPlayerUi())
+    , SongPlayerView_(new SongPlayerView(businessContainer.songPlayer(),
                           *SongPlayerUI_))
 {
 }

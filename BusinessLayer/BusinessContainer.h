@@ -4,13 +4,15 @@
 
 class DataContainer;
 class BusinessContainerPrivate;
+class SongPlayer;
 
 class BusinessContainer
 {
 public:
     explicit BusinessContainer(DataContainer& dataContainer);
     ~BusinessContainer();
+    SongPlayer& songPlayer();
 
 private:
-    QScopedPointer<BusinessContainerPrivate> impl_;
-}
+    QScopedPointer<SongPlayer> songPlayer_;
+};

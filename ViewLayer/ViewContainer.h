@@ -2,6 +2,7 @@
 
 #include <QScopedPointer>
 
+class I_SongPlayerUI;
 class SongPlayerView;
 class BusinessContainer;
 
@@ -12,5 +13,6 @@ class ViewContainer
         ~ViewContainer();
 
     private:
+        I_SongPlayerUI* SongPlayerUI_;
         QScopedPointer<SongPlayerView> SongPlayerView_;
-}
+};

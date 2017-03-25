@@ -6,6 +6,6 @@ message(University of Calgary Solar Car Team Epsilon Onboard Media Control)
 
 SUBDIRS = \
 ViewLayer\
-BusinuessLayer\
+BusinessLayer \
 DataLayer \
 OnBoardMediaControl

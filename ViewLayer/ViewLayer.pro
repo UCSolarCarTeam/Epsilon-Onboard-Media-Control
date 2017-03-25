@@ -5,18 +5,20 @@ CONFIG += staticlib
 error("Could not find common.pri file!")
 }
 
+PRE_TARGETDEPS += \
+    ../../build/.lib/*
 
 DESTDIR = ../../build/.lib
 
 HEADERS += \
-ViewContainer.h \
-SongPlayerView/SongPlayerView.h \
-SongPlayerUI/SongPlayerUi.h \
+    ViewContainer.h \
+    SongPlayerView/SongPlayerView.h \
+    SongPlayerUI/SongPlayerUi.h \
 
 SOURCES += \
-ViewContainer.cpp \
-SongPlayerUI/SongPlayerUi.cpp \
-SongPlayerView/SongPlayerView.cpp
+    ViewContainer.cpp \
+    SongPlayerUI/SongPlayerUi.cpp \
+    SongPlayerView/SongPlayerView.cpp
 
-Forms += \
-SongPlayerUI.ui
+FORMS += \
+    SongPlayerUI.ui
