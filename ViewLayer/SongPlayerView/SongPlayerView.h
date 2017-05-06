@@ -8,6 +8,8 @@ class I_SongPlayerUi;
 class SongPlayerView : public QWidget
 {
 
+    Q_OBJECT
+
 public:
     SongPlayerView(SongPlayer& songPlayer, I_SongPlayerUi& ui);
     ~SongPlayerView();

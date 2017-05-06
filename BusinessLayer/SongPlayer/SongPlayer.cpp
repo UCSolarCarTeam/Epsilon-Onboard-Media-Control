@@ -16,8 +16,8 @@ SongPlayer::SongPlayer(QWidget *parent) : QWidget(parent)
 
 void SongPlayer::playFile(const QString &filePath)
 {
-    playButton_->setEnabled(true);
-    infoLabel_->setText(QFileInfo(filePath).fileName());
+//    playButton_->setEnabled(true);
+//    infoLabel_->setText(QFileInfo(filePath).fileName());
 
     mediaPlayer_.setMedia(QUrl::fromLocalFile(filePath));
 }
