@@ -5,21 +5,24 @@
 #include <QSlider>
 #include <QLabel>
 
+#include "I_SongPlayerUi.h"
+
 namespace Ui {
 class SongPlayerUi;
 }
 
-class SongPlayerUi : public QWidget
+class SongPlayerUi : public I_SongPlayerUi
 {
     Q_OBJECT
 
 public:
-    explicit SongPlayerUi(QWidget *parent = 0);
+    explicit SongPlayerUi();
     ~SongPlayerUi();
+     QLabel& infoLabel();
      QPushButton& PlayButton();
      QPushButton& OpenButton();
      QSlider& PositionSlider();
-     QLabel& infoLabel();
+
 
 private:
     Ui::SongPlayerUi *ui;

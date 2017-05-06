@@ -10,11 +10,9 @@ DESTDIR = ../../build/.lib
 HEADERS += \
     BusinessContainer.h \
     SongPlayer/SongPlayer.h \
-    OpenFile/OpenFile.h \
     SongControl/SongControl.h
 
 SOURCES += \
     BusinessContainer.cpp \
     SongPlayer/SongPlayer.cpp \
-    OpenFile/OpenFile.cpp \
     SongControl/SongControl.cpp

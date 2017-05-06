@@ -2,7 +2,7 @@
 #include "../SongPlayerUI/SongPlayerUi.h"
 #include "../BusinessLayer/SongPlayer/SongPlayer.h"
 
-SongPlayerView::SongPlayerView(SongPlayer& songPlayer, SongPlayerUi& ui)
+SongPlayerView::SongPlayerView(SongPlayer& songPlayer, I_SongPlayerUi& ui)
     :songPlayer_(songPlayer)
     ,ui_(ui)
 {

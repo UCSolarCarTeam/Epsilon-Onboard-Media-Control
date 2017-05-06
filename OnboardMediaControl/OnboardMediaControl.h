@@ -15,8 +15,6 @@ public:
 
 private:
     QScopedPointer<DataContainer> dataContainer_;
-    QScopedPointer<CommunicationContainer> communicationContainer_;
     QScopedPointer<BusinessContainer> businessContainer_;
-    QScopedPointer<PresenterContainer> presenterContainer_;
     QScopedPointer<ViewContainer> viewContainer_;
 };

@@ -1,11 +1,11 @@
 #include "SongPlayerUi.h"
 #include "ui_SongPlayerUi.h"
 
-SongPlayerUi::SongPlayerUi(QWidget *parent) :
-    QWidget(parent),
+SongPlayerUi::SongPlayerUi():
     ui(new Ui::SongPlayerUi)
 {
     ui->setupUi(this);
+    show();
 }
 
 SongPlayerUi::~SongPlayerUi()
@@ -26,4 +26,9 @@ QPushButton& SongPlayerUi::OpenButton()
 QSlider& SongPlayerUi::PositionSlider()
 {
     return *ui->PositionSlider;
+}
+
+QLabel& SongPlayerUi::infoLabel()
+{
+    return *ui->infoLabel;
 }
