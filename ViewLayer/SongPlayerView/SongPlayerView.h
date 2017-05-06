@@ -7,14 +7,17 @@ class I_SongPlayerUi;
 
 class SongPlayerView : public QWidget
 {
+
 public:
     SongPlayerView(SongPlayer& songPlayer, I_SongPlayerUi& ui);
     ~SongPlayerView();
     void handlePlayPauseClicked();
-    void handlePlayButtonClicked();
-    void handleOpenButtonClicked();
 
 private:
     I_SongPlayerUi& ui_;
     SongPlayer& songPlayer_;
+
+private slots:
+    void handlePlayButtonClicked();
+    void handleOpenButtonClicked();
 };
