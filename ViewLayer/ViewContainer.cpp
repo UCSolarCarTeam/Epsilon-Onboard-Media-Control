@@ -1,6 +1,3 @@
-#include "SongPlayerUI/SongPlayerUi.h"
-#include "SongPlayerView/SongPlayerView.h"
-#include "../BusinessLayer/BusinessContainer.h"
 #include "ViewContainer.h"
 
 ViewContainer::ViewContainer(BusinessContainer& businessContainer)

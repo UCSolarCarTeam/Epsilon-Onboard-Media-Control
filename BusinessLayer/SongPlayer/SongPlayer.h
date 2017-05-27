@@ -9,50 +9,48 @@
 #include <QMediaPlayer>
 #include <QMouseEvent>
 #include <QShortcut>
-#include <QSlider>
 #include <QStandardPaths>
 #include <QStyle>
 #include <QTime>
 #include <QToolButton>
 #include <QWidget>
+#include <QProgressBar>
 
 class SongPlayer : public QWidget
 {
     Q_OBJECT
 public:
     SongPlayer(QWidget *parent = 0);
+    QLabel *infoLabel_;
+    QProgressBar *positionSlider_;
 
 public slots:
     void openFile();
     void openNext();
     void playFile(const QString& filePath);
-    void seekBackward();
-    void seekForward();
-    void setPosition(int position);
     void togglePlayback();
 
 protected:
-//    bool event(QEvent *event);
-//    void mousePressEvent(QMouseEvent *event);
-//    void mouseMoveEvent(QMouseEvent *event);
-//    void mouseReleaseEvent(QMouseEvent *event);
 
 private slots:
     void updateState(QMediaPlayer::State state);
-    void updatePosition(qint64 position);
-    void updateDuration(qint64 duration);
-    void updateInfo();
+    void durationChanged(qint64 duration);
+    void positionChanged(qint64 progress);
     void handleError();
 
 private:
     void createWidgets();
     void createShortcuts();
-
-
-    QMediaPlayer mediaPlayer_;
     QAbstractButton *playButton_;
-    QSlider *positionSlider_;
     QLabel *positionLabel_;
-    QLabel *infoLabel_;
     QPoint offset_;
+    QMediaPlayer mediaPlayer_;
+    QMediaPlayer *token_;
+
+
+signals:
+    void updateTitle(const QString& fileName);
+    void resetPosition(const QMediaPlayer& media);
+    void updateDuration(qint64 duration);
+    void updatePosition(qint64 position);
 };

@@ -12,14 +12,16 @@ SongControl controller;
 
 SongPlayer::SongPlayer(QWidget *parent) : QWidget(parent)
 {
+    connect(&mediaPlayer_, &QMediaPlayer::stateChanged, this, &SongPlayer::updateState);
+    connect(&mediaPlayer_, SIGNAL(durationChanged(qint64)), this, SLOT(durationChanged(qint64)));
+    connect(&mediaPlayer_, SIGNAL(positionChanged(qint64)), this, SLOT(positionChanged(qint64)));
 }
 
 void SongPlayer::playFile(const QString &filePath)
 {
-//    playButton_->setEnabled(true);
-//    infoLabel_->setText(QFileInfo(filePath).fileName());
-
     mediaPlayer_.setMedia(QUrl::fromLocalFile(filePath));
+    token_ = &mediaPlayer_;
+    emit updateTitle(filePath);
 }
 
 void SongPlayer::togglePlayback()
@@ -36,26 +38,16 @@ void SongPlayer::togglePlayback()
     {
         mediaPlayer_.play();
     }
-
 }
 
 void SongPlayer::updateState(QMediaPlayer::State state)
 {
-    if (state == QMediaPlayer::PlayingState)
-    {
-        playButton_->setToolTip(tr("Pause"));
-       // playButton_->setIcon(Style()->standardIcon(QStyle::SP_MediaPause));
-    }
-    else
-    {
-        playButton_->setToolTip(tr("Play"));
-        playButton_->setIcon(style()->standardIcon(QStyle::SP_MediaPlay));
-    }
     if (mediaPlayer_.position() >= mediaPlayer_.duration() && mediaPlayer_.duration() != -1)
     {
         openNext();
         togglePlayback();
     }
+    emit mediaPlayer_.durationChanged(mediaPlayer_.duration());
 }
 
 void SongPlayer::openFile()
@@ -88,57 +80,14 @@ void SongPlayer::openNext()
     }
 }
 
-void SongPlayer::seekForward()
+void SongPlayer::durationChanged(qint64 duration)
 {
-    positionSlider_->triggerAction(QSlider::SliderPageStepAdd);
+    emit updateDuration(duration);
 }
 
-void SongPlayer::seekBackward()
+void SongPlayer::positionChanged(qint64 position)
 {
-    positionSlider_->triggerAction(QSlider::SliderPageStepSub);
-}
-
-void SongPlayer::setPosition(int position)
-{
-    //avoid seeking when the slider value change is triggered fromupdatePosition()
-    if(qAbs(mediaPlayer_.position() - position) > 99)
-    {
-        mediaPlayer_.setPosition(position);
-    }
-}
-
-void SongPlayer::updatePosition(qint64 position)
-{
-    positionSlider_->setValue(position);
-
-    QTime duration(0, position / MS_TO_MINUTES, qRound((position % MS_TO_MINUTES) / MS_TO_SECONDS));
-    positionLabel_->setText(duration.toString(tr("mm:ss")));
-}
-
-void SongPlayer::updateDuration(qint64 duration)
-{
-    positionSlider_->setRange(0, duration);
-    positionSlider_->setEnabled(duration > 0);
-    positionSlider_->setPageStep(duration / PAGE_STEP_INCREMENTS);
-}
-
-void SongPlayer::updateInfo()
-{
-    QStringList info;
-    QString author = mediaPlayer_.metaData("Author").toString();
-    if(!author.isEmpty())
-    {
-        info += author;
-    }
-    QString title = mediaPlayer_.metaData("Title").toString();
-    if(!title.isEmpty())
-    {
-        info += title;
-    }
-    if (!info.isEmpty())
-    {
-        infoLabel_->setText(info.join(tr(" - ")));
-    }
+    emit updatePosition(position);
 }
 
 void SongPlayer::handleError()

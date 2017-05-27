@@ -23,9 +23,9 @@ QPushButton& SongPlayerUi::OpenButton()
     return *ui->OpenButton;
 }
 
-QSlider& SongPlayerUi::PositionSlider()
+QProgressBar& SongPlayerUi::ProgressBar()
 {
-    return *ui->PositionSlider;
+    return *ui->progressBar;
 }
 
 QLabel& SongPlayerUi::infoLabel()

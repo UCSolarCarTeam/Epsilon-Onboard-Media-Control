@@ -2,7 +2,7 @@
 
 #include <QWidget>
 #include <QPushButton>
-#include <QSlider>
+#include <QProgressBar>
 #include <QLabel>
 
 #include "I_SongPlayerUi.h"
@@ -21,7 +21,7 @@ public:
      QLabel& infoLabel();
      QPushButton& PlayButton();
      QPushButton& OpenButton();
-     QSlider& PositionSlider();
+     QProgressBar& ProgressBar();
 
 
 private:
