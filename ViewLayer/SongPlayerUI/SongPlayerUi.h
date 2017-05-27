@@ -22,6 +22,8 @@ public:
      QPushButton& PlayButton();
      QPushButton& OpenButton();
      QProgressBar& ProgressBar();
+     QPushButton& NextSong();
+     QPushButton& PrevSong();
 
 
 private:

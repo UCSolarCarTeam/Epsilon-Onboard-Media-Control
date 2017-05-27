@@ -32,3 +32,13 @@ QLabel& SongPlayerUi::infoLabel()
 {
     return *ui->infoLabel;
 }
+
+QPushButton& SongPlayerUi::NextSong()
+{
+    return *ui->nextSong;
+}
+
+QPushButton& SongPlayerUi::PrevSong()
+{
+    return *ui->prevSong;
+}

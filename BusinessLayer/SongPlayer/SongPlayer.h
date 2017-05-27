@@ -27,6 +27,9 @@ public:
 public slots:
     void openFile();
     void openNext();
+    void openPrevious();
+    void playNext();
+    void playPrevious();
     void playFile(const QString& filePath);
     void togglePlayback();
 
@@ -45,8 +48,6 @@ private:
     QLabel *positionLabel_;
     QPoint offset_;
     QMediaPlayer mediaPlayer_;
-    QMediaPlayer *token_;
-
 
 signals:
     void updateTitle(const QString& fileName);

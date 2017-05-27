@@ -24,6 +24,8 @@ private:
 private slots:
     void handlePlayButtonClicked();
     void handleOpenButtonClicked();
+    void handleNextButtonClicked();
+    void handlePrevButtonClicked();
     void updateTitle(const QString& filePath);
     void updatePosition(qint64 position);
     void setDuration(qint64 duration);

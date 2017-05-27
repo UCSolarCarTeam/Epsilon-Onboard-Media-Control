@@ -20,7 +20,6 @@ SongPlayer::SongPlayer(QWidget *parent) : QWidget(parent)
 void SongPlayer::playFile(const QString &filePath)
 {
     mediaPlayer_.setMedia(QUrl::fromLocalFile(filePath));
-    token_ = &mediaPlayer_;
     emit updateTitle(filePath);
 }
 
@@ -44,8 +43,7 @@ void SongPlayer::updateState(QMediaPlayer::State state)
 {
     if (mediaPlayer_.position() >= mediaPlayer_.duration() && mediaPlayer_.duration() != -1)
     {
-        openNext();
-        togglePlayback();
+        playNext();
     }
     emit mediaPlayer_.durationChanged(mediaPlayer_.duration());
 }
@@ -80,6 +78,31 @@ void SongPlayer::openNext()
     }
 }
 
+void SongPlayer::openPrevious()
+{
+    const QString filePath = QString::fromStdString(controller.previous_song());
+    if(!filePath.isEmpty())
+    {
+        playFile(filePath);
+    }
+    else
+    {
+        qDebug() << "Warning filepath is empty";
+    }
+}
+
+void SongPlayer::playNext()
+{
+    openNext();
+    togglePlayback();
+}
+
+void SongPlayer::playPrevious()
+{
+    openPrevious();
+    togglePlayback();
+}
+
 void SongPlayer::durationChanged(qint64 duration)
 {
     emit updateDuration(duration);
@@ -89,6 +112,8 @@ void SongPlayer::positionChanged(qint64 position)
 {
     emit updatePosition(position);
 }
+
+
 
 void SongPlayer::handleError()
 {
