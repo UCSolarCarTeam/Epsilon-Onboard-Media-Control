@@ -50,11 +50,7 @@ void SongPlayer::updateState(QMediaPlayer::State state)
 
 void SongPlayer::openFile()
 {
-    const QStringList musicPaths = QStandardPaths::standardLocations(QStandardPaths::MusicLocation);
-    const QString filePath =
-        QFileDialog::getOpenFileName(this, tr("open file"),
-                                     musicPaths.isEmpty() ? QDir::homePath() : musicPaths.first(),
-                                     tr("mp3 files (*.mp3);;all files (*.*)"));
+    const QString filePath = QString::fromStdString(controller.current_song());
     if (!filePath.isEmpty())
     {
         playFile(filePath);
