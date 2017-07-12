@@ -1,8 +1,7 @@
 #include "BusinessContainer.h"
-#include "../DataLayer/DataContainer.h"
 #include "SongPlayer/SongPlayer.h"
 
-BusinessContainer::BusinessContainer(DataContainer& dataContainer)
+BusinessContainer::BusinessContainer()
     : songPlayer_(new SongPlayer())
 {
 }

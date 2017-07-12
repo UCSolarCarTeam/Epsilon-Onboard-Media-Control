@@ -3,7 +3,7 @@
 
 int main(int argc, char* argv[])
 {
-    QScopedPointer<EpsilonDashboard> app;
-    app.reset(new EpsilonDashboard(argc, argv));
+    QScopedPointer<EpsilonOnboardMediaControl> app;
+    app.reset(new EpsilonOnboardMediaControl(argc, argv));
     return app->exec();
 }

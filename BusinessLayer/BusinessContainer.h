@@ -2,14 +2,13 @@
 
 #include <QScopedPointer>
 
-class DataContainer;
 class BusinessContainerPrivate;
 class SongPlayer;
 
 class BusinessContainer
 {
 public:
-    explicit BusinessContainer(DataContainer& dataContainer);
+    explicit BusinessContainer();
     ~BusinessContainer();
     SongPlayer& songPlayer();
 
