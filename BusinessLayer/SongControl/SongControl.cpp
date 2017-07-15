@@ -2,50 +2,56 @@
 
 SongControl::SongControl()
 {
-    std::string dir = std::string(".");
-    read_song_names(dir, files);
-    current_song_index = 0;
+    QString dir = QString(".");
+    readSongNames(dir, files_);
+    current_song_index_ = 0;
 }
 
 
-std::string SongControl::next_song()
+QString SongControl::nextSong()
 {
-    current_song_index = (current_song_index + 1) % files.size();
-    return files[current_song_index];
+    current_song_index_ = (current_song_index_ + 1) % files_.size();
+    return files_[current_song_index_];
 }
 
-std::string SongControl::previous_song()
+QString SongControl::previousSong()
 {
-    current_song_index = (current_song_index - 1) % files.size();
-    return files[current_song_index];
+    current_song_index_ = (current_song_index_ - 1) % files_.size();
+    return files_[current_song_index_];
 }
 
-std::string SongControl::current_song()
+QString SongControl::currentSong()
 {
-    return (files[(current_song_index) % files.size()]);
+    return (files_[(current_song_index_) % files_.size()]);
 }
 
-void SongControl::io_event(int io_command)
+void SongControl::ioEvent(int io_command)
 {
     switch (io_command)
     {
     case 1:
-        next_song();
+        nextSong();
 
     case 2:
-        previous_song();
+        previousSong();
     }
 }
 
-bool has_suffix(const std::string& s, const std::string& suffix)
+bool SongControl::hasSuffix(const QString& s, const QString& suffix)
 {
-    return (s.size() >= suffix.size()) && equal(suffix.rbegin(), suffix.rend(), s.rbegin());
+    if(0 == QString::compare(s.right(4), suffix))
+    {
+
+        return true;
+    }
+    else
+        return false;
 }
 
-bool SongControl::read_song_names(std::string dir, std::vector<std::string> &files)
+bool SongControl::readSongNames(QString dir, QVector<QString> &files_)
 {
     DIR *dp;
-    std::string filepath;
+    QString filepath;
     dir = "/home/ben/Music";
     struct dirent *dirp;
     if ((dp = opendir("/home/ben/Music")) == NULL)
@@ -55,10 +61,10 @@ bool SongControl::read_song_names(std::string dir, std::vector<std::string> &fil
     
     while ((dirp = readdir(dp)) != NULL)
     {
-        if (has_suffix(dirp->d_name, ".mp3"))
+        if (hasSuffix(dirp->d_name, ".mp3"))
         {
             filepath = dir + "/" + dirp->d_name;
-            files.push_back(std::string(filepath));
+            files_.push_back(QString(filepath));
         }
     }
     closedir(dp);

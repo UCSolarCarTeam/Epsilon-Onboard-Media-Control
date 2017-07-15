@@ -50,7 +50,7 @@ void SongPlayer::updateState(QMediaPlayer::State state)
 
 void SongPlayer::openFile()
 {
-    const QString filePath = QString::fromStdString(controller.current_song());
+    const QString filePath = controller.currentSong();
     if (!filePath.isEmpty())
     {
         playFile(filePath);
@@ -63,7 +63,7 @@ void SongPlayer::openFile()
 
 void SongPlayer::openNext()
 {
-    const QString filePath = QString::fromStdString(controller.next_song());
+    const QString filePath = controller.nextSong();
     if(!filePath.isEmpty())
     {
        playFile(filePath);
@@ -76,7 +76,7 @@ void SongPlayer::openNext()
 
 void SongPlayer::openPrevious()
 {
-    const QString filePath = QString::fromStdString(controller.previous_song());
+    const QString filePath = controller.previousSong();
     if(!filePath.isEmpty())
     {
         playFile(filePath);

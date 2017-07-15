@@ -10,6 +10,10 @@
 #include <stdlib.h>
 #include <string>
 #include <vector>
+#include <QString>
+#include <QVector>
+#include <QFileInfo>
+#include <QDebug>
 
 
 namespace Ui
@@ -21,17 +25,16 @@ class SongControl
 {
 public:
     SongControl();
-    bool song_exists();
-    void io_event(int io_command);
-    std::string next_song();
-    std::string previous_song();
-    std::string current_song();
-    std::string libraryLoad();
+    bool songExists();
+    void ioEvent(int io_command);
+    QString nextSong();
+    QString previousSong();
+    QString currentSong();
+    QString libraryLoad();
+    bool hasSuffix(const QString& s, const QString& suffix);
 
 private:
-    Ui::SongControl *ui;
-    std::vector<std::string> files = std::vector<std::string>();
-    int current_song_index;
-    bool check_library;
-    bool read_song_names(std::string dir, std::vector<std::string> &files);
+    QVector<QString> files_ = QVector<QString>();
+    int current_song_index_;
+    bool readSongNames(QString dir, QVector<QString> &files);
 };

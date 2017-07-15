@@ -9,7 +9,6 @@ class I_SongPlayerUi;
 
 class SongPlayerView : public QWidget
 {
-
     Q_OBJECT
 
 public:

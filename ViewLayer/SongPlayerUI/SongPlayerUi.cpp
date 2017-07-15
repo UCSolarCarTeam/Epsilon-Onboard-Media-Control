@@ -2,43 +2,43 @@
 #include "ui_SongPlayerUi.h"
 
 SongPlayerUi::SongPlayerUi():
-    ui(new Ui::SongPlayerUi)
+    ui_(new Ui::SongPlayerUi)
 {
-    ui->setupUi(this);
+    ui_->setupUi(this);
     show();
 }
 
 SongPlayerUi::~SongPlayerUi()
 {
-    delete ui;
+    delete ui_;
 }
 
 QPushButton& SongPlayerUi::PlayButton()
 {
-    return *ui->PlayButton;
+    return *ui_->PlayButton;
 }
 
 QPushButton& SongPlayerUi::OpenButton()
 {
-    return *ui->OpenButton;
+    return *ui_->OpenButton;
 }
 
 QProgressBar& SongPlayerUi::ProgressBar()
 {
-    return *ui->progressBar;
+    return *ui_->progressBar;
 }
 
 QLabel& SongPlayerUi::infoLabel()
 {
-    return *ui->infoLabel;
+    return *ui_->infoLabel;
 }
 
 QPushButton& SongPlayerUi::NextSong()
 {
-    return *ui->nextSong;
+    return *ui_->nextSong;
 }
 
 QPushButton& SongPlayerUi::PrevSong()
 {
-    return *ui->prevSong;
+    return *ui_->prevSong;
 }

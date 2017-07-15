@@ -18,14 +18,14 @@ class SongPlayerUi : public I_SongPlayerUi
 public:
     explicit SongPlayerUi();
     ~SongPlayerUi();
-     QLabel& infoLabel();
-     QPushButton& PlayButton();
-     QPushButton& OpenButton();
-     QProgressBar& ProgressBar();
-     QPushButton& NextSong();
-     QPushButton& PrevSong();
+    QLabel& infoLabel();
+    QPushButton& PlayButton();
+    QPushButton& OpenButton();
+    QProgressBar& ProgressBar();
+    QPushButton& NextSong();
+    QPushButton& PrevSong();
 
 
 private:
-    Ui::SongPlayerUi *ui;
+    Ui::SongPlayerUi *ui_;
 };
