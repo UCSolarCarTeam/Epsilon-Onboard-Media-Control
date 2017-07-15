@@ -33,8 +33,6 @@ public slots:
     void playFile(const QString& filePath);
     void togglePlayback();
 
-protected:
-
 private slots:
     void updateState(QMediaPlayer::State state);
     void durationChanged(qint64 duration);
