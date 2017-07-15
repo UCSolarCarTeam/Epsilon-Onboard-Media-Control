@@ -8,6 +8,10 @@ SongControl::SongControl()
     current_song_index_ = 0;
 }
 
+SongControl::~SongControl()
+{
+}
+
 
 QString SongControl::nextSong()
 {

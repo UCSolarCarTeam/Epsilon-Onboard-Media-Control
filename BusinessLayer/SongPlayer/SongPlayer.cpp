@@ -8,11 +8,15 @@ namespace
 }
 
 SongPlayer::SongPlayer(QWidget* parent) : QWidget(parent)
+  , controller_(new SongControl())
 {
-    SongControl controller_;
     connect(&mediaPlayer_, &QMediaPlayer::stateChanged, this, &SongPlayer::updateState);
     connect(&mediaPlayer_, SIGNAL(durationChanged(qint64)), this, SLOT(durationChanged(qint64)));
     connect(&mediaPlayer_, SIGNAL(positionChanged(qint64)), this, SLOT(positionChanged(qint64)));
+}
+
+SongPlayer::~SongPlayer()
+{
 }
 
 void SongPlayer::playFile(const QString& filePath)
@@ -37,7 +41,7 @@ void SongPlayer::togglePlayback()
     }
 }
 
-void SongPlayer::updateState(QMediaPlayer::State state)
+void SongPlayer::updateState()
 {
     if (mediaPlayer_.position() >= mediaPlayer_.duration() && mediaPlayer_.duration() != -1)
     {
@@ -49,7 +53,7 @@ void SongPlayer::updateState(QMediaPlayer::State state)
 
 void SongPlayer::openFile()
 {
-    const QString filePath = controller_.currentSong();
+    const QString filePath = controller_->currentSong();
 
     if (!filePath.isEmpty())
     {
@@ -63,7 +67,7 @@ void SongPlayer::openFile()
 
 void SongPlayer::openNext()
 {
-    const QString filePath = controller_.nextSong();
+    const QString filePath = controller_->nextSong();
 
     if (!filePath.isEmpty())
     {
@@ -77,7 +81,7 @@ void SongPlayer::openNext()
 
 void SongPlayer::openPrevious()
 {
-    const QString filePath = controller_.previousSong();
+    const QString filePath = controller_->previousSong();
 
     if (!filePath.isEmpty())
     {

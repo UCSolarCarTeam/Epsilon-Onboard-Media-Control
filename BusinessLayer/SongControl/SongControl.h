@@ -25,6 +25,7 @@ class SongControl
 {
 public:
     SongControl();
+    ~SongControl();
     bool songExists();
     void ioEvent(int io_command);
     QString nextSong();

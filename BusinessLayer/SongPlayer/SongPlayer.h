@@ -15,6 +15,7 @@
 #include <QToolButton>
 #include <QWidget>
 #include <QProgressBar>
+#include <QScopedPointer>
 #include "../SongControl/SongControl.h"
 
 class SongPlayer : public QWidget
@@ -24,6 +25,7 @@ public:
     SongPlayer(QWidget* parent = 0);
     QLabel* infoLabel_;
     QProgressBar* positionSlider_;
+    ~SongPlayer();
 
 public slots:
     void openFile();
@@ -35,13 +37,13 @@ public slots:
     void togglePlayback();
 
 private slots:
-    void updateState(QMediaPlayer::State state);
+    void updateState();
     void durationChanged(qint64 duration);
     void positionChanged(qint64 progress);
     void handleError();
 
 private:
-    SongControl controller_;
+    QScopedPointer<SongControl> controller_;
     void createWidgets();
     void createShortcuts();
     QAbstractButton* playButton_;
