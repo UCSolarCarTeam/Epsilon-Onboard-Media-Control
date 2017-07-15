@@ -1,17 +1,15 @@
 #include "SongPlayer.h"
-#include "SongControl/SongControl.h"
-#include "SongControl/SongControl.cpp"
 
 namespace
 {
     const int MS_TO_MINUTES = 60000;
     const double MS_TO_SECONDS = 1000.0;
     const int PAGE_STEP_INCREMENTS = 10;
-    SongControl controller;
 }
 
 SongPlayer::SongPlayer(QWidget* parent) : QWidget(parent)
 {
+    SongControl controller_;
     connect(&mediaPlayer_, &QMediaPlayer::stateChanged, this, &SongPlayer::updateState);
     connect(&mediaPlayer_, SIGNAL(durationChanged(qint64)), this, SLOT(durationChanged(qint64)));
     connect(&mediaPlayer_, SIGNAL(positionChanged(qint64)), this, SLOT(positionChanged(qint64)));
@@ -51,7 +49,7 @@ void SongPlayer::updateState(QMediaPlayer::State state)
 
 void SongPlayer::openFile()
 {
-    const QString filePath = controller.currentSong();
+    const QString filePath = controller_.currentSong();
 
     if (!filePath.isEmpty())
     {
@@ -65,7 +63,7 @@ void SongPlayer::openFile()
 
 void SongPlayer::openNext()
 {
-    const QString filePath = controller.nextSong();
+    const QString filePath = controller_.nextSong();
 
     if (!filePath.isEmpty())
     {
@@ -79,7 +77,7 @@ void SongPlayer::openNext()
 
 void SongPlayer::openPrevious()
 {
-    const QString filePath = controller.previousSong();
+    const QString filePath = controller_.previousSong();
 
     if (!filePath.isEmpty())
     {

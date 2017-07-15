@@ -15,6 +15,7 @@
 #include <QToolButton>
 #include <QWidget>
 #include <QProgressBar>
+#include "../SongControl/SongControl.h"
 
 class SongPlayer : public QWidget
 {
@@ -40,6 +41,7 @@ private slots:
     void handleError();
 
 private:
+    SongControl controller_;
     void createWidgets();
     void createShortcuts();
     QAbstractButton* playButton_;
