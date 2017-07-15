@@ -2,6 +2,7 @@
 
 SongControl::SongControl()
 {
+    files_ = QVector<QString>();
     QString dir = QString(".");
     readSongNames(dir, files_);
     current_song_index_ = 0;
@@ -54,10 +55,10 @@ bool SongControl::readSongNames(QString dir, QVector<QString>& files_)
 {
     DIR* dp;
     QString filepath;
-    dir = "/home/ben/Music";
+    dir = "/home/ben/Documents/SolarCar/Epsilon-Onboard-Media_Control/Epsilon-Onboard-Media-Control/DataLayer/SongLibrary";
     struct dirent* dirp;
 
-    if ((dp = opendir("/home/ben/Music")) == NULL)
+    if ((dp = opendir("/home/ben/Documents/SolarCar/Epsilon-Onboard-Media_Control/Epsilon-Onboard-Media-Control/DataLayer/SongLibrary")) == NULL)
     {
         return false;
     }
