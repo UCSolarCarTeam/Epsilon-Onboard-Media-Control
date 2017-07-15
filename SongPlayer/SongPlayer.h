@@ -20,7 +20,7 @@ class SongPlayer : public QWidget
 {
     Q_OBJECT
 public:
-    SongPlayer(QWidget *parent = 0);
+    SongPlayer(QWidget* parent = 0);
 
 public slots:
     void openFile();
@@ -31,10 +31,10 @@ public slots:
     void setPosition(int position);
 
 protected:
-    bool event(QEvent *event);
-    void mousePressEvent(QMouseEvent *event);
-    void mouseMoveEvent(QMouseEvent *event);
-    void mouseReleaseEvent(QMouseEvent *event);
+    bool event(QEvent* event);
+    void mousePressEvent(QMouseEvent* event);
+    void mouseMoveEvent(QMouseEvent* event);
+    void mouseReleaseEvent(QMouseEvent* event);
 
 private slots:
     void updateState(QMediaPlayer::State state);
@@ -49,9 +49,9 @@ private:
 
 
     QMediaPlayer mediaPlayer_;
-    QAbstractButton *playButton_;
-    QSlider *positionSlider_;
-    QLabel *positionLabel_;
-    QLabel *infoLabel_;
+    QAbstractButton* playButton_;
+    QSlider* positionSlider_;
+    QLabel* positionLabel_;
+    QLabel* infoLabel_;
     QPoint offset_;
 };

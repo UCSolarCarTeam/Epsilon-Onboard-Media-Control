@@ -4,20 +4,20 @@
 
 namespace
 {
-const int MS_TO_MINUTES = 60000;
-const double MS_TO_SECONDS = 1000.0;
-const int PAGE_STEP_INCREMENTS = 10;
-SongControl controller;
+    const int MS_TO_MINUTES = 60000;
+    const double MS_TO_SECONDS = 1000.0;
+    const int PAGE_STEP_INCREMENTS = 10;
+    SongControl controller;
 }
 
-SongPlayer::SongPlayer(QWidget *parent) : QWidget(parent)
+SongPlayer::SongPlayer(QWidget* parent) : QWidget(parent)
 {
     connect(&mediaPlayer_, &QMediaPlayer::stateChanged, this, &SongPlayer::updateState);
     connect(&mediaPlayer_, SIGNAL(durationChanged(qint64)), this, SLOT(durationChanged(qint64)));
     connect(&mediaPlayer_, SIGNAL(positionChanged(qint64)), this, SLOT(positionChanged(qint64)));
 }
 
-void SongPlayer::playFile(const QString &filePath)
+void SongPlayer::playFile(const QString& filePath)
 {
     mediaPlayer_.setMedia(QUrl::fromLocalFile(filePath));
     emit updateTitle(filePath);
@@ -45,12 +45,14 @@ void SongPlayer::updateState(QMediaPlayer::State state)
     {
         playNext();
     }
+
     emit mediaPlayer_.durationChanged(mediaPlayer_.duration());
 }
 
 void SongPlayer::openFile()
 {
     const QString filePath = controller.currentSong();
+
     if (!filePath.isEmpty())
     {
         playFile(filePath);
@@ -64,9 +66,10 @@ void SongPlayer::openFile()
 void SongPlayer::openNext()
 {
     const QString filePath = controller.nextSong();
-    if(!filePath.isEmpty())
+
+    if (!filePath.isEmpty())
     {
-       playFile(filePath);
+        playFile(filePath);
     }
     else
     {
@@ -77,7 +80,8 @@ void SongPlayer::openNext()
 void SongPlayer::openPrevious()
 {
     const QString filePath = controller.previousSong();
-    if(!filePath.isEmpty())
+
+    if (!filePath.isEmpty())
     {
         playFile(filePath);
     }

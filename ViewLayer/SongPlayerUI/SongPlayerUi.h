@@ -7,8 +7,9 @@
 
 #include "I_SongPlayerUi.h"
 
-namespace Ui {
-class SongPlayerUi;
+namespace Ui
+{
+    class SongPlayerUi;
 }
 
 class SongPlayerUi : public I_SongPlayerUi
@@ -27,5 +28,5 @@ public:
 
 
 private:
-    Ui::SongPlayerUi *ui_;
+    Ui::SongPlayerUi* ui_;
 };

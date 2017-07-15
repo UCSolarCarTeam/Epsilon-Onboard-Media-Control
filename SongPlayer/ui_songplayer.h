@@ -25,15 +25,18 @@ QT_BEGIN_NAMESPACE
 class Ui_MusicPlayer
 {
 public:
-    QMenuBar *menuBar;
-    QToolBar *mainToolBar;
-    QWidget *centralWidget;
-    QStatusBar *statusBar;
+    QMenuBar* menuBar;
+    QToolBar* mainToolBar;
+    QWidget* centralWidget;
+    QStatusBar* statusBar;
 
-    void setupUi(QMainWindow *MusicPlayer)
+    void setupUi(QMainWindow* MusicPlayer)
     {
         if (MusicPlayer->objectName().isEmpty())
+        {
             MusicPlayer->setObjectName(QStringLiteral("MusicPlayer"));
+        }
+
         MusicPlayer->resize(400, 300);
         menuBar = new QMenuBar(MusicPlayer);
         menuBar->setObjectName(QStringLiteral("menuBar"));
@@ -53,14 +56,15 @@ public:
         QMetaObject::connectSlotsByName(MusicPlayer);
     } // setupUi
 
-    void retranslateUi(QMainWindow *MusicPlayer)
+    void retranslateUi(QMainWindow* MusicPlayer)
     {
         MusicPlayer->setWindowTitle(QApplication::translate("MusicPlayer", "MusicPlayer", 0));
     } // retranslateUi
 
 };
 
-namespace Ui {
+namespace Ui
+{
     class MusicPlayer: public Ui_MusicPlayer {};
 } // namespace Ui
 

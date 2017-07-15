@@ -2,12 +2,12 @@
 
 namespace
 {
-const int MS_TO_MINUTES = 60000;
-const double MS_TO_SECONDS = 1000.0;
-const int PAGE_STEP_INCREMENTS = 10;
+    const int MS_TO_MINUTES = 60000;
+    const double MS_TO_SECONDS = 1000.0;
+    const int PAGE_STEP_INCREMENTS = 10;
 }
 
-SongPlayer::SongPlayer(QWidget *parent) : QWidget(parent)
+SongPlayer::SongPlayer(QWidget* parent) : QWidget(parent)
 {
 }
 
@@ -18,6 +18,7 @@ void SongPlayer::openFile()
         QFileDialog::getOpenFileName(this, tr("open file"),
                                      musicPaths.isEmpty() ? QDir::homePath() : musicPaths.first(),
                                      tr("mp3 files (*.mp3);;all files (*.*)"));
+
     if (!filePath.isEmpty())
     {
         playFile(filePath);
@@ -28,7 +29,7 @@ void SongPlayer::openFile()
     }
 }
 
-void SongPlayer::playFile(const QString &filePath)
+void SongPlayer::playFile(const QString& filePath)
 {
     playButton_->setEnabled(true);
     infoLabel_->setText(QFileInfo(filePath).fileName());

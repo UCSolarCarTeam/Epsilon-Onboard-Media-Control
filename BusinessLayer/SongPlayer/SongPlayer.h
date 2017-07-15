@@ -20,9 +20,9 @@ class SongPlayer : public QWidget
 {
     Q_OBJECT
 public:
-    SongPlayer(QWidget *parent = 0);
-    QLabel *infoLabel_;
-    QProgressBar *positionSlider_;
+    SongPlayer(QWidget* parent = 0);
+    QLabel* infoLabel_;
+    QProgressBar* positionSlider_;
 
 public slots:
     void openFile();
@@ -44,8 +44,8 @@ private slots:
 private:
     void createWidgets();
     void createShortcuts();
-    QAbstractButton *playButton_;
-    QLabel *positionLabel_;
+    QAbstractButton* playButton_;
+    QLabel* positionLabel_;
     QPoint offset_;
     QMediaPlayer mediaPlayer_;
 

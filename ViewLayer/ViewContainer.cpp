@@ -3,7 +3,7 @@
 ViewContainer::ViewContainer(BusinessContainer& businessContainer)
     : SongPlayerUI_(new SongPlayerUi())
     , SongPlayerView_(new SongPlayerView(businessContainer.songPlayer(),
-                          *SongPlayerUI_))
+                                         *SongPlayerUI_))
 {
 }
 

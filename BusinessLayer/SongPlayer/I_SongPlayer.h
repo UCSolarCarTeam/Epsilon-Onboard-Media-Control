@@ -2,7 +2,7 @@
 
 #include <QWidget>
 
-class I_SongPlayer :public QWidget
+class I_SongPlayer : public QWidget
 {
     Q_OBJECT
 signals:

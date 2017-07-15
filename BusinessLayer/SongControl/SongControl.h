@@ -36,5 +36,5 @@ public:
 private:
     QVector<QString> files_ = QVector<QString>();
     int current_song_index_;
-    bool readSongNames(QString dir, QVector<QString> &files);
+    bool readSongNames(QString dir, QVector<QString>& files);
 };

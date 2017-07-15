@@ -1,7 +1,7 @@
 #include "SongPlayerUi.h"
 #include "ui_SongPlayerUi.h"
 
-SongPlayerUi::SongPlayerUi(QWidget *parent) :
+SongPlayerUi::SongPlayerUi(QWidget* parent) :
     QWidget(parent),
     ui(new Ui::SongPlayerUi)
 {

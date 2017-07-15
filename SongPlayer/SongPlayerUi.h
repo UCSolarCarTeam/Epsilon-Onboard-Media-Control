@@ -5,8 +5,9 @@
 #include <QSlider>
 #include <QLabel>
 
-namespace Ui {
-class SongPlayerUi;
+namespace Ui
+{
+    class SongPlayerUi;
 }
 
 class SongPlayerUi : public QWidget
@@ -14,13 +15,13 @@ class SongPlayerUi : public QWidget
     Q_OBJECT
 
 public:
-    explicit SongPlayerUi(QWidget *parent = 0);
+    explicit SongPlayerUi(QWidget* parent = 0);
     ~SongPlayerUi();
-     QPushButton& PlayButton();
-     QPushButton& OpenButton();
-     QSlider& PositionSlider();
-     QLabel& infoLabel();
+    QPushButton& PlayButton();
+    QPushButton& OpenButton();
+    QSlider& PositionSlider();
+    QLabel& infoLabel();
 
 private:
-    Ui::SongPlayerUi *ui;
+    Ui::SongPlayerUi* ui;
 };
