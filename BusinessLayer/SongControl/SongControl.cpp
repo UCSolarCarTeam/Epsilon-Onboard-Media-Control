@@ -47,10 +47,10 @@ bool SongControl::readSongNames(QString dir, QVector<QString>& files_)
 {
     DIR* dp;
     QString filepath;
-    dir = "/home/ben/Documents/SolarCar/Epsilon-Onboard-Media_Control/Epsilon-Onboard-Media-Control/DataLayer/SongLibrary";
+    dir = "/home/pi/Documents/Epsilon-Onboard-Media-Control/DataLayer/SongLibrary";
     struct dirent* dirp;
 
-    if ((dp = opendir("/home/ben/Documents/SolarCar/Epsilon-Onboard-Media_Control/Epsilon-Onboard-Media-Control/DataLayer/SongLibrary")) == NULL)
+    if ((dp = opendir("/home/pi/Documents/Epsilon-Onboard-Media-Control/DataLayer/SongLibrary")) == NULL)
     {
         return false;
     }
