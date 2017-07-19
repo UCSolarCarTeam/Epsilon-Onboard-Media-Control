@@ -4,8 +4,6 @@ SongPlayerView::SongPlayerView(SongPlayer& songPlayer, I_SongPlayerUi& ui)
     : songPlayer_(songPlayer)
     , ui_(ui)
 {
-    ui_.ProgressBar().setMinimum(0);
-    ui_.ProgressBar().setTextVisible(false);
     ui_.infoLabel().setAlignment(Qt::AlignCenter);
     connect(&ui_.PlayButton(), SIGNAL(clicked()), this, SLOT(handlePlayButtonClicked()));
     connect(&ui_.OpenButton(), SIGNAL(clicked()), this, SLOT(handleOpenButtonClicked()));
@@ -42,7 +40,6 @@ void SongPlayerView::handlePrevButtonClicked()
 
 void SongPlayerView::updateTitle(const QString& filePath)
 {
-    qDebug() << QFileInfo(filePath).fileName();
     ui_.infoLabel().setText(QFileInfo(filePath).fileName());
 }
 

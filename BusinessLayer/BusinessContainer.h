@@ -2,7 +2,6 @@
 
 #include <QScopedPointer>
 
-class BusinessContainerPrivate;
 class SongPlayer;
 
 class BusinessContainer

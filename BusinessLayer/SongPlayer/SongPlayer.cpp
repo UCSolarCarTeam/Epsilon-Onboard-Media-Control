@@ -19,6 +19,19 @@ SongPlayer::~SongPlayer()
 {
 }
 
+void SongPlayer::playNext()
+{
+    openNext();
+    togglePlayback();
+}
+
+void SongPlayer::playPrevious()
+{
+    openPrevious();
+    togglePlayback();
+}
+
+
 void SongPlayer::playFile(const QString& filePath)
 {
     mediaPlayer_.setMedia(QUrl::fromLocalFile(filePath));
@@ -93,17 +106,6 @@ void SongPlayer::openPrevious()
     }
 }
 
-void SongPlayer::playNext()
-{
-    openNext();
-    togglePlayback();
-}
-
-void SongPlayer::playPrevious()
-{
-    openPrevious();
-    togglePlayback();
-}
 
 void SongPlayer::durationChanged(qint64 duration)
 {
@@ -113,12 +115,4 @@ void SongPlayer::durationChanged(qint64 duration)
 void SongPlayer::positionChanged(qint64 position)
 {
     emit updatePosition(position);
-}
-
-
-
-void SongPlayer::handleError()
-{
-    playButton_->setEnabled(false);
-    infoLabel_->setText(tr("Error: %1").arg(mediaPlayer_.errorString()));
 }

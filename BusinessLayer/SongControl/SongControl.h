@@ -27,7 +27,6 @@ public:
     SongControl();
     ~SongControl();
     bool songExists();
-    void ioEvent(int io_command);
     QString nextSong();
     QString previousSong();
     QString currentSong();
@@ -36,6 +35,6 @@ public:
 
 private:
     QVector<QString> files_;
-    int current_song_index_;
+    int currentSongIndex_;
     bool readSongNames(QString dir, QVector<QString>& files);
 };

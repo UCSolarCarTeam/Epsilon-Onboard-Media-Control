@@ -5,7 +5,7 @@ SongControl::SongControl()
     files_ = QVector<QString>();
     QString dir = QString(".");
     readSongNames(dir, files_);
-    current_song_index_ = 0;
+    currentSongIndex_ = 0;
 }
 
 SongControl::~SongControl()
@@ -15,38 +15,26 @@ SongControl::~SongControl()
 
 QString SongControl::nextSong()
 {
-    current_song_index_ = (current_song_index_ + 1) % files_.size();
-    return files_[current_song_index_];
+    currentSongIndex_ = (currentSongIndex_ + 1) % files_.size();
+    return files_[currentSongIndex_];
 }
 
 QString SongControl::previousSong()
 {
-    current_song_index_ = (current_song_index_ - 1) % files_.size();
-    return files_[current_song_index_];
+    currentSongIndex_ = (currentSongIndex_ - 1) % files_.size();
+    return files_[currentSongIndex_];
 }
 
 QString SongControl::currentSong()
 {
-    return (files_[(current_song_index_) % files_.size()]);
-}
-
-void SongControl::ioEvent(int io_command)
-{
-    switch (io_command)
-    {
-        case 1:
-            nextSong();
-
-        case 2:
-            previousSong();
-    }
+    return (files_[(currentSongIndex_)]);
 }
 
 bool SongControl::hasSuffix(const QString& s, const QString& suffix)
 {
-    if (0 == QString::compare(s.right(4), suffix))
+    //compare returns 0 when the two strings are equal
+    if (QString::compare(s.right(4), suffix) == 0)
     {
-
         return true;
     }
     else

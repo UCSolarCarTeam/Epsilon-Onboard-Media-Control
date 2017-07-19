@@ -40,7 +40,6 @@ private slots:
     void updateState();
     void durationChanged(qint64 duration);
     void positionChanged(qint64 progress);
-    void handleError();
 
 private:
     QScopedPointer<SongControl> controller_;
