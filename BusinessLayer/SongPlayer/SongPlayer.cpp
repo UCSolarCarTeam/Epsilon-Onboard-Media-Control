@@ -19,41 +19,6 @@ SongPlayer::~SongPlayer()
 {
 }
 
-void SongPlayer::playNext()
-{
-    openNext();
-    togglePlayback();
-}
-
-void SongPlayer::playPrevious()
-{
-    openPrevious();
-    togglePlayback();
-}
-
-
-void SongPlayer::playFile(const QString& filePath)
-{
-    mediaPlayer_.setMedia(QUrl::fromLocalFile(filePath));
-    emit updateTitle(filePath);
-}
-
-void SongPlayer::togglePlayback()
-{
-    if (mediaPlayer_.mediaStatus() == QMediaPlayer::NoMedia)
-    {
-        openFile();
-    }
-    else if (mediaPlayer_.state() == QMediaPlayer::PlayingState)
-    {
-        mediaPlayer_.pause();
-    }
-    else
-    {
-        mediaPlayer_.play();
-    }
-}
-
 void SongPlayer::updateState()
 {
     if (mediaPlayer_.position() >= mediaPlayer_.duration() && mediaPlayer_.duration() != -1)
@@ -92,6 +57,12 @@ void SongPlayer::openNext()
     }
 }
 
+void SongPlayer::playNext()
+{
+    openNext();
+    togglePlayback();
+}
+
 void SongPlayer::openPrevious()
 {
     const QString filePath = controller_->previousSong();
@@ -104,6 +75,34 @@ void SongPlayer::openPrevious()
     {
         qDebug() << "Warning filepath is empty";
     }
+}
+
+void SongPlayer::playPrevious()
+{
+    openPrevious();
+    togglePlayback();
+}
+
+void SongPlayer::togglePlayback()
+{
+    if (mediaPlayer_.mediaStatus() == QMediaPlayer::NoMedia)
+    {
+        openFile();
+    }
+    else if (mediaPlayer_.state() == QMediaPlayer::PlayingState)
+    {
+        mediaPlayer_.pause();
+    }
+    else
+    {
+        mediaPlayer_.play();
+    }
+}
+
+void SongPlayer::playFile(const QString& filePath)
+{
+    mediaPlayer_.setMedia(QUrl::fromLocalFile(filePath));
+    emit updateTitle(filePath);
 }
 
 
