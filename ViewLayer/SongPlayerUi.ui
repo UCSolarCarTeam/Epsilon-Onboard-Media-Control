@@ -52,7 +52,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>-&gt;</string>
+    <string/>
    </property>
   </widget>
   <widget class="QPushButton" name="prevSong">
@@ -65,7 +65,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>&lt;-</string>
+    <string/>
    </property>
   </widget>
   <widget class="QProgressBar" name="progressBar">
@@ -97,7 +97,7 @@
     <string notr="true"/>
    </property>
    <property name="text">
-    <string>Play</string>
+    <string/>
    </property>
   </widget>
  </widget>

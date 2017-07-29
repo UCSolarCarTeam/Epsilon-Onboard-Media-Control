@@ -8,6 +8,7 @@ SongPlayerView::SongPlayerView(SongPlayer& songPlayer, I_SongPlayerUi& ui, Progr
 {
     ui_.infoLabel().setAlignment(Qt::AlignCenter);
     bar_.show();
+    //ui_.nextSong -> setIcon(QIcon("Data"));
     connect(&ui_.PlayButton(), SIGNAL(clicked()), this, SLOT(handlePlayButtonClicked()));
     connect(&ui_.OpenButton(), SIGNAL(clicked()), this, SLOT(handleOpenButtonClicked()));
     connect(&ui_.NextSong(), SIGNAL(clicked()), this, SLOT(handleNextButtonClicked()));
