@@ -108,10 +108,17 @@ void SongPlayer::playFile(const QString& filePath)
 
 void SongPlayer::durationChanged(qint64 duration)
 {
-    emit updateDuration(duration);
+    duration_ = duration;
+    emit updateDuration(duration_);
 }
 
 void SongPlayer::positionChanged(qint64 position)
 {
-    emit updatePosition(position);
+    position_ = position;
+    progressChanged();
+}
+
+void SongPlayer::progressChanged()
+{
+    emit updateProgress(position_, duration_);
 }

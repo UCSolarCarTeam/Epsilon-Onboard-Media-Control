@@ -40,6 +40,7 @@ private slots:
     void updateState();
     void durationChanged(qint64 duration);
     void positionChanged(qint64 progress);
+    void progressChanged();
 
 private:
     QScopedPointer<SongControl> controller_;
@@ -49,10 +50,13 @@ private:
     QLabel* positionLabel_;
     QPoint offset_;
     QMediaPlayer mediaPlayer_;
+    qint64 position_;
+    qint64 duration_;
 
 signals:
     void updateTitle(const QString& fileName);
     void resetPosition(const QMediaPlayer& media);
     void updateDuration(qint64 duration);
     void updatePosition(qint64 position);
+    void updateProgress(qint64 position, qint64 duration);
 };

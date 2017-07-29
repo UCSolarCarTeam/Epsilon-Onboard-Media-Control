@@ -1,10 +1,13 @@
 #include "SongPlayerView.h"
+#include <QDebug>
 
-SongPlayerView::SongPlayerView(SongPlayer& songPlayer, I_SongPlayerUi& ui)
+SongPlayerView::SongPlayerView(SongPlayer& songPlayer, I_SongPlayerUi& ui, ProgressBar& bar)
     : songPlayer_(songPlayer)
     , ui_(ui)
+    , bar_(bar)
 {
     ui_.infoLabel().setAlignment(Qt::AlignCenter);
+    bar_.show();
     connect(&ui_.PlayButton(), SIGNAL(clicked()), this, SLOT(handlePlayButtonClicked()));
     connect(&ui_.OpenButton(), SIGNAL(clicked()), this, SLOT(handleOpenButtonClicked()));
     connect(&ui_.NextSong(), SIGNAL(clicked()), this, SLOT(handleNextButtonClicked()));
@@ -12,6 +15,7 @@ SongPlayerView::SongPlayerView(SongPlayer& songPlayer, I_SongPlayerUi& ui)
     connect(&songPlayer_, SIGNAL(updateTitle(const QString&)), this, SLOT(updateTitle(const QString&)));
     connect(&songPlayer_, SIGNAL(updatePosition(qint64)), this, SLOT(updatePosition(qint64)));
     connect(&songPlayer_, SIGNAL(updateDuration(qint64)), this, SLOT(setDuration(qint64)));
+    connect(&songPlayer_,SIGNAL(updateProgress(qint64,qint64)), this,SLOT(updateProgress(qint64,qint64)));
 }
 
 SongPlayerView::~SongPlayerView()
@@ -53,4 +57,10 @@ void SongPlayerView::setDuration(qint64 duration)
 {
     duration = duration / 1000;
     ui_.ProgressBar().setMaximum(duration);
+}
+
+void SongPlayerView::updateProgress(qint64 position, qint64 duration)
+{
+    bar_.progress = (double)position/(double)duration;
+    bar_.update();
 }
