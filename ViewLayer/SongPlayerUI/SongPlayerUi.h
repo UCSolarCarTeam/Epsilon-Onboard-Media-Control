@@ -25,6 +25,7 @@ public:
     QProgressBar& ProgressBar();
     QPushButton& NextSong();
     QPushButton& PrevSong();
+    QVBoxLayout& progressBarContainer();
 
 private:
     Ui::SongPlayerUi* ui_;

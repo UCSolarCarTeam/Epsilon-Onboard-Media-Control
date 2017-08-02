@@ -13,6 +13,7 @@ SongPlayer::SongPlayer(QWidget* parent) : QWidget(parent)
     connect(&mediaPlayer_, &QMediaPlayer::stateChanged, this, &SongPlayer::updateState);
     connect(&mediaPlayer_, SIGNAL(durationChanged(qint64)), this, SLOT(durationChanged(qint64)));
     connect(&mediaPlayer_, SIGNAL(positionChanged(qint64)), this, SLOT(positionChanged(qint64)));
+    connect(&mediaPlayer_, SIGNAL(metaDataAvailableChanged(bool)), this, SLOT(updateInfo()));
 }
 
 SongPlayer::~SongPlayer()
@@ -25,8 +26,6 @@ void SongPlayer::updateState()
     {
         playNext();
     }
-
-    emit mediaPlayer_.durationChanged(mediaPlayer_.duration());
 }
 
 void SongPlayer::openFile()
@@ -105,11 +104,10 @@ void SongPlayer::playFile(const QString& filePath)
     emit updateTitle(filePath);
 }
 
-
 void SongPlayer::durationChanged(qint64 duration)
 {
     duration_ = duration;
-    emit updateDuration(duration_);
+    //emit updateDuration(duration_);
 }
 
 void SongPlayer::positionChanged(qint64 position)
@@ -121,4 +119,9 @@ void SongPlayer::positionChanged(qint64 position)
 void SongPlayer::progressChanged()
 {
     emit updateProgress(position_, duration_);
+}
+
+void SongPlayer::updateInfo()
+{
+
 }

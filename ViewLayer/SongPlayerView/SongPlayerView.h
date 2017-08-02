@@ -30,7 +30,5 @@ private slots:
     void handleNextButtonClicked();
     void handlePrevButtonClicked();
     void updateTitle(const QString& filePath);
-    void updatePosition(qint64 position);
     void updateProgress(qint64 position,qint64 duration);
-    void setDuration(qint64 duration);
 };
