@@ -9,5 +9,4 @@ signals:
     void updateTitle(const QString& fileName);
     void togglePlayback();
     void openFile();
-
 };

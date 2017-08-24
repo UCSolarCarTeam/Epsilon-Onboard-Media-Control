@@ -12,7 +12,6 @@ SongControl::~SongControl()
 {
 }
 
-
 QString SongControl::nextSong()
 {
     currentSongIndex_ = (currentSongIndex_ + 1) % files_.size();

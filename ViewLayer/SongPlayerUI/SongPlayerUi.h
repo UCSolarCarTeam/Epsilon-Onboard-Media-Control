@@ -26,7 +26,6 @@ public:
     QPushButton& NextSong();
     QPushButton& PrevSong();
 
-
 private:
     Ui::SongPlayerUi* ui_;
 };
