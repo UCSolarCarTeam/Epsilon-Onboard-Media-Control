@@ -11,7 +11,7 @@ SongPlayerUi::SongPlayerUi():
     ui_->PlayButton->setIcon(QIcon("/home/ben/Documents/SolarCar/Epsilon-Onboard-Media_Control/Epsilon-Onboard-Media-Control/DataLayer/Icons/Play.png"));
     ui_->nextSong->setIconSize(QSize(65,65));
     ui_->prevSong->setIconSize(QSize(65,65));
-    ui_->PlayButton->setIconSize(QSize(65,65))
+    ui_->PlayButton->setIconSize(QSize(65,65));
 
 }
 
