@@ -11,7 +11,7 @@ SongPlayerView::SongPlayerView(SongPlayer& songPlayer, I_SongPlayerUi& ui, Progr
     connect(&ui_.OpenButton(), SIGNAL(clicked()), this, SLOT(handleOpenButtonClicked()));
     connect(&ui_.NextSong(), SIGNAL(clicked()), this, SLOT(handleNextButtonClicked()));
     connect(&ui_.PrevSong(), SIGNAL(clicked()), this, SLOT(handlePrevButtonClicked()));
-    connect(&songPlayer_, SIGNAL(updateTitle(const QString&)), this, SLOT(updateTitle(const QString&)));
+    connect(&songPlayer_, SIGNAL(updateGUI(const QString&, const QString&, const QImage&)), this, SLOT(updateGUI(const QString&, const QString&, const QImage&)));
     connect(&songPlayer_,SIGNAL(updateProgress(qint64,qint64)), this,SLOT(updateProgress(qint64,qint64)));
     ui_.progressBarContainer().addWidget(&bar_);
 }
@@ -40,9 +40,9 @@ void SongPlayerView::handlePrevButtonClicked()
     songPlayer_.playPrevious();
 }
 
-void SongPlayerView::updateTitle(const QString& filePath)
+void SongPlayerView::updateGUI(const QString& title, const QString& artist, const QImage& cover)
 {
-    ui_.infoLabel().setText(QFileInfo(filePath).fileName());
+    ui_.infoLabel().setText(artist + " - " + title);
 }
 
 void SongPlayerView::updateProgress(qint64 position, qint64 duration)

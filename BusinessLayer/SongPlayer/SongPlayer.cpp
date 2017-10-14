@@ -101,13 +101,11 @@ void SongPlayer::togglePlayback()
 void SongPlayer::playFile(const QString& filePath)
 {
     mediaPlayer_.setMedia(QUrl::fromLocalFile(filePath));
-    emit updateTitle(filePath);
 }
 
 void SongPlayer::durationChanged(qint64 duration)
 {
     duration_ = duration;
-    //emit updateDuration(duration_);
 }
 
 void SongPlayer::positionChanged(qint64 position)
@@ -123,5 +121,9 @@ void SongPlayer::progressChanged()
 
 void SongPlayer::updateInfo()
 {
-
+    artist_ = mediaPlayer_.metaData(QMediaMetaData::ContributingArtist).toString();
+    title_ = mediaPlayer_.metaData(QMediaMetaData::Title).toString();
+    cover_ = mediaPlayer_.metaData(QMediaMetaData::CoverArtImage).value<QImage>();
+    //qDebug() << mediaPlayer_.availableMetaData() << endl;
+    emit updateGUI(title_, artist_, cover_);
 }

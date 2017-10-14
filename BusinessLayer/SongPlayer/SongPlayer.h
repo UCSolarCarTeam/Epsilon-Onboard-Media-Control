@@ -56,9 +56,10 @@ private:
     qint64 duration_;
     QString title_;
     QString artist_;
+    QImage cover_;
 
 signals:
-    void updateTitle(const QString& fileName);
+    void updateGUI(const QString& title, const QString& author, const QImage& cover);
     void resetPosition(const QMediaPlayer& media);
     void updateProgress(qint64 position, qint64 duration);
 };
