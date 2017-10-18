@@ -2,11 +2,11 @@ sudo: required
 
 before_install:
     - sudo apt-add-repository -y ppa:ubuntu-toolchain-r/test
-    - sudo apt-add-repository -y ppa:beineri/opt-qt542
+    - sudo apt-add-repository -y ppa:beineri/opt-qt551
     - sudo apt-get -qq update
-    - sudo apt-get -qq install g++-4.8 libc6-i386 qt54tools qt54svg qt54webkit qt54serialport qt54multimedia
-    - PATH="/opt/qt54/bin:$PATH"
-    - qt54-env.sh
+    - sudo apt-get -qq install g++-4.8 libc6-i386 qt55tools qt55svg qt55webkit qt55serialport qt55multimedia
+    - PATH="/opt/qt55/bin:$PATH"
+    - qt55-env.sh
 
 install:
     - wget 'https://s3-us-west-2.amazonaws.com/ucsolarteam.hostedfiles/astyle'
