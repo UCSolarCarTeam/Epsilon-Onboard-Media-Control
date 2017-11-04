@@ -121,7 +121,6 @@ void SongPlayer::progressChanged()
 
 void SongPlayer::adjustVolume(int volume)
 {
-    qDebug() << "Volume in SongPlayer is: " << volume << endl;
     mediaPlayer_.setVolume(volume);
 }
 
@@ -130,6 +129,5 @@ void SongPlayer::updateInfo()
     artist_ = mediaPlayer_.metaData(QMediaMetaData::ContributingArtist).toString();
     title_ = mediaPlayer_.metaData(QMediaMetaData::Title).toString();
     cover_ = mediaPlayer_.metaData(QMediaMetaData::CoverArtImage).value<QImage>();
-    //qDebug() << mediaPlayer_.availableMetaData() << endl;
     emit updateGUI(title_, artist_, cover_);
 }

@@ -44,7 +44,6 @@ void SongPlayerView::handlePrevButtonClicked()
 void SongPlayerView::handleVolumeControl()
 {
     int volume = ui_.volumeControl().value();
-    qDebug() << "volume in handler is: " << volume << endl;
     songPlayer_.adjustVolume(volume);
 }
 

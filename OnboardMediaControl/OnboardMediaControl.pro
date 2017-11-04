@@ -18,3 +18,11 @@ SOURCES += \
 
 HEADERS += \
     OnboardMediaControl.h
+
+RESOURCES += \
+    ../ViewLayer/uiresources.qrc
+
+DISTFILES += \
+    ../Resources/PlaySmall.png \
+    ../Resources/Next.png \
+    ../Resources/Previous.png
