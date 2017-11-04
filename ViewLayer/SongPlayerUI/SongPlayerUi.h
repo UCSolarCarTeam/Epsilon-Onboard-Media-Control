@@ -4,6 +4,7 @@
 #include <QPushButton>
 #include <QProgressBar>
 #include <QLabel>
+#include <QSlider>
 
 #include "I_SongPlayerUi.h"
 
@@ -26,6 +27,7 @@ public:
     QPushButton& NextSong();
     QPushButton& PrevSong();
     QVBoxLayout& progressBarContainer();
+    QSlider& volumeControl();
 
 private:
     Ui::SongPlayerUi* ui_;

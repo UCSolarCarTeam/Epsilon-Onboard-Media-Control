@@ -12,7 +12,6 @@ SongPlayerUi::SongPlayerUi():
     ui_->nextSong->setIconSize(QSize(65,65));
     ui_->prevSong->setIconSize(QSize(65,65));
     ui_->PlayButton->setIconSize(QSize(65,65));
-
 }
 
 SongPlayerUi::~SongPlayerUi()
@@ -43,6 +42,11 @@ QPushButton& SongPlayerUi::NextSong()
 QPushButton& SongPlayerUi::PrevSong()
 {
     return *ui_->prevSong;
+}
+
+QSlider& SongPlayerUi::volumeControl()
+{
+    return *ui_->volumeControl;
 }
 
 QVBoxLayout& SongPlayerUi::progressBarContainer()

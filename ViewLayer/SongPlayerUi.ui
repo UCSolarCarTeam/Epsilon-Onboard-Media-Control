@@ -54,7 +54,7 @@
   <widget class="QPushButton" name="nextSong">
    <property name="geometry">
     <rect>
-     <x>520</x>
+     <x>510</x>
      <y>130</y>
      <width>101</width>
      <height>101</height>
@@ -70,7 +70,7 @@
   <widget class="QPushButton" name="prevSong">
    <property name="geometry">
     <rect>
-     <x>80</x>
+     <x>70</x>
      <y>130</y>
      <width>101</width>
      <height>101</height>
@@ -117,12 +117,26 @@
    </property>
    <layout class="QVBoxLayout" name="progressBarContainer"/>
   </widget>
+  <widget class="QSlider" name="volumeControl">
+   <property name="geometry">
+    <rect>
+     <x>640</x>
+     <y>210</y>
+     <width>16</width>
+     <height>160</height>
+    </rect>
+   </property>
+   <property name="orientation">
+    <enum>Qt::Vertical</enum>
+   </property>
+  </widget>
   <zorder>OpenButton</zorder>
   <zorder>infoLabel</zorder>
   <zorder>nextSong</zorder>
   <zorder>prevSong</zorder>
   <zorder>verticalLayoutWidget</zorder>
   <zorder>PlayButton</zorder>
+  <zorder>volumeControl</zorder>
  </widget>
  <resources/>
  <connections/>

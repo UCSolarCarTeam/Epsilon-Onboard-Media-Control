@@ -119,6 +119,12 @@ void SongPlayer::progressChanged()
     emit updateProgress(position_, duration_);
 }
 
+void SongPlayer::adjustVolume(int volume)
+{
+    qDebug() << "Volume in SongPlayer is: " << volume << endl;
+    mediaPlayer_.setVolume(volume);
+}
+
 void SongPlayer::updateInfo()
 {
     artist_ = mediaPlayer_.metaData(QMediaMetaData::ContributingArtist).toString();

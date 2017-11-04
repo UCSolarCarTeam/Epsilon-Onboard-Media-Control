@@ -11,6 +11,7 @@ SongPlayerView::SongPlayerView(SongPlayer& songPlayer, I_SongPlayerUi& ui, Progr
     connect(&ui_.OpenButton(), SIGNAL(clicked()), this, SLOT(handleOpenButtonClicked()));
     connect(&ui_.NextSong(), SIGNAL(clicked()), this, SLOT(handleNextButtonClicked()));
     connect(&ui_.PrevSong(), SIGNAL(clicked()), this, SLOT(handlePrevButtonClicked()));
+    connect(&ui_.volumeControl(), SIGNAL(valueChanged(int)), this, SLOT(handleVolumeControl()));
     connect(&songPlayer_, SIGNAL(updateGUI(const QString&, const QString&, const QImage&)), this, SLOT(updateGUI(const QString&, const QString&, const QImage&)));
     connect(&songPlayer_,SIGNAL(updateProgress(qint64,qint64)), this,SLOT(updateProgress(qint64,qint64)));
     ui_.progressBarContainer().addWidget(&bar_);
@@ -38,6 +39,13 @@ void SongPlayerView::handleNextButtonClicked()
 void SongPlayerView::handlePrevButtonClicked()
 {
     songPlayer_.playPrevious();
+}
+
+void SongPlayerView::handleVolumeControl()
+{
+    int volume = ui_.volumeControl().value();
+    qDebug() << "volume in handler is: " << volume << endl;
+    songPlayer_.adjustVolume(volume);
 }
 
 void SongPlayerView::updateGUI(const QString& title, const QString& artist, const QImage& cover)

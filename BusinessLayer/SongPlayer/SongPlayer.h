@@ -36,6 +36,7 @@ public slots:
     void playPrevious();
     void playFile(const QString& filePath);
     void togglePlayback();
+    void adjustVolume(int volume);
 
 private slots:
     void updateState();

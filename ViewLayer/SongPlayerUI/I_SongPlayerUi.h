@@ -4,6 +4,7 @@
 #include <QLabel>
 #include <QProgressBar>
 #include <QVBoxLayout>
+#include <QSlider>
 
 class I_SongPlayerUi : public QWidget
 {
@@ -16,5 +17,6 @@ public:
     virtual QPushButton& OpenButton() = 0;
     virtual QPushButton& NextSong() = 0;
     virtual QPushButton& PrevSong() = 0;
+    virtual QSlider& volumeControl() = 0;
     virtual QVBoxLayout& progressBarContainer() = 0;
 };
