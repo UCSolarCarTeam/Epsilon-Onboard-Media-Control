@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/">
+        <file>../Resources/Next.png</file>
+        <file>../Resources/Previous.png</file>
+        <file>../Resources/PlaySmall.png</file>
+    </qresource>
+</RCC>
