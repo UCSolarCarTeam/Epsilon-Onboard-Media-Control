@@ -21,7 +21,7 @@ QString SongControl::nextSong()
 
 QString SongControl::previousSong()
 {
-    currentSongIndex_ = (currentSongIndex_ - 1) % files_.size();
+    currentSongIndex_ = (((currentSongIndex_ - 1) % files_.size())+files_.size()) % files_.size();
     return files_[currentSongIndex_];
 }
 
