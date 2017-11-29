@@ -1,3 +1,5 @@
+image::https://badge.waffle.io/UCSolarCarTeam/Epsilon-Onboard-Media-Control.svg[link="http://waffle.io/UCSolarCarTeam/Epsilon-Onboard-Media-Control"]
+
 = Schulich Epsilon Onboard Media Control
 
 This program is an onboard media control for the University of Calgary's Solar Car Team in Schulich Epsilon. The program features a music player on the Raspberry Pi.
