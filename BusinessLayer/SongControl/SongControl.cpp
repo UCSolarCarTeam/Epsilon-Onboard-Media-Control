@@ -58,7 +58,6 @@ bool SongControl::readSongNames(QString dir, QVector<QString>& files_)
     }
 
     dir = relativeDirectory.absolutePath();
-    qDebug() << "DBUG" << relativeDirectory.absolutePath();
 
     QByteArray array = dir.toLocal8Bit();   //converting QString to char*
     char* dirCharPointer = array.data();
