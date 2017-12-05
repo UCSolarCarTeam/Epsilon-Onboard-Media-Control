@@ -14,7 +14,6 @@
 #include <QVector>
 #include <QFileInfo>
 #include <QDebug>
-#include <QDir>
 
 namespace Ui
 {
