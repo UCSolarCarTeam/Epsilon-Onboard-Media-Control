@@ -15,7 +15,6 @@
 #include <QFileInfo>
 #include <QDebug>
 
-
 namespace Ui
 {
     class SongControl;
