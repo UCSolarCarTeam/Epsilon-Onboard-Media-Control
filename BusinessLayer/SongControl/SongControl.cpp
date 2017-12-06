@@ -1,5 +1,5 @@
-#include "SongControl.h"
 #include <QDir>
+#include "SongControl.h"
 
 SongControl::SongControl()
 {
