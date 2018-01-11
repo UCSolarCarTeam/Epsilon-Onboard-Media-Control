@@ -7,6 +7,8 @@ SongPlayerView::SongPlayerView(SongPlayer& songPlayer, I_SongPlayerUi& ui, Progr
     , bar_(bar)
 {
     ui_.infoLabel().setAlignment(Qt::AlignCenter);
+    ui_.PlayButton().setCheckable(true);
+    ui_.PlayButton().setChecked(false);
     connect(&ui_.PlayButton(), SIGNAL(clicked()), this, SLOT(handlePlayButtonClicked()));
     connect(&ui_.OpenButton(), SIGNAL(clicked()), this, SLOT(handleOpenButtonClicked()));
     connect(&ui_.NextSong(), SIGNAL(clicked()), this, SLOT(handleNextButtonClicked()));
@@ -28,16 +30,19 @@ void SongPlayerView::handlePlayButtonClicked()
 
 void SongPlayerView::handleOpenButtonClicked()
 {
+    ui_.PlayButton().setChecked(false);
     songPlayer_.openFile();
 }
 
 void SongPlayerView::handleNextButtonClicked()
 {
+    ui_.PlayButton().setChecked(true);
     songPlayer_.playNext();
 }
 
 void SongPlayerView::handlePrevButtonClicked()
 {
+    ui_.PlayButton().setChecked(true);
     songPlayer_.playPrevious();
 }
 

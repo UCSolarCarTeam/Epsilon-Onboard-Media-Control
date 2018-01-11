@@ -50,7 +50,15 @@
          </size>
         </property>
         <property name="styleSheet">
-         <string notr="true">border-image: url(:/Resources/Next.png);</string>
+         <string notr="true">QPushButton
+{
+	border-image: url(:/Resources/icons_OFF/next.png);
+}
+
+QPushButton:pressed
+{
+	border-image: url(:/Resources/icons_ON/next.png);
+}</string>
         </property>
         <property name="text">
          <string/>
@@ -72,7 +80,15 @@
          </size>
         </property>
         <property name="styleSheet">
-         <string notr="true">border-image: url(:/Resources/Previous.png);</string>
+         <string notr="true">QPushButton
+{
+	border-image: url(:/Resources/icons_OFF/previous.png);
+}
+
+QPushButton:pressed
+{
+	border-image: url(:/Resources/icons_ON/previous.png);
+}</string>
         </property>
         <property name="text">
          <string/>
@@ -110,10 +126,42 @@
 	border-color: rgb(68,68,68);
 	border-width: 5px;
 	border-radius: 65px;
-	background-image: url(:/Resources/PlaySmall.png);
+	background-image: url(:/Resources/icons_OFF/40x50_small_play.png);
 	background-position: center;
 }
-</string>
+
+QPushButton:pressed
+{
+	border-style: solid;
+	background: white;
+	border-color: rgb(68,68,68);
+	border-width: 5px;
+	border-radius: 65px;
+	background-image: url(:/Resources/icons_ON/40x50_SMALL_play.png);
+	background-position: center;
+}
+
+QPushButton:checked
+{
+	border-style: solid;
+	background: white;
+	border-color: rgb(68,68,68);
+	border-width: 5px;
+	border-radius: 65px;
+	background-image: url(:/Resources/icons_OFF/SMALL_pause.png);
+	background-position: center;
+}
+
+QPushButton:checked:pressed
+{
+	border-style: solid;
+	background: white;
+	border-color: rgb(68,68,68);
+	border-width: 5px;
+	border-radius: 65px;
+	background-image: url(:/Resources/icons_ON/SMALL_pause_on.png);
+	background-position: center;
+}</string>
          </property>
          <property name="text">
           <string/>
