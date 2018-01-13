@@ -26,7 +26,6 @@ private:
 
 private slots:
     void handlePlayButtonClicked();
-    void handleOpenButtonClicked();
     void handleNextButtonClicked();
     void handlePrevButtonClicked();
     void handleVolumeControl();

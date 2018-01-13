@@ -22,7 +22,6 @@ public:
     ~SongPlayerUi();
     QLabel& infoLabel();
     QPushButton& PlayButton();
-    QPushButton& OpenButton();
     QProgressBar& ProgressBar();
     QPushButton& NextSong();
     QPushButton& PrevSong();

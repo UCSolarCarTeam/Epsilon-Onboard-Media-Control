@@ -9,9 +9,7 @@ SongPlayerView::SongPlayerView(SongPlayer& songPlayer, I_SongPlayerUi& ui, Progr
     ui_.infoLabel().setAlignment(Qt::AlignCenter);
     ui_.PlayButton().setCheckable(true);
     ui_.PlayButton().setChecked(false);
-    ui_.OpenButton().hide();     //Button is not displayed
     connect(&ui_.PlayButton(), SIGNAL(clicked()), this, SLOT(handlePlayButtonClicked()));
-    connect(&ui_.OpenButton(), SIGNAL(clicked()), this, SLOT(handleOpenButtonClicked()));
     connect(&ui_.NextSong(), SIGNAL(clicked()), this, SLOT(handleNextButtonClicked()));
     connect(&ui_.PrevSong(), SIGNAL(clicked()), this, SLOT(handlePrevButtonClicked()));
     connect(&ui_.volumeControl(), SIGNAL(valueChanged(int)), this, SLOT(handleVolumeControl()));
@@ -27,10 +25,6 @@ SongPlayerView::~SongPlayerView()
 void SongPlayerView::handlePlayButtonClicked()
 {
     songPlayer_.togglePlayback();
-}
-
-void SongPlayerView::handleOpenButtonClicked()
-{
 }
 
 void SongPlayerView::handleNextButtonClicked()

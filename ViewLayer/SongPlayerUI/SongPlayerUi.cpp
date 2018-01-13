@@ -18,11 +18,6 @@ QPushButton& SongPlayerUi::PlayButton()
     return *ui_->PlayButton;
 }
 
-QPushButton& SongPlayerUi::OpenButton()
-{
-    return *ui_->OpenButton;
-}
-
 QLabel& SongPlayerUi::infoLabel()
 {
     return *ui_->infoLabel;
