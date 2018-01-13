@@ -126,7 +126,7 @@ QPushButton:pressed
 	border-color: rgb(68,68,68);
 	border-width: 5px;
 	border-radius: 65px;
-	background-image: url(:/Resources/icons_OFF/40x50_small_play.png);
+	background-image: url(:/Resources/icons_OFF/play.png);
 	background-position: center;
 }
 
@@ -137,7 +137,7 @@ QPushButton:pressed
 	border-color: rgb(68,68,68);
 	border-width: 5px;
 	border-radius: 65px;
-	background-image: url(:/Resources/icons_ON/40x50_SMALL_play.png);
+	background-image: url(:/Resources/icons_ON/play.png);
 	background-position: center;
 }
 
@@ -148,7 +148,7 @@ QPushButton:checked
 	border-color: rgb(68,68,68);
 	border-width: 5px;
 	border-radius: 65px;
-	background-image: url(:/Resources/icons_OFF/SMALL_pause.png);
+	background-image: url(:/Resources/icons_OFF/pause.png);
 	background-position: center;
 }
 
@@ -159,7 +159,7 @@ QPushButton:checked:pressed
 	border-color: rgb(68,68,68);
 	border-width: 5px;
 	border-radius: 65px;
-	background-image: url(:/Resources/icons_ON/SMALL_pause_on.png);
+	background-image: url(:/Resources/icons_ON/pause.png);
 	background-position: center;
 }</string>
          </property>
