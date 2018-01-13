@@ -2,23 +2,17 @@
     <qresource prefix="/">
         <file>../Resources/icons_OFF/40x50_small_play.png</file>
         <file>../Resources/icons_OFF/next.png</file>
-        <file>../Resources/icons_OFF/pause.png</file>
-        <file>../Resources/icons_OFF/play.png</file>
         <file>../Resources/icons_OFF/previous.png</file>
         <file>../Resources/icons_OFF/repeat.png</file>
         <file>../Resources/icons_OFF/shuffle.png</file>
         <file>../Resources/icons_OFF/SMALL_pause.png</file>
-        <file>../Resources/icons_OFF/SMALL_play.png</file>
         <file>../Resources/icons_OFF/speaker.png</file>
         <file>../Resources/icons_ON/40x50_SMALL_play.png</file>
         <file>../Resources/icons_ON/next.png</file>
-        <file>../Resources/icons_ON/pause.png</file>
-        <file>../Resources/icons_ON/play.png</file>
         <file>../Resources/icons_ON/previous.png</file>
         <file>../Resources/icons_ON/repeat.png</file>
         <file>../Resources/icons_ON/shuffle.png</file>
         <file>../Resources/icons_ON/SMALL_pause_on.png</file>
-        <file>../Resources/icons_ON/SMALL_play.png</file>
         <file>../Resources/icons_ON/speaker.png</file>
     </qresource>
 </RCC>
