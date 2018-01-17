@@ -112,11 +112,6 @@ void SongPlayer::durationChanged(qint64 duration)
 void SongPlayer::positionChanged(qint64 position)
 {
     position_ = position;
-    progressChanged();
-}
-
-void SongPlayer::progressChanged()
-{
     emit updateProgress(position_, duration_);
 }
 
