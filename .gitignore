@@ -1,6 +1,3 @@
 *.pro.user
 Makefile
-moc_songplayer.cpp
-moc_songplayer.o
-song_player/ui_songplayer.h
-
+moc_*
