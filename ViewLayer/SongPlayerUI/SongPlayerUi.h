@@ -20,6 +20,7 @@ class SongPlayerUi : public I_SongPlayerUi
 public:
     explicit SongPlayerUi();
     ~SongPlayerUi();
+    QLabel& label_pic();
     QLabel& infoLabel();
     QPushButton& PlayButton();
     QProgressBar& ProgressBar();

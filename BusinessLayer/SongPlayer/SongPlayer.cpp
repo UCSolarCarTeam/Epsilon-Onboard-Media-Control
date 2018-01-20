@@ -1,5 +1,5 @@
 #include "SongPlayer.h"
-
+#include "QDebug"
 namespace
 {
     const int MS_TO_MINUTES = 60000;
@@ -124,6 +124,9 @@ void SongPlayer::updateInfo()
 {
     artist_ = mediaPlayer_.metaData(QMediaMetaData::ContributingArtist).toString();
     title_ = mediaPlayer_.metaData(QMediaMetaData::Title).toString();
-    cover_ = mediaPlayer_.metaData(QMediaMetaData::CoverArtImage).value<QImage>();
-    emit updateGUI(title_, artist_);
+    cover_ = controller_->currentSong();
+    QString mp3 = ".mp3";
+    QString jpg = ".jpg";
+    cover_.replace(cover_.lastIndexOf(mp3), 4, jpg);
+    emit updateGUI(title_, artist_, cover_);
 }

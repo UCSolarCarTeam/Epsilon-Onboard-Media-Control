@@ -42,3 +42,8 @@ QVBoxLayout& SongPlayerUi::progressBarContainer()
 {
     return *ui_->progressBarContainer;
 }
+
+QLabel& SongPlayerUi::label_pic()
+{
+    return *ui_->label_pic;
+}

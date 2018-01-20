@@ -18,4 +18,5 @@ public:
     virtual QPushButton& PrevSong() = 0;
     virtual QSlider& volumeControl() = 0;
     virtual QVBoxLayout& progressBarContainer() = 0;
+    virtual QLabel& label_pic() = 0;
 };

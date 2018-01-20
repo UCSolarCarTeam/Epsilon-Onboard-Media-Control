@@ -29,6 +29,6 @@ private slots:
     void handleNextButtonClicked();
     void handlePrevButtonClicked();
     void handleVolumeControl();
-    void updateGUI(const QString& title, const QString& artist);
+    void updateGUI(const QString& title, const QString& artist, const QString& cover);
     void updateProgress(qint64 position,qint64 duration);
 };
