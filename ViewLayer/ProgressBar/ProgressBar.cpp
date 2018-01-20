@@ -2,7 +2,9 @@
 
 namespace
 {
-    const int DEGREES_IN_CIRCLE_TIMES_SIXTEEN = 5760; //16 * 360 1/16th degrees in a circle
+    // Angle must specified be in 1/16th of a degree
+    const int FULL_CIRCLE = 5760;   // 360 * 16
+    const int START_ANGLE = -1440;  // The bottom of the circle is -90 * 16
 }
 
 
@@ -27,8 +29,8 @@ void ProgressBar::paintEvent(QPaintEvent *)
 
     //consult drawArc method in Qt doc
     QRectF rectangle(27.0, 27.0, 138.0, 138.0);
-    int startAngle = -90 * 16;
-    int spanAngle = progress * DEGREES_IN_CIRCLE_TIMES_SIXTEEN;
+    int startAngle = START_ANGLE;
+    int spanAngle = progress * FULL_CIRCLE;
 
     p.drawArc(rectangle, startAngle, spanAngle);
 }
