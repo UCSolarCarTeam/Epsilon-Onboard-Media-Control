@@ -16,6 +16,8 @@ public:
     virtual QPushButton& PlayButton() = 0;
     virtual QPushButton& NextSong() = 0;
     virtual QPushButton& PrevSong() = 0;
+    virtual QPushButton& ShuffleButton() = 0;
+    virtual QPushButton& LoopButton() = 0;
     virtual QSlider& volumeControl() = 0;
     virtual QVBoxLayout& progressBarContainer() = 0;
 };

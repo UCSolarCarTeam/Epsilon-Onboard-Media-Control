@@ -12,6 +12,8 @@ SongPlayerView::SongPlayerView(SongPlayer& songPlayer, I_SongPlayerUi& ui, Progr
     connect(&ui_.PlayButton(), SIGNAL(clicked()), this, SLOT(handlePlayButtonClicked()));
     connect(&ui_.NextSong(), SIGNAL(clicked()), this, SLOT(handleNextButtonClicked()));
     connect(&ui_.PrevSong(), SIGNAL(clicked()), this, SLOT(handlePrevButtonClicked()));
+    connect(&ui_.ShuffleButton(), SIGNAL(clicked()), this, SLOT(handleShuffleButtonClicked()));
+    connect(&ui_.LoopButton(), SIGNAL(clicked()), this, SLOT(handleLoopButtonClicked()));
     connect(&ui_.volumeControl(), SIGNAL(valueChanged(int)), this, SLOT(handleVolumeControl()));
     connect(&songPlayer_, SIGNAL(updateGUI(const QString&, const QString&)), this, SLOT(updateGUI(const QString&, const QString&)));
     connect(&songPlayer_,SIGNAL(updateProgress(qint64,qint64)), this,SLOT(updateProgress(qint64,qint64)));
@@ -37,6 +39,16 @@ void SongPlayerView::handlePrevButtonClicked()
 {
     ui_.PlayButton().setChecked(true);
     songPlayer_.playPrevious();
+}
+
+void SongPlayerView::handleShuffleButtonClicked(){
+    qDebug() << "Shuffle";
+    songPlayer_.toggleShuffle();
+}
+
+void SongPlayerView::handleLoopButtonClicked(){
+    qDebug() << "Loop";
+    songPlayer_.toggleLoop();
 }
 
 void SongPlayerView::handleVolumeControl()

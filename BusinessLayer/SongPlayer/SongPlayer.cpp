@@ -9,6 +9,8 @@ namespace
 
 SongPlayer::SongPlayer(QWidget* parent) : QWidget(parent)
   , controller_(new SongControl())
+  , shuffle_(false)
+  , loop_(false)
 {
     connect(&mediaPlayer_, &QMediaPlayer::stateChanged, this, &SongPlayer::updateState);
     connect(&mediaPlayer_, SIGNAL(durationChanged(qint64)), this, SLOT(durationChanged(qint64)));
@@ -24,6 +26,15 @@ void SongPlayer::updateState()
 {
     if (mediaPlayer_.position() >= mediaPlayer_.duration() && mediaPlayer_.duration() != -1)
     {
+        if(loop_)
+        {
+            playFile();
+        }
+        else if(shuffle_)
+        {
+
+        }
+
         playNext();
     }
 }
@@ -58,7 +69,15 @@ void SongPlayer::openNext()
 
 void SongPlayer::playNext()
 {
-    openNext();
+    if(loop_)
+    {
+        openFile();
+    }
+    else
+    {
+        openNext();
+    }
+
     togglePlayback();
 }
 
@@ -99,6 +118,11 @@ void SongPlayer::togglePlayback()
     }
 }
 
+void SongPlayer::playNextShuffle()
+{
+
+}
+
 void SongPlayer::playFile(const QString& filePath)
 {
     mediaPlayer_.setMedia(QUrl::fromLocalFile(filePath));
@@ -118,6 +142,30 @@ void SongPlayer::positionChanged(qint64 position)
 void SongPlayer::adjustVolume(int volume)
 {
     mediaPlayer_.setVolume(volume);
+}
+
+void SongPlayer::toggleShuffle()
+{
+    if(shuffle_)
+    {
+        shuffle_ = false;
+    }
+    else
+    {
+        shuffle_ = true;
+    }
+}
+
+void SongPlayer::toggleLoop()
+{
+    if(loop_)
+    {
+        loop_ = false;
+    }
+    else
+    {
+        loop_ = true;
+    }
 }
 
 void SongPlayer::updateInfo()

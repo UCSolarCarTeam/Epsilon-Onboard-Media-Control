@@ -179,6 +179,22 @@ background: white;
      </property>
     </spacer>
    </item>
+   <item row="9" column="6">
+    <spacer name="verticalSpacer_4">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeType">
+      <enum>QSizePolicy::Fixed</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>40</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
    <item row="5" column="6">
     <widget class="QWidget" name="widget_2" native="true">
      <property name="sizePolicy">
@@ -345,20 +361,26 @@ QPushButton:checked:pressed
     </widget>
    </item>
    <item row="7" column="6">
-    <spacer name="verticalSpacer_4">
-     <property name="orientation">
-      <enum>Qt::Vertical</enum>
+    <widget class="QPushButton" name="ShuffleButton">
+     <property name="styleSheet">
+      <string notr="true">color: white;
+background-color: blue;</string>
      </property>
-     <property name="sizeType">
-      <enum>QSizePolicy::Fixed</enum>
+     <property name="text">
+      <string>Shuffle</string>
      </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>20</width>
-       <height>40</height>
-      </size>
+    </widget>
+   </item>
+   <item row="8" column="6">
+    <widget class="QPushButton" name="LoopButton">
+     <property name="styleSheet">
+      <string notr="true">color: white;
+background-color: red;</string>
      </property>
-    </spacer>
+     <property name="text">
+      <string>Loop</string>
+     </property>
+    </widget>
    </item>
   </layout>
  </widget>
