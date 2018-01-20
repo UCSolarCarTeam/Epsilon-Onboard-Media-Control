@@ -14,7 +14,7 @@ void ProgressBar::paintEvent(QPaintEvent *)
 
     QPen pen;
     pen.setWidth(7);
-    pen.setColor(Qt::green);
+    pen.setColor(QColor(92,145,161));
     p.setPen(pen);
 
     p.setRenderHint(QPainter::Antialiasing);
