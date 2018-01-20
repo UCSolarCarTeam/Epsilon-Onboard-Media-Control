@@ -26,16 +26,7 @@ void SongPlayer::updateState()
 {
     if (mediaPlayer_.position() >= mediaPlayer_.duration() && mediaPlayer_.duration() != -1)
     {
-        if(loop_)
-        {
-            playFile();
-        }
-        else if(shuffle_)
-        {
-
-        }
-
-        playNext();
+         playNext();
     }
 }
 
@@ -73,6 +64,10 @@ void SongPlayer::playNext()
     {
         openFile();
     }
+    else if (shuffle_)
+    {
+        openShuffle();
+    }
     else
     {
         openNext();
@@ -84,6 +79,20 @@ void SongPlayer::playNext()
 void SongPlayer::openPrevious()
 {
     const QString filePath = controller_->previousSong();
+
+    if (!filePath.isEmpty())
+    {
+        playFile(filePath);
+    }
+    else
+    {
+        qDebug() << "Warning filepath is empty";
+    }
+}
+
+void SongPlayer::openShuffle()
+{
+    const QString filePath = controller_->shuffleSong();
 
     if (!filePath.isEmpty())
     {
@@ -116,11 +125,6 @@ void SongPlayer::togglePlayback()
     {
         mediaPlayer_.play();
     }
-}
-
-void SongPlayer::playNextShuffle()
-{
-
 }
 
 void SongPlayer::playFile(const QString& filePath)

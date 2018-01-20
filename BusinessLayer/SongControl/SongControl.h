@@ -29,6 +29,7 @@ public:
     QString nextSong();
     QString previousSong();
     QString currentSong();
+    QString shuffleSong();
     QString libraryLoad();
     bool hasSuffix(const QString& s, const QString& suffix);
 

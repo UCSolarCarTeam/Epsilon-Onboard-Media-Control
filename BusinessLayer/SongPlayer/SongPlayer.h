@@ -32,6 +32,7 @@ public slots:
     void openFile();
     void openNext();
     void openPrevious();
+    void openShuffle();
     void playNext();
     void playPrevious();
     void playFile(const QString& filePath);

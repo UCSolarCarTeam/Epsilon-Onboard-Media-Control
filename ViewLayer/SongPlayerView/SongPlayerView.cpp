@@ -9,6 +9,10 @@ SongPlayerView::SongPlayerView(SongPlayer& songPlayer, I_SongPlayerUi& ui, Progr
     ui_.infoLabel().setAlignment(Qt::AlignCenter);
     ui_.PlayButton().setCheckable(true);
     ui_.PlayButton().setChecked(false);
+    ui_.ShuffleButton().setCheckable(true);
+    ui_.ShuffleButton().setChecked(false);
+    ui_.LoopButton().setCheckable(true);
+    ui_.LoopButton().setChecked(false);
     connect(&ui_.PlayButton(), SIGNAL(clicked()), this, SLOT(handlePlayButtonClicked()));
     connect(&ui_.NextSong(), SIGNAL(clicked()), this, SLOT(handleNextButtonClicked()));
     connect(&ui_.PrevSong(), SIGNAL(clicked()), this, SLOT(handlePrevButtonClicked()));

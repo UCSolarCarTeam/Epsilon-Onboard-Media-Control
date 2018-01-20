@@ -34,6 +34,11 @@ QString SongControl::currentSong()
     return (files_[(currentSongIndex_)]);
 }
 
+QString SongControl::shuffleSong()
+{
+    return (files_[rand() % files_.size()]);
+}
+
 bool SongControl::hasSuffix(const QString& s, const QString& suffix)
 {
     //compare returns 0 when the two strings are equal
