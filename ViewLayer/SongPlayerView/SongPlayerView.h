@@ -20,8 +20,8 @@ public:
     void handlePlayPauseClicked();
 
 private:
-    I_SongPlayerUi& ui_;
     SongPlayer& songPlayer_;
+    I_SongPlayerUi& ui_;
     ProgressBar& bar_;
 
 private slots:
@@ -29,6 +29,6 @@ private slots:
     void handleNextButtonClicked();
     void handlePrevButtonClicked();
     void handleVolumeControl();
-    void updateGUI(const QString& title, const QString& artist, const QImage& cover);
+    void updateGUI(const QString& title, const QString& artist);
     void updateProgress(qint64 position,qint64 duration);
 };

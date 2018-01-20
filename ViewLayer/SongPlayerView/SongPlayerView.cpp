@@ -13,7 +13,7 @@ SongPlayerView::SongPlayerView(SongPlayer& songPlayer, I_SongPlayerUi& ui, Progr
     connect(&ui_.NextSong(), SIGNAL(clicked()), this, SLOT(handleNextButtonClicked()));
     connect(&ui_.PrevSong(), SIGNAL(clicked()), this, SLOT(handlePrevButtonClicked()));
     connect(&ui_.volumeControl(), SIGNAL(valueChanged(int)), this, SLOT(handleVolumeControl()));
-    connect(&songPlayer_, SIGNAL(updateGUI(const QString&, const QString&, const QImage&)), this, SLOT(updateGUI(const QString&, const QString&, const QImage&)));
+    connect(&songPlayer_, SIGNAL(updateGUI(const QString&, const QString&)), this, SLOT(updateGUI(const QString&, const QString&)));
     connect(&songPlayer_,SIGNAL(updateProgress(qint64,qint64)), this,SLOT(updateProgress(qint64,qint64)));
     ui_.progressBarContainer().addWidget(&bar_);
 }
@@ -45,7 +45,7 @@ void SongPlayerView::handleVolumeControl()
     songPlayer_.adjustVolume(volume);
 }
 
-void SongPlayerView::updateGUI(const QString& title, const QString& artist, const QImage& cover)
+void SongPlayerView::updateGUI(const QString& title, const QString& artist)
 {
     ui_.infoLabel().setText(artist + " - " + title);
 }

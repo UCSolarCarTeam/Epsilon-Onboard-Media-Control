@@ -125,5 +125,5 @@ void SongPlayer::updateInfo()
     artist_ = mediaPlayer_.metaData(QMediaMetaData::ContributingArtist).toString();
     title_ = mediaPlayer_.metaData(QMediaMetaData::Title).toString();
     cover_ = mediaPlayer_.metaData(QMediaMetaData::CoverArtImage).value<QImage>();
-    emit updateGUI(title_, artist_, cover_);
+    emit updateGUI(title_, artist_);
 }
