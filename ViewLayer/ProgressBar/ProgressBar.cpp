@@ -29,8 +29,7 @@ void ProgressBar::paintEvent(QPaintEvent *)
 
     //consult drawArc method in Qt doc
     QRectF rectangle(27.0, 27.0, 138.0, 138.0);
-    int startAngle = START_ANGLE;
     int spanAngle = progress * FULL_CIRCLE;
 
-    p.drawArc(rectangle, startAngle, spanAngle);
+    p.drawArc(rectangle, START_ANGLE, spanAngle);
 }
