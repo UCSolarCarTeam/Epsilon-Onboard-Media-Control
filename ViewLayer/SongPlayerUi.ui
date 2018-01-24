@@ -241,18 +241,21 @@ QPushButton:checked:pressed
           <string/>
          </property>
         </widget>
-        <widget class="QWidget" name="verticalLayoutWidget">
+        <widget class="QWidget" name="verticalWidget" native="true">
          <property name="geometry">
           <rect>
-           <x>0</x>
-           <y>0</y>
+           <x>-2</x>
+           <y>-9</y>
            <width>191</width>
            <height>191</height>
           </rect>
          </property>
+         <property name="styleSheet">
+          <string notr="true">background: transparent</string>
+         </property>
          <layout class="QVBoxLayout" name="progressBarContainer">
           <property name="leftMargin">
-           <number>0</number>
+           <number>1</number>
           </property>
          </layout>
         </widget>
@@ -290,9 +293,9 @@ background: transparent; </string>
           <string/>
          </property>
         </widget>
-        <zorder>mask</zorder>
-        <zorder>verticalLayoutWidget</zorder>
         <zorder>label_pic</zorder>
+        <zorder>mask</zorder>
+        <zorder>verticalWidget</zorder>
         <zorder>PlayButton</zorder>
        </widget>
       </item>
