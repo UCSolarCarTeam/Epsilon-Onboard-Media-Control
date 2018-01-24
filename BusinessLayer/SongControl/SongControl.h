@@ -34,7 +34,9 @@ public:
     bool hasSuffix(const QString& s, const QString& suffix);
 
 private:
+    QVector<int> playOrder_;
     QVector<QString> files_;
     int currentSongIndex_;
+    int prevSongIndex_;
     bool readSongNames(QString dir, QVector<QString>& files);
 };

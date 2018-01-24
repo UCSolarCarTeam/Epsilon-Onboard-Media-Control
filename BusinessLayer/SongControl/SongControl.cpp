@@ -4,9 +4,11 @@
 SongControl::SongControl()
 {
     files_ = QVector<QString>();
+    playOrder_ = QVector<int>(10, -1);
     QString dir = QString(".");
     readSongNames(dir, files_);
     currentSongIndex_ = 0;
+    prevSongIndex_ = 0;
 }
 
 SongControl::~SongControl()
@@ -16,27 +18,45 @@ SongControl::~SongControl()
 QString SongControl::nextSong()
 {
     currentSongIndex_ = (currentSongIndex_ + 1) % files_.size();
+    playOrder_.prepend(currentSongIndex_);
+    prevSongIndex_ = 0;
     return files_[currentSongIndex_];
 }
 
 QString SongControl::previousSong()
 {
-    currentSongIndex_ -= 1;
-    if (currentSongIndex_ < 0)
+
+    if (prevSongIndex_ < 9)
     {
-        currentSongIndex_ = files_.size() - 1;
+        prevSongIndex_ += 1;
     }
-    return files_[currentSongIndex_];
+
+    if (playOrder_[prevsSongIndex_] == -1)
+    {
+        currentSongIndex_ -= 1;
+        if (currentSongIndex_ < 0)
+        {
+            currentSongIndex_ = files_.size() - 1;
+        }
+        return files_[currentSongIndex_];
+    }
+
+    return files_[playOrder_[prevSongIndex_]];
 }
 
 QString SongControl::currentSong()
 {
+    playOrder_.prepend(currentSongIndex_);
+    prevSongIndex_ = 0;
     return (files_[(currentSongIndex_)]);
 }
 
 QString SongControl::shuffleSong()
 {
-    return (files_[rand() % files_.size()]);
+    currentSongIndex_ = (rand() % files_.size());
+    playOrder_.prepend(currentSongIndex_);
+    prevSongIndex_ = 0;
+    return (files_[currentSongIndex_]);
 }
 
 bool SongControl::hasSuffix(const QString& s, const QString& suffix)

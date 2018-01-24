@@ -45,14 +45,28 @@ void SongPlayerView::handlePrevButtonClicked()
     songPlayer_.playPrevious();
 }
 
-void SongPlayerView::handleShuffleButtonClicked(){
-    qDebug() << "Shuffle";
+void SongPlayerView::handleShuffleButtonClicked()
+{
+    if(ui_.LoopButton().isChecked())
+    {
+        ui_.LoopButton().setChecked(false);
+        songPlayer_.toggleLoop();
+    }
+
     songPlayer_.toggleShuffle();
+    qDebug() << "Shuffle";
 }
 
-void SongPlayerView::handleLoopButtonClicked(){
-    qDebug() << "Loop";
+void SongPlayerView::handleLoopButtonClicked()
+{
+    if(ui_.ShuffleButton().isChecked())
+    {
+        ui_.ShuffleButton().setChecked(false);
+        songPlayer_.toggleShuffle();
+    }
+
     songPlayer_.toggleLoop();
+    qDebug() << "Loop";
 }
 
 void SongPlayerView::handleVolumeControl()
