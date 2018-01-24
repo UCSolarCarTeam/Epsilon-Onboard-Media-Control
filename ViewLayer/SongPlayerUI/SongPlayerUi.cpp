@@ -18,16 +18,6 @@ QPushButton& SongPlayerUi::PlayButton()
     return *ui_->PlayButton;
 }
 
-QPushButton& SongPlayerUi::OpenButton()
-{
-    return *ui_->OpenButton;
-}
-
-QProgressBar& SongPlayerUi::ProgressBar()
-{
-    return *ui_->progressBar;
-}
-
 QLabel& SongPlayerUi::infoLabel()
 {
     return *ui_->infoLabel;
@@ -41,4 +31,14 @@ QPushButton& SongPlayerUi::NextSong()
 QPushButton& SongPlayerUi::PrevSong()
 {
     return *ui_->prevSong;
+}
+
+QSlider& SongPlayerUi::volumeControl()
+{
+    return *ui_->volumeControl;
+}
+
+QVBoxLayout& SongPlayerUi::progressBarContainer()
+{
+    return *ui_->progressBarContainer;
 }

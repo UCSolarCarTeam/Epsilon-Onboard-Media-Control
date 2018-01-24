@@ -13,6 +13,7 @@ SongPlayer::SongPlayer(QWidget* parent) : QWidget(parent)
     connect(&mediaPlayer_, &QMediaPlayer::stateChanged, this, &SongPlayer::updateState);
     connect(&mediaPlayer_, SIGNAL(durationChanged(qint64)), this, SLOT(durationChanged(qint64)));
     connect(&mediaPlayer_, SIGNAL(positionChanged(qint64)), this, SLOT(positionChanged(qint64)));
+    connect(&mediaPlayer_, SIGNAL(metaDataAvailableChanged(bool)), this, SLOT(updateInfo()));
 }
 
 SongPlayer::~SongPlayer()
@@ -25,8 +26,6 @@ void SongPlayer::updateState()
     {
         playNext();
     }
-
-    emit mediaPlayer_.durationChanged(mediaPlayer_.duration());
 }
 
 void SongPlayer::openFile()
@@ -88,6 +87,7 @@ void SongPlayer::togglePlayback()
     if (mediaPlayer_.mediaStatus() == QMediaPlayer::NoMedia)
     {
         openFile();
+        mediaPlayer_.play();
     }
     else if (mediaPlayer_.state() == QMediaPlayer::PlayingState)
     {
@@ -102,16 +102,28 @@ void SongPlayer::togglePlayback()
 void SongPlayer::playFile(const QString& filePath)
 {
     mediaPlayer_.setMedia(QUrl::fromLocalFile(filePath));
-    emit updateTitle(filePath);
 }
-
 
 void SongPlayer::durationChanged(qint64 duration)
 {
-    emit updateDuration(duration);
+    duration_ = duration;
 }
 
 void SongPlayer::positionChanged(qint64 position)
 {
-    emit updatePosition(position);
+    position_ = position;
+    emit updateProgress(position_, duration_);
+}
+
+void SongPlayer::adjustVolume(int volume)
+{
+    mediaPlayer_.setVolume(volume);
+}
+
+void SongPlayer::updateInfo()
+{
+    artist_ = mediaPlayer_.metaData(QMediaMetaData::ContributingArtist).toString();
+    title_ = mediaPlayer_.metaData(QMediaMetaData::Title).toString();
+    cover_ = mediaPlayer_.metaData(QMediaMetaData::CoverArtImage).value<QImage>();
+    emit updateGUI(title_, artist_);
 }

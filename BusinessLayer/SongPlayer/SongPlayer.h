@@ -16,6 +16,7 @@
 #include <QWidget>
 #include <QProgressBar>
 #include <QScopedPointer>
+#include <QMediaMetaData>
 #include "../SongControl/SongControl.h"
 
 class SongPlayer : public QWidget
@@ -35,11 +36,13 @@ public slots:
     void playPrevious();
     void playFile(const QString& filePath);
     void togglePlayback();
+    void adjustVolume(int volume);
 
 private slots:
     void updateState();
     void durationChanged(qint64 duration);
     void positionChanged(qint64 progress);
+    void updateInfo();
 
 private:
     QScopedPointer<SongControl> controller_;
@@ -49,10 +52,14 @@ private:
     QLabel* positionLabel_;
     QPoint offset_;
     QMediaPlayer mediaPlayer_;
+    qint64 position_;
+    qint64 duration_;
+    QString title_;
+    QString artist_;
+    QImage cover_;
 
 signals:
-    void updateTitle(const QString& fileName);
+    void updateGUI(const QString& title, const QString& author);
     void resetPosition(const QMediaPlayer& media);
-    void updateDuration(qint64 duration);
-    void updatePosition(qint64 position);
+    void updateProgress(qint64 position, qint64 duration);
 };
