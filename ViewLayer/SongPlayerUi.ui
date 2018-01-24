@@ -126,12 +126,12 @@
         <property name="styleSheet">
          <string notr="true">QPushButton
 {
-	border-image: url(:/Resources/IconsOff/next.png);
+        border-image: url(:/Resources/IconsOff/next.png);
 }
 
 QPushButton:pressed
 {
-	border-image: url(:/Resources/IconsOn/next.png);
+        border-image: url(:/Resources/IconsOn/next.png);
 }</string>
         </property>
         <property name="text">
@@ -156,12 +156,12 @@ QPushButton:pressed
         <property name="styleSheet">
          <string notr="true">QPushButton
 {
-	border-image: url(:/Resources/IconsOff/previous.png);
+        border-image: url(:/Resources/IconsOff/previous.png);
 }
 
 QPushButton:pressed
 {
-	border-image: url(:/Resources/IconsOn/previous.png);
+        border-image: url(:/Resources/IconsOn/previous.png);
 }</string>
         </property>
         <property name="text">
@@ -195,46 +195,46 @@ QPushButton:pressed
          <property name="styleSheet">
           <string notr="true">QPushButton
 {
-	border-style: solid;
-	background: transparent;
-	border-color: rgb(68,68,68);
-	border-width: 5px;
-	border-radius: 65px;
-	background-image: url(:/Resources/IconsOff/play.png);
-	background-position: center;
+        border-style: solid;
+        background: transparent;
+        border-color: rgb(68,68,68);
+        border-width: 5px;
+        border-radius: 65px;
+        background-image: url(:/Resources/IconsOff/play.png);
+        background-position: center;
 }
 
 QPushButton:pressed
 {
-	border-style: solid;
-	background: transparent;
-	border-color: rgb(68,68,68);
-	border-width: 5px;
-	border-radius: 65px;
-	background-image: url(:/Resources/IconsOn/play.png);
-	background-position: center;
+        border-style: solid;
+        background: transparent;
+        border-color: rgb(68,68,68);
+        border-width: 5px;
+        border-radius: 65px;
+        background-image: url(:/Resources/IconsOn/play.png);
+        background-position: center;
 }
 
 QPushButton:checked
 {
-	border-style: solid;
-	background: transparent;
-	border-color: rgb(68,68,68);
-	border-width: 5px;
-	border-radius: 65px;
-	background-image: url(:/Resources/IconsOff/pause.png);
-	background-position: center;
+        border-style: solid;
+        background: transparent;
+        border-color: rgb(68,68,68);
+        border-width: 5px;
+        border-radius: 65px;
+        background-image: url(:/Resources/IconsOff/pause.png);
+        background-position: center;
 }
 
 QPushButton:checked:pressed
 {
-	border-style: solid;
-	background: transparent;
-	border-color: rgb(68,68,68);
-	border-width: 5px;
-	border-radius: 65px;
-	background-image: url(:/Resources/IconsOn/pause.png);
-	background-position: center;
+        border-style: solid;
+        background: transparent;
+        border-color: rgb(68,68,68);
+        border-width: 5px;
+        border-radius: 65px;
+        background-image: url(:/Resources/IconsOn/pause.png);
+        background-position: center;
 }</string>
          </property>
          <property name="text">
