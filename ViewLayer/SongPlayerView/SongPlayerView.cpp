@@ -54,7 +54,6 @@ void SongPlayerView::handleShuffleButtonClicked()
     }
 
     songPlayer_.toggleShuffle();
-    qDebug() << "Shuffle";
 }
 
 void SongPlayerView::handleLoopButtonClicked()
@@ -66,7 +65,6 @@ void SongPlayerView::handleLoopButtonClicked()
     }
 
     songPlayer_.toggleLoop();
-    qDebug() << "Loop";
 }
 
 void SongPlayerView::handleVolumeControl()

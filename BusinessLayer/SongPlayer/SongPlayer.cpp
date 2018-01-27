@@ -114,7 +114,14 @@ void SongPlayer::togglePlayback()
 {
     if (mediaPlayer_.mediaStatus() == QMediaPlayer::NoMedia)
     {
-        openFile();
+        if(shuffle_)
+        {
+            openShuffle();
+        }
+        else
+        {
+            openFile();
+        }
         mediaPlayer_.play();
     }
     else if (mediaPlayer_.state() == QMediaPlayer::PlayingState)

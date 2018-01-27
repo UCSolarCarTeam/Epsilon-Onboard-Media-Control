@@ -8,7 +8,9 @@ SongControl::SongControl()
     QString dir = QString(".");
     readSongNames(dir, files_);
     currentSongIndex_ = 0;
-    prevSongIndex_ = 0;
+    playOrderIndex_ = 0;
+    shuffleSeed_ = (int)startTime_.currentTime().msec();
+    srand(shuffleSeed_);
 }
 
 SongControl::~SongControl()
@@ -19,35 +21,35 @@ QString SongControl::nextSong()
 {
     currentSongIndex_ = (currentSongIndex_ + 1) % files_.size();
     playOrder_.prepend(currentSongIndex_);
-    prevSongIndex_ = 0;
+    playOrderIndex_ = 0;
     return files_[currentSongIndex_];
 }
 
 QString SongControl::previousSong()
 {
 
-    if (prevSongIndex_ < 9)
+    if (playOrderIndex_ < 9)
     {
-        prevSongIndex_ += 1;
+        playOrderIndex_ += 1;
     }
 
-    if (playOrder_[prevsSongIndex_] == -1)
+    if (playOrder_[playOrderIndex_] == -1)
     {
-        currentSongIndex_ -= 1;
-        if (currentSongIndex_ < 0)
-        {
-            currentSongIndex_ = files_.size() - 1;
-        }
+//        currentSongIndex_ -= 1;
+//        if (currentSongIndex_ < 0)
+//        {
+//            currentSongIndex_ = files_.size() - 1;
+//        }
         return files_[currentSongIndex_];
     }
 
-    return files_[playOrder_[prevSongIndex_]];
+    return files_[playOrder_[playOrderIndex_]];
 }
 
 QString SongControl::currentSong()
 {
     playOrder_.prepend(currentSongIndex_);
-    prevSongIndex_ = 0;
+    playOrderIndex_ = 0;
     return (files_[(currentSongIndex_)]);
 }
 
@@ -55,7 +57,7 @@ QString SongControl::shuffleSong()
 {
     currentSongIndex_ = (rand() % files_.size());
     playOrder_.prepend(currentSongIndex_);
-    prevSongIndex_ = 0;
+    playOrderIndex_ = 0;
     return (files_[currentSongIndex_]);
 }
 
