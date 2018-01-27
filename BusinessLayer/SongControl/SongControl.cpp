@@ -35,11 +35,6 @@ QString SongControl::previousSong()
 
     if (playOrder_[playOrderIndex_] == -1)
     {
-//        currentSongIndex_ -= 1;
-//        if (currentSongIndex_ < 0)
-//        {
-//            currentSongIndex_ = files_.size() - 1;
-//        }
         return files_[currentSongIndex_];
     }
 
