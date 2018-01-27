@@ -38,6 +38,18 @@
    </item>
    <item row="2" column="6" alignment="Qt::AlignHCenter">
     <widget class="QLabel" name="infoLabel">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>26</height>
+      </size>
+     </property>
      <property name="font">
       <font>
        <family>Nimbus Sans L</family>
@@ -259,7 +271,7 @@ QPushButton:checked:pressed
           </property>
          </layout>
         </widget>
-        <widget class="QLabel" name="label_pic">
+        <widget class="QLabel" name="labelPic">
          <property name="geometry">
           <rect>
            <x>30</x>
@@ -293,7 +305,7 @@ background: transparent; </string>
           <string/>
          </property>
         </widget>
-        <zorder>label_pic</zorder>
+        <zorder>labelPic</zorder>
         <zorder>mask</zorder>
         <zorder>verticalWidget</zorder>
         <zorder>PlayButton</zorder>
@@ -315,6 +327,21 @@ background: transparent; </string>
        <width>16</width>
        <height>0</height>
       </size>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QSlider::groove:vertical{
+background: #5c91a1;
+width: 4px;
+position: absolute; 
+}
+
+QSlider::add-page:vertical{
+background: #5c91a1;
+}
+
+QSlider::sub-page:vertical {
+background: white;
+}</string>
      </property>
      <property name="sliderPosition">
       <number>99</number>

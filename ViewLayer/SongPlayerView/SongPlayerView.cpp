@@ -12,9 +12,9 @@ SongPlayerView::SongPlayerView(SongPlayer& songPlayer, I_SongPlayerUi& ui, Progr
     ui_.PlayButton().setChecked(false);
     connect(&ui_.PlayButton(), SIGNAL(clicked()), this, SLOT(handlePlayButtonClicked()));
     connect(&ui_.NextSong(), SIGNAL(clicked()), this, SLOT(handleNextButtonClicked()));
-    connect(&ui_.PrevSong(), SIGNAL(clicked()), this, SLOT(handlePrevButtonClicked()));
+    connect(&ui_.prevSong(), SIGNAL(clicked()), this, SLOT(handlePrevButtonClicked()));
     connect(&ui_.volumeControl(), SIGNAL(valueChanged(int)), this, SLOT(handleVolumeControl()));
-    connect(&songPlayer_, SIGNAL(updateGUI(const QString&, const QString&, const QString&)), this, SLOT(updateGUI(const QString&, const QString&, const QString&)));
+    connect(&songPlayer_, SIGNAL(updateGUI(const QString&, const QString&, const QPixmap&)), this, SLOT(updateGUI(const QString&, const QString&, const QPixmap&)));
     connect(&songPlayer_,SIGNAL(updateProgress(qint64,qint64)), this,SLOT(updateProgress(qint64,qint64)));
     ui_.progressBarContainer().addWidget(&bar_);
 }
@@ -46,12 +46,14 @@ void SongPlayerView::handleVolumeControl()
     songPlayer_.adjustVolume(volume);
 }
 
-void SongPlayerView::updateGUI(const QString& title, const QString& artist, const QString& cover)
+void SongPlayerView::updateGUI(const QString& title, const QString& artist, const QPixmap& cover)
 {
     ui_.infoLabel().setText(artist + " - " + title);
-    QPixmap img(cover);
-    ui_.label_pic().setPixmap(img);
-    ui_.label_pic().setScaledContents(true);
+    if (!cover.isNull())
+    {
+        ui_.labelPic().setPixmap(cover);
+        ui_.labelPic().setScaledContents(true);
+    }
 }
 
 void SongPlayerView::updateProgress(qint64 position, qint64 duration)

@@ -28,7 +28,7 @@ QPushButton& SongPlayerUi::NextSong()
     return *ui_->nextSong;
 }
 
-QPushButton& SongPlayerUi::PrevSong()
+QPushButton& SongPlayerUi::prevSong()
 {
     return *ui_->prevSong;
 }
@@ -43,7 +43,7 @@ QVBoxLayout& SongPlayerUi::progressBarContainer()
     return *ui_->progressBarContainer;
 }
 
-QLabel& SongPlayerUi::label_pic()
+QLabel& SongPlayerUi::labelPic()
 {
-    return *ui_->label_pic;
+    return *ui_->labelPic;
 }

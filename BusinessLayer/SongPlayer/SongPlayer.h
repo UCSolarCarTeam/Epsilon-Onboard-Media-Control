@@ -59,7 +59,7 @@ private:
     QString cover_;
 
 signals:
-    void updateGUI(const QString& title, const QString& author, const QString& cover);
+    void updateGUI(const QString& title, const QString& author, const QPixmap& cover);
     void resetPosition(const QMediaPlayer& media);
     void updateProgress(qint64 position, qint64 duration);
 };
