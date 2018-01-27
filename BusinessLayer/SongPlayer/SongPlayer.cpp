@@ -106,7 +106,14 @@ void SongPlayer::openShuffle()
 
 void SongPlayer::playPrevious()
 {
-    openPrevious();
+    if(shuffle_)
+    {
+        openShuffle();
+    }
+    else
+    {
+        openPrevious();
+    }
     togglePlayback();
 }
 
