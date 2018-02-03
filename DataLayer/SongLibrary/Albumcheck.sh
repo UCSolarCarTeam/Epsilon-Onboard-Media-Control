@@ -8,7 +8,13 @@ done
 
 eyeD3 --write-images=$PWD *.mp3
 
-mv OTHER.JPG ${song[0]}.jpg 
+album="$(eyeD3 ${song[0]}.mp3 | grep -o -P '(?<=: ).*(?=year)')"
+album=${album// /_}
+album=${album//[[:blank:]]/}
+album="$album.jpg"
+echo album file is: $album
+
+mv OTHER.JPG $album 
 
 i=1
 while [ $i -lt ${#song[@]} ]; do 
@@ -16,7 +22,9 @@ while [ $i -lt ${#song[@]} ]; do
 	let i=i+1
 done
 
-mogrify -format jpg *.png
+#mogrify -format jpg *.png
+
+
 
 
 
