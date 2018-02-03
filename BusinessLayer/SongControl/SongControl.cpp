@@ -38,6 +38,12 @@ QString SongControl::currentSong()
 
 QString SongControl::shuffleSong()
 {
+
+    if(files_.length() == 1)
+    {
+        return (files_[currentSongIndex_]);
+    }
+
     int index = currentSongIndex_;
     while(currentSongIndex_ == index)
     {
