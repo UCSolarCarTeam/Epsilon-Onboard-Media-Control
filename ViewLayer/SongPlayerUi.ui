@@ -329,13 +329,20 @@ background: transparent; </string>
       </size>
      </property>
      <property name="styleSheet">
-      <string notr="true">QSlider::groove:vertical{
+      <string notr="true">QSlider::groove:vertical {
 background: #5c91a1;
 width: 4px;
 position: absolute; 
 }
 
-QSlider::add-page:vertical{
+QSlider::handle:vertical {
+height: 16px;
+border-radius: 8px;
+background: grey;
+margin: 0  -6px;
+}
+
+QSlider::add-page:vertical {
 background: #5c91a1;
 }
 
