@@ -106,7 +106,7 @@
      </property>
     </spacer>
    </item>
-   <item row="5" column="6">
+   <item row="5" column="6" alignment="Qt::AlignHCenter">
     <widget class="QWidget" name="widget_2" native="true">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
