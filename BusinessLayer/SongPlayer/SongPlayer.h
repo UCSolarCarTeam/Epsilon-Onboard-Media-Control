@@ -57,6 +57,7 @@ private:
     QString title_;
     QString artist_;
     QString cover_;
+    QString album_;
 
 signals:
     void updateGUI(const QString& title, const QString& author, const QPixmap& cover);

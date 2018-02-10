@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-song=(1-06+Animal 1-11+Armageddon+It 1-14+Hysteria 01DangerZone 01TakeOnMe 02PumpedUpKicks)
+song=(1-06+Animal 1-11+Armageddon+It 1-14+Hysteria 01-Take-On-Me)
 uniquealbumlist=()
 albumlist=()
 

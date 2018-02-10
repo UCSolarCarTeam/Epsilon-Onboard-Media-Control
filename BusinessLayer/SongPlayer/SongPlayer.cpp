@@ -1,12 +1,13 @@
 #include "SongPlayer.h"
+#include <QDebug>
 
 namespace
 {
     const int MS_TO_MINUTES = 60000;
     const double MS_TO_SECONDS = 1000.0;
     const int PAGE_STEP_INCREMENTS = 10;
-    const QString mp3 = ".mp3";
-    const QString jpg = ".jpg";
+    const QString SONGFILEPATH = "SongLibrary/";
+    const QString ALBUMFILEPATH = "Covers/";
 }
 
 SongPlayer::SongPlayer(QWidget* parent) : QWidget(parent)
@@ -126,8 +127,11 @@ void SongPlayer::updateInfo()
 {
     artist_ = mediaPlayer_.metaData(QMediaMetaData::ContributingArtist).toString();
     title_ = mediaPlayer_.metaData(QMediaMetaData::Title).toString();
+    album_ = mediaPlayer_.metaData(QMediaMetaData::AlbumTitle).toString();
+    album_.replace(" ", "");
     cover_ = controller_->currentSong();
-    cover_.replace(cover_.lastIndexOf(mp3), 4, jpg);
+    cover_.replace(cover_.lastIndexOf(SONGFILEPATH), 12, ALBUMFILEPATH);
+    cover_.replace(cover_.lastIndexOf(ALBUMFILEPATH) + 7, 100, album_);
     QPixmap img(cover_);
     emit updateGUI(title_, artist_, img);
 }
