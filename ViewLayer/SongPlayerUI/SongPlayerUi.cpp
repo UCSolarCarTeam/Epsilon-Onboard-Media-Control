@@ -13,9 +13,9 @@ SongPlayerUi::~SongPlayerUi()
     delete ui_;
 }
 
-QPushButton& SongPlayerUi::PlayButton()
+QPushButton& SongPlayerUi::playButton()
 {
-    return *ui_->PlayButton;
+    return *ui_->playButton;
 }
 
 QLabel& SongPlayerUi::infoLabel()
@@ -23,7 +23,7 @@ QLabel& SongPlayerUi::infoLabel()
     return *ui_->infoLabel;
 }
 
-QPushButton& SongPlayerUi::NextSong()
+QPushButton& SongPlayerUi::nextSong()
 {
     return *ui_->nextSong;
 }

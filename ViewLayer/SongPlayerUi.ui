@@ -195,7 +195,7 @@ QPushButton:pressed
           <height>191</height>
          </size>
         </property>
-        <widget class="QPushButton" name="PlayButton">
+        <widget class="QPushButton" name="playButton">
          <property name="geometry">
           <rect>
            <x>30</x>
@@ -308,7 +308,7 @@ background: transparent; </string>
         <zorder>labelPic</zorder>
         <zorder>mask</zorder>
         <zorder>verticalWidget</zorder>
-        <zorder>PlayButton</zorder>
+        <zorder>playButton</zorder>
        </widget>
       </item>
      </layout>

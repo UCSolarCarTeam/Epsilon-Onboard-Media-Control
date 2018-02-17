@@ -22,9 +22,9 @@ public:
     ~SongPlayerUi();
     QLabel& labelPic();
     QLabel& infoLabel();
-    QPushButton& PlayButton();
-    QProgressBar& ProgressBar();
-    QPushButton& NextSong();
+    QPushButton& playButton();
+    QProgressBar& progressBar();
+    QPushButton& nextSong();
     QPushButton& prevSong();
     QVBoxLayout& progressBarContainer();
     QSlider& volumeControl();

@@ -1,13 +1,12 @@
 #include "SongPlayer.h"
-#include <QDebug>
 
 namespace
 {
     const int MS_TO_MINUTES = 60000;
     const double MS_TO_SECONDS = 1000.0;
     const int PAGE_STEP_INCREMENTS = 10;
-    const QString SONGFILEPATH = "SongLibrary/";
-    const QString ALBUMFILEPATH = "Covers/";
+    const QString SONG_FILE_PATH = "SongLibrary/";
+    const QString ALBUM_FILE_PATH = "Covers/";
 }
 
 SongPlayer::SongPlayer(QWidget* parent) : QWidget(parent)
@@ -127,11 +126,12 @@ void SongPlayer::updateInfo()
 {
     artist_ = mediaPlayer_.metaData(QMediaMetaData::ContributingArtist).toString();
     title_ = mediaPlayer_.metaData(QMediaMetaData::Title).toString();
-    album_ = mediaPlayer_.metaData(QMediaMetaData::AlbumTitle).toString();
-    album_.replace(" ", "");
+    album_ = mediaPlayer_.metaData(QMediaMetaData::AlbumTitle).toString(); //retrieves the album name from current song
+    album_.replace(" ", ""); //remove all spaces in album name for easier access to file path of album
     cover_ = controller_->currentSong();
-    cover_.replace(cover_.lastIndexOf(SONGFILEPATH), 12, ALBUMFILEPATH);
-    cover_.replace(cover_.lastIndexOf(ALBUMFILEPATH) + 7, 100, album_);
+    int songNameLength = cover_.length() - cover_.lastIndexOf(SONG_FILE_PATH) + SONG_FILE_PATH.length();
+    cover_.replace(cover_.lastIndexOf(SONG_FILE_PATH), SONG_FILE_PATH.length(), ALBUM_FILE_PATH);
+    cover_.replace(cover_.lastIndexOf(ALBUM_FILE_PATH) + ALBUM_FILE_PATH.length(), songNameLength, album_);
     QPixmap img(cover_);
     emit updateGUI(title_, artist_, img);
 }

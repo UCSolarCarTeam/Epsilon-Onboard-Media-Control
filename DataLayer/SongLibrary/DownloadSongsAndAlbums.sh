@@ -45,6 +45,3 @@ while [ $i -lt ${#song[@]} ]; do
 done
 
 mogrify -format jpg *.png
-
-
-

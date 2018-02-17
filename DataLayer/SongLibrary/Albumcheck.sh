@@ -13,7 +13,6 @@ album="../Covers/$album.jpg"
 eyeD3 --write-images=$PWD ${song[0]}.mp3
 mv OTHER.JPG $album
 
-
 i=1
 firstfilecheck=true
 while [ $i -lt ${#song[@]} ]; do 
@@ -46,10 +45,3 @@ printf '%s\n' "${uniquealbumlist[@]}"
 
 echo albumlist contains
 printf '%s\n' "${albumlist[@]}"
-
-
-
-
-
-
-
