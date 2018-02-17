@@ -54,6 +54,27 @@ void SongPlayerView::updateGUI(const QString& title, const QString& artist, cons
         ui_.labelPic().setPixmap(cover);
         ui_.labelPic().setScaledContents(true);
     }
+    QImage img(cover.toImage());
+    QColor color = songPlayer_.getColor(img);
+    QString styleSheet = "QSlider::groove:vertical {"
+            "background: %1;"
+            "width: 4px;"
+            "position: absolute;}"
+
+            "QSlider::handle:vertical {"
+            "height: 16px;"
+            "border-radius: 8px;"
+            "background: grey;"
+            "margin: 0  -6px;}"
+
+            "QSlider::add-page:vertical {"
+            "background: %1;}"
+
+            "QSlider::sub-page:vertical {"
+            "background: white;}";
+    ui_.volumeControl().setStyleSheet(styleSheet.arg(color.name()));
+    bar_.changeColor(color);
+
 }
 
 void SongPlayerView::updateProgress(qint64 position, qint64 duration)
