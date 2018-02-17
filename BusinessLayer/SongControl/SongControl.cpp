@@ -7,6 +7,7 @@ SongControl::SongControl()
     QString dir = QString(".");
     readSongNames(dir, files_);
     currentSongIndex_ = 0;
+    srand(time(0));
 }
 
 SongControl::~SongControl()
@@ -32,6 +33,24 @@ QString SongControl::previousSong()
 QString SongControl::currentSong()
 {
     return (files_[(currentSongIndex_)]);
+}
+
+QString SongControl::shuffleSong()
+{
+
+    if(files_.length() == 1)
+    {
+        return (files_[currentSongIndex_]);
+    }
+
+    int index = currentSongIndex_;
+    do
+    {
+        currentSongIndex_ = (rand() % files_.size());
+    }
+    while (currentSongIndex_ == index);
+
+    return (files_[currentSongIndex_]);
 }
 
 bool SongControl::hasSuffix(const QString& s, const QString& suffix)

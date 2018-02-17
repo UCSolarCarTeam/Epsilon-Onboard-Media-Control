@@ -9,6 +9,8 @@ namespace
 
 SongPlayer::SongPlayer(QWidget* parent) : QWidget(parent)
   , controller_(new SongControl())
+  , shuffle_(false)
+  , loop_(false)
 {
     connect(&mediaPlayer_, &QMediaPlayer::stateChanged, this, &SongPlayer::updateState);
     connect(&mediaPlayer_, SIGNAL(durationChanged(qint64)), this, SLOT(durationChanged(qint64)));
@@ -24,7 +26,7 @@ void SongPlayer::updateState()
 {
     if (mediaPlayer_.position() >= mediaPlayer_.duration() && mediaPlayer_.duration() != -1)
     {
-        playNext();
+         playNext();
     }
 }
 
@@ -34,7 +36,7 @@ void SongPlayer::openFile()
 
     if (!filePath.isEmpty())
     {
-        playFile(filePath);
+        setFile(filePath);
     }
     else
     {
@@ -48,7 +50,7 @@ void SongPlayer::openNext()
 
     if (!filePath.isEmpty())
     {
-        playFile(filePath);
+        setFile(filePath);
     }
     else
     {
@@ -58,7 +60,19 @@ void SongPlayer::openNext()
 
 void SongPlayer::playNext()
 {
-    openNext();
+    if(loop_)
+    {
+        openFile();
+    }
+    else if (shuffle_)
+    {
+        openShuffle();
+    }
+    else
+    {
+        openNext();
+    }
+
     togglePlayback();
 }
 
@@ -68,7 +82,21 @@ void SongPlayer::openPrevious()
 
     if (!filePath.isEmpty())
     {
-        playFile(filePath);
+        setFile(filePath);
+    }
+    else
+    {
+        qDebug() << "Warning filepath is empty";
+    }
+}
+
+void SongPlayer::openShuffle()
+{
+    const QString filePath = controller_->shuffleSong();
+
+    if (!filePath.isEmpty())
+    {
+        setFile(filePath);
     }
     else
     {
@@ -78,7 +106,14 @@ void SongPlayer::openPrevious()
 
 void SongPlayer::playPrevious()
 {
-    openPrevious();
+    if(shuffle_)
+    {
+        openShuffle();
+    }
+    else
+    {
+        openPrevious();
+    }
     togglePlayback();
 }
 
@@ -86,7 +121,14 @@ void SongPlayer::togglePlayback()
 {
     if (mediaPlayer_.mediaStatus() == QMediaPlayer::NoMedia)
     {
-        openFile();
+        if(shuffle_)
+        {
+            openShuffle();
+        }
+        else
+        {
+            openFile();
+        }
         mediaPlayer_.play();
     }
     else if (mediaPlayer_.state() == QMediaPlayer::PlayingState)
@@ -99,7 +141,7 @@ void SongPlayer::togglePlayback()
     }
 }
 
-void SongPlayer::playFile(const QString& filePath)
+void SongPlayer::setFile(const QString& filePath)
 {
     mediaPlayer_.setMedia(QUrl::fromLocalFile(filePath));
 }
@@ -118,6 +160,30 @@ void SongPlayer::positionChanged(qint64 position)
 void SongPlayer::adjustVolume(int volume)
 {
     mediaPlayer_.setVolume(volume);
+}
+
+void SongPlayer::toggleShuffle()
+{
+    if(shuffle_)
+    {
+        shuffle_ = false;
+    }
+    else
+    {
+        shuffle_ = true;
+    }
+}
+
+void SongPlayer::toggleLoop()
+{
+    if(loop_)
+    {
+        loop_ = false;
+    }
+    else
+    {
+        loop_ = true;
+    }
 }
 
 void SongPlayer::updateInfo()
