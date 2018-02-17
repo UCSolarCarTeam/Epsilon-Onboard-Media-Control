@@ -73,6 +73,7 @@ void SongPlayerView::updateGUI(const QString& title, const QString& artist, cons
             "QSlider::sub-page:vertical {"
             "background: white;}";
     ui_.volumeControl().setStyleSheet(styleSheet.arg(color.name()));
+    bar_.changeColor(color);
 
 }
 

@@ -149,7 +149,7 @@ QColor SongPlayer::getColor(QImage img)
             color = temp;
             if(width >= img.width() - 10 || height >= img.height() - 10)
             {
-                QColor white(255,255,255,25);
+                QColor white = QColor(255,255,255,255);
                 color = white;
             }
         }
