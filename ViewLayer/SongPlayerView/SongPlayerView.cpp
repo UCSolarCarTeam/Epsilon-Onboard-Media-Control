@@ -10,7 +10,7 @@ SongPlayerView::SongPlayerView(SongPlayer& songPlayer, I_SongPlayerUi& ui, Progr
     ui_.infoLabel().setAlignment(Qt::AlignCenter);
     ui_.playButton().setCheckable(true);
     ui_.playButton().setChecked(false);
-    connect(&ui_.playButton(), SIGNAL(clicked()), this, SLOT(handlePlayButtonClicked()));
+    connect(&ui_.playButton(), SIGNAL(clicked()), this, SLOT(handleplayButtonClicked()));
     connect(&ui_.nextSong(), SIGNAL(clicked()), this, SLOT(handleNextButtonClicked()));
     connect(&ui_.prevSong(), SIGNAL(clicked()), this, SLOT(handlePrevButtonClicked()));
     connect(&ui_.volumeControl(), SIGNAL(valueChanged(int)), this, SLOT(handleVolumeControl()));
@@ -23,7 +23,7 @@ SongPlayerView::~SongPlayerView()
 {
 }
 
-void SongPlayerView::handlePlayButtonClicked()
+void SongPlayerView::handleplayButtonClicked()
 {
     songPlayer_.togglePlayback();
 }
@@ -54,6 +54,27 @@ void SongPlayerView::updateGUI(const QString& title, const QString& artist, cons
         ui_.labelPic().setPixmap(cover);
         ui_.labelPic().setScaledContents(true);
     }
+    QImage img(cover.toImage());
+    QColor color = songPlayer_.getColor(img);
+    QString styleSheet = "QSlider::groove:vertical {"
+            "background: %1;"
+            "width: 4px;"
+            "position: absolute;}"
+
+            "QSlider::handle:vertical {"
+            "height: 16px;"
+            "border-radius: 8px;"
+            "background: grey;"
+            "margin: 0  -6px;}"
+
+            "QSlider::add-page:vertical {"
+            "background: %1;}"
+
+            "QSlider::sub-page:vertical {"
+            "background: white;}";
+    ui_.volumeControl().setStyleSheet(styleSheet.arg(color.name()));
+    bar_.changeColor(color);
+
 }
 
 void SongPlayerView::updateProgress(qint64 position, qint64 duration)

@@ -17,5 +17,3 @@ sudo apt-get install eyeD3
 - Add requirements to get onboard media control running.
 - Add how to run the onboard media control. 
 - Add media control features here after it is finished. 
-
-
