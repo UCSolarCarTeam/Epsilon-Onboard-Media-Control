@@ -135,3 +135,24 @@ void SongPlayer::updateInfo()
     QPixmap img(cover_);
     emit updateGUI(title_, artist_, img);
 }
+
+QColor SongPlayer::getColor(QImage img)
+{
+    int height = img.height() / 2;
+    int width = img.width() / 2;
+    if(height != 0 && width != 0)
+    {
+        QColor color(img.pixel(width, height));
+        while(color.lightness() < 40)
+        {
+            QColor temp(img.pixel(width += 10, height += 10));
+            color = temp;
+            if(width >= img.width() - 10 || height >= img.height() - 10)
+            {
+                QColor white(255,255,255,25);
+                color = white;
+            }
+        }
+        return color;
+    }
+}
