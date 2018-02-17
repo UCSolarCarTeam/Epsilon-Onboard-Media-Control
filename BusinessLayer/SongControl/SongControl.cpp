@@ -7,8 +7,7 @@ SongControl::SongControl()
     QString dir = QString(".");
     readSongNames(dir, files_);
     currentSongIndex_ = 0;
-    shuffleSeed_ = (int)startTime_.currentTime().msec();
-    srand(shuffleSeed_);
+    srand(time(0));
 }
 
 SongControl::~SongControl()

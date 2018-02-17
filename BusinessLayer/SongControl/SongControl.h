@@ -38,6 +38,5 @@ private:
     QTime startTime_;
     QVector<QString> files_;
     int currentSongIndex_;
-    int shuffleSeed_;
     bool readSongNames(QString dir, QVector<QString>& files);
 };
