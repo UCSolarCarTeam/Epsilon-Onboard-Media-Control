@@ -36,7 +36,7 @@ void SongPlayer::openFile()
 
     if (!filePath.isEmpty())
     {
-        playFile(filePath);
+        setFile(filePath);
     }
     else
     {
@@ -50,7 +50,7 @@ void SongPlayer::openNext()
 
     if (!filePath.isEmpty())
     {
-        playFile(filePath);
+        setFile(filePath);
     }
     else
     {
@@ -82,7 +82,7 @@ void SongPlayer::openPrevious()
 
     if (!filePath.isEmpty())
     {
-        playFile(filePath);
+        setFile(filePath);
     }
     else
     {
@@ -96,7 +96,7 @@ void SongPlayer::openShuffle()
 
     if (!filePath.isEmpty())
     {
-        playFile(filePath);
+        setFile(filePath);
     }
     else
     {
@@ -141,7 +141,7 @@ void SongPlayer::togglePlayback()
     }
 }
 
-void SongPlayer::playFile(const QString& filePath)
+void SongPlayer::setFile(const QString& filePath)
 {
     mediaPlayer_.setMedia(QUrl::fromLocalFile(filePath));
 }

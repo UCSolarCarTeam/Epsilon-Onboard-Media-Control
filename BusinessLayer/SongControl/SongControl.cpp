@@ -45,10 +45,12 @@ QString SongControl::shuffleSong()
     }
 
     int index = currentSongIndex_;
-    while(currentSongIndex_ == index)
+    do
     {
         currentSongIndex_ = (rand() % files_.size());
     }
+    while (currentSongIndex_ == index);
+
     return (files_[currentSongIndex_]);
 }
 

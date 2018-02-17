@@ -35,7 +35,7 @@ public slots:
     void openShuffle();
     void playNext();
     void playPrevious();
-    void playFile(const QString& filePath);
+    void setFile(const QString& filePath);
     void togglePlayback();
     void adjustVolume(int volume);
     void toggleShuffle();
