@@ -37,6 +37,7 @@ public slots:
     void playFile(const QString& filePath);
     void togglePlayback();
     void adjustVolume(int volume);
+    QColor getColor(QImage img);
 
 private slots:
     void updateState();
