@@ -93,8 +93,8 @@
      </property>
     </spacer>
    </item>
-   <item row="5" column="2">
-    <spacer name="horizontalSpacer_2">
+   <item row="5" column="9">
+    <spacer name="horizontalSpacer">
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
      </property>
@@ -117,11 +117,11 @@
      <property name="minimumSize">
       <size>
        <width>420</width>
-       <height>191</height>
+       <height>240</height>
       </size>
      </property>
      <layout class="QGridLayout" name="gridLayout_2">
-      <item row="1" column="2">
+      <item row="1" column="3">
        <widget class="QPushButton" name="nextSong">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
@@ -373,6 +373,88 @@ QPushButton:checked:pressed
 
 QPushButton:pressed
 {
+	border-image: url(:/Resources/IconsOn/shuffle.png);
+}
+
+QPushButton:checked
+{
+	border-image: url(:/Resources/IconsOn/shuffle.png);
+}
+
+QPushButton:checked:pressed
+{
+	border-image: url(:/Resources/IconsOff/shuffle.png);
+}</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0" alignment="Qt::AlignRight|Qt::AlignVCenter">
+       <widget class="QPushButton" name="LoopButton">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>50</width>
+          <height>50</height>
+         </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton
+{
+	border-image: url(:/Resources/IconsOff/repeat.png);
+}
+
+QPushButton:pressed
+{
+	border-image: url(:/Resources/IconsOn/repeat.png);
+}
+
+QPushButton:checked
+{
+	border-image: url(:/Resources/IconsOn/repeat.png);
+}
+
+QPushButton:checked:pressed
+{
+	border-image: url(:/Resources/IconsOff/repeat.png);
+}</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="3">
+       <widget class="QPushButton" name="ShuffleButton">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>50</width>
+          <height>50</height>
+         </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">
+QPushButton
+{
+	border-image: url(:/Resources/IconsOff/shuffle.png);
+}
+
+QPushButton:pressed
+{
+	
 	border-image: url(:/Resources/IconsOn/shuffle.png);
 }
 
