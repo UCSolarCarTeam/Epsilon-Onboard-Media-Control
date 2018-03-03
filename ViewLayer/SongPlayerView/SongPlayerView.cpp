@@ -1,5 +1,6 @@
 #include "SongPlayerView.h"
 #include <QDebug>
+#include <QDir>
 
 SongPlayerView::SongPlayerView(SongPlayer& songPlayer, I_SongPlayerUi& ui, ProgressBar& bar)
     : songPlayer_(songPlayer)
@@ -7,19 +8,19 @@ SongPlayerView::SongPlayerView(SongPlayer& songPlayer, I_SongPlayerUi& ui, Progr
     , bar_(bar)
 {
     ui_.infoLabel().setAlignment(Qt::AlignCenter);
-    ui_.PlayButton().setCheckable(true);
-    ui_.PlayButton().setChecked(false);
-    ui_.ShuffleButton().setCheckable(true);
-    ui_.ShuffleButton().setChecked(false);
-    ui_.LoopButton().setCheckable(true);
-    ui_.LoopButton().setChecked(false);
-    connect(&ui_.PlayButton(), SIGNAL(clicked()), this, SLOT(handlePlayButtonClicked()));
-    connect(&ui_.NextSong(), SIGNAL(clicked()), this, SLOT(handleNextButtonClicked()));
-    connect(&ui_.PrevSong(), SIGNAL(clicked()), this, SLOT(handlePrevButtonClicked()));
-    connect(&ui_.ShuffleButton(), SIGNAL(clicked()), this, SLOT(handleShuffleButtonClicked()));
-    connect(&ui_.LoopButton(), SIGNAL(clicked()), this, SLOT(handleLoopButtonClicked()));
+    ui_.playButton().setCheckable(true);
+    ui_.playButton().setChecked(false);
+    ui_.shuffle().setCheckable(true);
+    ui_.shuffle().setChecked(false);
+    ui_.loop().setCheckable(true);
+    ui_.loop().setChecked(false);
+    connect(&ui_.playButton(), SIGNAL(clicked()), this, SLOT(handlePlayButtonClicked()));
+    connect(&ui_.nextSong(), SIGNAL(clicked()), this, SLOT(handleNextButtonClicked()));
+    connect(&ui_.prevSong(), SIGNAL(clicked()), this, SLOT(handlePrevButtonClicked()));
+    connect(&ui_.shuffle(), SIGNAL(clicked()), this, SLOT(handleShuffleButtonClicked()));
+    connect(&ui_.loop(), SIGNAL(clicked()), this, SLOT(handleLoopButtonClicked()));
     connect(&ui_.volumeControl(), SIGNAL(valueChanged(int)), this, SLOT(handleVolumeControl()));
-    connect(&songPlayer_, SIGNAL(updateGUI(const QString&, const QString&)), this, SLOT(updateGUI(const QString&, const QString&)));
+    connect(&songPlayer_, SIGNAL(updateGUI(const QString&, const QString&, const QPixmap&)), this, SLOT(updateGUI(const QString&, const QString&, const QPixmap&)));
     connect(&songPlayer_,SIGNAL(updateProgress(qint64,qint64)), this,SLOT(updateProgress(qint64,qint64)));
     ui_.progressBarContainer().addWidget(&bar_);
 }
@@ -35,21 +36,21 @@ void SongPlayerView::handlePlayButtonClicked()
 
 void SongPlayerView::handleNextButtonClicked()
 {
-    ui_.PlayButton().setChecked(true);
+    ui_.playButton().setChecked(true);
     songPlayer_.playNext();
 }
 
 void SongPlayerView::handlePrevButtonClicked()
 {
-    ui_.PlayButton().setChecked(true);
+    ui_.playButton().setChecked(true);
     songPlayer_.playPrevious();
 }
 
 void SongPlayerView::handleShuffleButtonClicked()
 {
-    if(ui_.LoopButton().isChecked())
+    if(ui_.loop().isChecked())
     {
-        ui_.LoopButton().setChecked(false);
+        ui_.loop().setChecked(false);
         songPlayer_.toggleLoop();
     }
 
@@ -58,9 +59,9 @@ void SongPlayerView::handleShuffleButtonClicked()
 
 void SongPlayerView::handleLoopButtonClicked()
 {
-    if(ui_.ShuffleButton().isChecked())
+    if(ui_.shuffle().isChecked())
     {
-        ui_.ShuffleButton().setChecked(false);
+        ui_.shuffle().setChecked(false);
         songPlayer_.toggleShuffle();
     }
 
@@ -73,9 +74,35 @@ void SongPlayerView::handleVolumeControl()
     songPlayer_.adjustVolume(volume);
 }
 
-void SongPlayerView::updateGUI(const QString& title, const QString& artist)
+void SongPlayerView::updateGUI(const QString& title, const QString& artist, const QPixmap& cover)
 {
     ui_.infoLabel().setText(artist + " - " + title);
+    if (!cover.isNull())
+    {
+        ui_.labelPic().setPixmap(cover);
+        ui_.labelPic().setScaledContents(true);
+    }
+    QImage img(cover.toImage());
+    QColor color = songPlayer_.getColor(img);
+    QString styleSheet = "QSlider::groove:vertical {"
+            "background: %1;"
+            "width: 4px;"
+            "position: absolute;}"
+
+            "QSlider::handle:vertical {"
+            "height: 16px;"
+            "border-radius: 8px;"
+            "background: grey;"
+            "margin: 0  -6px;}"
+
+            "QSlider::add-page:vertical {"
+            "background: %1;}"
+
+            "QSlider::sub-page:vertical {"
+            "background: white;}";
+    ui_.volumeControl().setStyleSheet(styleSheet.arg(color.name()));
+    bar_.changeColor(color);
+
 }
 
 void SongPlayerView::updateProgress(qint64 position, qint64 duration)
