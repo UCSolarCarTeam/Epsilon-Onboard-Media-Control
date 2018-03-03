@@ -10,9 +10,15 @@ SongPlayerView::SongPlayerView(SongPlayer& songPlayer, I_SongPlayerUi& ui, Progr
     ui_.infoLabel().setAlignment(Qt::AlignCenter);
     ui_.playButton().setCheckable(true);
     ui_.playButton().setChecked(false);
+    ui_.shuffle().setCheckable(true);
+    ui_.shuffle().setChecked(false);
+    ui_.loop().setCheckable(true);
+    ui_.loop().setChecked(false);
     connect(&ui_.playButton(), SIGNAL(clicked()), this, SLOT(handlePlayButtonClicked()));
     connect(&ui_.nextSong(), SIGNAL(clicked()), this, SLOT(handleNextButtonClicked()));
     connect(&ui_.prevSong(), SIGNAL(clicked()), this, SLOT(handlePrevButtonClicked()));
+    connect(&ui_.shuffle(), SIGNAL(clicked()), this, SLOT(handleShuffleButtonClicked()));
+    connect(&ui_.loop(), SIGNAL(clicked()), this, SLOT(handleLoopButtonClicked()));
     connect(&ui_.volumeControl(), SIGNAL(valueChanged(int)), this, SLOT(handleVolumeControl()));
     connect(&songPlayer_, SIGNAL(updateGUI(const QString&, const QString&, const QPixmap&)), this, SLOT(updateGUI(const QString&, const QString&, const QPixmap&)));
     connect(&songPlayer_,SIGNAL(updateProgress(qint64,qint64)), this,SLOT(updateProgress(qint64,qint64)));
@@ -38,6 +44,28 @@ void SongPlayerView::handlePrevButtonClicked()
 {
     ui_.playButton().setChecked(true);
     songPlayer_.playPrevious();
+}
+
+void SongPlayerView::handleShuffleButtonClicked()
+{
+    if(ui_.loop().isChecked())
+    {
+        ui_.loop().setChecked(false);
+        songPlayer_.toggleLoop();
+    }
+
+    songPlayer_.toggleShuffle();
+}
+
+void SongPlayerView::handleLoopButtonClicked()
+{
+    if(ui_.shuffle().isChecked())
+    {
+        ui_.shuffle().setChecked(false);
+        songPlayer_.toggleShuffle();
+    }
+
+    songPlayer_.toggleLoop();
 }
 
 void SongPlayerView::handleVolumeControl()

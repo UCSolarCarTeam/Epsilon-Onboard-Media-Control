@@ -23,6 +23,8 @@ public:
     QLabel& labelPic();
     QLabel& infoLabel();
     QPushButton& playButton();
+    QPushButton& shuffle();
+    QPushButton& loop();
     QProgressBar& progressBar();
     QPushButton& nextSong();
     QPushButton& prevSong();

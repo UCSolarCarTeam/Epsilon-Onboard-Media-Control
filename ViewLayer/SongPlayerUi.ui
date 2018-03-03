@@ -312,7 +312,7 @@ background: transparent; </string>
        </widget>
       </item>
       <item row="2" column="0" alignment="Qt::AlignRight">
-       <widget class="QPushButton" name="pushButton">
+       <widget class="QPushButton" name="loop">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
           <horstretch>0</horstretch>
@@ -352,7 +352,7 @@ QPushButton:checked:pressed
        </widget>
       </item>
       <item row="2" column="2">
-       <widget class="QPushButton" name="pushButton_2">
+       <widget class="QPushButton" name="shuffle">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
           <horstretch>0</horstretch>

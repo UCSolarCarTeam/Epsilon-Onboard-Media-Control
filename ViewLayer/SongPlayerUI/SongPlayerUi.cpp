@@ -33,6 +33,16 @@ QPushButton& SongPlayerUi::prevSong()
     return *ui_->prevSong;
 }
 
+QPushButton& SongPlayerUi::shuffle()
+{
+    return *ui_->shuffle;
+}
+
+QPushButton& SongPlayerUi::loop()
+{
+    return *ui_->loop;
+}
+
 QSlider& SongPlayerUi::volumeControl()
 {
     return *ui_->volumeControl;
