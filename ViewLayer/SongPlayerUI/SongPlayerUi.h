@@ -26,6 +26,8 @@ public:
     QProgressBar& progressBar();
     QPushButton& nextSong();
     QPushButton& prevSong();
+    QPushButton& ShuffleButton();
+    QPushButton& LoopButton();
     QVBoxLayout& progressBarContainer();
     QSlider& volumeControl();
 
