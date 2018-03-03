@@ -28,7 +28,7 @@ void SongPlayer::updateState()
 {
     if (mediaPlayer_.position() >= mediaPlayer_.duration() && mediaPlayer_.duration() != -1)
     {
-        playNext();
+         playNext();
     }
 }
 
@@ -187,8 +187,6 @@ void SongPlayer::toggleLoop()
         loop_ = true;
     }
 }
-
-
 void SongPlayer::updateInfo()
 {
     artist_ = mediaPlayer_.metaData(QMediaMetaData::ContributingArtist).toString();
