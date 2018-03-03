@@ -40,6 +40,7 @@ public slots:
     void adjustVolume(int volume);
     void toggleShuffle();
     void toggleLoop();
+    QColor getColor(QImage img);
 
 private slots:
     void updateState();
@@ -59,12 +60,13 @@ private:
     qint64 duration_;
     QString title_;
     QString artist_;
-    QImage cover_;
+    QString cover_;
+    QString album_;
     bool shuffle_;
     bool loop_;
 
 signals:
-    void updateGUI(const QString& title, const QString& author);
+    void updateGUI(const QString& title, const QString& author, const QPixmap& cover);
     void resetPosition(const QMediaPlayer& media);
     void updateProgress(qint64 position, qint64 duration);
 };

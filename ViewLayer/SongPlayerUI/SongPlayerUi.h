@@ -20,13 +20,14 @@ class SongPlayerUi : public I_SongPlayerUi
 public:
     explicit SongPlayerUi();
     ~SongPlayerUi();
+    QLabel& labelPic();
     QLabel& infoLabel();
-    QPushButton& PlayButton();
-    QProgressBar& ProgressBar();
-    QPushButton& NextSong();
-    QPushButton& PrevSong();
-    QPushButton& ShuffleButton();
-    QPushButton& LoopButton();
+    QPushButton& playButton();
+    QPushButton& shuffle();
+    QPushButton& loop();
+    QProgressBar& progressBar();
+    QPushButton& nextSong();
+    QPushButton& prevSong();
     QVBoxLayout& progressBarContainer();
     QSlider& volumeControl();
 

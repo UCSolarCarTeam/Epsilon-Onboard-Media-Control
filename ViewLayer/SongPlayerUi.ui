@@ -20,31 +20,62 @@
    <string notr="true">background-color:black;</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="5" column="0">
-    <spacer name="horizontalSpacer_3">
+   <item row="7" column="6">
+    <spacer name="verticalSpacer_4">
      <property name="orientation">
-      <enum>Qt::Horizontal</enum>
+      <enum>Qt::Vertical</enum>
      </property>
      <property name="sizeType">
       <enum>QSizePolicy::Fixed</enum>
      </property>
      <property name="sizeHint" stdset="0">
       <size>
-       <width>16</width>
-       <height>20</height>
+       <width>20</width>
+       <height>40</height>
       </size>
      </property>
     </spacer>
    </item>
-   <item row="6" column="6">
-    <spacer name="verticalSpacer">
+   <item row="2" column="6" alignment="Qt::AlignHCenter">
+    <widget class="QLabel" name="infoLabel">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>26</height>
+      </size>
+     </property>
+     <property name="font">
+      <font>
+       <family>Nimbus Sans L</family>
+       <pointsize>16</pointsize>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">color: white</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="6">
+    <spacer name="verticalSpacer_3">
      <property name="orientation">
       <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeType">
+      <enum>QSizePolicy::Fixed</enum>
      </property>
      <property name="sizeHint" stdset="0">
       <size>
        <width>20</width>
-       <height>40</height>
+       <height>16</height>
       </size>
      </property>
     </spacer>
@@ -67,9 +98,6 @@
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
      </property>
-     <property name="sizeType">
-      <enum>QSizePolicy::Expanding</enum>
-     </property>
      <property name="sizeHint" stdset="0">
       <size>
        <width>40</width>
@@ -78,7 +106,7 @@
      </property>
     </spacer>
    </item>
-   <item row="5" column="6">
+   <item row="5" column="6" alignment="Qt::AlignHCenter">
     <widget class="QWidget" name="widget_2" native="true">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
@@ -110,12 +138,12 @@
         <property name="styleSheet">
          <string notr="true">QPushButton
 {
-	border-image: url(:/Resources/IconsOff/next.png);
+        border-image: url(:/Resources/IconsOff/next.png);
 }
 
 QPushButton:pressed
 {
-	border-image: url(:/Resources/IconsOn/next.png);
+        border-image: url(:/Resources/IconsOn/next.png);
 }</string>
         </property>
         <property name="text">
@@ -140,12 +168,12 @@ QPushButton:pressed
         <property name="styleSheet">
          <string notr="true">QPushButton
 {
-	border-image: url(:/Resources/IconsOff/previous.png);
+        border-image: url(:/Resources/IconsOff/previous.png);
 }
 
 QPushButton:pressed
 {
-	border-image: url(:/Resources/IconsOn/previous.png);
+        border-image: url(:/Resources/IconsOn/previous.png);
 }</string>
         </property>
         <property name="text">
@@ -167,7 +195,7 @@ QPushButton:pressed
           <height>191</height>
          </size>
         </property>
-        <widget class="QPushButton" name="PlayButton">
+        <widget class="QPushButton" name="playButton">
          <property name="geometry">
           <rect>
            <x>30</x>
@@ -179,65 +207,188 @@ QPushButton:pressed
          <property name="styleSheet">
           <string notr="true">QPushButton
 {
-	border-style: solid;
-	background: white;
-	border-color: rgb(68,68,68);
-	border-width: 5px;
-	border-radius: 65px;
-	background-image: url(:/Resources/IconsOff/play.png);
-	background-position: center;
+        border-style: solid;
+        background: transparent;
+        border-color: rgb(68,68,68);
+        border-width: 5px;
+        border-radius: 65px;
+        background-image: url(:/Resources/IconsOff/play.png);
+        background-position: center;
 }
 
 QPushButton:pressed
 {
-	border-style: solid;
-	background: white;
-	border-color: rgb(68,68,68);
-	border-width: 5px;
-	border-radius: 65px;
-	background-image: url(:/Resources/IconsOn/play.png);
-	background-position: center;
+        border-style: solid;
+        background: transparent;
+        border-color: rgb(68,68,68);
+        border-width: 5px;
+        border-radius: 65px;
+        background-image: url(:/Resources/IconsOn/play.png);
+        background-position: center;
 }
 
 QPushButton:checked
 {
-	border-style: solid;
-	background: white;
-	border-color: rgb(68,68,68);
-	border-width: 5px;
-	border-radius: 65px;
-	background-image: url(:/Resources/IconsOff/pause.png);
-	background-position: center;
+        border-style: solid;
+        background: transparent;
+        border-color: rgb(68,68,68);
+        border-width: 5px;
+        border-radius: 65px;
+        background-image: url(:/Resources/IconsOff/pause.png);
+        background-position: center;
 }
 
 QPushButton:checked:pressed
 {
-	border-style: solid;
-	background: white;
-	border-color: rgb(68,68,68);
-	border-width: 5px;
-	border-radius: 65px;
-	background-image: url(:/Resources/IconsOn/pause.png);
-	background-position: center;
+        border-style: solid;
+        background: transparent;
+        border-color: rgb(68,68,68);
+        border-width: 5px;
+        border-radius: 65px;
+        background-image: url(:/Resources/IconsOn/pause.png);
+        background-position: center;
 }</string>
          </property>
          <property name="text">
           <string/>
          </property>
         </widget>
-        <widget class="QWidget" name="verticalLayoutWidget">
+        <widget class="QWidget" name="verticalWidget" native="true">
          <property name="geometry">
           <rect>
-           <x>0</x>
-           <y>0</y>
+           <x>-2</x>
+           <y>-9</y>
            <width>191</width>
            <height>191</height>
           </rect>
          </property>
-         <layout class="QVBoxLayout" name="progressBarContainer"/>
+         <property name="styleSheet">
+          <string notr="true">background: transparent</string>
+         </property>
+         <layout class="QVBoxLayout" name="progressBarContainer">
+          <property name="leftMargin">
+           <number>1</number>
+          </property>
+         </layout>
         </widget>
-        <zorder>verticalLayoutWidget</zorder>
-        <zorder>PlayButton</zorder>
+        <widget class="QLabel" name="labelPic">
+         <property name="geometry">
+          <rect>
+           <x>30</x>
+           <y>30</y>
+           <width>130</width>
+           <height>130</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-image: url(:/Resources/IconsOff/mask.png);
+background: transparent;</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+        <widget class="QLabel" name="mask">
+         <property name="geometry">
+          <rect>
+           <x>30</x>
+           <y>30</y>
+           <width>131</width>
+           <height>131</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">image: url(:/Resources/IconsOff/mask.png);
+background: transparent; </string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+        <zorder>labelPic</zorder>
+        <zorder>mask</zorder>
+        <zorder>verticalWidget</zorder>
+        <zorder>playButton</zorder>
+       </widget>
+      </item>
+      <item row="2" column="0" alignment="Qt::AlignRight">
+       <widget class="QPushButton" name="loop">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>50</width>
+          <height>50</height>
+         </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton
+{
+	border-image: url(:/Resources/IconsOff/repeat.png);
+}
+
+QPushButton:pressed
+{
+	border-image: url(:/Resources/IconsOn/repeat.png);
+}
+
+QPushButton:checked
+{
+	border-image: url(:/Resources/IconsOn/repeat.png);
+}
+
+QPushButton:checked:pressed
+{
+	border-image: url(:/Resources/IconsOff/repeat.png);
+}</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="2">
+       <widget class="QPushButton" name="shuffle">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>50</width>
+          <height>50</height>
+         </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton
+{
+	border-image: url(:/Resources/IconsOff/shuffle.png);
+}
+
+QPushButton:pressed
+{
+	border-image: url(:/Resources/IconsOn/shuffle.png);
+}
+
+QPushButton:checked
+{
+	border-image: url(:/Resources/IconsOn/shuffle.png);
+}
+
+QPushButton:checked:pressed
+{
+	border-image: url(:/Resources/IconsOff/shuffle.png);
+}</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
        </widget>
       </item>
       <item row="2" column="0" alignment="Qt::AlignRight|Qt::AlignVCenter">
@@ -325,35 +476,7 @@ QPushButton:checked:pressed
      </layout>
     </widget>
    </item>
-   <item row="2" column="6" alignment="Qt::AlignHCenter">
-    <widget class="QLabel" name="infoLabel">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="minimumSize">
-      <size>
-       <width>0</width>
-       <height>26</height>
-      </size>
-     </property>
-     <property name="font">
-      <font>
-       <family>Nimbus Sans L</family>
-       <pointsize>16</pointsize>
-      </font>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">color: white</string>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-    </widget>
-   </item>
-   <item row="5" column="10">
+   <item row="5" column="9">
     <widget class="QSlider" name="volumeControl">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
@@ -397,26 +520,26 @@ background: white;
      </property>
     </widget>
    </item>
-   <item row="5" column="2">
-    <spacer name="horizontalSpacer_2">
+   <item row="5" column="0">
+    <spacer name="horizontalSpacer_3">
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
      </property>
+     <property name="sizeType">
+      <enum>QSizePolicy::Fixed</enum>
+     </property>
      <property name="sizeHint" stdset="0">
       <size>
-       <width>40</width>
+       <width>16</width>
        <height>20</height>
       </size>
      </property>
     </spacer>
    </item>
-   <item row="10" column="6">
-    <spacer name="verticalSpacer_4">
+   <item row="6" column="6">
+    <spacer name="verticalSpacer">
      <property name="orientation">
       <enum>Qt::Vertical</enum>
-     </property>
-     <property name="sizeType">
-      <enum>QSizePolicy::Fixed</enum>
      </property>
      <property name="sizeHint" stdset="0">
       <size>
@@ -426,18 +549,18 @@ background: white;
      </property>
     </spacer>
    </item>
-   <item row="0" column="6">
-    <spacer name="verticalSpacer_3">
+   <item row="5" column="8">
+    <spacer name="horizontalSpacer">
      <property name="orientation">
-      <enum>Qt::Vertical</enum>
+      <enum>Qt::Horizontal</enum>
      </property>
      <property name="sizeType">
-      <enum>QSizePolicy::Fixed</enum>
+      <enum>QSizePolicy::Expanding</enum>
      </property>
      <property name="sizeHint" stdset="0">
       <size>
-       <width>20</width>
-       <height>16</height>
+       <width>40</width>
+       <height>20</height>
       </size>
      </property>
     </spacer>

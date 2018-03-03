@@ -10,6 +10,7 @@ namespace
 
 ProgressBar::ProgressBar()
 {
+    color_ = QColor(92,145,161,255);
 }
 
 ProgressBar::~ProgressBar()
@@ -20,10 +21,9 @@ void ProgressBar::paintEvent(QPaintEvent *)
 {
     QPainter p(this);
 
-    QPen pen;
-    pen.setWidth(7);
-    pen.setColor(QColor(92,145,161));
-    p.setPen(pen);
+    pen_.setWidth(7);
+    pen_.setColor(color_);
+    p.setPen(pen_);
 
     p.setRenderHint(QPainter::Antialiasing);
 
@@ -32,4 +32,9 @@ void ProgressBar::paintEvent(QPaintEvent *)
     int spanAngle = progress * FULL_CIRCLE;
 
     p.drawArc(rectangle, START_ANGLE, spanAngle);
+}
+
+void ProgressBar::changeColor(QColor color)
+{
+    color_ = color;
 }
