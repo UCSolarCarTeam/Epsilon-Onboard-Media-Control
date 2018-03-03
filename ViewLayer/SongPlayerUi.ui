@@ -17,7 +17,8 @@
    <bool>false</bool>
   </property>
   <property name="styleSheet">
-   <string notr="true">background-color:black;</string>
+   <string notr="true">background-color:black;
+border-width: 0px;</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="7" column="6">
@@ -198,10 +199,10 @@ QPushButton:pressed
         <widget class="QPushButton" name="playButton">
          <property name="geometry">
           <rect>
-           <x>30</x>
-           <y>30</y>
-           <width>131</width>
-           <height>131</height>
+           <x>29</x>
+           <y>29</y>
+           <width>132</width>
+           <height>132</height>
           </rect>
          </property>
          <property name="styleSheet">
@@ -293,8 +294,8 @@ background: transparent;</string>
           <rect>
            <x>30</x>
            <y>30</y>
-           <width>131</width>
-           <height>131</height>
+           <width>130</width>
+           <height>130</height>
           </rect>
          </property>
          <property name="styleSheet">
