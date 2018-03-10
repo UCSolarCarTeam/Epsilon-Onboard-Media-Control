@@ -5,12 +5,13 @@ namespace
     // Angle must specified be in 1/16th of a degree
     const int FULL_CIRCLE = 5760;   // 360 * 16
     const int START_ANGLE = -1440;  // The bottom of the circle is -90 * 16
+    const QColor DEFAULT_COLOR = QColor(92,145,161,255);
 }
 
 
 ProgressBar::ProgressBar()
 {
-    color_ = QColor(92,145,161,255);
+    color_ = DEFAULT_COLOR;
 }
 
 ProgressBar::~ProgressBar()

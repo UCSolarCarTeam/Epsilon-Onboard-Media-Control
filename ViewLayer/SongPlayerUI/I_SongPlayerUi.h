@@ -16,8 +16,8 @@ public:
     virtual QPushButton& playButton() = 0;
     virtual QPushButton& nextSong() = 0;
     virtual QPushButton& prevSong() = 0;
-    virtual QPushButton& shuffle() = 0;
-    virtual QPushButton& loop() = 0;
+    virtual QPushButton& shuffleButton() = 0;
+    virtual QPushButton& loopButton() = 0;
     virtual QSlider& volumeControl() = 0;
     virtual QVBoxLayout& progressBarContainer() = 0;
     virtual QLabel& labelPic() = 0;

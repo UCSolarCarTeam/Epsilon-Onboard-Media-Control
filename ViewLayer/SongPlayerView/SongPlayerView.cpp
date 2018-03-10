@@ -1,6 +1,25 @@
-#include "SongPlayerView.h"
-#include <QDebug>
 #include <QDir>
+#include "SongPlayerView.h"
+
+namespace
+{
+    const QString STYLESHEET = "QSlider::groove:vertical {"
+                              "background: %1;"
+                              "width: 4px;"
+                              "position: absolute;}"
+
+                              "QSlider::handle:vertical {"
+                              "height: 16px;"
+                              "border-radius: 8px;"
+                              "background: grey;"
+                              "margin: 0  -6px;}"
+
+                              "QSlider::add-page:vertical {"
+                              "background: %1;}"
+
+                              "QSlider::sub-page:vertical {"
+                              "background: white;}";
+}
 
 SongPlayerView::SongPlayerView(SongPlayer& songPlayer, I_SongPlayerUi& ui, ProgressBar& bar)
     : songPlayer_(songPlayer)
@@ -10,15 +29,15 @@ SongPlayerView::SongPlayerView(SongPlayer& songPlayer, I_SongPlayerUi& ui, Progr
     ui_.infoLabel().setAlignment(Qt::AlignCenter);
     ui_.playButton().setCheckable(true);
     ui_.playButton().setChecked(false);
-    ui_.shuffle().setCheckable(true);
-    ui_.shuffle().setChecked(false);
-    ui_.loop().setCheckable(true);
-    ui_.loop().setChecked(false);
+    ui_.shuffleButton().setCheckable(true);
+    ui_.shuffleButton().setChecked(false);
+    ui_.loopButton().setCheckable(true);
+    ui_.loopButton().setChecked(false);
     connect(&ui_.playButton(), SIGNAL(clicked()), this, SLOT(handlePlayButtonClicked()));
     connect(&ui_.nextSong(), SIGNAL(clicked()), this, SLOT(handleNextButtonClicked()));
     connect(&ui_.prevSong(), SIGNAL(clicked()), this, SLOT(handlePrevButtonClicked()));
-    connect(&ui_.shuffle(), SIGNAL(clicked()), this, SLOT(handleShuffleButtonClicked()));
-    connect(&ui_.loop(), SIGNAL(clicked()), this, SLOT(handleLoopButtonClicked()));
+    connect(&ui_.shuffleButton(), SIGNAL(clicked()), this, SLOT(handleShuffleButtonClicked()));
+    connect(&ui_.loopButton(), SIGNAL(clicked()), this, SLOT(handleLoopButtonClicked()));
     connect(&ui_.volumeControl(), SIGNAL(valueChanged(int)), this, SLOT(handleVolumeControl()));
     connect(&songPlayer_, SIGNAL(updateGUI(const QString&, const QString&, const QPixmap&)), this, SLOT(updateGUI(const QString&, const QString&, const QPixmap&)));
     connect(&songPlayer_,SIGNAL(updateProgress(qint64,qint64)), this,SLOT(updateProgress(qint64,qint64)));
@@ -48,9 +67,9 @@ void SongPlayerView::handlePrevButtonClicked()
 
 void SongPlayerView::handleShuffleButtonClicked()
 {
-    if(ui_.loop().isChecked())
+    if(ui_.loopButton().isChecked())
     {
-        ui_.loop().setChecked(false);
+        ui_.loopButton().setChecked(false);
         songPlayer_.toggleLoop();
     }
 
@@ -59,9 +78,9 @@ void SongPlayerView::handleShuffleButtonClicked()
 
 void SongPlayerView::handleLoopButtonClicked()
 {
-    if(ui_.shuffle().isChecked())
+    if(ui_.shuffleButton().isChecked())
     {
-        ui_.shuffle().setChecked(false);
+        ui_.shuffleButton().setChecked(false);
         songPlayer_.toggleShuffle();
     }
 
@@ -84,22 +103,7 @@ void SongPlayerView::updateGUI(const QString& title, const QString& artist, cons
     }
     QImage img(cover.toImage());
     QColor color = songPlayer_.getColor(img);
-    QString styleSheet = "QSlider::groove:vertical {"
-            "background: %1;"
-            "width: 4px;"
-            "position: absolute;}"
-
-            "QSlider::handle:vertical {"
-            "height: 16px;"
-            "border-radius: 8px;"
-            "background: grey;"
-            "margin: 0  -6px;}"
-
-            "QSlider::add-page:vertical {"
-            "background: %1;}"
-
-            "QSlider::sub-page:vertical {"
-            "background: white;}";
+    QString styleSheet = STYLESHEET;
     ui_.volumeControl().setStyleSheet(styleSheet.arg(color.name()));
     bar_.changeColor(color);
 
