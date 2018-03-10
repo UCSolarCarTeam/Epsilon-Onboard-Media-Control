@@ -32,12 +32,15 @@ public slots:
     void openFile();
     void openNext();
     void openPrevious();
+    void openShuffle();
     void playNext();
     void playPrevious();
-    void playFile(const QString& filePath);
+    void setFile(const QString& filePath);
     void togglePlayback();
     void adjustVolume(int volume);
     QColor getColor(QImage img);
+    void toggleShuffle();
+    void toggleLoop();
 
 private slots:
     void updateState();
@@ -59,6 +62,8 @@ private:
     QString artist_;
     QString cover_;
     QString album_;
+    bool shuffle_;
+    bool loop_;
 
 signals:
     void updateGUI(const QString& title, const QString& author, const QPixmap& cover);
