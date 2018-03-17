@@ -4,11 +4,12 @@ namespace
 {
     const int MS_TO_MINUTES = 60000;
     const double MS_TO_SECONDS = 1000.0;
-    const int MIN_LIGHT = 40;
+    const int MIN_VALUE = 40;
     const int SKIP_PIXELS = 10;
     const int PAGE_STEP_INCREMENTS = 10;
     const QString SONG_FILE_PATH = "SongLibrary/";
     const QString ALBUM_FILE_PATH = "Covers/";
+    const QColor BASELINE = QColor(0,0,0,255);
 }
 
 SongPlayer::SongPlayer(QWidget* parent) : QWidget(parent)
@@ -211,22 +212,26 @@ void SongPlayer::updateInfo()
 
 QColor SongPlayer::getColor(QImage img)
 {
-    int height = img.height() / 2;
-    int width = img.width() / 2;
+    int height = img.height();
+    int width = img.width();
     //height and width are set to 0 when the song changes.
     if(height != 0 && width != 0)
     {
-        QColor color(img.pixel(width, height));
-        while(color.lightness() < MIN_LIGHT)
+        QColor brightest = BASELINE;
+        brightest.setHsv(0,0,40,255);
+        QColor temp;
+        for(int i = 0; i < width; i++)
         {
-            QColor temp(img.pixel(width += SKIP_PIXELS, height += SKIP_PIXELS));
-            color = temp;
-            if(width >= img.width() - SKIP_PIXELS || height >= img.height() - SKIP_PIXELS)
+            for(int j = 0; j < height; j++)
             {
-                QColor white = QColor(255,255,255,255);
-                color = white;
+                temp = img.pixel(i, j);
+                if(temp.value() > brightest.value() && temp.saturation() > brightest.saturation())
+                {
+                    brightest = temp;
+                }
             }
         }
-        return color;
+        return brightest;
+
     }
 }

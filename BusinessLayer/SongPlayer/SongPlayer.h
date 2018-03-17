@@ -18,6 +18,7 @@
 #include <QScopedPointer>
 #include <QMediaMetaData>
 #include "../SongControl/SongControl.h"
+#include <QDebug>
 
 class SongPlayer : public QWidget
 {
