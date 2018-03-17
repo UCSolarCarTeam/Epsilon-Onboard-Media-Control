@@ -19,6 +19,8 @@ namespace
 
                               "QSlider::sub-page:vertical {"
                               "background: white;}";
+
+    const QColor DEFAULT_COLOR = QColor(255,255,255,255);
 }
 
 SongPlayerView::SongPlayerView(SongPlayer& songPlayer, I_SongPlayerUi& ui, ProgressBar& bar)
@@ -96,16 +98,20 @@ void SongPlayerView::handleVolumeControl()
 void SongPlayerView::updateGUI(const QString& title, const QString& artist, const QPixmap& cover)
 {
     ui_.infoLabel().setText(artist + " - " + title);
+    QString styleSheet = STYLESHEET;
+    QColor white = DEFAULT_COLOR;
+    ui_.volumeControl().setStyleSheet(styleSheet.arg(white.name()));
+    bar_.changeColor(white);
     if (!cover.isNull())
     {
         ui_.labelPic().setPixmap(cover);
         ui_.labelPic().setScaledContents(true);
+        QImage img(cover.toImage());
+        QColor color = songPlayer_.getColor(img);
+        ui_.volumeControl().setStyleSheet(styleSheet.arg(color.name()));
+        bar_.changeColor(color);
     }
-    QImage img(cover.toImage());
-    QColor color = songPlayer_.getColor(img);
-    QString styleSheet = STYLESHEET;
-    ui_.volumeControl().setStyleSheet(styleSheet.arg(color.name()));
-    bar_.changeColor(color);
+
 
 }
 
