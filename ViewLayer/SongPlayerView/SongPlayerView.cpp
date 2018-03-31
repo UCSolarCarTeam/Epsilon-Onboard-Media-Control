@@ -20,7 +20,7 @@ namespace
                               "QSlider::sub-page:vertical {"
                               "background: white;}";
 
-    const QColor DEFAULT_COLOR = QColor(255,255,255,255);
+    const QColor DEFAULT_COLOR = QColor(219,160,56,255);
 }
 
 SongPlayerView::SongPlayerView(SongPlayer& songPlayer, I_SongPlayerUi& ui, ProgressBar& bar)
