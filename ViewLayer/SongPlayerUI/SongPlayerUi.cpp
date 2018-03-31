@@ -13,9 +13,9 @@ SongPlayerUi::~SongPlayerUi()
     delete ui_;
 }
 
-QPushButton& SongPlayerUi::PlayButton()
+QPushButton& SongPlayerUi::playButton()
 {
-    return *ui_->PlayButton;
+    return *ui_->playButton;
 }
 
 QLabel& SongPlayerUi::infoLabel()
@@ -23,24 +23,24 @@ QLabel& SongPlayerUi::infoLabel()
     return *ui_->infoLabel;
 }
 
-QPushButton& SongPlayerUi::NextSong()
+QPushButton& SongPlayerUi::nextSong()
 {
     return *ui_->nextSong;
 }
 
-QPushButton& SongPlayerUi::PrevSong()
+QPushButton& SongPlayerUi::prevSong()
 {
     return *ui_->prevSong;
 }
 
-QPushButton& SongPlayerUi::ShuffleButton()
+QPushButton& SongPlayerUi::shuffleButton()
 {
-    return *ui_->ShuffleButton;
+    return *ui_->shuffleButton;
 }
 
-QPushButton& SongPlayerUi::LoopButton()
+QPushButton& SongPlayerUi::loopButton()
 {
-    return *ui_->LoopButton;
+    return *ui_->loopButton;
 }
 
 QSlider& SongPlayerUi::volumeControl()
@@ -51,4 +51,9 @@ QSlider& SongPlayerUi::volumeControl()
 QVBoxLayout& SongPlayerUi::progressBarContainer()
 {
     return *ui_->progressBarContainer;
+}
+
+QLabel& SongPlayerUi::labelPic()
+{
+    return *ui_->labelPic;
 }

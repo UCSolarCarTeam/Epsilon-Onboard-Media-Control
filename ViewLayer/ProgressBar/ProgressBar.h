@@ -11,6 +11,11 @@ public:
     ProgressBar();
     ~ProgressBar();
     double progress;
+    void changeColor(QColor color);
+
+private:
+    QPen pen_;
+    QColor color_;
 
 protected:
     void paintEvent(QPaintEvent *);
