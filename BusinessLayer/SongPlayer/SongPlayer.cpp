@@ -230,14 +230,12 @@ QColor SongPlayer::getColor(QImage img, int number)
             for(int j = start_y; j < y; j++)
             {
                 temp = img.pixel(i, j);
-                qDebug() << temp << endl;
                 if(temp.value() > brightest.value() && temp.saturation() > brightest.saturation())
                 {
                     brightest = temp;
                 }
             }
         }
-        qDebug() << "song player" << brightest << number << endl;
         return brightest;
     }
 

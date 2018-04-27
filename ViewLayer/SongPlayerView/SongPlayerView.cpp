@@ -21,7 +21,7 @@ namespace
                               "background: white;}";
 
     const QColor DEFAULT_COLOR = QColor(255,255,255,255);
-    const int NUM_THREADS = 9;
+    const int NUM_THREADS = 4;
 }
 
 SongPlayerView::SongPlayerView(SongPlayer& songPlayer, I_SongPlayerUi& ui, ProgressBar& bar)
@@ -101,7 +101,7 @@ void SongPlayerView::updateGUI(const QString& title, const QString& artist, cons
     ui_.infoLabel().setText(artist + " - " + title);
     QString styleSheet = STYLESHEET;
     QColor white = DEFAULT_COLOR;
-    QVector<QColor> colors(NUM_THREADS);
+    QVector<QColor> colors;
     ui_.volumeControl().setStyleSheet(styleSheet.arg(white.name()));
     bar_.changeColor(white);
     if (!cover.isNull())
@@ -109,15 +109,22 @@ void SongPlayerView::updateGUI(const QString& title, const QString& artist, cons
         ui_.labelPic().setPixmap(cover);
         ui_.labelPic().setScaledContents(true);
         QImage img(cover.toImage());
-        for(int i = 0; i < 1; i++)
+        for(int i = 0; i < NUM_THREADS; i++)
         {
             QFuture<QColor> future = QtConcurrent::run(&this->songPlayer_, &SongPlayer::getColor, img, i );
-            qDebug() << "View" << future.result() << i << endl;
             colors.push_back(future.result());
         }
-        QColor color = colors.at(0);
-        ui_.volumeControl().setStyleSheet(styleSheet.arg(color.name()));
-        bar_.changeColor(color);
+        QColor max = colors.at(0);
+        for(int i = 0; i < colors.size(); i++)
+        {
+            if(colors.at(i).value() > max.value() && colors.at(i).saturation() > max.saturation())
+            {
+                max = colors.at(i);
+            }
+        }
+        //QColor color = max;
+        ui_.volumeControl().setStyleSheet(styleSheet.arg(max.name()));
+        bar_.changeColor(max);
     }
 
 
