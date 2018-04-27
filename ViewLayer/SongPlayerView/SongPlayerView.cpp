@@ -117,12 +117,12 @@ void SongPlayerView::updateGUI(const QString& title, const QString& artist, cons
         QColor max = colors.at(0);
         for(int i = 0; i < colors.size(); i++)
         {
-            if(colors.at(i).value() > max.value() && colors.at(i).saturation() > max.saturation())
+            qDebug() << colors.at(i).value() << colors.at(i).saturation() << endl;
+            if(/*colors.at(i).value() > max.value() && */colors.at(i).saturation() > max.saturation())
             {
                 max = colors.at(i);
             }
         }
-        //QColor color = max;
         ui_.volumeControl().setStyleSheet(styleSheet.arg(max.name()));
         bar_.changeColor(max);
     }
