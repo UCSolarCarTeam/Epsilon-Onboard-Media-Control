@@ -210,28 +210,35 @@ void SongPlayer::updateInfo()
     emit updateGUI(title_, artist_, img);
 }
 
-QColor SongPlayer::getColor(QImage img)
+QColor SongPlayer::getColor(QImage img, int number)
 {
     int height = img.height();
     int width = img.width();
+    int size = qMin(img.width(),img.height());
+    int start_x = (size / 3) * (number % 3);
+    int start_y  = (size / 3) * (number / 3);
+    int x = (size / 3) * ((number % 3) + 1);
+    int y = (size / 3) * ((int)(number / 3) + 1);
     //height and width are set to 0 when the song changes.
     if(height != 0 && width != 0)
     {
         QColor brightest = BASELINE;
         brightest.setHsv(0,0,40,255);
         QColor temp;
-        for(int i = 0; i < width; i++)
+        for(int i = start_x; i < x; i++)
         {
-            for(int j = 0; j < height; j++)
+            for(int j = start_y; j < y; j++)
             {
                 temp = img.pixel(i, j);
+                qDebug() << temp << endl;
                 if(temp.value() > brightest.value() && temp.saturation() > brightest.saturation())
                 {
                     brightest = temp;
                 }
             }
         }
+        qDebug() << "song player" << brightest << number << endl;
         return brightest;
-
     }
+
 }
