@@ -10,6 +10,7 @@ namespace
     const QString SONG_FILE_PATH = "SongLibrary/";
     const QString ALBUM_FILE_PATH = "Covers/";
     const QColor BASELINE = QColor(0,0,0,255);
+    const int SECTIONS = 2;
 }
 
 SongPlayer::SongPlayer(QWidget* parent) : QWidget(parent)
@@ -215,19 +216,19 @@ QColor SongPlayer::getColor(QImage img, int number)
     int height = img.height();
     int width = img.width();
     int size = qMin(img.width(),img.height());
-    int start_x = (size / 3) * (number % 3);
-    int start_y  = (size / 3) * (number / 3);
-    int x = (size / 3) * ((number % 3) + 1);
-    int y = (size / 3) * ((int)(number / 3) + 1);
+    int start_x = (size / SECTIONS) * (number % SECTIONS);
+    int start_y  = (size / SECTIONS) * (number / SECTIONS);
+    int x = (size / SECTIONS) * ((number % SECTIONS) + 1);
+    int y = (size / SECTIONS) * ((int)(number / SECTIONS) + 1);
     //height and width are set to 0 when the song changes.
     if(height != 0 && width != 0)
     {
         QColor brightest = BASELINE;
         brightest.setHsv(0,0,40,255);
         QColor temp;
-        for(int i = start_x; i < x; i++)
+        for(int i = start_x; i < x; i+=2)
         {
-            for(int j = start_y; j < y; j++)
+            for(int j = start_y; j < y; j+=2)
             {
                 temp = img.pixel(i, j);
                 if(temp.value() > brightest.value() && temp.saturation() > brightest.saturation())
