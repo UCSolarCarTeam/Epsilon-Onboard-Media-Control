@@ -9,10 +9,14 @@ This program is an onboard media control for the University of Calgary's Solar C
 image::plan.jpg[Plan]
 
 == Acquiring Album Art
-
+ 
 In order to rip the jpg pics off the mp3 files a script from eyeD3 is used. Run the following line in the linux terminal once to aquire the program:
 
 `sudo apt-get install eyeD3`
+
+Some pictures are downloaded as png files. To keep everything in jpg format, a command will be run to convert all png files to jpg files. To aquire the commands for file formatting run: 
+
+`sudo apt-get install imagemagick`
 
 .TODO list  
 - Add requirements to get onboard media control running.
