@@ -66,6 +66,9 @@ border-width: 0px;</string>
      <property name="text">
       <string/>
      </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
     </widget>
    </item>
    <item row="0" column="6">
@@ -93,23 +96,6 @@ border-width: 0px;</string>
       <size>
        <width>20</width>
        <height>40</height>
-      </size>
-     </property>
-    </spacer>
-   </item>
-   <item row="5" column="2">
-    <spacer name="horizontalSpacer_2">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-<<<<<<< HEAD
-     <property name="sizeType">
-      <enum>QSizePolicy::Minimum</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>20</width>
-       <height>20</height>
       </size>
      </property>
     </spacer>
@@ -168,7 +154,7 @@ background: white;
      </property>
      <property name="sizeHint" stdset="0">
       <size>
-       <width>131</width>
+       <width>100</width>
        <height>20</height>
       </size>
      </property>
@@ -195,8 +181,6 @@ background: white;
      <property name="sizeType">
       <enum>QSizePolicy::Expanding</enum>
      </property>
-=======
->>>>>>> master
      <property name="sizeHint" stdset="0">
       <size>
        <width>100</width>
@@ -302,6 +286,15 @@ QPushButton:pressed
            <width>132</width>
            <height>132</height>
           </rect>
+         </property>
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="layoutDirection">
+          <enum>Qt::LeftToRight</enum>
          </property>
          <property name="styleSheet">
           <string notr="true">QPushButton
@@ -493,98 +486,22 @@ QPushButton:checked:pressed
      </layout>
     </widget>
    </item>
-<<<<<<< HEAD
-=======
-   <item row="5" column="9">
-    <widget class="QSlider" name="volumeControl">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="minimumSize">
-      <size>
-       <width>16</width>
-       <height>0</height>
-      </size>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">QSlider::groove:vertical {
-background: #5c91a1;
-width: 4px;
-position: absolute; 
-}
-
-QSlider::handle:vertical {
-height: 16px;
-border-radius: 8px;
-background: grey;
-margin: 0  -6px;
-}
-
-QSlider::add-page:vertical {
-background: #5c91a1;
-}
-
-QSlider::sub-page:vertical {
-background: white;
-}</string>
-     </property>
-     <property name="sliderPosition">
-      <number>99</number>
-     </property>
-     <property name="orientation">
-      <enum>Qt::Vertical</enum>
-     </property>
-    </widget>
-   </item>
-   <item row="5" column="0">
-    <spacer name="horizontalSpacer_3">
+   <item row="5" column="2">
+    <spacer name="horizontalSpacer_2">
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
      </property>
      <property name="sizeType">
-      <enum>QSizePolicy::Fixed</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>16</width>
-       <height>20</height>
-      </size>
-     </property>
-    </spacer>
-   </item>
-   <item row="6" column="6">
-    <spacer name="verticalSpacer">
-     <property name="orientation">
-      <enum>Qt::Vertical</enum>
+      <enum>QSizePolicy::Minimum</enum>
      </property>
      <property name="sizeHint" stdset="0">
       <size>
        <width>20</width>
-       <height>40</height>
-      </size>
-     </property>
-    </spacer>
-   </item>
-   <item row="5" column="8">
-    <spacer name="horizontalSpacer">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-     <property name="sizeType">
-      <enum>QSizePolicy::Expanding</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>40</width>
        <height>20</height>
       </size>
      </property>
     </spacer>
    </item>
->>>>>>> master
   </layout>
  </widget>
  <resources/>

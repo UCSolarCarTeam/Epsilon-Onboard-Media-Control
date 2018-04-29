@@ -11,11 +11,7 @@ namespace
 
 ProgressBar::ProgressBar()
 {
-<<<<<<< HEAD
-    color_ = QColor(92,145,161,255);
-=======
     color_ = DEFAULT_COLOR;
->>>>>>> master
 }
 
 ProgressBar::~ProgressBar()

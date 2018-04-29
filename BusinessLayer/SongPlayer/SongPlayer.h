@@ -41,7 +41,6 @@ public slots:
     QColor getColor(QImage img);
     void toggleShuffle();
     void toggleLoop();
-    QColor getColor(QImage img);
 
 private slots:
     void updateState();

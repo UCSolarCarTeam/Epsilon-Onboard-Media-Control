@@ -26,7 +26,7 @@ private:
     ProgressBar& bar_;
 
 private slots:
-    void handleplayButtonClicked();
+    void handlePlayButtonClicked();
     void handleNextButtonClicked();
     void handlePrevButtonClicked();
     void handleShuffleButtonClicked();

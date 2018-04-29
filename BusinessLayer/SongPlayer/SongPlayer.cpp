@@ -193,19 +193,12 @@ void SongPlayer::updateInfo()
 {
     artist_ = mediaPlayer_.metaData(QMediaMetaData::ContributingArtist).toString();
     title_ = mediaPlayer_.metaData(QMediaMetaData::Title).toString();
-<<<<<<< HEAD
 
     //retrieves the album name from current song
-=======
->>>>>>> master
     album_ = mediaPlayer_.metaData(QMediaMetaData::AlbumTitle).toString();
 
     //remove all spaces in album name for easier access to file path of album
     album_.replace(" ", "");
-<<<<<<< HEAD
-=======
-
->>>>>>> master
     cover_ = controller_->currentSong();
 
     int songNameLength = cover_.length() - cover_.lastIndexOf(SONG_FILE_PATH) + SONG_FILE_PATH.length();
