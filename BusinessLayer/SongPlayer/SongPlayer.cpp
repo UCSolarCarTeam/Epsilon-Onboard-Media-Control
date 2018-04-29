@@ -1,5 +1,4 @@
 #include "SongPlayer.h"
-#include <QDebug>
 
 namespace
 {
@@ -193,10 +192,16 @@ void SongPlayer::updateInfo()
 {
     artist_ = mediaPlayer_.metaData(QMediaMetaData::ContributingArtist).toString();
     title_ = mediaPlayer_.metaData(QMediaMetaData::Title).toString();
-    album_ = mediaPlayer_.metaData(QMediaMetaData::AlbumTitle).toString(); //retrieves the album name from current song
-    album_.replace(" ", "");  //remove all spaces in album name for easier access to file path of album
+
+    //retrieves the album name from current song
+    album_ = mediaPlayer_.metaData(QMediaMetaData::AlbumTitle).toString();
+
+    //remove all spaces in album name for easier access to file path of album
+    album_.replace(" ", "");
     cover_ = controller_->currentSong();
     int songNameLength = cover_.length() - cover_.lastIndexOf(SONG_FILE_PATH) + SONG_FILE_PATH.length();
+
+    //manipulate the current song filepath string to the album file path
     cover_.replace(cover_.lastIndexOf(SONG_FILE_PATH), SONG_FILE_PATH.length(), ALBUM_FILE_PATH);
     cover_.replace(cover_.lastIndexOf(ALBUM_FILE_PATH) + ALBUM_FILE_PATH.length(), songNameLength, album_);
     QPixmap img(cover_);

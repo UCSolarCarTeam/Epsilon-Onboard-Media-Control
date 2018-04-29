@@ -1,5 +1,4 @@
 #include "SongPlayerView.h"
-#include <QDebug>
 #include <QDir>
 
 SongPlayerView::SongPlayerView(SongPlayer& songPlayer, I_SongPlayerUi& ui, ProgressBar& bar)
