@@ -97,11 +97,12 @@ border-width: 0px;</string>
      </property>
     </spacer>
    </item>
-   <item row="5" column="9">
-    <spacer name="horizontalSpacer">
+   <item row="5" column="2">
+    <spacer name="horizontalSpacer_2">
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
      </property>
+<<<<<<< HEAD
      <property name="sizeType">
       <enum>QSizePolicy::Minimum</enum>
      </property>
@@ -194,6 +195,8 @@ background: white;
      <property name="sizeType">
       <enum>QSizePolicy::Expanding</enum>
      </property>
+=======
+>>>>>>> master
      <property name="sizeHint" stdset="0">
       <size>
        <width>100</width>
@@ -213,11 +216,11 @@ background: white;
      <property name="minimumSize">
       <size>
        <width>420</width>
-       <height>240</height>
+       <height>191</height>
       </size>
      </property>
      <layout class="QGridLayout" name="gridLayout_2">
-      <item row="1" column="3">
+      <item row="1" column="2">
        <widget class="QPushButton" name="nextSong">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
@@ -407,8 +410,8 @@ background: transparent; </string>
         <zorder>playButton</zorder>
        </widget>
       </item>
-      <item row="2" column="0" alignment="Qt::AlignRight|Qt::AlignVCenter">
-       <widget class="QPushButton" name="LoopButton">
+      <item row="2" column="0" alignment="Qt::AlignRight">
+       <widget class="QPushButton" name="loopButton">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
           <horstretch>0</horstretch>
@@ -447,8 +450,8 @@ QPushButton:checked:pressed
         </property>
        </widget>
       </item>
-      <item row="2" column="3">
-       <widget class="QPushButton" name="ShuffleButton">
+      <item row="2" column="2">
+       <widget class="QPushButton" name="shuffleButton">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
           <horstretch>0</horstretch>
@@ -462,15 +465,13 @@ QPushButton:checked:pressed
          </size>
         </property>
         <property name="styleSheet">
-         <string notr="true">
-QPushButton
+         <string notr="true">QPushButton
 {
 	border-image: url(:/Resources/IconsOff/shuffle.png);
 }
 
 QPushButton:pressed
 {
-	
 	border-image: url(:/Resources/IconsOn/shuffle.png);
 }
 
@@ -492,6 +493,98 @@ QPushButton:checked:pressed
      </layout>
     </widget>
    </item>
+<<<<<<< HEAD
+=======
+   <item row="5" column="9">
+    <widget class="QSlider" name="volumeControl">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>16</width>
+       <height>0</height>
+      </size>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QSlider::groove:vertical {
+background: #5c91a1;
+width: 4px;
+position: absolute; 
+}
+
+QSlider::handle:vertical {
+height: 16px;
+border-radius: 8px;
+background: grey;
+margin: 0  -6px;
+}
+
+QSlider::add-page:vertical {
+background: #5c91a1;
+}
+
+QSlider::sub-page:vertical {
+background: white;
+}</string>
+     </property>
+     <property name="sliderPosition">
+      <number>99</number>
+     </property>
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="0">
+    <spacer name="horizontalSpacer_3">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeType">
+      <enum>QSizePolicy::Fixed</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>16</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="6" column="6">
+    <spacer name="verticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>40</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="5" column="8">
+    <spacer name="horizontalSpacer">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeType">
+      <enum>QSizePolicy::Expanding</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>40</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+>>>>>>> master
   </layout>
  </widget>
  <resources/>

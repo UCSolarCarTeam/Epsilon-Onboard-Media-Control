@@ -23,11 +23,11 @@ public:
     QLabel& labelPic();
     QLabel& infoLabel();
     QPushButton& playButton();
+    QPushButton& shuffleButton();
+    QPushButton& loopButton();
     QProgressBar& progressBar();
     QPushButton& nextSong();
     QPushButton& prevSong();
-    QPushButton& ShuffleButton();
-    QPushButton& LoopButton();
     QVBoxLayout& progressBarContainer();
     QSlider& volumeControl();
 
