@@ -3,7 +3,6 @@
 #include <QAbstractButton>
 #include <QBoxLayout>
 #include <QCoreApplication>
-#include <QDebug>
 #include <QFileDialog>
 #include <QLabel>
 #include <QMediaPlayer>
@@ -18,7 +17,6 @@
 #include <QScopedPointer>
 #include <QMediaMetaData>
 #include "../SongControl/SongControl.h"
-#include <QDebug>
 
 class SongPlayer : public QWidget
 {

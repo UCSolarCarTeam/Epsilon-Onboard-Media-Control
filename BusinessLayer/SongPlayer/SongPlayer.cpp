@@ -9,8 +9,8 @@ namespace
     const int PAGE_STEP_INCREMENTS = 10;
     const QString SONG_FILE_PATH = "SongLibrary/";
     const QString ALBUM_FILE_PATH = "Covers/";
-    const QColor BASELINE = QColor(0,0,0,255);
-    const int SECTIONS = 2;
+    const QColor BASELINE_COLOR = QColor(0,0,0,255);
+    const int IMAGE_PARTITIONS = 2;
 }
 
 SongPlayer::SongPlayer(QWidget* parent) : QWidget(parent)
@@ -211,19 +211,22 @@ void SongPlayer::updateInfo()
     emit updateGUI(title_, artist_, img);
 }
 
-QColor SongPlayer::getColor(QImage img, int number)
+QColor SongPlayer::getColor(QImage img, int thread_ID)
 {
+    //Recieves an image from the view layer and the id of the thread this function is running in.
+    //Uses the thread id to partition the image into smaller chunks. Each thread finds the brightest color
+    //in its segment and returns it.
     int height = img.height();
     int width = img.width();
     int size = qMin(img.width(),img.height());
-    int start_x = (size / SECTIONS) * (number % SECTIONS);
-    int start_y  = (size / SECTIONS) * (number / SECTIONS);
-    int x = (size / SECTIONS) * ((number % SECTIONS) + 1);
-    int y = (size / SECTIONS) * ((int)(number / SECTIONS) + 1);
+    int start_x = (size / IMAGE_PARTITIONS) * (thread_ID % IMAGE_PARTITIONS);
+    int start_y  = (size / IMAGE_PARTITIONS) * (thread_ID / IMAGE_PARTITIONS);
+    int x = (size / IMAGE_PARTITIONS) * ((thread_ID % IMAGE_PARTITIONS) + 1);
+    int y = (size / IMAGE_PARTITIONS) * ((int)(thread_ID / IMAGE_PARTITIONS) + 1);
     //height and width are set to 0 when the song changes.
     if(height != 0 && width != 0)
     {
-        QColor brightest = BASELINE;
+        QColor brightest = BASELINE_COLOR;
         brightest.setHsv(0,0,40,255);
         QColor temp;
         for(int i = start_x; i < x; i+=2)

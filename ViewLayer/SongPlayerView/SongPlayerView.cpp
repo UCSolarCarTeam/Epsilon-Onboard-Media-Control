@@ -111,10 +111,13 @@ void SongPlayerView::updateGUI(const QString& title, const QString& artist, cons
         QImage img(cover.toImage());
         for(int i = 0; i < NUM_THREADS; i++)
         {
+            //spawn threads
             QFuture<QColor> future = QtConcurrent::run(&this->songPlayer_, &SongPlayer::getColor, img, i );
+            //add brightest color to vector
             colors.push_back(future.result());
         }
         QColor max = colors.at(0);
+        //find brightest color in image
         for(int i = 0; i < colors.size(); i++)
         {
             if(colors.at(i).saturation() > max.saturation())
