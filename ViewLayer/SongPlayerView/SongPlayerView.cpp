@@ -19,7 +19,7 @@ namespace
 
                               "QSlider::sub-page:vertical {"
                               "background: white;}";
-
+  
     const QColor DEFAULT_COLOR = QColor(255,255,255,255);
     const int NUM_THREADS = 4;
 }
