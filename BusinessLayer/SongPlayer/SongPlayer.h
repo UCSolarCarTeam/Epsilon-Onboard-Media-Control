@@ -3,7 +3,6 @@
 #include <QAbstractButton>
 #include <QBoxLayout>
 #include <QCoreApplication>
-#include <QDebug>
 #include <QFileDialog>
 #include <QLabel>
 #include <QMediaPlayer>
@@ -40,7 +39,7 @@ public slots:
     void adjustVolume(int volume);
     void toggleShuffle();
     void toggleLoop();
-    QColor getColor(QImage img);
+    QColor getColor(QImage img, int number);
 
 private slots:
     void updateState();
