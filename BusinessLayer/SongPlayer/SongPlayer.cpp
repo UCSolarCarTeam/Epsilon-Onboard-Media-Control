@@ -8,6 +8,8 @@ namespace
     const QString ALBUM_FILE_PATH = "Covers/";
     const QColor BASELINE_COLOR = QColor(0,0,0,255);
     const int IMAGE_PARTITIONS = 2;
+    const int STEP = 2;
+    const int SATURATION_OFFSET = 10;
 }
 
 SongPlayer::SongPlayer(QWidget* parent) : QWidget(parent)
@@ -226,12 +228,12 @@ QColor SongPlayer::getColor(QImage img, int thread_ID)
         QColor brightest = BASELINE_COLOR;
         brightest.setHsv(0,0,40,255);
         QColor temp;
-        for(int i = start_x; i < x; i+=2)
+        for(int i = start_x; i < x; i+=STEP)
         {
-            for(int j = start_y; j < y; j+=2)
+            for(int j = start_y; j < y; j+=STEP)
             {
                 temp = img.pixel(i, j);
-                if(temp.value() > brightest.value() && temp.saturation() > brightest.saturation())
+                if(temp.value() > brightest.value() && temp.saturation() > brightest.saturation() - SATURATION_OFFSET)
                 {
                     brightest = temp;
                 }
