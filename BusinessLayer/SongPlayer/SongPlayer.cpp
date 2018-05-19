@@ -4,9 +4,6 @@ namespace
 {
     const int MS_TO_MINUTES = 60000;
     const double MS_TO_SECONDS = 1000.0;
-    const int MIN_VALUE = 40;
-    const int SKIP_PIXELS = 10;
-    const int PAGE_STEP_INCREMENTS = 10;
     const QString SONG_FILE_PATH = "SongLibrary/";
     const QString ALBUM_FILE_PATH = "Covers/";
     const QColor BASELINE_COLOR = QColor(0,0,0,255);

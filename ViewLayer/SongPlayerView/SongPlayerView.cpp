@@ -129,7 +129,6 @@ void SongPlayerView::updateGUI(const QString& title, const QString& artist, cons
         bar_.changeColor(max);
     }
 
-
 }
 
 void SongPlayerView::updateProgress(qint64 position, qint64 duration)
