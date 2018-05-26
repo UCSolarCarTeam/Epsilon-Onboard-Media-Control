@@ -1,0 +1,19 @@
+<RCC>
+    <qresource prefix="/">
+        <file>../Resources/IconsOff/next.png</file>
+        <file>../Resources/IconsOff/pause.png</file>
+        <file>../Resources/IconsOff/play.png</file>
+        <file>../Resources/IconsOff/previous.png</file>
+        <file>../Resources/IconsOff/repeat.png</file>
+        <file>../Resources/IconsOff/shuffle.png</file>
+        <file>../Resources/IconsOff/speaker.png</file>
+        <file>../Resources/IconsOn/next.png</file>
+        <file>../Resources/IconsOn/pause.png</file>
+        <file>../Resources/IconsOn/play.png</file>
+        <file>../Resources/IconsOn/previous.png</file>
+        <file>../Resources/IconsOn/repeat.png</file>
+        <file>../Resources/IconsOn/shuffle.png</file>
+        <file>../Resources/IconsOn/speaker.png</file>
+        <file>../Resources/IconsOff/mask.png</file>
+    </qresource>
+</RCC>
