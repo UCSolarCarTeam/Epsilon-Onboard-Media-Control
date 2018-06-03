@@ -11,9 +11,9 @@ HEADERS += \
     BusinessContainer.h \
     SongPlayer/SongPlayer.h \
     SongPlayer/I_SongPlayer.h \
-    SongControl/SongControl.h
+    SongControl/SongControl.h \
 
 SOURCES += \
     BusinessContainer.cpp \
     SongPlayer/SongPlayer.cpp \
-    SongControl/SongControl.cpp
+    SongControl/SongControl.cpp \
