@@ -4,3 +4,4 @@ moc_*
 *.mp3
 *.jpg
 *.png
+build/*
