@@ -27,48 +27,54 @@ MediaStatus GStreamerMediaPlayer::mediaStatus()
 {
     MediaStatus status = MediaStatus::Error;
 
-    switch(mediaPlayer_.mediaStatus())
+    switch (mediaPlayer_.mediaStatus())
     {
         case QMediaPlayer::NoMedia:
         {
             status = MediaStatus::NoMedia;
             break;
         }
+
         default:
         {
             break;
         }
     }
-        return status;
+
+    return status;
 }
 
 PlayerState GStreamerMediaPlayer::state()
 {
     PlayerState status = PlayerState::Stopped;
 
-    switch(mediaPlayer_.state())
+    switch (mediaPlayer_.state())
     {
         case QMediaPlayer::StoppedState:
         {
             status = PlayerState::Stopped;
             break;
         }
+
         case QMediaPlayer::PausedState:
         {
             status = PlayerState::Paused;
             break;
         }
+
         case QMediaPlayer::PlayingState:
         {
             status = PlayerState::Playing;
             break;
         }
+
         default:
         {
             break;
         }
     }
-        return status;
+
+    return status;
 }
 
 void GStreamerMediaPlayer::setMedia(const QString& filePath)
