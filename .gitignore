@@ -6,4 +6,4 @@ moc_*
 *.png
 build*
 *.o
-release/*
+release/
