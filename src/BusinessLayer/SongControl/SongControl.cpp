@@ -23,10 +23,12 @@ QString SongControl::nextSong()
 QString SongControl::previousSong()
 {
     currentSongIndex_ -= 1;
+
     if (currentSongIndex_ < 0)
     {
         currentSongIndex_ = files_.size() - 1;
     }
+
     return files_[currentSongIndex_];
 }
 
@@ -38,12 +40,13 @@ QString SongControl::currentSong()
 QString SongControl::shuffleSong()
 {
 
-    if(files_.length() == 1)
+    if (files_.length() == 1)
     {
         return (files_[currentSongIndex_]);
     }
 
     int index = currentSongIndex_;
+
     do
     {
         currentSongIndex_ = (rand() % files_.size());
@@ -77,6 +80,7 @@ bool SongControl::readSongNames(QString dir, QVector<QString>& files_)
     {
         return false;
     }
+
     if (!relativeDirectory.cd("DataLayer/SongLibrary"))
     {
         return false;

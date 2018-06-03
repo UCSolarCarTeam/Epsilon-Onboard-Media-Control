@@ -6,7 +6,6 @@
 #include <QDebug>
 #include <QFileDialog>
 #include <QLabel>
-#include <QMediaPlayer>
 #include <QMouseEvent>
 #include <QShortcut>
 #include <QStandardPaths>
@@ -16,8 +15,8 @@
 #include <QWidget>
 #include <QProgressBar>
 #include <QScopedPointer>
-#include <QMediaMetaData>
 #include "../SongControl/SongControl.h"
+#include "I_MediaPlayer.h"
 
 class SongPlayer : public QWidget
 {
@@ -55,7 +54,7 @@ private:
     QAbstractButton* playButton_;
     QLabel* positionLabel_;
     QPoint offset_;
-    QMediaPlayer mediaPlayer_;
+    QScopedPointer<I_MediaPlayer> mediaPlayer_;
     qint64 position_;
     qint64 duration_;
     QString title_;
@@ -67,6 +66,5 @@ private:
 
 signals:
     void updateGUI(const QString& title, const QString& author, const QPixmap& cover);
-    void resetPosition(const QMediaPlayer& media);
     void updateProgress(qint64 position, qint64 duration);
 };
