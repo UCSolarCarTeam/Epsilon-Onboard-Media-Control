@@ -5,3 +5,4 @@ moc_*
 *.jpg
 *.png
 build/*
+*.o
