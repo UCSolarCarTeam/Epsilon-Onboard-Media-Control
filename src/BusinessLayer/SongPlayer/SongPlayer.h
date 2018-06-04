@@ -18,6 +18,15 @@
 //#include <QMediaMetaData>
 #include "../SongControl/SongControl.h"
 
+#include <ao/ao.h>
+#include <mpg123.h>
+#include <string>
+#include <cstring>
+#include <unistd.h>
+
+#define BITS 8
+
+
 class SongPlayer : public QWidget
 {
     Q_OBJECT
@@ -41,6 +50,8 @@ public slots:
     void toggleLoop();
     QColor getColor(QImage img, int number);
 
+   // void ThreadFunction();
+
 private slots:
     void updateState();
     void durationChanged(qint64 duration);
@@ -54,6 +65,9 @@ private:
     QAbstractButton* playButton_;
     QLabel* positionLabel_;
     QPoint offset_;
+    double MAX_VOLUME;
+    double volume;
+
     //QMediaPlayer mediaPlayer_;
 
     qint64 position_;
@@ -64,6 +78,18 @@ private:
     QString album_;
     bool shuffle_;
     bool loop_;
+    char* songName;
+
+    unsigned char *buffer;
+    size_t buffer_size;
+    bool loaded;
+    mpg123_handle *mh;
+    ao_sample_format format;
+    ao_device *dev;
+    int channels, encoding;
+    long rate;
+    bool quitSong;
+
 
 signals:
     void updateGUI(const QString& title, const QString& author, const QPixmap& cover);
