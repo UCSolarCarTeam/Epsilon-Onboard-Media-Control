@@ -18,5 +18,5 @@ private:
     QColor color_;
 
 protected:
-    void paintEvent(QPaintEvent *);
+    void paintEvent(QPaintEvent*);
 };

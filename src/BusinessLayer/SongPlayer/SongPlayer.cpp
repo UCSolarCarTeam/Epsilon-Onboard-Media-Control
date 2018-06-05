@@ -12,9 +12,9 @@ namespace
 }
 
 SongPlayer::SongPlayer(QWidget* parent) : QWidget(parent)
-  , controller_(new SongControl())
-  , shuffle_(false)
-  , loop_(false)
+    , controller_(new SongControl())
+    , shuffle_(false)
+    , loop_(false)
 {
     connect(&mediaPlayer_, &QMediaPlayer::stateChanged, this, &SongPlayer::updateState);
     connect(&mediaPlayer_, SIGNAL(durationChanged(qint64)), this, SLOT(durationChanged(qint64)));
@@ -30,7 +30,7 @@ void SongPlayer::updateState()
 {
     if (mediaPlayer_.position() >= mediaPlayer_.duration() && mediaPlayer_.duration() != -1)
     {
-         playNext();
+        playNext();
     }
 }
 
@@ -64,11 +64,11 @@ void SongPlayer::openNext()
 
 void SongPlayer::playNext()
 {
-    if(loop_)
+    if (loop_)
     {
         openFile();
     }
-    else if(shuffle_)
+    else if (shuffle_)
     {
         openShuffle();
     }
@@ -110,22 +110,23 @@ void SongPlayer::openShuffle()
 
 void SongPlayer::playPrevious()
 {
-    if(shuffle_)
-     {
-         openShuffle();
-     }
-     else
-     {
-         openPrevious();
-     }
-     togglePlayback();
+    if (shuffle_)
+    {
+        openShuffle();
+    }
+    else
+    {
+        openPrevious();
+    }
+
+    togglePlayback();
 }
 
 void SongPlayer::togglePlayback()
 {
     if (mediaPlayer_.mediaStatus() == QMediaPlayer::NoMedia)
     {
-        if(shuffle_)
+        if (shuffle_)
         {
             openShuffle();
         }
@@ -133,6 +134,7 @@ void SongPlayer::togglePlayback()
         {
             openFile();
         }
+
         mediaPlayer_.play();
     }
     else if (mediaPlayer_.state() == QMediaPlayer::PlayingState)
@@ -168,7 +170,7 @@ void SongPlayer::adjustVolume(int volume)
 
 void SongPlayer::toggleShuffle()
 {
-    if(shuffle_)
+    if (shuffle_)
     {
         shuffle_ = false;
     }
@@ -180,7 +182,7 @@ void SongPlayer::toggleShuffle()
 
 void SongPlayer::toggleLoop()
 {
-    if(loop_)
+    if (loop_)
     {
         loop_ = false;
     }
@@ -218,19 +220,22 @@ QColor SongPlayer::getColor(QImage img)
     int width = img.width() / 2;
 
     //height and width are set to 0 when the song changes.
-    if(height != 0 && width != 0)
+    if (height != 0 && width != 0)
     {
         QColor color(img.pixel(width, height));
-        while(color.lightness() < MIN_LIGHT)
+
+        while (color.lightness() < MIN_LIGHT)
         {
             QColor temp(img.pixel(width += SKIP_PIXELS, height += SKIP_PIXELS));
             color = temp;
-            if(width >= img.width() - SKIP_PIXELS || height >= img.height() - SKIP_PIXELS)
+
+            if (width >= img.width() - SKIP_PIXELS || height >= img.height() - SKIP_PIXELS)
             {
-                QColor white = QColor(255,255,255,255);
+                QColor white = QColor(255, 255, 255, 255);
                 color = white;
             }
         }
+
         return color;
     }
 }

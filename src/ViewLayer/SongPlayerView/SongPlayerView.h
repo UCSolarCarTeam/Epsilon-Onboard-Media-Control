@@ -33,5 +33,5 @@ private slots:
     void handleLoopButtonClicked();
     void handleVolumeControl();
     void updateGUI(const QString& title, const QString& artist, const QPixmap& cover);
-    void updateProgress(qint64 position,qint64 duration);
+    void updateProgress(qint64 position, qint64 duration);
 };

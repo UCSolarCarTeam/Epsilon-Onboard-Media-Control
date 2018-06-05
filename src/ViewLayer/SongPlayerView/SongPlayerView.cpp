@@ -4,23 +4,23 @@
 namespace
 {
     const QString STYLESHEET = "QSlider::groove:vertical {"
-                              "background: %1;"
-                              "width: 4px;"
-                              "position: absolute;}"
+                               "background: %1;"
+                               "width: 4px;"
+                               "position: absolute;}"
 
-                              "QSlider::handle:vertical {"
-                              "height: 16px;"
-                              "border-radius: 8px;"
-                              "background: grey;"
-                              "margin: 0  -6px;}"
+                               "QSlider::handle:vertical {"
+                               "height: 16px;"
+                               "border-radius: 8px;"
+                               "background: grey;"
+                               "margin: 0  -6px;}"
 
-                              "QSlider::add-page:vertical {"
-                              "background: %1;}"
+                               "QSlider::add-page:vertical {"
+                               "background: %1;}"
 
-                              "QSlider::sub-page:vertical {"
-                              "background: white;}";
+                               "QSlider::sub-page:vertical {"
+                               "background: white;}";
 
-    const QColor DEFAULT_COLOR = QColor(219,160,56,255);
+    const QColor DEFAULT_COLOR = QColor(219, 160, 56, 255);
 }
 
 SongPlayerView::SongPlayerView(SongPlayer& songPlayer, I_SongPlayerUi& ui, ProgressBar& bar)
@@ -42,7 +42,7 @@ SongPlayerView::SongPlayerView(SongPlayer& songPlayer, I_SongPlayerUi& ui, Progr
     connect(&ui_.loopButton(), SIGNAL(clicked()), this, SLOT(handleLoopButtonClicked()));
     connect(&ui_.volumeControl(), SIGNAL(valueChanged(int)), this, SLOT(handleVolumeControl()));
     connect(&songPlayer_, SIGNAL(updateGUI(const QString&, const QString&, const QPixmap&)), this, SLOT(updateGUI(const QString&, const QString&, const QPixmap&)));
-    connect(&songPlayer_,SIGNAL(updateProgress(qint64,qint64)), this,SLOT(updateProgress(qint64,qint64)));
+    connect(&songPlayer_, SIGNAL(updateProgress(qint64, qint64)), this, SLOT(updateProgress(qint64, qint64)));
     ui_.progressBarContainer().addWidget(&bar_);
 }
 
@@ -69,7 +69,7 @@ void SongPlayerView::handlePrevButtonClicked()
 
 void SongPlayerView::handleShuffleButtonClicked()
 {
-    if(ui_.loopButton().isChecked())
+    if (ui_.loopButton().isChecked())
     {
         ui_.loopButton().setChecked(false);
         songPlayer_.toggleLoop();
@@ -80,7 +80,7 @@ void SongPlayerView::handleShuffleButtonClicked()
 
 void SongPlayerView::handleLoopButtonClicked()
 {
-    if(ui_.shuffleButton().isChecked())
+    if (ui_.shuffleButton().isChecked())
     {
         ui_.shuffleButton().setChecked(false);
         songPlayer_.toggleShuffle();
@@ -102,6 +102,7 @@ void SongPlayerView::updateGUI(const QString& title, const QString& artist, cons
     QColor white = DEFAULT_COLOR;
     ui_.volumeControl().setStyleSheet(styleSheet.arg(white.name()));
     bar_.changeColor(white);
+
     if (!cover.isNull())
     {
         ui_.labelPic().setPixmap(cover);
@@ -120,6 +121,6 @@ void SongPlayerView::updateGUI(const QString& title, const QString& artist, cons
 
 void SongPlayerView::updateProgress(qint64 position, qint64 duration)
 {
-    bar_.progress = (double)position/(double)duration;
+    bar_.progress = (double)position / (double)duration;
     bar_.update();
 }

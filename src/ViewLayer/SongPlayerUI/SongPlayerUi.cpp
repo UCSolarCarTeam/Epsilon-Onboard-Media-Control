@@ -9,7 +9,7 @@ SongPlayerUi::SongPlayerUi():
     ui_->setupUi(this);
     setWindowFlags(Qt::Window | Qt::FramelessWindowHint);
     setGeometry(
-            QStyle::alignedRect(
+        QStyle::alignedRect(
             Qt::LeftToRight,
             Qt::AlignBottom,
             size(),
