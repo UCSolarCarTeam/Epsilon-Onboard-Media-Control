@@ -3,7 +3,6 @@
 #include <QAbstractButton>
 #include <QBoxLayout>
 #include <QCoreApplication>
-#include <QDebug>
 #include <QFileDialog>
 #include <QLabel>
 #include <QMouseEvent>
@@ -17,6 +16,15 @@
 #include <QScopedPointer>
 #include "../SongControl/SongControl.h"
 #include "I_MediaPlayer.h"
+
+#include <ao/ao.h>
+#include <mpg123.h>
+#include <string>
+#include <cstring>
+#include <unistd.h>
+
+#define BITS 8
+
 
 class SongPlayer : public QWidget
 {
@@ -39,7 +47,9 @@ public slots:
     void adjustVolume(int volume);
     void toggleShuffle();
     void toggleLoop();
-    QColor getColor(QImage img);
+    QColor getColor(QImage img, int number);
+
+    // void ThreadFunction();
 
 private slots:
     void updateState();
@@ -55,6 +65,8 @@ private:
     QLabel* positionLabel_;
     QPoint offset_;
     QScopedPointer<I_MediaPlayer> mediaPlayer_;
+//    double MAX_VOLUME;
+//    double volume;
     qint64 position_;
     qint64 duration_;
     QString title_;
@@ -63,6 +75,18 @@ private:
     QString album_;
     bool shuffle_;
     bool loop_;
+    char* songName;
+
+    unsigned char* buffer;
+    size_t buffer_size;
+    bool loaded;
+    mpg123_handle* mh;
+    ao_sample_format format;
+    ao_device* dev;
+    int channels, encoding;
+    long rate;
+    bool quitSong;
+
 
 signals:
     void updateGUI(const QString& title, const QString& author, const QPixmap& cover);

@@ -13,10 +13,12 @@ HEADERS += \
     SongPlayer/I_SongPlayer.h \
     SongControl/SongControl.h \
     SongPlayer/I_MediaPlayer.h \
-    SongPlayer/GStreamerMediaPlayer.h
+    SongPlayer/GStreamerMediaPlayer.h \
+    LibMpgMediaPlayer.h
 
 SOURCES += \
     BusinessContainer.cpp \
     SongPlayer/SongPlayer.cpp \
     SongControl/SongControl.cpp \
-    SongPlayer/GStreamerMediaPlayer.cpp
+    SongPlayer/GStreamerMediaPlayer.cpp \
+    LibMpgMediaPlayer.cpp
