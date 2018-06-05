@@ -72,11 +72,12 @@ bool SongControl::readSongNames(QString dir, QVector<QString>& files_)
     QString filepath;
 
     QDir relativeDirectory(".");
+
     if (!relativeDirectory.cdUp())
     {
         return false;
     }
-    if (!relativeDirectory.cd("Epsilon-Onboard-Media-Control/DataLayer/SongLibrary"))
+    if (!relativeDirectory.cd("DataLayer/SongLibrary"))
     {
         return false;
     }
