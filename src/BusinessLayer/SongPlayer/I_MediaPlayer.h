@@ -6,6 +6,7 @@
 enum MediaStatus
 {
     NoMedia,
+    MediaLoaded,
     Error
 };
 enum PlayerState

@@ -15,7 +15,7 @@
 #include <QProgressBar>
 #include <QScopedPointer>
 #include "../SongControl/SongControl.h"
-#include "I_MediaPlayer.h"
+#include "../LibMpgMediaPlayer.h"
 
 #include <ao/ao.h>
 #include <mpg123.h>
@@ -43,13 +43,11 @@ public slots:
     void playNext();
     void playPrevious();
     void setFile(const QString& filePath);
-    void togglePlayback();
+    void togglePlayback(bool play);
     void adjustVolume(int volume);
     void toggleShuffle();
     void toggleLoop();
     QColor getColor(QImage img, int number);
-
-    // void ThreadFunction();
 
 private slots:
     void updateState();
@@ -64,9 +62,7 @@ private:
     QAbstractButton* playButton_;
     QLabel* positionLabel_;
     QPoint offset_;
-    QScopedPointer<I_MediaPlayer> mediaPlayer_;
-//    double MAX_VOLUME;
-//    double volume;
+    QScopedPointer<LibMpgMediaPlayer> mediaPlayer_;
     qint64 position_;
     qint64 duration_;
     QString title_;
@@ -75,18 +71,6 @@ private:
     QString album_;
     bool shuffle_;
     bool loop_;
-    char* songName;
-
-    unsigned char* buffer;
-    size_t buffer_size;
-    bool loaded;
-    mpg123_handle* mh;
-    ao_sample_format format;
-    ao_device* dev;
-    int channels, encoding;
-    long rate;
-    bool quitSong;
-
 
 signals:
     void updateGUI(const QString& title, const QString& author, const QPixmap& cover);

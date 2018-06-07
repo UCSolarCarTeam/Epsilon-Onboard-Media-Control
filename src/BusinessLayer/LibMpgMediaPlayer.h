@@ -1,14 +1,20 @@
 #pragma once
 #include <QMediaPlayer>
+#include <QThread>
 #include "SongPlayer/I_MediaPlayer.h"
+#include "SongControl/SongControl.h"
 #include <ao/ao.h>
 #include <mpg123.h>
+#include "DeltaSongPlayer.h"
+
+class LibMpgMediaPlayerThread;
+class DeltaSongPlayer;
 
 class LibMpgMediaPlayer : public I_MediaPlayer
 {
     Q_OBJECT
 public:
-    LibMpgMediaPlayer();
+    LibMpgMediaPlayer(SongControl* songControl);
     qint64 position();
     qint64 duration();
     MediaStatus mediaStatus();
@@ -26,9 +32,10 @@ signals:
     void metaDataAvailableChanged(bool);
 
 private:
+    DeltaSongPlayer* songplayer;
+    SongControl* songControl_;
     double volume;
     double MAX_VOLUME;
-    void freeMusic();
     int loadSong(char* songName);
 
     /*mpg123 specific variables*/
@@ -41,4 +48,10 @@ private:
     int channels, encoding;
     long rate;
     bool quitSong;
+    MediaStatus status_;
+    PlayerState state_;
+
+    /*Modes*/
+    enum threadMode { PLAY, NEXT, PREVIOUS, SHUFFLE, PAUSE};
+    threadMode mode;
 };

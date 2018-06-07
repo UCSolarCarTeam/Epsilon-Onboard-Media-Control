@@ -1,6 +1,5 @@
 #include "SongPlayer.h"
-#include "GStreamerMediaPlayer.h"
-#include "LibMpgMediaPlayer.h"
+//#include "LibMpgMediaPlayer.h"
 
 namespace
 {
@@ -18,18 +17,12 @@ SongPlayer::SongPlayer(QWidget* parent) : QWidget(parent)
     , controller_(new SongControl())
     , shuffle_(false)
     , loop_(false)
-    , mediaPlayer_(new LibMpgMediaPlayer())
+    , mediaPlayer_(new LibMpgMediaPlayer(controller_.data()))
 {
     connect(mediaPlayer_.data(), SIGNAL(stateChanged()), this, SLOT(updateState()));
     connect(mediaPlayer_.data(), SIGNAL(durationChanged(qint64)), this, SLOT(durationChanged(qint64)));
     connect(mediaPlayer_.data(), SIGNAL(positionChanged(qint64)), this, SLOT(positionChanged(qint64)));
     connect(mediaPlayer_.data(), SIGNAL(metaDataAvailableChanged(bool)), this, SLOT(updateInfo()));
-
-//    MAX_VOLUME = 1;
-//    volume = MAX_VOLUME/3;
-
-//    ao_initialize();
-//    mpg123_init();
 }
 
 SongPlayer::~SongPlayer()
@@ -87,7 +80,7 @@ void SongPlayer::playNext()
         openNext();
     }
 
-    togglePlayback();
+    togglePlayback(true);
 }
 
 void SongPlayer::openPrevious()
@@ -129,72 +122,37 @@ void SongPlayer::playPrevious()
         openPrevious();
     }
 
-    togglePlayback();
+    togglePlayback(true);
 }
 
-void SongPlayer::togglePlayback()
+void SongPlayer::togglePlayback(bool play)
 {
-    if (mediaPlayer_->mediaStatus() == MediaStatus::NoMedia)
-    {
-        if (shuffle_)
-        {
-            openShuffle();
-        }
-        else
-        {
-            openFile();
-        }
+//    if (mediaPlayer_->mediaStatus() == MediaStatus::NoMedia)
+//    {
+//        if (shuffle_)
+//        {
+//            openShuffle();
+//        }
+//        else
+//        {
+//            openFile();
+//        }
 
-        mediaPlayer_->play();
-    }
-    else if (mediaPlayer_->state() == PlayerState::Playing)
+//        mediaPlayer_->play();
+//    }
+    if(play)
     {
-        mediaPlayer_->pause();
+       mediaPlayer_->play();
     }
     else
     {
-        mediaPlayer_->play();
+        mediaPlayer_->pause();
     }
-
-//    size_t done;
-//    openFile();
-//    int driver;
-//    int err;
-//        driver = ao_default_driver_id();
-//        mh = mpg123_new(NULL, &err);
-//        mpg123_volume(mh, volume);
-//        // open the file and get the decoding format
-//        mpg123_open(mh, songName);
-//        mpg123_getformat(mh, &rate, &channels, &encoding); // error: Invalid UTF16 surrogate pair at 10 (0xff08). when running this line
-//        buffer_size = mpg123_outblock(mh);
-//        buffer = (unsigned char*) malloc(buffer_size * sizeof(unsigned char));
-
-//        // set the output format and open the output device
-//        format.bits = mpg123_encsize(encoding) * BITS;
-//        format.rate = rate;
-//        format.channels = channels;
-//        format.byte_format = AO_FMT_NATIVE;
-//        format.matrix = 0;
-
-//        // most important thing used in thread later
-//        dev = ao_open_live(driver, &format, NULL);
-
-//        loaded = true;
-//        printf("SongPlayer::loadSong: Loaded %s!\n",songName);
-
-
-//        if (mpg123_read(mh, buffer, buffer_size, &done) == MPG123_OK)
-//            ao_play(dev, (char*)buffer, done);
-
-//        if (getCurrentTime() >= getSongLength())
-//            mode = NEXT;
 }
 
 void SongPlayer::setFile(const QString& filePath)
 {
     mediaPlayer_->setMedia(filePath);
-//    QByteArray ba = filePath.toLocal8Bit();
-//    songName = ba.data();
 }
 
 void SongPlayer::durationChanged(qint64 duration)
