@@ -24,13 +24,14 @@
  */
 
 #include "DeltaSongPlayer.h"
+#include "LibMpgMediaPlayer.h"
 #include <QDebug>
 //#include "SongLoader.h"
 
 DeltaSongPlayer::DeltaSongPlayer(SongControl* songControl)
     : songControl_(songControl)
 {
-    MAX_VOLUME = 0.4;
+    MAX_VOLUME = 1.0;
 
     loaded = false;
     quitSong = false;
@@ -55,7 +56,7 @@ void DeltaSongPlayer::songQuit()
 
 void DeltaSongPlayer::changeVolume(double change)
 {
-    volume += change;
+    volume = change;
     if (volume > MAX_VOLUME)
     {
         volume = MAX_VOLUME;

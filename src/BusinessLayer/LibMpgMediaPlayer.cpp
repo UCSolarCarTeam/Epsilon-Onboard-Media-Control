@@ -53,6 +53,8 @@ void LibMpgMediaPlayer::setMedia(const QString& filePath)
 void LibMpgMediaPlayer::setVolume(int volume)
 {
     this->volume = static_cast<double>(volume) / 100.0;
+    songplayer->changeVolume(this->volume);
+
 }
 QString LibMpgMediaPlayer::metaData(const QString& key)
 {

@@ -64,6 +64,10 @@ class DeltaSongPlayer : public I_ThreadClass
     protected:
         void ThreadFunction();
 
+    private slots:
+        void durationChanged(qint64 duration);
+        void positionChanged(qint64 progress);
+
     private:
         double MAX_VOLUME;
 
