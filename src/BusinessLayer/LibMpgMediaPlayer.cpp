@@ -48,6 +48,7 @@ void LibMpgMediaPlayer::setMedia(const QString& filePath)
     {
         status_ = MediaStatus::MediaLoaded;
     }
+    emit metaDataAvailableChanged(true);
 }
 void LibMpgMediaPlayer::setVolume(int volume)
 {
@@ -55,6 +56,20 @@ void LibMpgMediaPlayer::setVolume(int volume)
 }
 QString LibMpgMediaPlayer::metaData(const QString& key)
 {
-    Q_UNUSED(key);
-    return "Ben is Fat";
+    if(key == QMediaMetaData::ContributingArtist)
+    {
+        return songplayer->currentSongArtist();
+    }
+    else if(key == QMediaMetaData::Title)
+    {
+        return songplayer->currentSongTitle();
+    }
+    else if(key == QMediaMetaData::AlbumTitle)
+    {
+        return songplayer->currentSongAlbum();
+    }
+    else
+    {
+        return "Ben is Fat";
+    }
 }

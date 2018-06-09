@@ -54,10 +54,13 @@ class DeltaSongPlayer : public I_ThreadClass
         double getSongLength();
         double getVolume();
         double getMaxVolume();
-        std::string currentSong();
+        QString currentSongAlbum();
+        QString currentSongArtist();
+        QString currentSongTitle();
 
         void songQuit();
-                int loadSong(QString filePath);
+        int loadSong(QString filePath);
+
     protected:
         void ThreadFunction();
 
@@ -79,6 +82,7 @@ class DeltaSongPlayer : public I_ThreadClass
         long rate;
         bool quitSong;
         char* mcurrentSong;
+        mpg123_id3v2* metaData;
 
         /*Modes*/
         enum threadMode { PLAY, NEXT, PREVIOUS, SHUFFLE, PAUSE};

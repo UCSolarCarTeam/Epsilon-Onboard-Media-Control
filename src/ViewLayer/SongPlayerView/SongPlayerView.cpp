@@ -29,7 +29,7 @@ SongPlayerView::SongPlayerView(SongPlayer& songPlayer, I_SongPlayerUi& ui, Progr
 {
     ui_.infoLabel().setAlignment(Qt::AlignCenter);
     ui_.playButton().setCheckable(true);
-    ui_.playButton().setChecked(true);
+    ui_.playButton().setChecked(false);
     ui_.shuffleButton().setCheckable(true);
     ui_.shuffleButton().setChecked(false);
     ui_.loopButton().setCheckable(true);
@@ -51,7 +51,6 @@ SongPlayerView::~SongPlayerView()
 
 void SongPlayerView::handlePlayButtonClicked()
 {
-
     songPlayer_.togglePlayback(ui_.playButton().isChecked());
 }
 

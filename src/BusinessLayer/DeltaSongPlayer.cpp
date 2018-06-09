@@ -41,9 +41,8 @@ DeltaSongPlayer::DeltaSongPlayer(SongControl* songControl)
     ao_initialize();
 
     mpg123_init();
-    mode = PLAY;
+    mode = PAUSE;
     volume = MAX_VOLUME;
-
 }
 DeltaSongPlayer::~DeltaSongPlayer()
 {
@@ -119,6 +118,9 @@ int DeltaSongPlayer::loadSong(QString filePath)
     // most important thing used in thread later
     dev = ao_open_live(driver, &format, NULL);
 
+    // loading song metadata
+    mpg123_id3(mh, NULL, &metaData);
+
     loaded = true;
     printf("DeltaSongPlayer::loadSong: Loaded %s!\n",songName);
     mode = PLAY;
@@ -143,9 +145,23 @@ void DeltaSongPlayer::pause()
         qDebug() << "pause() Pause";
     }
 }
-std::string DeltaSongPlayer::currentSong()
+
+QString DeltaSongPlayer::currentSongAlbum()
 {
-    //return loader.currentSong();
+    QString album = metaData->album->p;
+    return album;
+}
+
+QString DeltaSongPlayer::currentSongArtist()
+{
+    QString artist = metaData->artist->p;
+    return artist;
+}
+
+QString DeltaSongPlayer::currentSongTitle()
+{
+   QString title = metaData->title->p;
+   return title;
 }
 
 
