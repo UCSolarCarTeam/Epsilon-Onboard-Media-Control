@@ -38,6 +38,7 @@
 
 class DeltaSongPlayer : public I_ThreadClass
 {
+    Q_OBJECT
     public:
         DeltaSongPlayer(SongControl* songControl);
         ~DeltaSongPlayer();
@@ -61,12 +62,12 @@ class DeltaSongPlayer : public I_ThreadClass
         void songQuit();
         int loadSong(QString filePath);
 
+    signals:
+        void durationChanged(qint64);
+        void positionChanged(qint64);
+
     protected:
         void ThreadFunction();
-
-    private slots:
-        void durationChanged(qint64 duration);
-        void positionChanged(qint64 progress);
 
     private:
         double MAX_VOLUME;

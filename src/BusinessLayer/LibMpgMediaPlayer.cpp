@@ -42,6 +42,11 @@ PlayerState LibMpgMediaPlayer::state()
     return state_;
 }
 
+DeltaSongPlayer* LibMpgMediaPlayer::getDeltaSongPlayer()
+{
+    return songplayer;
+}
+
 void LibMpgMediaPlayer::setMedia(const QString& filePath)
 {
     if(songplayer->loadSong(filePath) == 0)

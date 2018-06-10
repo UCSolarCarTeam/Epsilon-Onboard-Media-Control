@@ -27,9 +27,10 @@
 #define I_THREADCLASS_H
 
 #include <thread>
+#include <QObject>
 
 
-class I_ThreadClass
+class I_ThreadClass : public QObject
 {
 public:
     I_ThreadClass() { }

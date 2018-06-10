@@ -231,7 +231,6 @@ void DeltaSongPlayer::ThreadFunction()
 
     while (!quitSong)
     {
-
         switch(mode){
 
         case PLAY:
@@ -258,5 +257,7 @@ void DeltaSongPlayer::ThreadFunction()
             usleep(200000);
             break;
         }
+
+        emit positionChanged(getCurrentTime() * 1000);
     }
 }

@@ -25,10 +25,10 @@ public:
     void pause();
     PlayerState state();
 
+    DeltaSongPlayer* getDeltaSongPlayer();
+
 signals:
     void stateChanged();
-    void durationChanged(qint64);
-    void positionChanged(qint64);
     void metaDataAvailableChanged(bool);
 
 private:
