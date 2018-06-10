@@ -5,12 +5,11 @@ namespace
 {
     const int MS_TO_MINUTES = 60000;
     const double MS_TO_SECONDS = 1000.0;
+    const int MIN_LIGHT = 40;
+    const int SKIP_PIXELS = 10;
+    const int PAGE_STEP_INCREMENTS = 10;
     const QString SONG_FILE_PATH = "SongLibrary/";
     const QString ALBUM_FILE_PATH = "Covers/";
-    const QColor BASELINE_COLOR = QColor(0, 0, 0, 255);
-    const int IMAGE_PARTITIONS = 2;
-    const int STEP = 2;
-    const int SATURATION_OFFSET = 10;
 }
 
 SongPlayer::SongPlayer(QWidget* parent) : QWidget(parent)
@@ -203,10 +202,11 @@ void SongPlayer::updateInfo()
 
     //remove all spaces in album name for easier access to file path of album
     album_.replace(" ", "");
-
     cover_ = controller_->currentSong();
 
     int songNameLength = cover_.length() - cover_.lastIndexOf(SONG_FILE_PATH) + SONG_FILE_PATH.length();
+
+    //manipulate the current song filepath string to the album file path
     cover_.replace(cover_.lastIndexOf(SONG_FILE_PATH), SONG_FILE_PATH.length(), ALBUM_FILE_PATH);
     cover_.replace(cover_.lastIndexOf(ALBUM_FILE_PATH) + ALBUM_FILE_PATH.length(), songNameLength, album_);
 
@@ -215,51 +215,28 @@ void SongPlayer::updateInfo()
     emit updateGUI(title_, artist_, img);
 }
 
-QColor SongPlayer::getColor(QImage img, int thread_ID)
+QColor SongPlayer::getColor(QImage img)
 {
-    //Recieves an image from the view layer and the id of the thread this function is running in.
-    //Uses the thread id to partition the image into smaller chunks. Each thread finds the brightest color
-    //in its segment and returns it.
-    int height = img.height();
-    int width = img.width();
-    int size = qMin(img.width(), img.height());
-//    int start_x = (size / IMAGE_PARTITIONS) * (thread_ID % IMAGE_PARTITIONS);
-//    int start_y  = (size / IMAGE_PARTITIONS) * (thread_ID / IMAGE_PARTITIONS);
-    int x = (size / IMAGE_PARTITIONS) * ((thread_ID % IMAGE_PARTITIONS) + 1);
-    int y = (size / IMAGE_PARTITIONS) * ((int)(thread_ID / IMAGE_PARTITIONS) + 1);
+    int height = img.height() / 2;
+    int width = img.width() / 2;
+
     //height and width are set to 0 when the song changes.
-//    if (height != 0 && width != 0)
-//    {
-//        QColor color(img.pixel(width, height));
+    if (height != 0 && width != 0)
+    {
+        QColor color(img.pixel(width, height));
 
-//        while (color.lightness() < MIN_LIGHT)
-//        {
-//            QColor temp(img.pixel(width += SKIP_PIXELS, height += SKIP_PIXELS));
-//            color = temp;
+        while (color.lightness() < MIN_LIGHT)
+        {
+            QColor temp(img.pixel(width += SKIP_PIXELS, height += SKIP_PIXELS));
+            color = temp;
 
-//            if (width >= img.width() - SKIP_PIXELS || height >= img.height() - SKIP_PIXELS)
-//            {
-//                QColor white = QColor(255, 255, 255, 255);
-//                color = white;
-//            }
-//        }
-    QColor color = BASELINE_COLOR;
-    return color;
-//        QColor brightest = BASELINE_COLOR;
-//        brightest.setHsv(0,0,40,255);
-//        QColor temp;
-//        for(int i = start_x; i < x; i+=STEP)
-//        {
-//            for(int j = start_y; j < y; j+=STEP)
-//            {
-//                temp = img.pixel(i, j);
-//                if(temp.value() > brightest.value() && temp.saturation() > brightest.saturation() - SATURATION_OFFSET)
-//                {
-//                    brightest = temp;
-//                }
-//            }
-//        }
-//        return brightest;
-//    }
+            if (width >= img.width() - SKIP_PIXELS || height >= img.height() - SKIP_PIXELS)
+            {
+                QColor white = QColor(255, 255, 255, 255);
+                color = white;
+            }
+        }
 
+        return color;
+    }
 }

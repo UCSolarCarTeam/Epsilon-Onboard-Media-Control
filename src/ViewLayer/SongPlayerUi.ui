@@ -17,16 +17,14 @@
    <bool>false</bool>
   </property>
   <property name="styleSheet">
-   <string notr="true">background-color:black;</string>
+   <string notr="true">background-color:black;
+border-width: 0px;</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="7" column="6">
-    <spacer name="verticalSpacer_4">
+   <item row="6" column="7">
+    <spacer name="verticalSpacer">
      <property name="orientation">
       <enum>Qt::Vertical</enum>
-     </property>
-     <property name="sizeType">
-      <enum>QSizePolicy::Fixed</enum>
      </property>
      <property name="sizeHint" stdset="0">
       <size>
@@ -36,8 +34,11 @@
      </property>
     </spacer>
    </item>
-   <item row="2" column="6" alignment="Qt::AlignHCenter">
+   <item row="2" column="7" alignment="Qt::AlignHCenter">
     <widget class="QLabel" name="infoLabel">
+     <property name="enabled">
+      <bool>true</bool>
+     </property>
      <property name="sizePolicy">
       <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
        <horstretch>0</horstretch>
@@ -62,9 +63,12 @@
      <property name="text">
       <string/>
      </property>
+     <property name="alignment">
+      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+     </property>
     </widget>
    </item>
-   <item row="0" column="6">
+   <item row="0" column="7">
     <spacer name="verticalSpacer_3">
      <property name="orientation">
       <enum>Qt::Vertical</enum>
@@ -80,7 +84,23 @@
      </property>
     </spacer>
    </item>
-   <item row="3" column="6">
+   <item row="5" column="9">
+    <spacer name="horizontalSpacer">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeType">
+      <enum>QSizePolicy::Expanding</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>40</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="3" column="7">
     <spacer name="verticalSpacer_2">
      <property name="orientation">
       <enum>Qt::Vertical</enum>
@@ -93,10 +113,13 @@
      </property>
     </spacer>
    </item>
-   <item row="5" column="2">
-    <spacer name="horizontalSpacer_2">
+   <item row="5" column="1">
+    <spacer name="horizontalSpacer_3">
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeType">
+      <enum>QSizePolicy::Expanding</enum>
      </property>
      <property name="sizeHint" stdset="0">
       <size>
@@ -106,7 +129,23 @@
      </property>
     </spacer>
    </item>
-   <item row="5" column="6" alignment="Qt::AlignHCenter">
+   <item row="7" column="7">
+    <spacer name="verticalSpacer_4">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeType">
+      <enum>QSizePolicy::Fixed</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>40</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="5" column="7" alignment="Qt::AlignHCenter">
     <widget class="QWidget" name="widget_2" native="true">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
@@ -198,11 +237,20 @@ QPushButton:pressed
         <widget class="QPushButton" name="playButton">
          <property name="geometry">
           <rect>
-           <x>30</x>
-           <y>30</y>
-           <width>131</width>
-           <height>131</height>
+           <x>29</x>
+           <y>29</y>
+           <width>132</width>
+           <height>132</height>
           </rect>
+         </property>
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="layoutDirection">
+          <enum>Qt::LeftToRight</enum>
          </property>
          <property name="styleSheet">
           <string notr="true">QPushButton
@@ -293,8 +341,8 @@ background: transparent;</string>
           <rect>
            <x>30</x>
            <y>30</y>
-           <width>131</width>
-           <height>131</height>
+           <width>130</width>
+           <height>130</height>
           </rect>
          </property>
          <property name="styleSheet">
@@ -394,7 +442,7 @@ QPushButton:checked:pressed
      </layout>
     </widget>
    </item>
-   <item row="5" column="9">
+   <item row="5" column="10">
     <widget class="QSlider" name="volumeControl">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
@@ -439,45 +487,16 @@ background: white;
     </widget>
    </item>
    <item row="5" column="0">
-    <spacer name="horizontalSpacer_3">
+    <spacer name="horizontalSpacer_2">
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
      </property>
      <property name="sizeType">
-      <enum>QSizePolicy::Fixed</enum>
+      <enum>QSizePolicy::Minimum</enum>
      </property>
      <property name="sizeHint" stdset="0">
       <size>
        <width>16</width>
-       <height>20</height>
-      </size>
-     </property>
-    </spacer>
-   </item>
-   <item row="6" column="6">
-    <spacer name="verticalSpacer">
-     <property name="orientation">
-      <enum>Qt::Vertical</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>20</width>
-       <height>40</height>
-      </size>
-     </property>
-    </spacer>
-   </item>
-   <item row="5" column="8">
-    <spacer name="horizontalSpacer">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-     <property name="sizeType">
-      <enum>QSizePolicy::Expanding</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>40</width>
        <height>20</height>
       </size>
      </property>

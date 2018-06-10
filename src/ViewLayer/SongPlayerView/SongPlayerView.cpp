@@ -18,8 +18,8 @@ namespace
                                "background: %1;}"
                                "QSlider::sub-page:vertical {"
                                "background: white;}";
-    const QColor DEFAULT_COLOR = QColor(255, 255, 255, 255);
-    const int NUM_THREADS = 4;
+
+    const QColor DEFAULT_COLOR = QColor(219, 160, 56, 255);
 }
 
 SongPlayerView::SongPlayerView(SongPlayer& songPlayer, I_SongPlayerUi& ui, ProgressBar& bar)
@@ -108,30 +108,15 @@ void SongPlayerView::updateGUI(const QString& title, const QString& artist, cons
         ui_.labelPic().setPixmap(cover);
         ui_.labelPic().setScaledContents(true);
         QImage img(cover.toImage());
-
-        for (int i = 0; i < NUM_THREADS; i++)
-        {
-            //spawn threads
-            QFuture<QColor> future = QtConcurrent::run(&this->songPlayer_, &SongPlayer::getColor, img, i );
-            //add brightest color to vector
-            colors.push_back(future.result());
-        }
-
-        QColor max = colors.at(0);
-
-        //find brightest color in image
-        for (int i = 0; i < colors.size(); i++)
-        {
-            if (colors.at(i).saturation() > max.saturation())
-            {
-                max = colors.at(i);
-            }
-        }
-
-        ui_.volumeControl().setStyleSheet(styleSheet.arg(max.name()));
-        bar_.changeColor(max);
+        QColor color = songPlayer_.getColor(img);
+        ui_.volumeControl().setStyleSheet(styleSheet.arg(color.name()));
+        bar_.changeColor(color);
     }
 
+    QImage img(cover.toImage());
+    QColor color = songPlayer_.getColor(img);
+    ui_.volumeControl().setStyleSheet(styleSheet.arg(color.name()));
+    bar_.changeColor(color);
 }
 
 void SongPlayerView::updateProgress(qint64 position, qint64 duration)
