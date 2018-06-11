@@ -19,7 +19,7 @@ install:
     - make
     - sudo make install
     - cd ..
-    - apt-get install libao-dev --yes
+    - sudo apt-get install libao-dev --yes
 
 script:
     - cd src
