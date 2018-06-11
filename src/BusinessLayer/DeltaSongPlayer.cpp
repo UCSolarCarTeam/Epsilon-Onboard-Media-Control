@@ -62,10 +62,13 @@ void DeltaSongPlayer::songQuit()
 void DeltaSongPlayer::changeVolume(double change)
 {
     volume = change;
+
     if (volume > MAX_VOLUME)
     {
         volume = MAX_VOLUME;
-    } else if (volume < 0) {
+    }
+    else if (volume < 0)
+    {
         volume = 0;
     }
 
@@ -96,7 +99,8 @@ int DeltaSongPlayer::loadSong(QString filePath)
         return -1;
     }
 
-    if(loaded){
+    if (loaded)
+    {
         freeMusic();
     }
 
@@ -134,7 +138,7 @@ int DeltaSongPlayer::loadSong(QString filePath)
 
 void DeltaSongPlayer::play()
 {
-    if(mode == PAUSE)
+    if (mode == PAUSE)
     {
         mode = PLAY;
     }
@@ -142,7 +146,7 @@ void DeltaSongPlayer::play()
 
 void DeltaSongPlayer::pause()
 {
-    if(mode != PAUSE)
+    if (mode != PAUSE)
     {
         mode = PAUSE;
     }
@@ -162,23 +166,23 @@ QString DeltaSongPlayer::currentSongArtist()
 
 QString DeltaSongPlayer::currentSongTitle()
 {
-   QString title = metaData->title->p;
-   return title;
+    QString title = metaData->title->p;
+    return title;
 }
 
 
 double DeltaSongPlayer::getCurrentTime()
 {
-    if(loaded)
+    if (loaded)
     {
         off_t length;
         double times;
         int timem;
         length = mpg123_tell(mh);
-        times = (double)(length/rate)/60;
+        times = (double)(length / rate) / 60;
         timem = times;
         times = (times - (double)timem) * 60;
-        return timem*60 + times;
+        return timem * 60 + times;
 
     }
     else
@@ -188,16 +192,16 @@ double DeltaSongPlayer::getCurrentTime()
 }
 double DeltaSongPlayer::getSongLength()
 {
-    if(loaded)
+    if (loaded)
     {
         off_t length;
         double times;
         int timem;
         length = mpg123_length(mh);
-        times = (double)(length/rate)/60; //time in minutes.minutes (e.g 5.3 minutes)
+        times = (double)(length / rate) / 60; //time in minutes.minutes (e.g 5.3 minutes)
         timem = times;                          //time in minutes (5)
         times = (times - (double)timem) * 60; //time in seconds (.3*60)
-        return timem*60+times;
+        return timem * 60 + times;
     }
     else
     {
@@ -232,31 +236,37 @@ void DeltaSongPlayer::ThreadFunction()
 
     while (!quitSong)
     {
-        switch(mode){
+        switch (mode)
+        {
 
-        case PLAY:
-            if (mpg123_read(mh, buffer, buffer_size, &done) == MPG123_OK)
-                ao_play(dev, (char*)buffer, done);
+            case PLAY:
+                if (mpg123_read(mh, buffer, buffer_size, &done) == MPG123_OK)
+                {
+                    ao_play(dev, (char*)buffer, done);
+                }
 
-            if (getCurrentTime() >= getSongLength())
-                mode = NEXT;
-            break;
+                if (getCurrentTime() >= getSongLength())
+                {
+                    mode = NEXT;
+                }
 
-        case NEXT:
-            loadSong(songControl_->nextSong());
-            break;
+                break;
 
-        case PREVIOUS:
-            loadSong(songControl_->previousSong());
-            break;
+            case NEXT:
+                loadSong(songControl_->nextSong());
+                break;
 
-        case SHUFFLE:
-            break;
+            case PREVIOUS:
+                loadSong(songControl_->previousSong());
+                break;
 
-        case PAUSE:
-            //Keeps the thread looping every 0.2 seconds (So we don't kill CPU cycles on this thread)
-            usleep(200000);
-            break;
+            case SHUFFLE:
+                break;
+
+            case PAUSE:
+                //Keeps the thread looping every 0.2 seconds (So we don't kill CPU cycles on this thread)
+                usleep(200000);
+                break;
         }
 
         emit positionChanged(getCurrentTime() * SECONDS_TO_MS);

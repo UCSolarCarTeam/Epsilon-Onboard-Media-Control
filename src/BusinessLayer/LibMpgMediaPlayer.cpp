@@ -49,7 +49,7 @@ DeltaSongPlayer* LibMpgMediaPlayer::getDeltaSongPlayer()
 
 void LibMpgMediaPlayer::setMedia(const QString& filePath)
 {
-    if(songplayer->loadSong(filePath) == 0)
+    if (songplayer->loadSong(filePath) == 0)
     {
         status_ = MediaStatus::MediaLoaded;
     }
@@ -62,15 +62,15 @@ void LibMpgMediaPlayer::setVolume(int volume)
 }
 QString LibMpgMediaPlayer::metaData(const QString& key)
 {
-    if(key == QMediaMetaData::ContributingArtist)
+    if (key == QMediaMetaData::ContributingArtist)
     {
         return songplayer->currentSongArtist();
     }
-    else if(key == QMediaMetaData::Title)
+    else if (key == QMediaMetaData::Title)
     {
         return songplayer->currentSongTitle();
     }
-    else if(key == QMediaMetaData::AlbumTitle)
+    else if (key == QMediaMetaData::AlbumTitle)
     {
         return songplayer->currentSongAlbum();
     }

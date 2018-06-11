@@ -139,9 +139,9 @@ void SongPlayer::togglePlayback(bool play)
 
 //        mediaPlayer_->play();
 //    }
-    if(play)
+    if (play)
     {
-       mediaPlayer_->play();
+        mediaPlayer_->play();
     }
     else
     {

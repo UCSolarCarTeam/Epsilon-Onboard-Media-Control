@@ -39,60 +39,60 @@
 class DeltaSongPlayer : public I_ThreadClass
 {
     Q_OBJECT
-    public:
-        DeltaSongPlayer(SongControl* songControl);
-        ~DeltaSongPlayer();
+public:
+    DeltaSongPlayer(SongControl* songControl);
+    ~DeltaSongPlayer();
 
-        void closeDeltaSongPlayer();
+    void closeDeltaSongPlayer();
 
-        /*Song Control*/
-        void play();
-        void pause();
-        void changeVolume(double change);
+    /*Song Control*/
+    void play();
+    void pause();
+    void changeVolume(double change);
 
-        /*For the time bar*/
-        double getCurrentTime();
-        double getSongLength();
-        double getVolume();
-        double getMaxVolume();
-        QString currentSongAlbum();
-        QString currentSongArtist();
-        QString currentSongTitle();
+    /*For the time bar*/
+    double getCurrentTime();
+    double getSongLength();
+    double getVolume();
+    double getMaxVolume();
+    QString currentSongAlbum();
+    QString currentSongArtist();
+    QString currentSongTitle();
 
-        void songQuit();
-        int loadSong(QString filePath);
+    void songQuit();
+    int loadSong(QString filePath);
 
-    signals:
-        void durationChanged(qint64);
-        void positionChanged(qint64);
-        void metaDataAvailableChanged(bool);
+signals:
+    void durationChanged(qint64);
+    void positionChanged(qint64);
+    void metaDataAvailableChanged(bool);
 
-    protected:
-        void ThreadFunction();
+protected:
+    void ThreadFunction();
 
-    private:
-        double MAX_VOLUME;
+private:
+    double MAX_VOLUME;
 
-        void freeMusic();
-        SongControl* songControl_;
-        double volume;
+    void freeMusic();
+    SongControl* songControl_;
+    double volume;
 
-        /*mpg123 specific variables*/
-        unsigned char *buffer;
-        size_t buffer_size;
-        bool loaded;
-        mpg123_handle *mh;
-        ao_sample_format format;
-        ao_device *dev;
-        int channels, encoding;
-        long rate;
-        bool quitSong;
-        char* mcurrentSong;
-        mpg123_id3v2* metaData;
+    /*mpg123 specific variables*/
+    unsigned char* buffer;
+    size_t buffer_size;
+    bool loaded;
+    mpg123_handle* mh;
+    ao_sample_format format;
+    ao_device* dev;
+    int channels, encoding;
+    long rate;
+    bool quitSong;
+    char* mcurrentSong;
+    mpg123_id3v2* metaData;
 
-        /*Modes*/
-        enum threadMode { PLAY, NEXT, PREVIOUS, SHUFFLE, PAUSE};
-        threadMode mode;
+    /*Modes*/
+    enum threadMode { PLAY, NEXT, PREVIOUS, SHUFFLE, PAUSE};
+    threadMode mode;
 };
 
 #endif /* DeltaSongPlayer_H */

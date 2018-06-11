@@ -60,9 +60,9 @@ protected:
     virtual void ThreadFunction() = 0;
 
 private:
-    static void * ThreadReference(void * thread_id)
+    static void* ThreadReference(void* thread_id)
     {
-        ((I_ThreadClass *)thread_id)->ThreadFunction();
+        ((I_ThreadClass*)thread_id)->ThreadFunction();
         return NULL;
     }
 
