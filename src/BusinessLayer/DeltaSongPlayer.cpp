@@ -28,6 +28,11 @@
 #include <QDebug>
 //#include "SongLoader.h"
 
+namespace
+{
+    const double SECONDS_TO_MS = 1000.0;
+}
+
 DeltaSongPlayer::DeltaSongPlayer(SongControl* songControl)
     : songControl_(songControl)
 {
@@ -81,20 +86,17 @@ double DeltaSongPlayer::getMaxVolume()
 int DeltaSongPlayer::loadSong(QString filePath)
 {
     mode = PAUSE;
-    qDebug() << "loadsong Pause";
     QByteArray ba = filePath.toLocal8Bit();
     int size = ba.length();
     char* songName = new char[size];
     songName = ba.data();
 
-    printf("DeltaSongPlayer::loadSong: Trying to load %s\n",songName);
     if (NULL == songName || 0 == strcmp("", songName))
     {
         return -1;
     }
 
     if(loaded){
-        printf("DeltaSongPlayer::loadSong: calling freeMusic()\n");
         freeMusic();
     }
 
@@ -123,9 +125,10 @@ int DeltaSongPlayer::loadSong(QString filePath)
     mpg123_id3(mh, NULL, &metaData);
 
     loaded = true;
-    printf("DeltaSongPlayer::loadSong: Loaded %s!\n",songName);
     mode = PLAY;
-    qDebug() << "loadsong Play";
+
+    emit durationChanged(getSongLength() * SECONDS_TO_MS);
+    emit metaDataAvailableChanged(true);
     return 0;
 }
 
@@ -134,7 +137,6 @@ void DeltaSongPlayer::play()
     if(mode == PAUSE)
     {
         mode = PLAY;
-        qDebug() << "play() Play";
     }
 }
 
@@ -143,7 +145,6 @@ void DeltaSongPlayer::pause()
     if(mode != PAUSE)
     {
         mode = PAUSE;
-        qDebug() << "pause() Pause";
     }
 }
 
@@ -258,6 +259,6 @@ void DeltaSongPlayer::ThreadFunction()
             break;
         }
 
-        emit positionChanged(getCurrentTime() * 1000);
+        emit positionChanged(getCurrentTime() * SECONDS_TO_MS);
     }
 }

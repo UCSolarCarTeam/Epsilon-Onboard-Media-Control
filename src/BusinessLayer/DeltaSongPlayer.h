@@ -65,6 +65,7 @@ class DeltaSongPlayer : public I_ThreadClass
     signals:
         void durationChanged(qint64);
         void positionChanged(qint64);
+        void metaDataAvailableChanged(bool);
 
     protected:
         void ThreadFunction();

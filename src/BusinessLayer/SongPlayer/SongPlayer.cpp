@@ -19,9 +19,9 @@ SongPlayer::SongPlayer(QWidget* parent) : QWidget(parent)
     , mediaPlayer_(new LibMpgMediaPlayer(controller_.data()))
 {
     connect(mediaPlayer_.data(), SIGNAL(stateChanged()), this, SLOT(updateState()));
-   // connect(mediaPlayer_.data(), SIGNAL(durationChanged(qint64)), this, SLOT(durationChanged(qint64)));
+    connect(mediaPlayer_.data()->getDeltaSongPlayer(), SIGNAL(durationChanged(qint64)), this, SLOT(durationChanged(qint64)));
     connect(mediaPlayer_.data()->getDeltaSongPlayer(), SIGNAL(positionChanged(qint64)), this, SLOT(positionChanged(qint64)));
-    connect(mediaPlayer_.data(), SIGNAL(metaDataAvailableChanged(bool)), this, SLOT(updateInfo()));
+    connect(mediaPlayer_.data()->getDeltaSongPlayer(), SIGNAL(metaDataAvailableChanged(bool)), this, SLOT(updateInfo()));
 }
 
 SongPlayer::~SongPlayer()

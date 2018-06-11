@@ -29,7 +29,6 @@ public:
 
 signals:
     void stateChanged();
-    void metaDataAvailableChanged(bool);
 
 private:
     DeltaSongPlayer* songplayer;

@@ -53,7 +53,6 @@ void LibMpgMediaPlayer::setMedia(const QString& filePath)
     {
         status_ = MediaStatus::MediaLoaded;
     }
-    emit metaDataAvailableChanged(true);
 }
 void LibMpgMediaPlayer::setVolume(int volume)
 {
