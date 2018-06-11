@@ -3,7 +3,6 @@
 #include <QThread>
 #include "SongPlayer/I_MediaPlayer.h"
 #include "SongControl/SongControl.h"
-#include <ao/ao.h>
 #include <mpg123.h>
 #include "DeltaSongPlayer.h"
 

@@ -1,10 +1,8 @@
 #include "LibMpgMediaPlayer.h"
-#include <ao/ao.h>
 #include <mpg123.h>
 #include <string>
 #include <cstring>
 #include <unistd.h>
-#include <QDebug>
 
 LibMpgMediaPlayer::LibMpgMediaPlayer(SongControl* songControl)
     : songControl_(songControl)

@@ -17,7 +17,6 @@
 #include "../SongControl/SongControl.h"
 #include "../LibMpgMediaPlayer.h"
 
-#include <ao/ao.h>
 #include <mpg123.h>
 #include <string>
 #include <cstring>

@@ -25,8 +25,6 @@
 
 #include "DeltaSongPlayer.h"
 #include "LibMpgMediaPlayer.h"
-#include <QDebug>
-//#include "SongLoader.h"
 
 namespace
 {
