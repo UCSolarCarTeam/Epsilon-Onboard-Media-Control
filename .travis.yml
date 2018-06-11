@@ -13,6 +13,13 @@ install:
     - tar -zxvf astyle
     - (cd astyle/build/gcc && make release && sudo make install)
     - rm astyle -rf
+    - git clone https://github.com/gypified/libmpg123.git
+    - cd libmpg123
+    - ./configure
+    - make
+    - sudo make install
+    - cd ..
+    - apt-get install libao-dev --yes
 
 script:
     - cd src
