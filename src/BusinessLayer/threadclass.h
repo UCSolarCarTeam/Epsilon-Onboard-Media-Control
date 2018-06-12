@@ -32,6 +32,7 @@
 
 class I_ThreadClass : public QObject
 {
+    Q_OBJECT
 public:
     I_ThreadClass() { }
     virtual ~I_ThreadClass() { }
