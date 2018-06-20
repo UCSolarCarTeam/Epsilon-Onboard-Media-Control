@@ -7,8 +7,7 @@ namespace
     const int MIN_LIGHT = 40;
     const int SKIP_PIXELS = 10;
     const int PAGE_STEP_INCREMENTS = 10;
-    const QString SONG_FILE_PATH = "SongLibrary/";
-    const QString ALBUM_FILE_PATH = "Covers/";
+    const QString ALBUM_FILE_PATH = QDir::homePath() + "/Pictures/Covers/";
 }
 
 SongPlayer::SongPlayer(QWidget* parent) : QWidget(parent)
@@ -201,13 +200,9 @@ void SongPlayer::updateInfo()
 
     //remove all spaces in album name for easier access to file path of album
     album_.replace(" ", "");
-    cover_ = controller_->currentSong();
 
-    int songNameLength = cover_.length() - cover_.lastIndexOf(SONG_FILE_PATH) + SONG_FILE_PATH.length();
-
-    //manipulate the current song filepath string to the album file path
-    cover_.replace(cover_.lastIndexOf(SONG_FILE_PATH), SONG_FILE_PATH.length(), ALBUM_FILE_PATH);
-    cover_.replace(cover_.lastIndexOf(ALBUM_FILE_PATH) + ALBUM_FILE_PATH.length(), songNameLength, album_);
+    cover_ = (ALBUM_FILE_PATH);
+    cover_.append(album_);
 
     QPixmap img(cover_);
 
