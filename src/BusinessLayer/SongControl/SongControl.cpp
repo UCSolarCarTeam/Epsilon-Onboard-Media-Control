@@ -74,13 +74,6 @@ bool SongControl::readSongNames(QString dir, QVector<QString>& files_)
     DIR* dp;
     QString filepath;
 
-//    QDir relativeDirectory(".");
-
-//    if (!relativeDirectory.cdUp())
-//    {
-//        return false;
-//    }
-
     QDir relativeDirectory(QDir::homePath());
 
     if (!relativeDirectory.cd("Music/SongLibrary"))
