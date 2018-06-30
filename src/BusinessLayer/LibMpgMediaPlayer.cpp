@@ -1,34 +1,30 @@
 #include "LibMpgMediaPlayer.h"
-#include <mpg123.h>
-#include <string>
-#include <cstring>
-#include <unistd.h>
 
 LibMpgMediaPlayer::LibMpgMediaPlayer(SongControl* songControl)
     : songControl_(songControl)
     , status_(MediaStatus::NoMedia)
     , state_(PlayerState::Playing)
 {
-    songplayer = new DeltaSongPlayer(songControl_);
-    songplayer->StartThread();
+    songPlayer_ = new SongPlayerThread(songControl_);
+    songPlayer_->StartThread();
 }
 void LibMpgMediaPlayer::play()
 {
     state_ = PlayerState::Playing;
-    songplayer->play();
+    songPlayer_->play();
 }
 void LibMpgMediaPlayer::pause()
 {
     state_ = PlayerState::Paused;
-    songplayer->pause();
+    songPlayer_->pause();
 }
 qint64 LibMpgMediaPlayer::position()
 {
-    return songplayer->getCurrentTime() * 1000;
+    return songPlayer_->getCurrentTime() * 1000;
 }
 qint64 LibMpgMediaPlayer::duration()
 {
-    return songplayer->getSongLength() * 1000;
+    return songPlayer_->getSongLength() * 1000;
 }
 MediaStatus LibMpgMediaPlayer::mediaStatus()
 {
@@ -40,37 +36,37 @@ PlayerState LibMpgMediaPlayer::state()
     return state_;
 }
 
-DeltaSongPlayer* LibMpgMediaPlayer::getDeltaSongPlayer()
+SongPlayerThread* LibMpgMediaPlayer::getSongPlayerThread()
 {
-    return songplayer;
+    return songPlayer_;
 }
 
 void LibMpgMediaPlayer::setMedia(const QString& filePath)
 {
-    if (songplayer->loadSong(filePath) == 0)
+    if (songPlayer_->loadSong(filePath) == 0)
     {
         status_ = MediaStatus::MediaLoaded;
     }
 }
 void LibMpgMediaPlayer::setVolume(int volume)
 {
-    this->volume = static_cast<double>(volume) / 100.0;
-    songplayer->changeVolume(this->volume);
+    this->volume_ = static_cast<double>(volume) / 100.0;
+    songPlayer_->changeVolume(this->volume_);
 
 }
 QString LibMpgMediaPlayer::metaData(const QString& key)
 {
     if (key == QMediaMetaData::ContributingArtist)
     {
-        return songplayer->currentSongArtist();
+        return songPlayer_->currentSongArtist();
     }
     else if (key == QMediaMetaData::Title)
     {
-        return songplayer->currentSongTitle();
+        return songPlayer_->currentSongTitle();
     }
     else if (key == QMediaMetaData::AlbumTitle)
     {
-        return songplayer->currentSongAlbum();
+        return songPlayer_->currentSongAlbum();
     }
     else
     {

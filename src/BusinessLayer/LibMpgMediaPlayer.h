@@ -1,13 +1,12 @@
 #pragma once
+
 #include <QMediaPlayer>
-#include <QThread>
-#include "SongPlayer/I_MediaPlayer.h"
 #include "SongControl/SongControl.h"
-#include <mpg123.h>
-#include "DeltaSongPlayer.h"
+#include "SongPlayer/I_MediaPlayer.h"
+#include "SongPlayerThread.h"
 
 class LibMpgMediaPlayerThread;
-class DeltaSongPlayer;
+class SongPlayerThread;
 
 class LibMpgMediaPlayer : public I_MediaPlayer
 {
@@ -24,32 +23,33 @@ public:
     void pause();
     PlayerState state();
 
-    DeltaSongPlayer* getDeltaSongPlayer();
+    SongPlayerThread* getSongPlayerThread();
 
 signals:
     void stateChanged();
 
 private:
-    DeltaSongPlayer* songplayer;
+    SongPlayerThread* songPlayer_;
     SongControl* songControl_;
-    double volume;
+    double volume_;
     double MAX_VOLUME;
     int loadSong(char* songName);
 
     /*mpg123 specific variables*/
-    unsigned char* buffer;
-    size_t buffer_size;
-    bool loaded;
-    mpg123_handle* mh;
-    ao_sample_format format;
-    ao_device* dev;
-    int channels, encoding;
-    long rate;
-    bool quitSong;
+    unsigned char* buffer_;
+    size_t bufferSize_;
+    bool loaded_;
+    mpg123_handle* mh_;
+    ao_sample_format format_;
+    ao_device* dev_;
+    int channels_;
+    int encoding_;
+    long rate_;
+    bool quitSong_;
     MediaStatus status_;
     PlayerState state_;
 
     /*Modes*/
     enum threadMode { PLAY, NEXT, PREVIOUS, SHUFFLE, PAUSE};
-    threadMode mode;
+    threadMode mode_;
 };

@@ -17,13 +17,7 @@
 #include "../SongControl/SongControl.h"
 #include "../LibMpgMediaPlayer.h"
 
-#include <mpg123.h>
-#include <string>
-#include <cstring>
-#include <unistd.h>
-
 #define BITS 8
-
 
 class SongPlayer : public QWidget
 {

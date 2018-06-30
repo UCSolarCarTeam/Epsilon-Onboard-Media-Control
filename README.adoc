@@ -23,15 +23,7 @@ The media player uses libmpg123 and libao to decode and play music files. Run th
 
 `git clone https://github.com/gypified/libmpg123.git`
 
-`cd libmpg123`
-
-`./configure`
-
-`make`
-
-`sudo make install`
-
-`cd ..`
+`(cd libmpg123 && ./configure && make && sudo make install)`
 
 `sudo apt-get install libao-dev --yes`
 

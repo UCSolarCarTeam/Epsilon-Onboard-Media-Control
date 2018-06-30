@@ -14,12 +14,12 @@ HEADERS += \
     SongControl/SongControl.h \
     SongPlayer/I_MediaPlayer.h \
     LibMpgMediaPlayer.h \
-    DeltaSongPlayer.h \
-    threadclass.h
+    SongPlayerThread.h \
+    ThreadClass.h
 
 SOURCES += \
     BusinessContainer.cpp \
     SongPlayer/SongPlayer.cpp \
     SongControl/SongControl.cpp \
     LibMpgMediaPlayer.cpp \
-    DeltaSongPlayer.cpp
+    SongPlayerThread.cpp

@@ -12,14 +12,14 @@ namespace
 
 SongPlayer::SongPlayer(QWidget* parent) : QWidget(parent)
     , controller_(new SongControl())
+    , mediaPlayer_(new LibMpgMediaPlayer(controller_.data()))
     , shuffle_(false)
     , loop_(false)
-    , mediaPlayer_(new LibMpgMediaPlayer(controller_.data()))
 {
     connect(mediaPlayer_.data(), SIGNAL(stateChanged()), this, SLOT(updateState()));
-    connect(mediaPlayer_.data()->getDeltaSongPlayer(), SIGNAL(durationChanged(qint64)), this, SLOT(durationChanged(qint64)));
-    connect(mediaPlayer_.data()->getDeltaSongPlayer(), SIGNAL(positionChanged(qint64)), this, SLOT(positionChanged(qint64)));
-    connect(mediaPlayer_.data()->getDeltaSongPlayer(), SIGNAL(metaDataAvailableChanged(bool)), this, SLOT(updateInfo()));
+    connect(mediaPlayer_.data()->getSongPlayerThread(), SIGNAL(durationChanged(qint64)), this, SLOT(durationChanged(qint64)));
+    connect(mediaPlayer_.data()->getSongPlayerThread(), SIGNAL(positionChanged(qint64)), this, SLOT(positionChanged(qint64)));
+    connect(mediaPlayer_.data()->getSongPlayerThread(), SIGNAL(metaDataAvailableChanged(bool)), this, SLOT(updateInfo()));
 }
 
 SongPlayer::~SongPlayer()
@@ -124,19 +124,6 @@ void SongPlayer::playPrevious()
 
 void SongPlayer::togglePlayback(bool play)
 {
-//    if (mediaPlayer_->mediaStatus() == MediaStatus::NoMedia)
-//    {
-//        if (shuffle_)
-//        {
-//            openShuffle();
-//        }
-//        else
-//        {
-//            openFile();
-//        }
-
-//        mediaPlayer_->play();
-//    }
     if (play)
     {
         mediaPlayer_->play();
@@ -160,7 +147,6 @@ void SongPlayer::durationChanged(qint64 duration)
 void SongPlayer::positionChanged(qint64 position)
 {
     position_ = position;
-//    qDebug() << "position: " << position;
     emit updateProgress(position_, duration_);
 }
 
@@ -214,10 +200,12 @@ QColor SongPlayer::getColor(QImage img)
     int height = img.height() / 2;
     int width = img.width() / 2;
 
+    QColor color(255, 255, 255, 255);
+
     //height and width are set to 0 when the song changes.
     if (height != 0 && width != 0)
     {
-        QColor color(img.pixel(width, height));
+        color = QColor(img.pixel(width, height));
 
         while (color.lightness() < MIN_LIGHT)
         {
@@ -233,4 +221,6 @@ QColor SongPlayer::getColor(QImage img)
 
         return color;
     }
+
+    return color;
 }
