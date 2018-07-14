@@ -38,7 +38,7 @@ public slots:
     void setFile(const QString& filePath);
     void togglePlayback(bool play);
     void adjustVolume(int volume);
-    QColor getColor(QImage img, int thread_ID);
+    QColor getColor(QImage img, int threadID);
     void toggleShuffle();
     void toggleLoop();
 

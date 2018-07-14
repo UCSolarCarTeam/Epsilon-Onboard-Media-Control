@@ -196,7 +196,7 @@ void SongPlayer::updateInfo()
     emit updateGUI(title_, artist_, img);
 }
 
-QColor SongPlayer::getColor(QImage img, int thread_ID)
+QColor SongPlayer::getColor(QImage img, int threadID)
 {
     //Recieves an image from the view layer and the id of the thread this function is running in.
     //Uses the thread id to partition the image into smaller chunks. Each thread finds the brightest color
@@ -204,10 +204,10 @@ QColor SongPlayer::getColor(QImage img, int thread_ID)
     int height = img.height();
     int width = img.width();
     int size = qMin(img.width(), img.height());
-    int start_x = (size / IMAGE_PARTITIONS) * (thread_ID % IMAGE_PARTITIONS);
-    int start_y  = (size / IMAGE_PARTITIONS) * (thread_ID / IMAGE_PARTITIONS);
-    int x = (size / IMAGE_PARTITIONS) * ((thread_ID % IMAGE_PARTITIONS) + 1);
-    int y = (size / IMAGE_PARTITIONS) * ((int)(thread_ID / IMAGE_PARTITIONS) + 1);
+    int start_x = (size / IMAGE_PARTITIONS) * (threadID % IMAGE_PARTITIONS);
+    int start_y  = (size / IMAGE_PARTITIONS) * (threadID / IMAGE_PARTITIONS);
+    int x = (size / IMAGE_PARTITIONS) * ((threadID % IMAGE_PARTITIONS) + 1);
+    int y = (size / IMAGE_PARTITIONS) * ((int)(threadID / IMAGE_PARTITIONS) + 1);
 
     QColor brightest = BASELINE_COLOR;
 

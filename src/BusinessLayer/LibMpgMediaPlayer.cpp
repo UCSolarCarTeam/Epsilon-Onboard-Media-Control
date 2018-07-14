@@ -70,6 +70,6 @@ QString LibMpgMediaPlayer::metaData(const QString& key)
     }
     else
     {
-        return "Ben is Fat";
+        return "Metadata Unavailable";
     }
 }
