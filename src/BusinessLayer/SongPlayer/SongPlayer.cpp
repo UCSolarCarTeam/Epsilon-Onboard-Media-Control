@@ -4,22 +4,23 @@ namespace
 {
     const int MS_TO_MINUTES = 60000;
     const double MS_TO_SECONDS = 1000.0;
-    const int MIN_LIGHT = 40;
-    const int SKIP_PIXELS = 10;
-    const int PAGE_STEP_INCREMENTS = 10;
-    const QString SONG_FILE_PATH = "SongLibrary/";
-    const QString ALBUM_FILE_PATH = "Covers/";
+    const QString ALBUM_FILE_PATH = QDir::homePath() + "/Pictures/Covers/";
+    const QColor BASELINE_COLOR = QColor(0, 0, 0, 255);
+    const int IMAGE_PARTITIONS = 2;
+    const int STEP = 2;
+    const int SATURATION_OFFSET = 10;
 }
 
 SongPlayer::SongPlayer(QWidget* parent) : QWidget(parent)
     , controller_(new SongControl())
+    , mediaPlayer_(new LibMpgMediaPlayer(controller_.data()))
     , shuffle_(false)
     , loop_(false)
 {
-    connect(&mediaPlayer_, &QMediaPlayer::stateChanged, this, &SongPlayer::updateState);
-    connect(&mediaPlayer_, SIGNAL(durationChanged(qint64)), this, SLOT(durationChanged(qint64)));
-    connect(&mediaPlayer_, SIGNAL(positionChanged(qint64)), this, SLOT(positionChanged(qint64)));
-    connect(&mediaPlayer_, SIGNAL(metaDataAvailableChanged(bool)), this, SLOT(updateInfo()));
+    connect(mediaPlayer_.data(), SIGNAL(stateChanged()), this, SLOT(updateState()));
+    connect(mediaPlayer_.data()->getSongPlayerThread(), SIGNAL(durationChanged(qint64)), this, SLOT(durationChanged(qint64)));
+    connect(mediaPlayer_.data()->getSongPlayerThread(), SIGNAL(positionChanged(qint64)), this, SLOT(positionChanged(qint64)));
+    connect(mediaPlayer_.data()->getSongPlayerThread(), SIGNAL(metaDataAvailableChanged(bool)), this, SLOT(updateInfo()));
 }
 
 SongPlayer::~SongPlayer()
@@ -28,7 +29,7 @@ SongPlayer::~SongPlayer()
 
 void SongPlayer::updateState()
 {
-    if (mediaPlayer_.position() >= mediaPlayer_.duration() && mediaPlayer_.duration() != -1)
+    if (mediaPlayer_->position() >= mediaPlayer_->duration() && mediaPlayer_->duration() != -1)
     {
         playNext();
     }
@@ -77,7 +78,7 @@ void SongPlayer::playNext()
         openNext();
     }
 
-    togglePlayback();
+    togglePlayback(true);
 }
 
 void SongPlayer::openPrevious()
@@ -119,37 +120,24 @@ void SongPlayer::playPrevious()
         openPrevious();
     }
 
-    togglePlayback();
+    togglePlayback(true);
 }
 
-void SongPlayer::togglePlayback()
+void SongPlayer::togglePlayback(bool play)
 {
-    if (mediaPlayer_.mediaStatus() == QMediaPlayer::NoMedia)
+    if (play)
     {
-        if (shuffle_)
-        {
-            openShuffle();
-        }
-        else
-        {
-            openFile();
-        }
-
-        mediaPlayer_.play();
-    }
-    else if (mediaPlayer_.state() == QMediaPlayer::PlayingState)
-    {
-        mediaPlayer_.pause();
+        mediaPlayer_->play();
     }
     else
     {
-        mediaPlayer_.play();
+        mediaPlayer_->pause();
     }
 }
 
 void SongPlayer::setFile(const QString& filePath)
 {
-    mediaPlayer_.setMedia(QUrl::fromLocalFile(filePath));
+    mediaPlayer_->setMedia(filePath);
 }
 
 void SongPlayer::durationChanged(qint64 duration)
@@ -165,7 +153,7 @@ void SongPlayer::positionChanged(qint64 position)
 
 void SongPlayer::adjustVolume(int volume)
 {
-    mediaPlayer_.setVolume(volume);
+    mediaPlayer_->setVolume(volume);
 }
 
 void SongPlayer::toggleShuffle()
@@ -193,49 +181,55 @@ void SongPlayer::toggleLoop()
 }
 void SongPlayer::updateInfo()
 {
-    artist_ = mediaPlayer_.metaData(QMediaMetaData::ContributingArtist).toString();
-    title_ = mediaPlayer_.metaData(QMediaMetaData::Title).toString();
-
-    //retrieves the album name from current song
-    album_ = mediaPlayer_.metaData(QMediaMetaData::AlbumTitle).toString();
+    artist_ = mediaPlayer_->metaData(QMediaMetaData::ContributingArtist);
+    title_ = mediaPlayer_->metaData(QMediaMetaData::Title);
+    album_ = mediaPlayer_->metaData(QMediaMetaData::AlbumTitle);
 
     //remove all spaces in album name for easier access to file path of album
     album_.replace(" ", "");
-    cover_ = controller_->currentSong();
 
-    int songNameLength = cover_.length() - cover_.lastIndexOf(SONG_FILE_PATH) + SONG_FILE_PATH.length();
-
-    //manipulate the current song filepath string to the album file path
-    cover_.replace(cover_.lastIndexOf(SONG_FILE_PATH), SONG_FILE_PATH.length(), ALBUM_FILE_PATH);
-    cover_.replace(cover_.lastIndexOf(ALBUM_FILE_PATH) + ALBUM_FILE_PATH.length(), songNameLength, album_);
+    cover_ = (ALBUM_FILE_PATH);
+    cover_.append(album_);
 
     QPixmap img(cover_);
 
     emit updateGUI(title_, artist_, img);
 }
 
-QColor SongPlayer::getColor(QImage img)
+QColor SongPlayer::getColor(QImage img, int threadID)
 {
-    int height = img.height() / 2;
-    int width = img.width() / 2;
+    //Recieves an image from the view layer and the id of the thread this function is running in.
+    //Uses the thread id to partition the image into smaller chunks. Each thread finds the brightest color
+    //in its segment and returns it.
+    int height = img.height();
+    int width = img.width();
+    int size = qMin(img.width(), img.height());
+    int start_x = (size / IMAGE_PARTITIONS) * (threadID % IMAGE_PARTITIONS);
+    int start_y  = (size / IMAGE_PARTITIONS) * (threadID / IMAGE_PARTITIONS);
+    int x = (size / IMAGE_PARTITIONS) * ((threadID % IMAGE_PARTITIONS) + 1);
+    int y = (size / IMAGE_PARTITIONS) * ((int)(threadID / IMAGE_PARTITIONS) + 1);
+
+    QColor brightest = BASELINE_COLOR;
 
     //height and width are set to 0 when the song changes.
     if (height != 0 && width != 0)
     {
-        QColor color(img.pixel(width, height));
+        brightest.setHsv(0, 0, 40, 255);
+        QColor temp;
 
-        while (color.lightness() < MIN_LIGHT)
+        for (int i = start_x; i < x; i += STEP)
         {
-            QColor temp(img.pixel(width += SKIP_PIXELS, height += SKIP_PIXELS));
-            color = temp;
-
-            if (width >= img.width() - SKIP_PIXELS || height >= img.height() - SKIP_PIXELS)
+            for (int j = start_y; j < y; j += STEP)
             {
-                QColor white = QColor(255, 255, 255, 255);
-                color = white;
+                temp = img.pixel(i, j);
+
+                if (temp.value() > brightest.value() && temp.saturation() > brightest.saturation() - SATURATION_OFFSET)
+                {
+                    brightest = temp;
+                }
             }
         }
-
-        return color;
     }
+
+    return brightest;
 }

@@ -14,8 +14,6 @@
 #include <QTime>
 #include <QVector>
 #include <QFileInfo>
-#include <QDebug>
-
 namespace Ui
 {
     class SongControl;

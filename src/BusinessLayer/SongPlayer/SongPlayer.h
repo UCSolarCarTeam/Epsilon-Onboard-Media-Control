@@ -3,10 +3,8 @@
 #include <QAbstractButton>
 #include <QBoxLayout>
 #include <QCoreApplication>
-#include <QDebug>
 #include <QFileDialog>
 #include <QLabel>
-#include <QMediaPlayer>
 #include <QMouseEvent>
 #include <QShortcut>
 #include <QStandardPaths>
@@ -16,8 +14,10 @@
 #include <QWidget>
 #include <QProgressBar>
 #include <QScopedPointer>
-#include <QMediaMetaData>
 #include "../SongControl/SongControl.h"
+#include "../LibMpgMediaPlayer.h"
+
+#define BITS 8
 
 class SongPlayer : public QWidget
 {
@@ -36,9 +36,9 @@ public slots:
     void playNext();
     void playPrevious();
     void setFile(const QString& filePath);
-    void togglePlayback();
+    void togglePlayback(bool play);
     void adjustVolume(int volume);
-    QColor getColor(QImage img);
+    QColor getColor(QImage img, int threadID);
     void toggleShuffle();
     void toggleLoop();
 
@@ -55,7 +55,7 @@ private:
     QAbstractButton* playButton_;
     QLabel* positionLabel_;
     QPoint offset_;
-    QMediaPlayer mediaPlayer_;
+    QScopedPointer<LibMpgMediaPlayer> mediaPlayer_;
     qint64 position_;
     qint64 duration_;
     QString title_;
@@ -67,6 +67,5 @@ private:
 
 signals:
     void updateGUI(const QString& title, const QString& author, const QPixmap& cover);
-    void resetPosition(const QMediaPlayer& media);
     void updateProgress(qint64 position, qint64 duration);
 };

@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+mkdir -p $HOME/Music/SongLibrary
+mkdir -p $HOME/Pictures/Covers
+cd $HOME/Music/SongLibrary
+
 song=(1-06+Animal 1-11+Armageddon+It 1-14+Hysteria 1-01+Good+Times+Bad+Times 20+Rock+and+Roll+Is+King)
 uniquealbumlist=()
 albumlist=()
@@ -13,7 +17,7 @@ album=${album//[[:blank:]]/}
 album=${album::-4}
 albumlist+=($album)
 uniquealbumlist+=($album)
-album="../Covers/$album.jpg"
+album="$HOME/Pictures/Covers/$album.jpg"
 eyeD3 --write-images=$PWD ${song[0]}.mp3
 mv OTHER.JPG $album
 
@@ -37,7 +41,7 @@ while [ $i -lt ${#song[@]} ]; do
 		uniquealbumlist+=($album)
 		echo song jpg: ${song[$i]}
 		eyeD3 --write-images=$PWD ${song[$i]}.mp3
-		album="../Covers/$album.jpg"
+		album="$HOME/Pictures/Covers/$album.jpg"
 		mv OTHER.JPG $album
 		let k=k+1
 	fi
