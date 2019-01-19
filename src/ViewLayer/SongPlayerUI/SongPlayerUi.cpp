@@ -16,7 +16,6 @@ SongPlayerUi::SongPlayerUi():
             qApp->desktop()->availableGeometry()
         )
     );
-    setFixedSize(size());
     show();
 }
 

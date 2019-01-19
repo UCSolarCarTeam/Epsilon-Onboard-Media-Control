@@ -8,6 +8,18 @@ This program is an onboard media control for the University of Calgary's Solar C
 :imagesdir: assets/images
 image::plan.jpg[Plan]
 
+== Acquiring Music From AWS
+
+In order to download all songs from AWS, the AWS command line tool is used to find all the song names on the server. Run the following lines in the linux terminal to aquire the commands. 
+
+`sudo apt-get install awscli`
+
+Then configure the connection with:
+
+`aws configure`
+
+Access codes may be aquired by asking the solar car manager. 
+
 == Acquiring Album Art
 
 In order to rip the jpg pics off the mp3 files a script from eyeD3 is used. Run the following line in the linux terminal once to aquire the program:
