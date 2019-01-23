@@ -188,6 +188,8 @@ void SongPlayer::updateInfo()
     //remove all spaces in album name for easier access to file path of album
     album_.replace(" ", "");
 
+    qDebug() << album_;
+
     cover_ = (ALBUM_FILE_PATH);
     cover_.append(album_);
 

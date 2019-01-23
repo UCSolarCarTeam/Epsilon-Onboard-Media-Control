@@ -24,7 +24,7 @@ Access codes may be aquired by asking the solar car manager.
 
 In order to rip the jpg pics off the mp3 files a script from eyeD3 is used. Run the following line in the linux terminal once to aquire the program:
 
-`sudo apt-get install eyeD3`
+`sudo apt-get install eyed3`
 
 Some pictures are downloaded as png files. To keep everything in jpg format, a command will be run to convert all png files to jpg files. To aquire the commands for file formatting run:
 

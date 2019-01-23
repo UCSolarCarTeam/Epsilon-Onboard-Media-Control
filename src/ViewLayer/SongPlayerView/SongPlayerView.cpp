@@ -132,6 +132,10 @@ void SongPlayerView::updateGUI(const QString& title, const QString& artist, cons
         ui_.volumeControl().setStyleSheet(styleSheet.arg(max.name()));
         bar_.changeColor(max);
     }
+    else
+    {
+        ui_.labelPic().clear();
+    }
 }
 
 void SongPlayerView::updateProgress(qint64 position, qint64 duration)
