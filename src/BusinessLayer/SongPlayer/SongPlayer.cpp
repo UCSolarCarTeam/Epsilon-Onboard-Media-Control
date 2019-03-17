@@ -35,6 +35,11 @@ void SongPlayer::updateState()
     }
 }
 
+QScopedPointer<SongControl> SongPlayer::getController()
+{
+    return controller_; //FIX
+}
+
 void SongPlayer::openFile()
 {
     const QString filePath = controller_->currentSong();

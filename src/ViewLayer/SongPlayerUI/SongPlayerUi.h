@@ -29,6 +29,7 @@ public:
     QPushButton& nextSong();
     QPushButton& prevSong();
     QVBoxLayout& progressBarContainer();
+    QPushButton& playerToList();
     QSlider& volumeControl();
 
 private:

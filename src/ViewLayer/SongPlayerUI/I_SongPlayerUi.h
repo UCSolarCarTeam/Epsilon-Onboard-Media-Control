@@ -21,4 +21,5 @@ public:
     virtual QSlider& volumeControl() = 0;
     virtual QVBoxLayout& progressBarContainer() = 0;
     virtual QLabel& labelPic() = 0;
+    virtual QPushButton& playerToList() = 0;
 };

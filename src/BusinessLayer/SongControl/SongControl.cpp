@@ -14,6 +14,10 @@ SongControl::~SongControl()
 {
 }
 
+QVector<QString> SongControl::getFiles(){
+    return files_;
+}
+
 QString SongControl::nextSong()
 {
     currentSongIndex_ = (currentSongIndex_ + 1) % files_.size();

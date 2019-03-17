@@ -16,7 +16,6 @@ SongPlayerUi::SongPlayerUi():
             qApp->desktop()->availableGeometry()
         )
     );
-    show();
 }
 
 SongPlayerUi::~SongPlayerUi()
@@ -67,4 +66,9 @@ QVBoxLayout& SongPlayerUi::progressBarContainer()
 QLabel& SongPlayerUi::labelPic()
 {
     return *ui_->labelPic;
+}
+
+QPushButton& SongPlayerUi::playerToList()
+{
+    return *ui_->playerToList;
 }

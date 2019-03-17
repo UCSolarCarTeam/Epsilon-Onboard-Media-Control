@@ -23,10 +23,11 @@ namespace
     const int NUM_THREADS = 4;
 }
 
-SongPlayerView::SongPlayerView(SongPlayer& songPlayer, I_SongPlayerUi& ui, ProgressBar& bar)
+SongPlayerView::SongPlayerView(SongPlayer& songPlayer, I_SongPlayerUi& ui, ProgressBar& bar, ContainerUI& containerUI)
     : songPlayer_(songPlayer)
     , ui_(ui)
     , bar_(bar)
+    , containerUI_(containerUI)
 {
     ui_.infoLabel().setAlignment(Qt::AlignCenter);
     ui_.playButton().setCheckable(true);
@@ -43,6 +44,7 @@ SongPlayerView::SongPlayerView(SongPlayer& songPlayer, I_SongPlayerUi& ui, Progr
     connect(&ui_.volumeControl(), SIGNAL(valueChanged(int)), this, SLOT(handleVolumeControl()));
     connect(&songPlayer_, SIGNAL(updateGUI(const QString&, const QString&, const QPixmap&)), this, SLOT(updateGUI(const QString&, const QString&, const QPixmap&)));
     connect(&songPlayer_, SIGNAL(updateProgress(qint64, qint64)), this, SLOT(updateProgress(qint64, qint64)));
+    connect(&ui_.playerToList(), SIGNAL(clicked()), this, SLOT(handlePlayerToListClicked()));
     ui_.progressBarContainer().addWidget(&bar_);
 }
 
@@ -93,6 +95,11 @@ void SongPlayerView::handleVolumeControl()
 {
     int volume = ui_.volumeControl().value();
     songPlayer_.adjustVolume(volume);
+}
+
+void SongPlayerView::handlePlayerToListClicked()
+{
+    containerUI_.setCurrentIndex(1);
 }
 
 void SongPlayerView::updateGUI(const QString& title, const QString& artist, const QPixmap& cover)

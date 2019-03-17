@@ -26,7 +26,9 @@ public:
     SongPlayer(QWidget* parent = 0);
     QLabel* infoLabel_;
     QProgressBar* positionSlider_;
+    QScopedPointer<SongControl> getController();
     ~SongPlayer();
+
 
 public slots:
     void openFile();
