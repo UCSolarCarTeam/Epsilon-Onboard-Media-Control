@@ -83,7 +83,7 @@ border-width: 0px;</string>
      </property>
     </spacer>
    </item>
-   <item row="5" column="9">
+   <item row="5" column="8">
     <spacer name="horizontalSpacer">
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
@@ -128,7 +128,7 @@ border-width: 0px;</string>
      </property>
     </spacer>
    </item>
-   <item row="7" column="7">
+   <item row="8" column="7">
     <spacer name="verticalSpacer_4">
      <property name="orientation">
       <enum>Qt::Vertical</enum>
@@ -441,7 +441,7 @@ QPushButton:checked:pressed
      </layout>
     </widget>
    </item>
-   <item row="5" column="10">
+   <item row="5" column="9">
     <widget class="QSlider" name="volumeControl">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
@@ -500,6 +500,16 @@ background: white;
       </size>
      </property>
     </spacer>
+   </item>
+   <item row="7" column="7">
+    <widget class="QPushButton" name="playerToList">
+     <property name="styleSheet">
+      <string notr="true">background-color:blue;</string>
+     </property>
+     <property name="text">
+      <string>PushButton</string>
+     </property>
+    </widget>
    </item>
   </layout>
  </widget>

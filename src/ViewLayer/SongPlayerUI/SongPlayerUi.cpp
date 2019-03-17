@@ -74,3 +74,8 @@ QLabel& SongPlayerUi::labelPic()
 {
     return *ui_->labelPic;
 }
+
+QPushButton& SongPlayerUi::playerToList()
+{
+    return *ui_->playerToList;
+}

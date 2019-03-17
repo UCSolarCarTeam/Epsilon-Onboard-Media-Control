@@ -30,6 +30,7 @@ public:
     QString currentSong();
     QString shuffleSong();
     QString libraryLoad();
+    QVector<QString> getFiles();
     bool hasSuffix(const QString& s, const QString& suffix);
 
 private:
