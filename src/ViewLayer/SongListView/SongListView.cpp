@@ -21,6 +21,6 @@ void SongListView::handleListToPlayerClicked()
 
 void SongListView::addSongsToList()
 {
-    QVector<QString> tempFiles =
+    //QVector<QString> tempFiles =
 }
 
