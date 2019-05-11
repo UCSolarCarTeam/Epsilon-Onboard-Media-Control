@@ -15,5 +15,6 @@
         <file>../Resources/IconsOn/shuffle.png</file>
         <file>../Resources/IconsOn/speaker.png</file>
         <file>../Resources/IconsOff/mask.png</file>
+        <file>../Resources/Fonts/BurlingamePro-Light.otf</file>
     </qresource>
 </RCC>

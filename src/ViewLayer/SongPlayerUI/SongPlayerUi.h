@@ -7,6 +7,7 @@
 #include <QSlider>
 
 #include "I_SongPlayerUi.h"
+#include "../FontLoader/FontLoader.h"
 
 namespace Ui
 {
@@ -33,4 +34,5 @@ public:
 
 private:
     Ui::SongPlayerUi* ui_;
+    QScopedPointer<FontLoader> fontLoader_;
 };
