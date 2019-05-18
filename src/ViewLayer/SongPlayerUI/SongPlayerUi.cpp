@@ -21,7 +21,6 @@ SongPlayerUi::SongPlayerUi():
 
     //Font loading
     QApplication::setFont(fontLoader_->loadFont(Font::BURLINGAME));
-    ui_->infoLabel->setFont(fontLoader_->loadFont(Font::BURLINGAME));
 
     show();
 }

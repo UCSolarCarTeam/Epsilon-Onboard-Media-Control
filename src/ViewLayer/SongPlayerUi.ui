@@ -53,10 +53,7 @@ border-width: 0px;</string>
      </property>
      <property name="font">
       <font>
-       <family>Nimbus Sans L</family>
-       <pointsize>20</pointsize>
-       <weight>75</weight>
-       <bold>true</bold>
+       <pointsize>16</pointsize>
       </font>
      </property>
      <property name="styleSheet">
