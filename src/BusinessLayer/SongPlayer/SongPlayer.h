@@ -26,11 +26,15 @@ public:
     SongPlayer(QWidget* parent = 0);
     QLabel* infoLabel_;
     QProgressBar* positionSlider_;
-    QScopedPointer<SongControl> getController();
+    SongControl* getController();
+    int loadMetaData(const QString& filePath);
+    QString getSongArtist();
+    QString getSongName();
     ~SongPlayer();
 
 
 public slots:
+
     void openFile();
     void openNext();
     void openPrevious();

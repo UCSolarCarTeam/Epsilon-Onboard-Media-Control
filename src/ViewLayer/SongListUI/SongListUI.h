@@ -1,6 +1,6 @@
 #pragma once
 #include <QPushButton>
-#include <QListWidget>
+#include <QScrollArea>
 #include <QWidget>
 #include "I_SongListUI.h"
 
@@ -16,7 +16,7 @@ public:
     explicit SongListUI();
     ~SongListUI();
     QPushButton& listToPlayer();
-    QListWidget& listOfSongs();
+    QScrollArea& listScroll();
 
 private:
     Ui::SongListUI *ui_;

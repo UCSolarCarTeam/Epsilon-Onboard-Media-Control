@@ -8,7 +8,7 @@ ViewContainer::ViewContainer(BusinessContainer& businessContainer)
     , SongPlayerView_(new SongPlayerView(businessContainer.songPlayer(),
                                          *SongPlayerUI_, *ProgressBar_,
                                          *ContainerUI_))
-    , SongListView_(new SongListView(*SongListUI_, *ContainerUI_))
+    , SongListView_(new SongListView(businessContainer.songPlayer(),*SongListUI_, *ContainerUI_))
 {
     ContainerUI_->addWidget(SongPlayerUI_);
     ContainerUI_->setCurrentIndex(0);

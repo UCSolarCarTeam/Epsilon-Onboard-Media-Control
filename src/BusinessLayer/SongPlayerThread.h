@@ -33,7 +33,7 @@ public:
 
     void songQuit();
     int loadSong(QString filePath);
-
+    int loadMetaData(QString filePath);
 signals:
     void durationChanged(qint64);
     void positionChanged(qint64);

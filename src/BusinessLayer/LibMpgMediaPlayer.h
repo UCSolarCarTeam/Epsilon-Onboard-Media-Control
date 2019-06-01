@@ -22,6 +22,7 @@ public:
     void play();
     void pause();
     PlayerState state();
+    int loadMetaData(const QString& filePath);
 
     SongPlayerThread* getSongPlayerThread();
 

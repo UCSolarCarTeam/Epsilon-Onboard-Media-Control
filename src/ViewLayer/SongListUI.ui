@@ -32,15 +32,28 @@
     <string>PushButton</string>
    </property>
   </widget>
-  <widget class="QListWidget" name="listOfSongs">
+  <widget class="QScrollArea" name="listScroll">
    <property name="geometry">
     <rect>
-     <x>50</x>
-     <y>0</y>
-     <width>301</width>
-     <height>221</height>
+     <x>70</x>
+     <y>40</y>
+     <width>251</width>
+     <height>171</height>
     </rect>
    </property>
+   <property name="widgetResizable">
+    <bool>true</bool>
+   </property>
+   <widget class="QWidget" name="scrollAreaWidgetContents">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>249</width>
+      <height>169</height>
+     </rect>
+    </property>
+   </widget>
   </widget>
  </widget>
  <resources/>
