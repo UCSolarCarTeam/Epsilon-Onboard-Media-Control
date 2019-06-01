@@ -42,6 +42,5 @@ void SongListView::addFilePaths()
         infoList_.push_back(&temp);
         qDebug() << temp.getName() << " " << temp.getArtist() << " " << temp.getPath();
      }
-
 }
 

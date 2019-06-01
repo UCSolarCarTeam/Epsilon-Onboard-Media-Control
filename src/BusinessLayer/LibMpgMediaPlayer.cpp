@@ -73,3 +73,9 @@ QString LibMpgMediaPlayer::metaData(const QString& key)
         return "Metadata Unavailable";
     }
 }
+
+int LibMpgMediaPlayer::loadMetaData(const QString& filePath)
+{
+    int i = songPlayer_->loadMetaData(filePath);
+    return i;
+}

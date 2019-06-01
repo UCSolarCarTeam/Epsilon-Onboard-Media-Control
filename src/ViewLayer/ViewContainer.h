@@ -16,6 +16,7 @@ class ProgressBar;
 class ContainerUI;
 class SongPlayerUI;
 class SongListView;
+class SongListUI;
 
 class ViewContainer
 {

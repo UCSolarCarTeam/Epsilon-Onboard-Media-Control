@@ -28,6 +28,22 @@ SongPlayer::~SongPlayer()
 {
 }
 
+int SongPlayer::loadMetaData(const QString& filePath)
+{
+    int i = mediaPlayer_->loadMetaData(filePath);
+    return i;
+}
+
+QString SongPlayer::getSongArtist()
+{
+    return mediaPlayer_->metaData(QMediaMetaData::ContributingArtist);
+}
+
+QString SongPlayer::getSongName()
+{
+    return mediaPlayer_->metaData(QMediaMetaData::Title);
+}
+
 void SongPlayer::updateState()
 {
     if (mediaPlayer_->position() >= mediaPlayer_->duration() && mediaPlayer_->duration() != -1)
@@ -36,9 +52,9 @@ void SongPlayer::updateState()
     }
 }
 
-QScopedPointer<SongControl> SongPlayer::getController()
+SongControl* SongPlayer::getController()
 {
-    return controller_; //FIX
+    return controller_.data();
 }
 
 void SongPlayer::openFile()

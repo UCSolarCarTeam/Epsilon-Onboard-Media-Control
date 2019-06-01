@@ -58,6 +58,32 @@ double SongPlayerThread::getMaxVolume()
     return MAX_VOLUME;
 }
 
+int SongPlayerThread::loadMetaData(QString filePath)
+{
+    QByteArray ba = filePath.toLocal8Bit();
+    int size = ba.length();
+    char* songName = new char[size];
+    songName = ba.data();
+
+    if (NULL == songName || 0 == strcmp("", songName))
+    {
+        return -1;
+    }
+
+    if (loaded_)
+    {
+        freeMusic();
+    }
+
+    int err;
+    mh_ = mpg123_new(NULL, &err);
+    mpg123_open(mh_, songName);
+    mpg123_id3(mh_, NULL, &metaData_);
+
+    //emit metaDataAvailableChanged(true);
+    return 0;
+}
+
 //Will load the songName into buffer
 int SongPlayerThread::loadSong(QString filePath)
 {
@@ -108,6 +134,8 @@ int SongPlayerThread::loadSong(QString filePath)
     emit metaDataAvailableChanged(true);
     return 0;
 }
+
+
 
 void SongPlayerThread::play()
 {

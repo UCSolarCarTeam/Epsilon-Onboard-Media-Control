@@ -29,7 +29,7 @@ QPushButton& SongListUI::listToPlayer()
     return *ui_->listToPlayer;
 }
 
-QListWidget& SongListUI::listOfSongs()
+QScrollArea& SongListUI::listScroll()
 {
-    return *ui_->listOfSongs;
+    return *ui_->listScroll;
 }
