@@ -17,6 +17,7 @@ public:
     ~SongListUI();
     QPushButton& listToPlayer();
     QScrollArea& listScroll();
+    QWidget& scrollAreaWidgetContents();
 
 private:
     Ui::SongListUI *ui_;

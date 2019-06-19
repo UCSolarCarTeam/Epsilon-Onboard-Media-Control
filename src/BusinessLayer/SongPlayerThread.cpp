@@ -16,7 +16,7 @@ SongPlayerThread::SongPlayerThread(SongControl* songControl)
     dev_ = NULL;
     mh_ = NULL;
     buffer_ = NULL;
-
+    metaData_ = nullptr;
     ao_initialize();
 
     mpg123_init();
@@ -78,6 +78,7 @@ int SongPlayerThread::loadMetaData(QString filePath)
     int err;
     mh_ = mpg123_new(NULL, &err);
     mpg123_open(mh_, songName);
+    mpg123_getformat(mh_, &rate_, &channels_, &encoding_);
     mpg123_id3(mh_, NULL, &metaData_);
 
     //emit metaDataAvailableChanged(true);

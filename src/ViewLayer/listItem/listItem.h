@@ -4,17 +4,18 @@
 class listItem: public QPushButton
 {
 public:
-    listItem();
+    listItem(QString artist, QString name, QString path);
     ~listItem();
     void setPath(QString path);
     void setName(QString name);
     void setArtist(QString artist);
+    void setButtonText();
     QString getName();
     QString getPath();
     QString getArtist();
 private:
-    QString name;
-    QString artist;
-    QString filepath;
+    QString artist_;
+    QString name_;
+    QString filepath_;
 };
 

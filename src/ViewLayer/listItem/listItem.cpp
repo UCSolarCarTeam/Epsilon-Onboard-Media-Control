@@ -1,8 +1,11 @@
 #include "listItem.h"
 
-listItem::listItem()
+listItem::listItem(QString artist, QString name, QString path)
+    :artist_(artist),
+      name_(name),
+      filepath_(path)
 {
-
+    setButtonText();
 }
 
 listItem::~listItem()
@@ -10,32 +13,40 @@ listItem::~listItem()
 
 }
 
+void listItem:: setButtonText()
+{
+    QString temp = getName() + " - " + getArtist();
+    this->setText(temp);
+}
+
 void listItem:: setArtist(QString artist)
 {
-    this->artist = artist;
+    this->artist_ = artist;
 }
 
 void listItem:: setName(QString name)
 {
-    this->name = name;
+    this->name_ = name;
 }
 
 void listItem:: setPath(QString path)
 {
-    this->filepath = path;
+    this->filepath_ = path;
 }
 
 QString listItem:: getArtist()
 {
-    return this->artist;
+    return this->artist_;
 }
 
 QString listItem:: getName()
 {
-    return this->name;
+    return this->name_;
 }
 
 QString listItem:: getPath()
 {
-    return this->filepath;
+    return this->filepath_;
 }
+
+
