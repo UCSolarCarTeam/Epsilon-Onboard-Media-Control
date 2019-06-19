@@ -32,7 +32,7 @@ void SongListView::addSongsToList()
     addFilePaths();
     QLayout* layoutL = ui_.scrollAreaWidgetContents().layout();
     for(int j = 0; j<infoList_.length(); j++){
-        //layoutL->addWidget(infoList_[j]);
+        layoutL->addWidget(infoList_.at(j));
     }
 }
 
