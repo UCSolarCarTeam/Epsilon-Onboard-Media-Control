@@ -33,3 +33,8 @@ QScrollArea& SongListUI::listScroll()
 {
     return *ui_->listScroll;
 }
+
+QWidget& SongListUI::scrollAreaWidgetContents()
+{
+    return *ui_->scrollAreaWidgetContents;
+}
