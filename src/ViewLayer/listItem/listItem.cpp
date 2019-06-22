@@ -7,7 +7,7 @@ listItem::listItem(QString artist, QString name, QString path)
 {
     listButton_ = new QPushButton();
     setButtonText();
-    listButton_->setStyleSheet("color:white;");
+    listButton_->setStyleSheet("color:white; border-style: outset;border-width: 1px; border-color: grey; font: bold 16px;");
     connect(listButton_, SIGNAL(clicked()), this, SLOT(handleButtonPressed()));
 }
 
