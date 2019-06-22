@@ -21,7 +21,8 @@ private:
     QVector<listItem*> infoList_;
     void addSongsToList();
     void addFilePaths();
-private slots:
+public slots:
     void handleListToPlayerClicked();
+    void handleSongButtonClicked(QString path);
 };
 

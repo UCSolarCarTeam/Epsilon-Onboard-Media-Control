@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
+    <width>701</width>
     <height>300</height>
    </rect>
   </property>
@@ -125,7 +125,8 @@ background-color:rgba(45,45,45,150);
    <item>
     <widget class="QPushButton" name="listToPlayer">
      <property name="styleSheet">
-      <string notr="true">background-color:green;</string>
+      <string notr="true">background-color:grey;
+</string>
      </property>
      <property name="text">
       <string>PushButton</string>
