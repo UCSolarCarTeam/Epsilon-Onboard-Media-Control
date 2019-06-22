@@ -28,13 +28,13 @@
      <property name="minimumSize">
       <size>
        <width>665</width>
-       <height>150</height>
+       <height>200</height>
       </size>
      </property>
      <property name="maximumSize">
       <size>
        <width>665</width>
-       <height>150</height>
+       <height>200</height>
       </size>
      </property>
      <property name="autoFillBackground">

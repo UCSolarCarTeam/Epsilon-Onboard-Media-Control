@@ -4,6 +4,8 @@
 #include <QDebug>
 #include <QScrollBar>
 #include <QVBoxLayout>
+#include <QSizePolicy>
+#include <QPixmap>
 #include "listItem/listItem.h"
 
 SongListView::SongListView(SongPlayer& songPlayer, I_SongListUI& ui, ContainerUI& containerUI)
@@ -42,10 +44,13 @@ void SongListView::addSongsToList()
 {
     addFilePaths();
     QLayout* layoutL = ui_.scrollAreaWidgetContents().layout();
-    for(int j = 0; j<infoList_.length(); j++){
+    int j = 0;
+    for(; j<infoList_.length(); j++){
         layoutL->addWidget(infoList_[j]->getButton());
         connect(infoList_[j], SIGNAL(songChanged(QString)), this, SLOT(handleSongButtonClicked(QString)));
     }
+
+    ui_.scrollAreaWidgetContents().setFixedSize(ui_.width() - 50, j * 35);
 }
 
 void SongListView::addFilePaths()
