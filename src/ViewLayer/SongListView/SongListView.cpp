@@ -4,6 +4,7 @@
 #include <QDebug>
 #include <QScrollBar>
 #include <QVBoxLayout>
+#include "listItem/listItem.h"
 
 SongListView::SongListView(SongPlayer& songPlayer, I_SongListUI& ui, ContainerUI& containerUI)
     :songPlayer_(songPlayer),
@@ -11,8 +12,7 @@ SongListView::SongListView(SongPlayer& songPlayer, I_SongListUI& ui, ContainerUI
      containerUI_(containerUI),
      infoList_()
 {
-
-//    ui_.listScroll().setWidget(new QVBoxLayout());
+    ui_.listToPlayer().setText("Media Player");
     QScrollBar* verticalBar = new QScrollBar();
     ui_.listScroll().setVerticalScrollBar(verticalBar);
     addSongsToList();
@@ -31,12 +31,20 @@ void SongListView::handleListToPlayerClicked()
     containerUI_.setCurrentIndex(0);
 }
 
+void SongListView::handleSongButtonClicked(QString path)
+{
+    songPlayer_.setFile(path);
+    handleListToPlayerClicked();
+}
+
+
 void SongListView::addSongsToList()
 {
     addFilePaths();
     QLayout* layoutL = ui_.scrollAreaWidgetContents().layout();
     for(int j = 0; j<infoList_.length(); j++){
-        layoutL->addWidget(infoList_[j]);
+        layoutL->addWidget(infoList_[j]->getButton());
+        connect(infoList_[j], SIGNAL(songChanged(QString)), this, SLOT(handleSongButtonClicked(QString)));
     }
 }
 
@@ -50,7 +58,8 @@ void SongListView::addFilePaths()
             qDebug() << "Error loading meta data for song at index " << i;
             exit(-1);
         }
-        infoList_.push_back(new listItem(songPlayer_.getSongArtist(), songPlayer_.getSongName(), tempFiles.at(i)));
+        listItem *test = new listItem(songPlayer_.getSongArtist(), songPlayer_.getSongName(), tempFiles.at(i));
+        infoList_.push_back(test);
 //        qDebug() << temp.getName() << " " << temp.getArtist() << " " << temp.getPath();
      }
 }

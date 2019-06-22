@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>683</width>
-    <height>384</height>
+    <height>428</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -504,7 +504,7 @@ background: white;
    <item row="7" column="7">
     <widget class="QPushButton" name="playerToList">
      <property name="styleSheet">
-      <string notr="true">background-color:blue;</string>
+      <string notr="true">background-color:grey;</string>
      </property>
      <property name="text">
       <string>PushButton</string>

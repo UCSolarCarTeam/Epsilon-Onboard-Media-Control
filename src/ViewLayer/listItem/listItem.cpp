@@ -1,11 +1,14 @@
 #include "listItem.h"
 
 listItem::listItem(QString artist, QString name, QString path)
-    :artist_(artist),
+    : artist_(artist),
       name_(name),
       filepath_(path)
 {
+    listButton_ = new QPushButton();
     setButtonText();
+    listButton_->setStyleSheet("color:white;");
+    connect(listButton_, SIGNAL(clicked()), this, SLOT(handleButtonPressed()));
 }
 
 listItem::~listItem()
@@ -16,7 +19,7 @@ listItem::~listItem()
 void listItem:: setButtonText()
 {
     QString temp = getName() + " - " + getArtist();
-    this->setText(temp);
+    listButton_->setText(temp);
 }
 
 void listItem:: setArtist(QString artist)
@@ -47,6 +50,16 @@ QString listItem:: getName()
 QString listItem:: getPath()
 {
     return this->filepath_;
+}
+
+QPushButton* listItem:: getButton()
+{
+    return this->listButton_;
+}
+
+void listItem:: handleButtonPressed()
+{
+    emit songChanged(filepath_);
 }
 
 
