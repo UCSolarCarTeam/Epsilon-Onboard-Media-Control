@@ -8,6 +8,32 @@
 #include <QPixmap>
 #include "listItem/listItem.h"
 
+QString SCROLLBAR_STYLESHEET = "QScrollBar:vertical {"
+                                   "    background:rgba(83, 83, 84);"
+                                   "    width:10px;    "
+                                   "    margin: 0px 0px 0px 0px;"
+                                   "}"
+                                   "QScrollBar::handle:vertical {"
+                                   "    background: qlineargradient(x1:0, y1:0, x2:1, y2:0,"
+                                   "    stop: 0 rgb(255, 192, 33), stop: 0.5 rgb(255, 192, 33), stop:1 rgb(255, 192, 33));"
+                                   "    min-height: 0px;"
+                                   "    border-radius: 5px;"
+                                   "}"
+                                   "QScrollBar::add-line:vertical {"
+                                   "    background: qlineargradient(x1:0, y1:0, x2:1, y2:0,"
+                                   "    stop: 0 rgb(255, 192, 33), stop: 0.5 rgb(255, 192, 33),  stop:1 rgb(255, 192, 33));"
+                                   "    height: 0px;"
+                                   "    subcontrol-position: bottom;"
+                                   "    subcontrol-origin: margin;"
+                                   "}"
+                                   "QScrollBar::sub-line:vertical {"
+                                   "    background: qlineargradient(x1:0, y1:0, x2:1, y2:0,"
+                                   "    stop: 0  rgb(255, 192, 33), stop: 0.5 rgb(255, 192, 33),  stop:1 rgb(255, 192, 33));"
+                                   "    height: 0 px;"
+                                   "    subcontrol-position: top;"
+                                   "    subcontrol-origin: margin;"
+                                   "}";
+
 SongListView::SongListView(SongPlayer& songPlayer, I_SongListUI& ui, ContainerUI& containerUI)
     :songPlayer_(songPlayer),
      ui_(ui),
@@ -15,6 +41,7 @@ SongListView::SongListView(SongPlayer& songPlayer, I_SongListUI& ui, ContainerUI
      infoList_()
 {
     QScrollBar* verticalBar = new QScrollBar();
+    verticalBar->setStyleSheet(SCROLLBAR_STYLESHEET);
     ui_.listScroll().setVerticalScrollBar(verticalBar);
     addSongsToList();
     connect(&ui_.listToPlayer(), SIGNAL(clicked()), this, SLOT(handleListToPlayerClicked()));
