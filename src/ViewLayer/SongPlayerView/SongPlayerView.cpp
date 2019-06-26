@@ -46,7 +46,6 @@ SongPlayerView::SongPlayerView(SongPlayer& songPlayer, I_SongPlayerUi& ui, Progr
     connect(&songPlayer_, SIGNAL(updateProgress(qint64, qint64)), this, SLOT(updateProgress(qint64, qint64)));
     connect(&ui_.playerToList(), SIGNAL(clicked()), this, SLOT(handlePlayerToListClicked()));
     ui_.progressBarContainer().addWidget(&bar_);
-    ui_.playerToList().setText("Track List");
 }
 
 SongPlayerView::~SongPlayerView()

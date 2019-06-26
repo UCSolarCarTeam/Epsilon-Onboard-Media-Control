@@ -14,7 +14,6 @@ SongListView::SongListView(SongPlayer& songPlayer, I_SongListUI& ui, ContainerUI
      containerUI_(containerUI),
      infoList_()
 {
-    ui_.listToPlayer().setText("Media Player");
     QScrollBar* verticalBar = new QScrollBar();
     ui_.listScroll().setVerticalScrollBar(verticalBar);
     addSongsToList();
