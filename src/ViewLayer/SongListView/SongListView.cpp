@@ -35,10 +35,11 @@ QString SCROLLBAR_STYLESHEET = "QScrollBar:vertical {"
                                    "    subcontrol-origin: margin;"
                                    "}";
 
-SongListView::SongListView(SongPlayer& songPlayer, I_SongListUI& ui, ContainerUI& containerUI)
+SongListView::SongListView(SongPlayer& songPlayer, I_SongListUI& ui, ContainerUI& containerUI, I_SongPlayerUi& songPlayerUI)
     :songPlayer_(songPlayer),
      ui_(ui),
      containerUI_(containerUI),
+     songPlayerUI_(songPlayerUI),
      infoList_()
 {
     QScrollBar* verticalBar = new QScrollBar();
@@ -46,13 +47,15 @@ SongListView::SongListView(SongPlayer& songPlayer, I_SongListUI& ui, ContainerUI
     QScroller::grabGesture(&ui_.listScroll(), QScroller::LeftMouseButtonGesture);
     QScroller::grabGesture(&ui_.listScroll(), QScroller::TouchGesture);
     ui_.listScroll().setVerticalScrollBar(verticalBar);
+    ui_.listScroll().setStyleSheet("border-style: outset; border-width: 1px; border-color:grey;");
     addSongsToList();
     connect(&ui_.listToPlayer(), SIGNAL(clicked()), this, SLOT(handleListToPlayerClicked()));
 }
 
 SongListView::~SongListView()
 {
-    for(int j = 0; j<infoList_.length(); j++){
+    for(int j = 0; j<infoList_.length(); j++)
+    {
         delete infoList_[j];
     }
 }
@@ -65,6 +68,7 @@ void SongListView::handleListToPlayerClicked()
 void SongListView::handleSongButtonClicked(QString path)
 {
     songPlayer_.setFile(path);
+    songPlayerUI_.playButton().setChecked(true);
     handleListToPlayerClicked();
 }
 
@@ -78,23 +82,22 @@ void SongListView::addSongsToList()
         layoutL->addWidget(infoList_[j]->getButton());
         connect(infoList_[j], SIGNAL(songChanged(QString)), this, SLOT(handleSongButtonClicked(QString)));
     }
-
     ui_.scrollAreaWidgetContents().setFixedSize(ui_.width() - 50, j * 35);
 }
 
 void SongListView::addFilePaths()
 {
     QVector<QString> tempFiles = songPlayer_.getController()->getFiles();
-    for(int i = 0; i<tempFiles.length(); i++){
-        int w = songPlayer_.loadMetaData(tempFiles.at(i));
-        if(w==-1)
+    for(int i = 0; i<tempFiles.length(); i++)
+    {
+        int errorCheck = songPlayer_.loadMetaData(tempFiles.at(i));
+        if(errorCheck==-1)
         {
             qDebug() << "Error loading meta data for song at index " << i;
             exit(-1);
         }
-        listItem *test = new listItem(songPlayer_.getSongArtist(), songPlayer_.getSongName(), tempFiles.at(i));
-        infoList_.push_back(test);
-//        qDebug() << temp.getName() << " " << temp.getArtist() << " " << temp.getPath();
+        listItem *temp = new listItem(songPlayer_.getSongArtist(), songPlayer_.getSongName(), tempFiles.at(i));
+        infoList_.push_back(temp);
      }
 }
 
