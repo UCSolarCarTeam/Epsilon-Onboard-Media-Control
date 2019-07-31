@@ -7,6 +7,7 @@
 #include <QSizePolicy>
 #include <QPixmap>
 #include "listItem/listItem.h"
+#include <QScroller>
 
 QString SCROLLBAR_STYLESHEET = "QScrollBar:vertical {"
                                    "    background:rgba(83, 83, 84);"
@@ -43,6 +44,8 @@ SongListView::SongListView(SongPlayer& songPlayer, I_SongListUI& ui, ContainerUI
 {
     QScrollBar* verticalBar = new QScrollBar();
     verticalBar->setStyleSheet(SCROLLBAR_STYLESHEET);
+    QScroller::grabGesture(&ui_.listScroll(), QScroller::LeftMouseButtonGesture);
+    QScroller::grabGesture(&ui_.listScroll(), QScroller::TouchGesture);
     ui_.listScroll().setVerticalScrollBar(verticalBar);
     ui_.listScroll().setStyleSheet("border-style: outset; border-width: 1px; border-color:grey;");
     addSongsToList();
