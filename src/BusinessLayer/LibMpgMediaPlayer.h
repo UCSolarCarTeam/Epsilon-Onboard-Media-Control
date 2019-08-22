@@ -1,6 +1,5 @@
 #pragma once
 
-#include <QMediaPlayer>
 #include "SongControl/SongControl.h"
 #include "SongPlayer/I_MediaPlayer.h"
 #include "SongPlayerThread.h"
