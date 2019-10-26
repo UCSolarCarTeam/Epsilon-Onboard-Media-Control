@@ -19,7 +19,6 @@ HEADERS += \
     SongListView/SongListView.h \
     listItem/listItem.h \
     FontLoader/FontLoader.h \
->>>>>>> master
 
 SOURCES += \
     SongPlayerUI/SongPlayerUi.cpp \
