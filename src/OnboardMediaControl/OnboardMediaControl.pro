@@ -25,4 +25,5 @@ RESOURCES += \
 DISTFILES += \
     ../Resources/PlaySmall.png \
     ../Resources/Next.png \
-    ../Resources/Previous.png
+    ../Resources/Previous.png \
+    ../Resources/Fonts/BurlingamePro-Light.otf

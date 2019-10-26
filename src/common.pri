@@ -1,6 +1,5 @@
 INCLUDEPATH += .
-QT+=core gui
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets network multimedia
+QT+=core gui widgets network multimedia
 
 CONFIG += static c++11 debug
 

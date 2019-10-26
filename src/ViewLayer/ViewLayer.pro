@@ -18,6 +18,8 @@ HEADERS += \
     SongListUI/I_SongListUI.h \
     SongListView/SongListView.h \
     listItem/listItem.h \
+    FontLoader/FontLoader.h \
+>>>>>>> master
 
 SOURCES += \
     SongPlayerUI/SongPlayerUi.cpp \
@@ -28,6 +30,7 @@ SOURCES += \
     SongListUI/SongListUI.cpp \
     SongListView/SongListView.cpp \
     listItem/listItem.cpp \
+    FontLoader/FontLoader.cpp \
 
 FORMS += \
     SongPlayerUi.ui \

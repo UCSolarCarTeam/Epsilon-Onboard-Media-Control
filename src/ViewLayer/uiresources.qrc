@@ -17,5 +17,6 @@
         <file>../Resources/IconsOff/mask.png</file>
         <file>../Resources/Menu/BackArrow.svg</file>
         <file>../Resources/Menu/SongListIcon.svg</file>
+        <file>../Resources/Fonts/BurlingamePro-Light.otf</file>
     </qresource>
 </RCC>

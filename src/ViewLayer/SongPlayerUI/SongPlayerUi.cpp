@@ -5,6 +5,7 @@
 
 SongPlayerUi::SongPlayerUi():
     ui_(new Ui::SongPlayerUi)
+    , fontLoader_(new FontLoader())
 {
     ui_->setupUi(this);
     setWindowFlags(Qt::Window | Qt::FramelessWindowHint);
@@ -16,6 +17,13 @@ SongPlayerUi::SongPlayerUi():
             qApp->desktop()->availableGeometry()
         )
     );
+
+    setFixedSize(size());
+
+    //Font loading
+    QApplication::setFont(fontLoader_->loadFont(Font::BURLINGAME));
+
+    show();
 }
 
 SongPlayerUi::~SongPlayerUi()

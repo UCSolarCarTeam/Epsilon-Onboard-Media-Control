@@ -1,4 +1,5 @@
 #include "SongPlayer.h"
+#include <QDebug>
 
 namespace
 {
