@@ -10,5 +10,3 @@ OBJECTS_DIR = ../release/.obj
 MOC_DIR = ../release/.moc
 RCC_DIR = ../release/.rcc
 UI_DIR = ../release/.ui
-
-LIBS += -lao -lmpg123
