@@ -14,8 +14,9 @@
 #include <QWidget>
 #include <QProgressBar>
 #include <QScopedPointer>
+#include <QMediaPlayer>
 #include "../SongControl/SongControl.h"
-#include "../LibMpgMediaPlayer.h"
+//#include "../LibMpgMediaPlayer.h"
 
 #define BITS 8
 
@@ -55,7 +56,7 @@ private:
     QAbstractButton* playButton_;
     QLabel* positionLabel_;
     QPoint offset_;
-    QScopedPointer<LibMpgMediaPlayer> mediaPlayer_;
+    QScopedPointer<QMediaPlayer> mediaPlayer_;
     qint64 position_;
     qint64 duration_;
     QString title_;
