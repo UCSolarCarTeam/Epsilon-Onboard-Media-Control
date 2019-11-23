@@ -16,9 +16,6 @@
 #include <QScopedPointer>
 #include <QMediaPlayer>
 #include "../SongControl/SongControl.h"
-//#include "../LibMpgMediaPlayer.h"
-
-#define BITS 8
 
 class SongPlayer : public QWidget
 {
