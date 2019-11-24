@@ -1,12 +1,6 @@
 #pragma once
-#include <QObject>
-#include <QSlider>
-#include <QFuture>
-#include <QtConcurrent/QtConcurrent>
-#include "../SongPlayerUI/I_SongPlayerUi.h"
-#include "../SongPlayerUI/SongPlayerUi.h"
-#include "../ProgressBar/ProgressBar.h"
-#include "../BusinessLayer/SongPlayer/SongPlayer.h"
+
+#include <QWidget>
 
 class SongPlayer;
 class I_SongPlayerUi;

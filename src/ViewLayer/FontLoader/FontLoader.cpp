@@ -1,5 +1,4 @@
 #include <QFontDatabase>
-
 #include "FontLoader.h"
 
 FontLoader::FontLoader()
