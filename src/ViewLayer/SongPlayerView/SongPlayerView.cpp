@@ -1,5 +1,17 @@
 #include <QDir>
 #include "SongPlayerView.h"
+#include "SongPlayerUI/I_SongPlayerUi.h"
+#include <QLabel>
+#include <QPushButton>
+#include <QObject>
+#include <QLabel>
+#include <QFuture>
+#include "../BusinessLayer/SongPlayer/SongPlayer.h"
+#include <QSlider>
+#include <ProgressBar/ProgressBar.h>
+#include <QtConcurrent/QtConcurrent>
+#include <QColor>
+#include <QVBoxLayout>
 
 namespace
 {
@@ -136,6 +148,6 @@ void SongPlayerView::updateGUI(const QString& title, const QString& artist, cons
 
 void SongPlayerView::updateProgress(qint64 position, qint64 duration)
 {
-    bar_.progress = (double)position / (double)duration;
+    bar_.progress = static_cast<double>(position) / static_cast<double>(duration);
     bar_.update();
 }

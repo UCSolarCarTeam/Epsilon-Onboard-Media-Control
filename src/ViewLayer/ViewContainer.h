@@ -1,10 +1,6 @@
 #pragma once
 
 #include <QScopedPointer>
-#include "SongPlayerUI/SongPlayerUi.h"
-#include "SongPlayerView/SongPlayerView.h"
-#include "../BusinessLayer/BusinessContainer.h"
-#include "ProgressBar/ProgressBar.h"
 
 class I_SongPlayerUi;
 class SongPlayerView;

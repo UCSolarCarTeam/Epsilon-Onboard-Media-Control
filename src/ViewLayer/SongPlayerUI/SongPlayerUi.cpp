@@ -1,5 +1,6 @@
 #include "SongPlayerUi.h"
 #include "ui_SongPlayerUi.h"
+#include <FontLoader/FontLoader.h>
 #include <QStyle>
 #include <QDesktopWidget>
 

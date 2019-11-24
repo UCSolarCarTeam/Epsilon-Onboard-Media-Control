@@ -1,19 +1,10 @@
-#pragma once
-
-#include <QObject>
-#include <algorithm>
-#include <dirent.h>
-#include <errno.h>
-#include <iostream>
-#include <random>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string>
-#include <vector>
 #include <QString>
 #include <QTime>
 #include <QVector>
-#include <QFileInfo>
+
+#pragma once
+
+
 namespace Ui
 {
     class SongControl;

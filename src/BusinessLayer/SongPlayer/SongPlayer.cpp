@@ -1,12 +1,13 @@
 #include "SongPlayer.h"
 #include <QDebug>
+#include <QDir>
 #include <QMediaMetaData>
+#include <QMediaPlayer>
 #include <QVariant>
+#include <SongControl/SongControl.h>
 
 namespace
 {
-    const int MS_TO_MINUTES = 60000;
-    const double MS_TO_SECONDS = 1000.0;
     const QString ALBUM_FILE_PATH = QDir::homePath() + "/Pictures/Covers/";
     const QColor BASELINE_COLOR = QColor(0, 0, 0, 255);
     const int IMAGE_PARTITIONS = 2;
@@ -21,10 +22,6 @@ SongPlayer::SongPlayer(QWidget* parent) : QWidget(parent)
     , loop_(false)
 {
     openNext();
-//    connect(mediaPlayer_.data(), SIGNAL(stateChanged()), this, SLOT(updateState()));
-//    connect(mediaPlayer_.data()->getSongPlayerThread(), SIGNAL(durationChanged(qint64)), this, SLOT(durationChanged(qint64)));
-//    connect(mediaPlayer_.data()->getSongPlayerThread(), SIGNAL(positionChanged(qint64)), this, SLOT(positionChanged(qint64)));
-//    connect(mediaPlayer_.data()->getSongPlayerThread(), SIGNAL(metaDataAvailableChanged(bool)), this, SLOT(updateInfo()));
     connect(mediaPlayer_.data(), SIGNAL(mediaChanged(const QMediaContent&)), this, SLOT(updateState()));
     connect(mediaPlayer_.data(), SIGNAL(durationChanged(qint64)), this, SLOT(durationChanged(qint64)));
     connect(mediaPlayer_.data(), SIGNAL(positionChanged(qint64)), this, SLOT(positionChanged(qint64)));
@@ -224,7 +221,7 @@ QColor SongPlayer::getColor(QImage img, int threadID)
     int start_x = (size / IMAGE_PARTITIONS) * (threadID % IMAGE_PARTITIONS);
     int start_y  = (size / IMAGE_PARTITIONS) * (threadID / IMAGE_PARTITIONS);
     int x = (size / IMAGE_PARTITIONS) * ((threadID % IMAGE_PARTITIONS) + 1);
-    int y = (size / IMAGE_PARTITIONS) * ((int)(threadID / IMAGE_PARTITIONS) + 1);
+    int y = (size / IMAGE_PARTITIONS) * (static_cast<int>((threadID / IMAGE_PARTITIONS) + 1));
 
     QColor brightest = BASELINE_COLOR;
 
