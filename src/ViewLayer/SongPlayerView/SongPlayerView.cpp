@@ -1,17 +1,18 @@
 #include <QDir>
-#include "SongPlayerView.h"
-#include "SongPlayerUI/I_SongPlayerUi.h"
 #include <QLabel>
 #include <QPushButton>
 #include <QObject>
 #include <QLabel>
 #include <QFuture>
-#include "../BusinessLayer/SongPlayer/SongPlayer.h"
 #include <QSlider>
-#include <ProgressBar/ProgressBar.h>
 #include <QtConcurrent/QtConcurrent>
 #include <QColor>
 #include <QVBoxLayout>
+
+#include "ProgressBar/ProgressBar.h"
+#include "SongPlayerView.h"
+#include "SongPlayerUI/I_SongPlayerUi.h"
+#include "../BusinessLayer/SongPlayer/SongPlayer.h"
 
 namespace
 {

@@ -1,3 +1,5 @@
+#include <QPainter>
+
 #include "ProgressBar.h"
 
 namespace
