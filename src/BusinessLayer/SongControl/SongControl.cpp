@@ -1,6 +1,7 @@
 #include <QDir>
-#include "SongControl.h"
 #include <dirent.h>
+
+#include "SongControl.h"
 SongControl::SongControl()
 {
     files_ = QVector<QString>();

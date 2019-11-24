@@ -1,10 +1,11 @@
-#include "SongPlayer.h"
 #include <QDebug>
 #include <QDir>
 #include <QMediaMetaData>
 #include <QMediaPlayer>
 #include <QVariant>
-#include <SongControl/SongControl.h>
+
+#include "SongControl/SongControl.h"
+#include "SongPlayer.h"
 
 namespace
 {
@@ -34,13 +35,14 @@ SongPlayer::~SongPlayer()
 
 void SongPlayer::updateState()
 {
-    if(mediaPlayer_->state() == QMediaPlayer::StoppedState)
+    if (mediaPlayer_->state() == QMediaPlayer::StoppedState)
     {
         auto pos = mediaPlayer_->position();
-        auto dur =mediaPlayer_->duration();
+        auto dur = mediaPlayer_->duration();
+
         if (dur > 0 && pos >= dur)
         {
-             playNext();
+            playNext();
         }
     }
 }
@@ -201,11 +203,9 @@ void SongPlayer::updateInfo()
     cover_ = (ALBUM_FILE_PATH);
     cover_.append(album_);
 
-//    QPixmap img(cover_);
-
     QImage img(mediaPlayer_->metaData(QMediaMetaData::CoverArtImage).value<QImage>());
-        QPixmap pixmap;
-        pixmap.convertFromImage(img);
+    QPixmap pixmap;
+    pixmap.convertFromImage(img);
 
     emit updateGUI(title_, artist_, pixmap);
 }

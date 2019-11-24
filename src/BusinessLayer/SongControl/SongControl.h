@@ -1,9 +1,7 @@
+#pragma once
 #include <QString>
 #include <QTime>
 #include <QVector>
-
-#pragma once
-
 
 namespace Ui
 {
