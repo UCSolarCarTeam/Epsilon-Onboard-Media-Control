@@ -8,7 +8,9 @@ CONFIG += staticlib
 
 DESTDIR = ../../build/.lib
 
-SOURCES +=
+SOURCES += \
+    LocalSongUrlSource.cpp
 
 HEADERS += \
-    I_SongUrlSource.h
+    I_SongUrlSource.h \
+    LocalSongUrlSource.h
