@@ -3,7 +3,11 @@
 
 #include <QTime>
 
-SongController::SongController(I_SongUrlSource& songUrlSource) : songList_(songUrlSource.getSongList()), index_(0)
+SongController::SongController(I_SongUrlSource& songUrlSource) :
+    index_(0),
+    loop_(false),
+    shuffle_(false),
+    songList_(songUrlSource.getSongList())
 {
 }
 

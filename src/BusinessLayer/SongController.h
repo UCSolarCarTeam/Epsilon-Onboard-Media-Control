@@ -18,9 +18,9 @@ public:
 private:
     void updateSongIndex_(int step);
 
+    int index_;
     bool loop_;
     bool shuffle_;
     QList<QUrl> songList_;
-    int index_;
 };
 
