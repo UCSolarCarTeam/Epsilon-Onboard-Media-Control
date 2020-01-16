@@ -5,7 +5,7 @@ CONFIG += staticlib
 error("Could not find common.pri file!")
 }
 
-DESTDIR = ../../build/.lib
+DESTDIR = .lib
 
 HEADERS += \
     SongPlayerUI/SongPlayerUi.h \

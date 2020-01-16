@@ -1,16 +1,17 @@
 TEMPLATE = app
-LIBS += -L../../build/.lib -lViewLayer -lBusinessLayer
+LIBS += -L../ViewLayer/.lib -L../BusinessLayer/.lib -lViewLayer -lBusinessLayer
 
 ! include(../common.pri){
     error("Could not find common.pri file!")
 }
 
 PRE_TARGETDEPS += \
- ../../build/.lib/*
+ ../ViewLayer/.lib/* \
+ ../BusinessLayer/.lib/*
 
 TARGET = OnboardMediaControl
 
-DESTDIR = ../../build
+DESTDIR = ../bin/
 
 SOURCES += \
     main.cpp \
