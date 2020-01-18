@@ -2,6 +2,8 @@
 #include "I_SongController.h"
 
 #include <QList>
+#include <QMediaPlaylist>
+
 class I_SongUrlSource;
 class QUrl;
 
@@ -21,6 +23,7 @@ private:
     int index_;
     bool loop_;
     bool shuffle_;
+    QMediaPlaylist playlist_;
     QList<QUrl> songList_;
 };
 
