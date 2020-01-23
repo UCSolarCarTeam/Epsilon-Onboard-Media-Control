@@ -27,9 +27,8 @@ install:
     - (cd libmpg123 && ./configure && make && sudo make install)
 
 script:
-    - cd src
-    - qmake
-    - make
+    - mkdir build
+    - (cd build && qmake ../src && make)
     - "! (astyle *.h *.cpp -r --dry-run --options=astylerc | grep formatted)"
 
 language: cpp
