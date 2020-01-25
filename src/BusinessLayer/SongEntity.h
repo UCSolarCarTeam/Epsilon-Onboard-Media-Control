@@ -2,12 +2,12 @@
 
 #include <QImage>
 #include <QMediaContent>
-
+#include <QObject>
 
 class SongEntity : public I_SongEntity
 {
 public:
-    SongEntity(const QMediaContent& content);
+    SongEntity();
 
     // I_SongEntity interface
 public:
@@ -16,14 +16,16 @@ public:
     QString songName();
     qint64 duration();
     qint64 position();
-    QMediaContent songContent();
 
-    void setImage(QImage &image);
-    void setArtist(QString &artist);
-    void setSongName(QString &songName);
+    void setImage(QImage image);
+    void setArtist(QString artist);
+    void setSongName(QString songName);
     void setDuration(qint64 duration);
     void setPosition(qint64 position);
-    void setSongContent(QMediaContent &content);
+
+    //Signals
+    void metaDataChanged();
+    void positionChanged();
 
 private:
     QImage image_;
@@ -31,6 +33,4 @@ private:
     QString songName_;
     qint64 duration_;
     qint64 position_;
-    QMediaContent mediaContent_;
-
 };

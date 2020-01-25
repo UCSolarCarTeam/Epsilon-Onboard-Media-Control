@@ -1,7 +1,8 @@
 #include "SongEntity.h"
 
-SongEntity::SongEntity(const QMediaContent& content):mediaContent_(content)
-{}
+SongEntity::SongEntity()
+{
+}
 
 QImage SongEntity::image()
 {
@@ -28,22 +29,17 @@ qint64 SongEntity::position()
     return position_;
 }
 
-QMediaContent SongEntity::songContent()
-{
-    return mediaContent_;
-}
-
-void SongEntity::setImage(QImage &image)
+void SongEntity::setImage(QImage image)
 {
     image_ = image;
 }
 
-void SongEntity::setArtist(QString &artist)
+void SongEntity::setArtist(QString artist)
 {
     artist_ = artist;
 }
 
-void SongEntity::setSongName(QString &songName)
+void SongEntity::setSongName(QString songName)
 {
     songName_ = songName;
 }
@@ -56,9 +52,4 @@ void SongEntity::setDuration(qint64 duration)
 void SongEntity::setPosition(qint64 position)
 {
     position_ = position;
-}
-
-void SongEntity::setSongContent(QMediaContent &content)
-{
-    mediaContent_ = content;
 }
