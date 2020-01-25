@@ -5,7 +5,7 @@
 #include "I_SongPlayer.h"
 
 class I_SongEntity;
-class I_SongController;
+class I_SongControllerDeprecated;
 
 class SongPlayer : I_SongPlayer
 {

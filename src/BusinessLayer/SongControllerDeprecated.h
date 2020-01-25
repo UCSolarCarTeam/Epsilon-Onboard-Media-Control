@@ -1,5 +1,5 @@
 #pragma once
-#include "I_SongController.h"
+#include "I_SongControllerDeprecated.h"
 
 #include <QList>
 #include <QMediaPlaylist>
@@ -7,10 +7,10 @@
 class I_SongUrlSource;
 class QUrl;
 
-class SongController : public I_SongController
+class SongControllerDeprecated : public I_SongControllerDeprecated
 {
 public:
-    SongController(I_SongUrlSource& songUrlSource);
+    SongControllerDeprecated(I_SongUrlSource& songUrlSource);
 
     QUrl next();
     QUrl prev();

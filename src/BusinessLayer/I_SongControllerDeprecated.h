@@ -2,10 +2,10 @@
 
 class QUrl;
 
-class I_SongController
+class I_SongControllerDeprecated
 {
 public:
-    virtual ~I_SongController();
+    virtual ~I_SongControllerDeprecated();
     virtual QUrl next() = 0;
     virtual QUrl prev() = 0;
     virtual void setShuffle(bool shuffle) = 0;

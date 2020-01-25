@@ -1,9 +1,9 @@
-#include "SongController.h"
+#include "SongControllerDeprecated.h"
 #include "I_SongUrlSource.h"
 
 #include <QTime>
 
-SongController::SongController(I_SongUrlSource& songUrlSource) :
+SongControllerDeprecated::SongControllerDeprecated(I_SongUrlSource& songUrlSource) :
     index_(0),
     loop_(false),
     shuffle_(false),
@@ -11,19 +11,19 @@ SongController::SongController(I_SongUrlSource& songUrlSource) :
 {
 }
 
-QUrl SongController::next()
+QUrl SongControllerDeprecated::next()
 {
     updateSongIndex_(1);
     return songList_[index_];
 }
 
-QUrl SongController::prev()
+QUrl SongControllerDeprecated::prev()
 {
     updateSongIndex_(-1);
     return songList_[index_];
 }
 
-void SongController::updateSongIndex_(int step)
+void SongControllerDeprecated::updateSongIndex_(int step)
 {
     if(shuffle_)
     {
@@ -37,12 +37,12 @@ void SongController::updateSongIndex_(int step)
     }
 }
 
-void SongController::setShuffle(bool shuffle)
+void SongControllerDeprecated::setShuffle(bool shuffle)
 {
     shuffle_ = shuffle;
 }
 
-void SongController::setLoop(bool loop)
+void SongControllerDeprecated::setLoop(bool loop)
 {
     loop_ = loop;
 }
