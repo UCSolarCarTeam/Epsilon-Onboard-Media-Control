@@ -1,50 +1,59 @@
 #include "SongController.h"
-#include "I_SongUrlSource.h"
 
-#include <QTime>
+#include "I_SongControlEntity.h"
+#include "I_SongPlayer.h"
 
-SongController::SongController(I_SongUrlSource& songUrlSource) :
-    index_(0),
-    loop_(false),
-    shuffle_(false),
-    songList_(songUrlSource.getSongList())
+#include <QMediaContent>
+#include <QRandomGenerator>
+#include <QStack>
+
+SongController::SongController(I_SongPlayer &songPlayer, I_SongControlEntity &songControlEntity,
+                               QList<QUrl> &songUrls)
+    : songPlayer_(songPlayer)
+    , songControlEntity_(songControlEntity)
+    , songUrls_(songUrls)
+    , songIndex_(0)
+    , generator_(QRandomGenerator::system())
+    , previousSongs_(new QStack<int>)
 {
 }
 
-QUrl SongController::next()
+SongController::~SongController()
 {
-    updateSongIndex_(1);
-    return songList_[index_];
 }
 
-QUrl SongController::prev()
+void SongController::playNext()
 {
-    updateSongIndex_(-1);
-    return songList_[index_];
-}
-
-void SongController::updateSongIndex_(int step)
-{
-    if(shuffle_)
+    if(songUrls_.size() == 0)
     {
-        qsrand(static_cast<uint>(QDateTime::currentMSecsSinceEpoch() / 1000));
-        index_ = qrand() % songList_.size();
+        return;
     }
-    else if (!loop_)
+    if(songControlEntity_.loop())
     {
-        index_ += step;
-        index_ %= songList_.size();
+        songPlayer_.load(QMediaContent(songUrls_[songIndex_]));
     }
+    else if(songControlEntity_.shuffle())
+    {
+        songIndex_ = generator_->bounded(songUrls_.size());
+    }
+    else
+    {
+        ++songIndex_ %= songUrls_.size();
+    }
+    loadSong();
 }
 
-void SongController::setShuffle(bool shuffle)
+void SongController::playPrevious()
 {
-    shuffle_ = shuffle;
+    if(!previousSongs_->isEmpty())
+    {
+        songIndex_ = previousSongs_->pop();
+    }
+    loadSong();
 }
 
-void SongController::setLoop(bool loop)
+void SongController::loadSong()
 {
-    loop_ = loop;
+    previousSongs_->push(songIndex_);
+    songPlayer_.load(QMediaContent(songUrls_[songIndex_]));
 }
-
-

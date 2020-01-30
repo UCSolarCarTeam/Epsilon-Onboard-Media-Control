@@ -1,29 +1,36 @@
 #pragma once
+
 #include "I_SongController.h"
 
-#include <QList>
-#include <QMediaPlaylist>
+#include <QObject>
+#include <QScopedPointer>
 
-class I_SongUrlSource;
+class I_SongPlayer;
+class I_SongControlEntity;
 class QUrl;
+class QRandomGenerator;
+template <class T> class QList;
+template <class T> class QStack;
 
-class SongController : public I_SongController
+class SongController : public QObject, ISongcontroller
 {
 public:
-    SongController(I_SongUrlSource& songUrlSource);
+    explicit SongController(I_SongPlayer& songPlayer, I_SongControlEntity& songControlEntity,
+                            QList<QUrl>& songUrls);
+    virtual ~SongController();
 
-    QUrl next();
-    QUrl prev();
-    void setShuffle(bool shuffle);
-    void setLoop(bool loop);
+    void playNext() override;
+    void playPrevious() override;
 
 private:
-    void updateSongIndex_(int step);
 
-    int index_;
-    bool loop_;
-    bool shuffle_;
-    QMediaPlaylist playlist_;
-    QList<QUrl> songList_;
+    void loadSong();
+
+    I_SongPlayer& songPlayer_;
+    I_SongControlEntity& songControlEntity_;
+    QList<QUrl>& songUrls_;
+
+    int songIndex_;
+   QScopedPointer<QRandomGenerator> generator_;
+   QScopedPointer<QStack<int>> previousSongs_;
 };
-
