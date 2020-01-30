@@ -14,6 +14,8 @@ HEADERS += \
     ProgressBar/ProgressBar.h\
     ViewContainer.h \
     FontLoader/FontLoader.h \
+    SongPlayerUI/I_CurrentSongUi.h \
+    SongPlayerUI/I_SongControlUi.h
 
 SOURCES += \
     SongPlayerUI/SongPlayerUi.cpp \
