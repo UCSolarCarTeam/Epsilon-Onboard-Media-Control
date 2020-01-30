@@ -23,10 +23,6 @@ public:
     void setDuration(qint64 duration);
     void setPosition(qint64 position);
 
-    //Signals
-    void metaDataChanged();
-    void positionChanged();
-
 private:
     QImage image_;
     QString artist_;

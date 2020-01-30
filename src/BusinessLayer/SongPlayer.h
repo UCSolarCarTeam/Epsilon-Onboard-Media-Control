@@ -7,19 +7,19 @@
 class I_SongEntity;
 class I_SongController;
 
-class SongPlayer : I_SongPlayer
+class SongPlayer : public I_SongPlayer
 {
 public:
     SongPlayer(I_SongEntity& songEntity);
 
     // I_SongPlayer interface
-public:
     void play() override;
     void pause() override;
     void load(const QMediaContent &content) override;
 
-    // Slots
-    void updateSongPosition();
+public slots:
+    void updateSongPosition(qint64 pos) override;
+    void songUpdate(const QMediaContent&) override;
 
 private:
     QScopedPointer<QMediaPlayer> mediaPlayer_;

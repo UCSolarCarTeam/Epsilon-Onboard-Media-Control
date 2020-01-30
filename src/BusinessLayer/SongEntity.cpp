@@ -1,8 +1,7 @@
 #include "SongEntity.h"
 
 SongEntity::SongEntity()
-{
-}
+{}
 
 QImage SongEntity::image()
 {

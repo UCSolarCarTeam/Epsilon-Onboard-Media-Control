@@ -22,6 +22,6 @@ public:
     virtual void setPosition(qint64 position) =0;
 
 signals:
-    void songChanged();
+    void metaDataChanged();
     void positionChanged();
 };
