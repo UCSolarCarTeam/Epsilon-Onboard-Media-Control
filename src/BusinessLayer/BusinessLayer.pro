@@ -23,7 +23,9 @@ HEADERS += \
     I_SongControlEntity.h \
     SongControlEntity.h \
     I_SongControllerDeprecated.h \
-    SongControllerDeprecated.h
+    SongControllerDeprecated.h \
+    I_SongController.h \
+    SongController.h
 
 SOURCES += \
     BusinessContainer.cpp \
@@ -32,4 +34,5 @@ SOURCES += \
     SongPlayer/SongPlayer.cpp \
     SongControl/SongControl.cpp \
     SongControlEntity.cpp \
-    SongControllerDeprecated.cpp
+    SongControllerDeprecated.cpp \
+    SongController.cpp
