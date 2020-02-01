@@ -1,0 +1,13 @@
+#include "SongControlPresenter.h"
+
+SongControlPresenter::SongControlPresenter
+(
+    I_SongControlPresenter& songControlPresenter,
+    I_SongControlUi& songControlUi
+):
+    songContolPresenter_(songControlPresenter),
+    songControlUi_(songControlUi)
+{
+
+}
+

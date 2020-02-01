@@ -1,7 +1,10 @@
+#include <QObject>
+
 #pragma once
 
-class I_SongControlEntity
+class I_SongControlEntity : public QObject
 {
+    Q_OBJECT
 public:
     virtual ~I_SongControlEntity(){}
 

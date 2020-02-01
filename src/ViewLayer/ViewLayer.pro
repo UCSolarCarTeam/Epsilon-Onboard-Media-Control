@@ -9,6 +9,7 @@ DESTDIR = .lib
 INCLUDEPATH += ../BusinessLayer
 
 HEADERS += \
+    SongControlView.h \
     SongPlayerUI/SongPlayerUi.h \
     SongPlayerUI/I_SongPlayerUi.h \
     SongPlayerView/SongPlayerView.h \
@@ -20,6 +21,7 @@ HEADERS += \
     CurrentSongView.h
 
 SOURCES += \
+    SongControlView.cpp \
     SongPlayerUI/SongPlayerUi.cpp \
     SongPlayerView/SongPlayerView.cpp \
     ProgressBar/ProgressBar.cpp \
