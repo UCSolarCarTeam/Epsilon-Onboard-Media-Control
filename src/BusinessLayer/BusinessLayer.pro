@@ -25,7 +25,9 @@ HEADERS += \
     I_SongControllerDeprecated.h \
     SongControllerDeprecated.h \
     I_SongController.h \
-    SongController.h
+    SongController.h \
+    I_CurrentSongPresenter.h \
+    I_SongControlPresenter.h
 
 SOURCES += \
     BusinessContainer.cpp \
