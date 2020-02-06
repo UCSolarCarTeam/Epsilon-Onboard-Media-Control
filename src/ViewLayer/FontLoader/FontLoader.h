@@ -1,8 +1,8 @@
 #pragma once
 
-#include <QObject>
 #include <QHash>
-#include <QFont>
+
+class QFont;
 
 enum Font { BURLINGAME, LCD };
 class FontLoader

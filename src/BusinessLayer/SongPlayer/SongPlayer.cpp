@@ -1,10 +1,15 @@
-#include "SongPlayer.h"
 #include <QDebug>
+#include <QDir>
+#include <QMediaMetaData>
+#include <QMediaMetaData>
+#include <QMediaPlayer>
+#include <QVariant>
+
+#include "SongControl/SongControl.h"
+#include "SongPlayer.h"
 
 namespace
 {
-    const int MS_TO_MINUTES = 60000;
-    const double MS_TO_SECONDS = 1000.0;
     const QString ALBUM_FILE_PATH = QDir::homePath() + "/Pictures/Covers/";
     const QColor BASELINE_COLOR = QColor(0, 0, 0, 255);
     const int IMAGE_PARTITIONS = 2;
@@ -14,14 +19,15 @@ namespace
 
 SongPlayer::SongPlayer(QWidget* parent) : QWidget(parent)
     , controller_(new SongControl())
-    , mediaPlayer_(new LibMpgMediaPlayer(controller_.data()))
+    , mediaPlayer_(new QMediaPlayer())
     , shuffle_(false)
     , loop_(false)
 {
-    connect(mediaPlayer_.data(), SIGNAL(stateChanged()), this, SLOT(updateState()));
-    connect(mediaPlayer_.data()->getSongPlayerThread(), SIGNAL(durationChanged(qint64)), this, SLOT(durationChanged(qint64)));
-    connect(mediaPlayer_.data()->getSongPlayerThread(), SIGNAL(positionChanged(qint64)), this, SLOT(positionChanged(qint64)));
-    connect(mediaPlayer_.data()->getSongPlayerThread(), SIGNAL(metaDataAvailableChanged(bool)), this, SLOT(updateInfo()));
+    openNext();
+    connect(mediaPlayer_.data(), SIGNAL(mediaChanged(const QMediaContent&)), this, SLOT(updateState()));
+    connect(mediaPlayer_.data(), SIGNAL(durationChanged(qint64)), this, SLOT(durationChanged(qint64)));
+    connect(mediaPlayer_.data(), SIGNAL(positionChanged(qint64)), this, SLOT(positionChanged(qint64)));
+    connect(mediaPlayer_.data(), SIGNAL(metaDataAvailableChanged(bool)), this, SLOT(updateInfo()));
 }
 
 SongPlayer::~SongPlayer()
@@ -30,25 +36,31 @@ SongPlayer::~SongPlayer()
 
 int SongPlayer::loadMetaData(const QString& filePath)
 {
-    int i = mediaPlayer_->loadMetaData(filePath);
-    return i;
+    mediaPlayer_->setMedia(QMediaContent(QUrl(filePath)));
+    return 0;
 }
 
 QString SongPlayer::getSongArtist()
 {
-    return mediaPlayer_->metaData(QMediaMetaData::ContributingArtist);
+    return mediaPlayer_->metaData(QMediaMetaData::ContributingArtist).toString();
 }
 
 QString SongPlayer::getSongName()
 {
-    return mediaPlayer_->metaData(QMediaMetaData::Title);
+    return mediaPlayer_->metaData(QMediaMetaData::Title).toString();
 }
 
 void SongPlayer::updateState()
 {
-    if (mediaPlayer_->position() >= mediaPlayer_->duration() && mediaPlayer_->duration() != -1)
+    if (mediaPlayer_->state() == QMediaPlayer::StoppedState)
     {
-        playNext();
+        auto pos = mediaPlayer_->position();
+        auto dur = mediaPlayer_->duration();
+
+        if (dur > 0 && pos >= dur)
+        {
+            playNext();
+        }
     }
 }
 
@@ -159,7 +171,7 @@ void SongPlayer::togglePlayback(bool play)
 
 void SongPlayer::setFile(const QString& filePath)
 {
-    mediaPlayer_->setMedia(filePath);
+    mediaPlayer_->setMedia(QUrl::fromLocalFile(filePath));
 }
 
 void SongPlayer::durationChanged(qint64 duration)
@@ -203,9 +215,9 @@ void SongPlayer::toggleLoop()
 }
 void SongPlayer::updateInfo()
 {
-    artist_ = mediaPlayer_->metaData(QMediaMetaData::ContributingArtist);
-    title_ = mediaPlayer_->metaData(QMediaMetaData::Title);
-    album_ = mediaPlayer_->metaData(QMediaMetaData::AlbumTitle);
+    artist_ = mediaPlayer_->metaData(QMediaMetaData::ContributingArtist).toString();
+    title_ = mediaPlayer_->metaData(QMediaMetaData::Title).toString();
+    album_ = mediaPlayer_->metaData(QMediaMetaData::AlbumTitle).toString();
 
     //remove all spaces in album name for easier access to file path of album
     album_.replace(" ", "");
@@ -213,9 +225,11 @@ void SongPlayer::updateInfo()
     cover_ = (ALBUM_FILE_PATH);
     cover_.append(album_);
 
-    QPixmap img(cover_);
+    QImage img(mediaPlayer_->metaData(QMediaMetaData::CoverArtImage).value<QImage>());
+    QPixmap pixmap;
+    pixmap.convertFromImage(img);
 
-    emit updateGUI(title_, artist_, img);
+    emit updateGUI(title_, artist_, pixmap);
 }
 
 QColor SongPlayer::getColor(QImage img, int threadID)
@@ -229,7 +243,7 @@ QColor SongPlayer::getColor(QImage img, int threadID)
     int start_x = (size / IMAGE_PARTITIONS) * (threadID % IMAGE_PARTITIONS);
     int start_y  = (size / IMAGE_PARTITIONS) * (threadID / IMAGE_PARTITIONS);
     int x = (size / IMAGE_PARTITIONS) * ((threadID % IMAGE_PARTITIONS) + 1);
-    int y = (size / IMAGE_PARTITIONS) * ((int)(threadID / IMAGE_PARTITIONS) + 1);
+    int y = (size / IMAGE_PARTITIONS) * (static_cast<int>((threadID / IMAGE_PARTITIONS) + 1));
 
     QColor brightest = BASELINE_COLOR;
 

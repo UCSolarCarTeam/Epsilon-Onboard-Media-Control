@@ -1,8 +1,9 @@
 #pragma once
 
+#include <QPen>
 #include <QWidget>
-#include <QPaintEvent>
-#include <QPainter>
+
+class QPaintEvent;
 
 class ProgressBar : public QWidget
 {

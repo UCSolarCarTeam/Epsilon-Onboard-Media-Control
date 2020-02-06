@@ -1,35 +1,23 @@
 #pragma once
 
-#include <QAbstractButton>
-#include <QBoxLayout>
-#include <QCoreApplication>
-#include <QFileDialog>
-#include <QLabel>
-#include <QMouseEvent>
-#include <QShortcut>
-#include <QStandardPaths>
-#include <QStyle>
-#include <QTime>
-#include <QToolButton>
 #include <QWidget>
-#include <QProgressBar>
 #include <QScopedPointer>
-#include "../SongControl/SongControl.h"
-#include "../LibMpgMediaPlayer.h"
 
-#define BITS 8
+class QMediaPlayer;
+class SongControl;
+class QProgressBar;
+class QAbstractButton;
+class QLabel;
 
 class SongPlayer : public QWidget
 {
     Q_OBJECT
 public:
-    SongPlayer(QWidget* parent = 0);
-    QLabel* infoLabel_;
-    QProgressBar* positionSlider_;
     SongControl* getController();
     int loadMetaData(const QString& filePath);
     QString getSongArtist();
     QString getSongName();
+    SongPlayer(QWidget* parent = nullptr);
     ~SongPlayer();
 
 
@@ -61,7 +49,7 @@ private:
     QAbstractButton* playButton_;
     QLabel* positionLabel_;
     QPoint offset_;
-    QScopedPointer<LibMpgMediaPlayer> mediaPlayer_;
+    QScopedPointer<QMediaPlayer> mediaPlayer_;
     qint64 position_;
     qint64 duration_;
     QString title_;
@@ -70,6 +58,8 @@ private:
     QString album_;
     bool shuffle_;
     bool loop_;
+    QLabel* infoLabel_;
+    QProgressBar* positionSlider_;
 
 signals:
     void updateGUI(const QString& title, const QString& author, const QPixmap& cover);

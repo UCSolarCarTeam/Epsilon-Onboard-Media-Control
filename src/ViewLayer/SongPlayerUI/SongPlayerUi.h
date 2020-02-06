@@ -1,13 +1,9 @@
 #pragma once
 
-#include <QWidget>
-#include <QPushButton>
-#include <QProgressBar>
-#include <QLabel>
-#include <QSlider>
-
 #include "I_SongPlayerUi.h"
-#include "../FontLoader/FontLoader.h"
+
+class QProgressBar;
+class FontLoader;
 
 namespace Ui
 {

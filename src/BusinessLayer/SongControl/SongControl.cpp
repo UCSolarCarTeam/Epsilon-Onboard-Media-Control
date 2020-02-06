@@ -1,13 +1,14 @@
 #include <QDir>
-#include "SongControl.h"
+#include <dirent.h>
 
+#include "SongControl.h"
 SongControl::SongControl()
 {
     files_ = QVector<QString>();
     QString dir = QString(".");
     readSongNames(dir, files_);
     currentSongIndex_ = 0;
-    srand(time(0));
+    srand(static_cast<unsigned>(time(nullptr)));
 }
 
 SongControl::~SongControl()
@@ -92,12 +93,12 @@ bool SongControl::readSongNames(QString dir, QVector<QString>& files_)
 
     struct dirent* dirp;
 
-    if ((dp = opendir(dirCharPointer)) == NULL)
+    if ((dp = opendir(dirCharPointer)) == nullptr)
     {
         return false;
     }
 
-    while ((dirp = readdir(dp)) != NULL)
+    while ((dirp = readdir(dp)) != nullptr)
     {
         if (hasSuffix(dirp->d_name, ".mp3"))
         {

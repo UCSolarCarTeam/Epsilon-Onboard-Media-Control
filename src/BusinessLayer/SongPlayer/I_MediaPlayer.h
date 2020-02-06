@@ -1,15 +1,14 @@
 #pragma once
 
-#include <QWidget>
-#include <QMediaMetaData>
+#include <QObject>
 
-enum MediaStatus
+enum class MediaStatus
 {
     NoMedia,
     MediaLoaded,
     Error
 };
-enum PlayerState
+enum class PlayerState
 {
     Playing,
     Stopped,

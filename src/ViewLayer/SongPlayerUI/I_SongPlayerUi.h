@@ -1,10 +1,11 @@
 #pragma once
 
-#include <QPushButton>
-#include <QLabel>
-#include <QProgressBar>
-#include <QVBoxLayout>
-#include <QSlider>
+#include <QWidget>
+
+class QLabel;
+class QPushButton;
+class QSlider;
+class QVBoxLayout;
 
 class I_SongPlayerUi : public QWidget
 {

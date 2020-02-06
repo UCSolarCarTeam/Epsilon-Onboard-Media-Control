@@ -1,13 +1,6 @@
 #pragma once
 
 #include <QScopedPointer>
-#include "SongPlayerUI/SongPlayerUi.h"
-#include "SongPlayerView/SongPlayerView.h"
-#include "../BusinessLayer/BusinessContainer.h"
-#include "ProgressBar/ProgressBar.h"
-#include "ContainerUI/ContainerUI.h"
-#include "SongListUI/SongListUI.h"
-#include "SongListView/SongListView.h"
 
 class I_SongPlayerUi;
 class SongPlayerView;
@@ -16,7 +9,7 @@ class ProgressBar;
 class ContainerUI;
 class SongPlayerUI;
 class SongListView;
-class SongListUI;
+class I_SongListUI;
 
 class ViewContainer
 {

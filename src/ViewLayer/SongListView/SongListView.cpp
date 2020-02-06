@@ -8,6 +8,7 @@
 #include <QPixmap>
 #include "listItem/listItem.h"
 #include <QScroller>
+#include <../BusinessLayer/SongControl/SongControl.h>
 
 QString SCROLLBAR_STYLESHEET = "QScrollBar:vertical {"
                                    "    background:rgba(83, 83, 84);"

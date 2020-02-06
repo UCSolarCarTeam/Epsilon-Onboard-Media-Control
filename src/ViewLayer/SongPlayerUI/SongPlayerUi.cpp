@@ -1,7 +1,9 @@
-#include "SongPlayerUi.h"
-#include "ui_SongPlayerUi.h"
 #include <QStyle>
 #include <QDesktopWidget>
+
+#include "SongPlayerUi.h"
+#include "ui_SongPlayerUi.h"
+#include "FontLoader/FontLoader.h"
 
 SongPlayerUi::SongPlayerUi():
     ui_(new Ui::SongPlayerUi)
