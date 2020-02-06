@@ -14,6 +14,7 @@ HEADERS += \
     I_SongPlayer.h \
     I_SongPlayerPresenter.h \
     I_SongPresenter.h \
+    SongControlPresenter.h \
     SongEntity.h \
     SongPlayer.h \
     SongPlayer/SongPlayer.h \
@@ -32,6 +33,7 @@ HEADERS += \
 
 SOURCES += \
     BusinessContainer.cpp \
+    SongControlPresenter.cpp \
     SongEntity.cpp \
     SongPlayer.cpp \
     SongPlayer/SongPlayer.cpp \

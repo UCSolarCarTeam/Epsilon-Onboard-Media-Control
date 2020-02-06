@@ -57,3 +57,24 @@ void SongController::loadSong()
     previousSongs_->push(songIndex_);
     songPlayer_.load(QMediaContent(songUrls_[songIndex_]));
 }
+
+void SongController::toggleLoop()
+{
+    songControlEntity_.setLoop( !songControlEntity_.loop() );
+}
+
+void SongController::toggleShuffle()
+{
+    songControlEntity_.setShuffle( !songControlEntity_.shuffle() );
+}
+
+void SongController::togglePlay()
+{
+    if(songPlayer_.playPauseState())
+    songPlayer_.play();
+}
+
+void SongController::pause()
+{
+    songPlayer_.pause();
+}

@@ -14,7 +14,11 @@ public:
     virtual bool loop() = 0;
     virtual void setLoop(bool loop) = 0;
 
+    virtual bool playing() = 0;
+    virtual void setPlaying(bool play) = 0;
+
 // signals
 protected:
     virtual void controlStateChanged() = 0;
+    virtual void playingStateChanged() = 0;
 };
