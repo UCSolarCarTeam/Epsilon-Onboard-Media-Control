@@ -22,7 +22,7 @@ void SongPlayer::pause()
     mediaPlayer_->pause();
 }
 
-void SongPlayer::load(const QMediaContent &content)
+void SongPlayer::load(const QMediaContent& content)
 {
     mediaPlayer_->setMedia(content);
 }

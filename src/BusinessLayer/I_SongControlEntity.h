@@ -6,7 +6,7 @@ class I_SongControlEntity : public QObject
 {
     Q_OBJECT
 public:
-    virtual ~I_SongControlEntity(){}
+    virtual ~I_SongControlEntity() {}
 
     virtual bool shuffle() = 0;
     virtual void setShuffle(bool shuffle) = 0;

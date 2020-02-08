@@ -9,8 +9,8 @@
 #include <QVBoxLayout>
 #include <QLabel>
 
-CurrentSongView::CurrentSongView(I_CurrentSongPresenter &currentSongPresenter,
-                                 I_CurrentSongUi &currentSongUi,
+CurrentSongView::CurrentSongView(I_CurrentSongPresenter& currentSongPresenter,
+                                 I_CurrentSongUi& currentSongUi,
                                  ProgressBar& progressBar)
     : currentSong_(currentSongPresenter.songEntity())
     , currentSongUi_(currentSongUi)
@@ -34,7 +34,8 @@ void CurrentSongView::setupUi()
 void CurrentSongView::updateUiMetaData()
 {
     currentSongUi_.infoLabel().setText(currentSong_.artist() + " - " + currentSong_.songName());
-    if(!currentSong_.image().isNull())
+
+    if (!currentSong_.image().isNull())
     {
         currentSongUi_.labelPic().setPixmap(QPixmap::fromImage(currentSong_.image()));
     }

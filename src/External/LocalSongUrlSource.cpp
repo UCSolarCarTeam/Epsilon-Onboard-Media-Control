@@ -5,7 +5,7 @@
 
 namespace
 {
-QString SONG_DIRECTORY = "/Music/SongLibrary";
+    QString SONG_DIRECTORY = "/Music/SongLibrary";
 }
 
 LocalSongUrlSource::LocalSongUrlSource() : songList_()
@@ -26,9 +26,9 @@ void LocalSongUrlSource::loadSongs()
 {
     QString localSongLibrary = QDir::homePath() + SONG_DIRECTORY;
     QDir songDir(localSongLibrary);
-    QStringList songFileList = songDir.entryList(QStringList() << "*.mp3" , QDir::Files);
+    QStringList songFileList = songDir.entryList(QStringList() << "*.mp3", QDir::Files);
 
-    foreach(QString song, songFileList)
+    foreach (QString song, songFileList)
     {
         songList_ << QUrl(song);
     }

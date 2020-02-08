@@ -13,7 +13,7 @@ public:
     (
         I_SongControlPresenter& songControlPresenter,
         I_SongControlUi& songControlUi
-     );
+    );
     virtual ~SongControlView() = default;
 
 private slots:

@@ -5,7 +5,7 @@ class I_SongControlEntity;
 class I_SongControlPresenter
 {
 public:
-    virtual ~I_SongControlPresenter(){}
+    virtual ~I_SongControlPresenter() {}
 
     virtual void playNext() = 0;
     virtual void playPrevious() = 0;

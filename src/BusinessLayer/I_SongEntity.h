@@ -18,8 +18,8 @@ public:
     virtual void setImage(QImage image) = 0;
     virtual void setArtist(QString artist) = 0;
     virtual void setSongName(QString songName) = 0;
-    virtual void setDuration(qint64 duration) =0;
-    virtual void setPosition(qint64 position) =0;
+    virtual void setDuration(qint64 duration) = 0;
+    virtual void setPosition(qint64 position) = 0;
 
 signals:
     void metaDataChanged();

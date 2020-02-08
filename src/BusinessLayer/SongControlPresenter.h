@@ -15,7 +15,7 @@ public:
 public:
     void playNext() override;
     void playPrevious() override;
-    I_SongControlEntity &songControlEntity() const override;
+    I_SongControlEntity& songControlEntity() const override;
 
 private:
     I_SongController& songController_;

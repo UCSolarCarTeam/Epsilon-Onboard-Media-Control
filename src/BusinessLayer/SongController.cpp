@@ -7,8 +7,8 @@
 #include <QRandomGenerator>
 #include <QStack>
 
-SongController::SongController(I_SongPlayer &songPlayer, I_SongControlEntity &songControlEntity,
-                               QList<QUrl> &songUrls)
+SongController::SongController(I_SongPlayer& songPlayer, I_SongControlEntity& songControlEntity,
+                               QList<QUrl>& songUrls)
     : songPlayer_(songPlayer)
     , songControlEntity_(songControlEntity)
     , songUrls_(songUrls)
@@ -27,15 +27,16 @@ SongController::~SongController()
 
 void SongController::playNext()
 {
-    if(songUrls_.size() == 0)
+    if (songUrls_.size() == 0)
     {
         return;
     }
-    if(songControlEntity_.loop())
+
+    if (songControlEntity_.loop())
     {
         songPlayer_.load(QMediaContent(songUrls_[songIndex_]));
     }
-    else if(songControlEntity_.shuffle())
+    else if (songControlEntity_.shuffle())
     {
         songIndex_ = generator_->bounded(songUrls_.size());
     }
@@ -43,21 +44,23 @@ void SongController::playNext()
     {
         ++songIndex_ %= songUrls_.size();
     }
+
     loadSong();
 }
 
 void SongController::playPrevious()
 {
-    if(!previousSongs_->isEmpty())
+    if (!previousSongs_->isEmpty())
     {
         songIndex_ = previousSongs_->pop();
     }
+
     loadSong();
 }
 
 void SongController::toggleSongPlayingState()
 {
-    if(songControlEntity_.playing())
+    if (songControlEntity_.playing())
     {
         songPlayer_.play();
     }
@@ -69,7 +72,7 @@ void SongController::toggleSongPlayingState()
 
 void SongController::loadSong()
 {
-    if(!songUrls_.isEmpty())
+    if (!songUrls_.isEmpty())
     {
         previousSongs_->push(songIndex_);
         songPlayer_.load(QMediaContent(songUrls_[songIndex_]));

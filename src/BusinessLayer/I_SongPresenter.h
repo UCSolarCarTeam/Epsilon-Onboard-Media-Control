@@ -12,8 +12,8 @@ public:
     virtual QImage image() = 0;
     virtual QString artist() = 0;
     virtual QString songName() = 0;
-    virtual qint64 duration() =0;
-    virtual qint64 position() =0;
+    virtual qint64 duration() = 0;
+    virtual qint64 position() = 0;
 
 signals:
     void songChanged();

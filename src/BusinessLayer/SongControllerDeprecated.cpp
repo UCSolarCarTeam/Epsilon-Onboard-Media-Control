@@ -25,7 +25,7 @@ QUrl SongControllerDeprecated::prev()
 
 void SongControllerDeprecated::updateSongIndex_(int step)
 {
-    if(shuffle_)
+    if (shuffle_)
     {
         qsrand(static_cast<uint>(QDateTime::currentMSecsSinceEpoch() / 1000));
         index_ = qrand() % songList_.size();

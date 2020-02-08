@@ -15,7 +15,7 @@ public:
     // I_SongPlayer interface
     void play() override;
     void pause() override;
-    void load(const QMediaContent &content) override;
+    void load(const QMediaContent& content) override;
 
 public slots:
     void updateSongPosition(qint64 pos) override;

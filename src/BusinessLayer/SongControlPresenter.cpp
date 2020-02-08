@@ -2,10 +2,10 @@
 #include "I_SongControlEntity.h"
 #include "I_SongController.h"
 
-SongControlPresenter::SongControlPresenter(I_SongController &songController,
-                                           I_SongControlEntity &songEntity)
-                                           : songController_(songController),
-                                             songEntity_(songEntity)
+SongControlPresenter::SongControlPresenter(I_SongController& songController,
+        I_SongControlEntity& songEntity)
+    : songController_(songController),
+      songEntity_(songEntity)
 {
 }
 

@@ -18,10 +18,11 @@ bool SongControlEntity::shuffle()
 
 void SongControlEntity::setShuffle(bool shuffle)
 {
-    if(loop_)
+    if (loop_)
     {
         loop_ = false;
     }
+
     shuffle_ = shuffle;
     emit controlStateChanged();
 }
@@ -33,10 +34,11 @@ bool SongControlEntity::loop()
 
 void SongControlEntity::setLoop(bool loop)
 {
-    if(shuffle_)
+    if (shuffle_)
     {
         shuffle_ = false;
     }
+
     loop_ = loop;
     emit controlStateChanged();
 }
@@ -48,7 +50,7 @@ bool SongControlEntity::playing()
 
 void SongControlEntity::setPlaying(bool playing)
 {
-    if(playing_ != playing)
+    if (playing_ != playing)
     {
         playing_ = playing;
         emit playingStateChanged();
