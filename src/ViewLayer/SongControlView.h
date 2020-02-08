@@ -22,11 +22,13 @@ private slots:
     void prevSongButtonClicked();
     void shuffleButtonClicked();
     void loopButtonClicked();
-    void controlStateUpdate();
-
+    void updateSongControlUi();
 //    void setVolumeControl(); //Slider
 
 private:
+
+    void initializeUi();
+
     I_SongControlPresenter& songControlPresenter_;
     I_SongControlUi& songControlUi_;
     I_SongControlEntity& songEntity_;

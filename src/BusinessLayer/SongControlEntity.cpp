@@ -3,6 +3,7 @@
 SongControlEntity::SongControlEntity()
     : shuffle_(false)
     , loop_(false)
+    , playing_(false)
 {
 }
 
@@ -38,4 +39,18 @@ void SongControlEntity::setLoop(bool loop)
     }
     loop_ = loop;
     emit controlStateChanged();
+}
+
+bool SongControlEntity::playing()
+{
+    return playing_;
+}
+
+void SongControlEntity::setPlaying(bool playing)
+{
+    if(playing_ != playing)
+    {
+        playing_ = playing;
+        emit playingStateChanged();
+    }
 }

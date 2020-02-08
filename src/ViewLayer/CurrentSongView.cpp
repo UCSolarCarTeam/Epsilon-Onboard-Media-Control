@@ -36,7 +36,7 @@ void CurrentSongView::updateUiMetaData()
     currentSongUi_.infoLabel().setText(currentSong_.artist() + " - " + currentSong_.songName());
     if(!currentSong_.image().isNull())
     {
-        currentSongUi_.labelPic().setPixmap(QPixmap::convertFromImage(currentSong_.image()));
+        currentSongUi_.labelPic().setPixmap(QPixmap::fromImage(currentSong_.image()));
     }
 }
 

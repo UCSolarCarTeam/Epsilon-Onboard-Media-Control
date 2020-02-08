@@ -1,6 +1,6 @@
-#include <QObject>
-
 #pragma once
+
+#include <QObject>
 
 class I_SongControlEntity : public QObject
 {
@@ -15,7 +15,7 @@ public:
     virtual void setLoop(bool loop) = 0;
 
     virtual bool playing() = 0;
-    virtual void setPlaying(bool play) = 0;
+    virtual void setPlaying(bool playing) = 0;
 
 // signals
 protected:

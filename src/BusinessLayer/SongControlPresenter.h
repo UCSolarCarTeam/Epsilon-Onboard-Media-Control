@@ -5,20 +5,16 @@
 class I_SongControlEntity;
 class I_SongController;
 
-class SongControlPresenter : public QObject, I_SongControlPresenter
+class SongControlPresenter : public QObject, public I_SongControlPresenter
 {
     Q_OBJECT
 public:
-    SongControlPresenter(I_SongController& songController, I_SongControlEntity& songEntity);
+    explicit SongControlPresenter(I_SongController& songController, I_SongControlEntity& songEntity);
+    virtual ~SongControlPresenter();
 
-
-    // I_SongControlPresenter interface
 public:
-    void togglePlay() override;
     void playNext() override;
     void playPrevious() override;
-    void toggleShuffle() override;
-    void toggleLoop() override;
     I_SongControlEntity &songControlEntity() const override;
 
 private:

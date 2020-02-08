@@ -17,13 +17,16 @@ SongControlView::SongControlView
     connect(&songControlUi_.prevSongButton(),  SIGNAL(clicked()), this, SLOT(prevSongButtonClicked()));
     connect(&songControlUi_.shuffleButton(),  SIGNAL(clicked()), this, SLOT(shuffleButtonClicked()));
     connect(&songControlUi_.loopButton(),  SIGNAL(clicked()), this, SLOT(loopButtonClicked()));
-    connect(&songControlPresenter_.songControlEntity(), SIGNAL(controlStateChanged()), this, SLOT(controlStateUpdate()));
+    connect(&songControlPresenter_.songControlEntity(), SIGNAL(controlStateChanged()), this, SLOT(updateSongControlUi()));
+    connect(&songControlPresenter_.songControlEntity(), SIGNAL(playingStateChanged()), this, SLOT(updateSongControlUi()));
 //  connect(&songControlUi_.volumeControlSlider())
+
+    initializeUi();
 }
 
 void SongControlView::playButtonClicked()
 {
-    songControlPresenter_.togglePlay();
+    songControlPresenter_.songControlEntity().setPlaying(!songControlPresenter_.songControlEntity().playing());
 }
 
 void SongControlView::nextSongButtonClicked()
@@ -38,15 +41,25 @@ void SongControlView::prevSongButtonClicked()
 
 void SongControlView::shuffleButtonClicked()
 {
-    songControlPresenter_.toggleShuffle();
+    songControlPresenter_.songControlEntity().setShuffle(!songControlPresenter_.songControlEntity().shuffle());
 }
 
 void SongControlView::loopButtonClicked()
 {
-    songControlPresenter_.toggleLoop();
+    songControlPresenter_.songControlEntity().setLoop(!songControlPresenter_.songControlEntity().loop());
 }
 
-void SongControlView::controlStateUpdate()
+void SongControlView::updateSongControlUi()
 {
+    songControlUi_.playButton().setChecked(songEntity_.playing());
+    songControlUi_.shuffleButton().setChecked(songEntity_.shuffle());
     songControlUi_.loopButton().setChecked(songEntity_.loop());
+}
+
+void SongControlView::initializeUi()
+{
+    songControlUi_.playButton().setCheckable(true);
+    songControlUi_.playButton().setCheckable(true);
+    songControlUi_.playButton().setCheckable(true);
+    updateSongControlUi();
 }

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "I_CurrentSongPresenter.h"s
+#include "I_CurrentSongPresenter.h"
 
 #include <QObject>
 
@@ -11,7 +11,7 @@ public:
     virtual ~CurrentSongPresenter();
 
 public:
-    I_SongEntity& songEntity() const;
+    I_SongEntity& songEntity() const override;
 
 private:
     I_SongEntity& songEntity_;

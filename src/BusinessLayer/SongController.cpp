@@ -16,6 +16,9 @@ SongController::SongController(I_SongPlayer &songPlayer, I_SongControlEntity &so
     , generator_(QRandomGenerator::system())
     , previousSongs_(new QStack<int>)
 {
+    connect(&songControlEntity_, SIGNAL(playingStateChanged()), this, SLOT(toggleSongPlayingState()));
+
+    loadSong();
 }
 
 SongController::~SongController()
@@ -52,29 +55,23 @@ void SongController::playPrevious()
     loadSong();
 }
 
+void SongController::toggleSongPlayingState()
+{
+    if(songControlEntity_.playing())
+    {
+        songPlayer_.play();
+    }
+    else
+    {
+        songPlayer_.pause();
+    }
+}
+
 void SongController::loadSong()
 {
-    previousSongs_->push(songIndex_);
-    songPlayer_.load(QMediaContent(songUrls_[songIndex_]));
-}
-
-void SongController::toggleLoop()
-{
-    songControlEntity_.setLoop( !songControlEntity_.loop() );
-}
-
-void SongController::toggleShuffle()
-{
-    songControlEntity_.setShuffle( !songControlEntity_.shuffle() );
-}
-
-void SongController::togglePlay()
-{
-    if(songPlayer_.playPauseState())
-    songPlayer_.play();
-}
-
-void SongController::pause()
-{
-    songPlayer_.pause();
+    if(!songUrls_.isEmpty())
+    {
+        previousSongs_->push(songIndex_);
+        songPlayer_.load(QMediaContent(songUrls_[songIndex_]));
+    }
 }

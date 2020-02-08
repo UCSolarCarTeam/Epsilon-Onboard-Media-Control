@@ -12,8 +12,9 @@ class QRandomGenerator;
 template <class T> class QList;
 template <class T> class QStack;
 
-class SongController : public QObject, I_SongController
+class SongController : public QObject, public I_SongController
 {
+    Q_OBJECT
 public:
     explicit SongController(I_SongPlayer& songPlayer, I_SongControlEntity& songControlEntity,
                             QList<QUrl>& songUrls);
@@ -21,13 +22,11 @@ public:
 
     void playNext() override;
     void playPrevious() override;
-    void toggleLoop() override;
-    void toggleShuffle() override;
-    void togglePlay() override;
-    void pause() override;
+
+private slots:
+    void toggleSongPlayingState();
 
 private:
-
     void loadSong();
 
     I_SongPlayer& songPlayer_;
@@ -35,7 +34,7 @@ private:
     QList<QUrl>& songUrls_;
 
     int songIndex_;
-   QScopedPointer<QRandomGenerator> generator_;
-   QScopedPointer<QStack<int>> previousSongs_;
+    QScopedPointer<QRandomGenerator> generator_;
+    QScopedPointer<QStack<int>> previousSongs_;
 
 };

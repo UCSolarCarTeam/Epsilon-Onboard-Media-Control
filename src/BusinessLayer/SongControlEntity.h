@@ -2,9 +2,7 @@
 
 #include "I_SongControlEntity.h"
 
-#include <QObject>
-
-class SongControlEntity : public QObject, I_SongControlEntity
+class SongControlEntity :  public I_SongControlEntity
 {
     Q_OBJECT
 public:
@@ -17,10 +15,15 @@ public:
     bool loop() override;
     void setLoop(bool loop) override;
 
+    bool playing() override;
+    void setPlaying(bool playing) override;
+
 signals:
     void controlStateChanged() override;
+    void playingStateChanged() override;
 
 private:
     bool shuffle_;
     bool loop_;
+    bool playing_;
 };
