@@ -3,6 +3,7 @@
 #include "SongPlayerUI/I_SongControlUi.h"
 #include "I_SongControlEntity.h"
 #include <QPushButton>
+#include <QSlider>
 SongControlView::SongControlView
 (
     I_SongControlPresenter& songControlPresenter,
@@ -17,9 +18,9 @@ SongControlView::SongControlView
     connect(&songControlUi_.prevSongButton(),  SIGNAL(clicked()), this, SLOT(prevSongButtonClicked()));
     connect(&songControlUi_.shuffleButton(),  SIGNAL(clicked()), this, SLOT(shuffleButtonClicked()));
     connect(&songControlUi_.loopButton(),  SIGNAL(clicked()), this, SLOT(loopButtonClicked()));
+    connect(&songControlUi_.volumeControlSlider(), SIGNAL(valueChanged(int)), this, SLOT(volumeSliderChanged(int)));
     connect(&songControlPresenter_.songControlEntity(), SIGNAL(controlStateChanged()), this, SLOT(updateSongControlUi()));
     connect(&songControlPresenter_.songControlEntity(), SIGNAL(playingStateChanged()), this, SLOT(updateSongControlUi()));
-//  connect(&songControlUi_.volumeControlSlider())
 
     initializeUi();
 }
@@ -54,6 +55,12 @@ void SongControlView::updateSongControlUi()
     songControlUi_.playButton().setChecked(songEntity_.playing());
     songControlUi_.shuffleButton().setChecked(songEntity_.shuffle());
     songControlUi_.loopButton().setChecked(songEntity_.loop());
+    songControlUi_.volumeControlSlider().setSliderPosition(songControlPresenter_.songControlEntity().volume());
+}
+
+void SongControlView::volumeSliderMoved(int newVolume)
+{
+    songControlPresenter_.songControlEntity().setVolume(newVolume);
 }
 
 void SongControlView::initializeUi()

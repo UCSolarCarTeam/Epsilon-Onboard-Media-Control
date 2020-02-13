@@ -18,6 +18,9 @@ public:
     bool playing() override;
     void setPlaying(bool playing) override;
 
+    int volume() override;
+    void setVolume(int volume) override;
+
 signals:
     void controlStateChanged() override;
     void playingStateChanged() override;
@@ -26,4 +29,6 @@ private:
     bool shuffle_;
     bool loop_;
     bool playing_;
+    int volume_;
+
 };

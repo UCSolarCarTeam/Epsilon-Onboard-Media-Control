@@ -17,6 +17,9 @@ public:
     virtual bool playing() = 0;
     virtual void setPlaying(bool playing) = 0;
 
+    virtual int volume() = 0;
+    virtual void setVolume(int volume) = 0;
+
 // signals
 protected:
     virtual void controlStateChanged() = 0;

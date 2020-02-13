@@ -56,3 +56,14 @@ void SongControlEntity::setPlaying(bool playing)
         emit playingStateChanged();
     }
 }
+
+int SongControlEntity::volume()
+{
+    return volume_;
+}
+
+void SongControlEntity::setVolume(int volume)
+{
+    volume_ = volume;
+    emit controlStateChanged();
+}
