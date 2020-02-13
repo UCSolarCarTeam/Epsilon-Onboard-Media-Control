@@ -7,9 +7,9 @@
 class SongEntity : public I_SongEntity
 {
 public:
-    SongEntity();
+    explicit SongEntity();
+    virtual ~SongEntity();
 
-    // I_SongEntity interface
 public:
     QImage image();
     QString artist();

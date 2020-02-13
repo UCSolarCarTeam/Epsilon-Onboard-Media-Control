@@ -1,13 +1,10 @@
 #pragma once
 
-#include <QWidget>
-
 class QLabel;
 class QVBoxLayout;
 
-class I_CurrentSongUi : public QWidget
+class I_CurrentSongUi
 {
-    Q_OBJECT
 public:
     virtual ~I_CurrentSongUi() {}
 

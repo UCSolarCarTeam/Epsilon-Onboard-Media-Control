@@ -1,6 +1,6 @@
 #include "SongPlayer.h"
-#include "I_SongEntity.h"
 
+#include "I_SongEntity.h"
 #include <QImage>
 #include <QMediaMetaData>
 
@@ -10,6 +10,10 @@ SongPlayer::SongPlayer(I_SongEntity& songEntity):
 {
     connect(mediaPlayer_.data(), SIGNAL(positionChanged(qint64)), this, SLOT(updateSongPosition(qint64)));
     connect(mediaPlayer_.data(), SIGNAL(mediaChanged(const QMediaContent&)), this, SLOT(songUpdate(const QMediaContent&)));
+}
+
+SongPlayer::~SongPlayer()
+{
 }
 
 void SongPlayer::play()

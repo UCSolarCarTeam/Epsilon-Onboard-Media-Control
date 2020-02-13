@@ -3,6 +3,10 @@
 SongEntity::SongEntity()
 {}
 
+SongEntity::~SongEntity()
+{
+}
+
 QImage SongEntity::image()
 {
     return image_;

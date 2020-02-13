@@ -3,15 +3,16 @@
 #include "I_SongControlEntity.h"
 #include "I_SongPlayer.h"
 
+#include <I_SongUrlSource.h>
 #include <QMediaContent>
 #include <QRandomGenerator>
 #include <QStack>
 
 SongController::SongController(I_SongPlayer& songPlayer, I_SongControlEntity& songControlEntity,
-                               QList<QUrl>& songUrls)
+                               I_SongUrlSource& songUrlSource)
     : songPlayer_(songPlayer)
     , songControlEntity_(songControlEntity)
-    , songUrls_(songUrls)
+    , songUrls_(songUrlSource.getSongList())
     , songIndex_(0)
     , generator_(QRandomGenerator::system())
     , previousSongs_(new QStack<int>)

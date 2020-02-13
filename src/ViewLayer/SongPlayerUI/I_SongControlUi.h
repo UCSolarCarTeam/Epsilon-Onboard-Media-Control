@@ -1,13 +1,10 @@
 #pragma once
 
-#include <QWidget>
-
 class QSlider;
 class QPushButton;
 
-class I_SongControlUi : public QWidget
+class I_SongControlUi
 {
-    Q_OBJECT
 public:
     virtual ~I_SongControlUi() {}
 

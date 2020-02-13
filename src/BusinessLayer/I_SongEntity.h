@@ -8,7 +8,7 @@ class I_SongEntity : public QObject
 {
     Q_OBJECT
 public:
-    virtual ~I_SongEntity();
+    virtual ~I_SongEntity(){}
     virtual QImage image() = 0;
     virtual QString artist() = 0;
     virtual QString songName() = 0;

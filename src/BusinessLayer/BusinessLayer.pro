@@ -6,7 +6,7 @@ CONFIG += staticlib
 }
 
 DESTDIR = .lib
-INCLUDEPATH += ../External/
+INCLUDEPATH += ../External
 
 HEADERS += \
     BusinessContainer.h \
@@ -17,8 +17,6 @@ HEADERS += \
     SongControlPresenter.h \
     SongEntity.h \
     SongPlayer.h \
-    SongPlayer/SongPlayer.h \
-    SongPlayer/I_SongPlayer.h \
     SongControl/SongControl.h \
     SongPlayer/I_MediaPlayer.h \
     I_SongControlEntity.h \
@@ -29,16 +27,18 @@ HEADERS += \
     SongController.h \
     I_CurrentSongPresenter.h \
     I_SongControlPresenter.h \
-    CurrentSongPresenter.h
+    CurrentSongPresenter.h \
+    SongPlayer/DeprecatedSongPlayer.h \
+    SongPlayer/I_DeprecatedSongPlayer.h
 
 SOURCES += \
     BusinessContainer.cpp \
     SongControlPresenter.cpp \
     SongEntity.cpp \
     SongPlayer.cpp \
-    SongPlayer/SongPlayer.cpp \
     SongControl/SongControl.cpp \
     SongControlEntity.cpp \
     SongControllerDeprecated.cpp \
     SongController.cpp \
-    CurrentSongPresenter.cpp
+    CurrentSongPresenter.cpp \
+    SongPlayer/DeprecatedSongPlayer.cpp

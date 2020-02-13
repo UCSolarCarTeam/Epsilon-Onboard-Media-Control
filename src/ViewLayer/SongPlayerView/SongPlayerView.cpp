@@ -12,7 +12,6 @@
 #include "ProgressBar/ProgressBar.h"
 #include "SongPlayerView.h"
 #include "SongPlayerUI/I_SongPlayerUi.h"
-#include "../BusinessLayer/SongPlayer/SongPlayer.h"
 
 namespace
 {

@@ -42,12 +42,12 @@ QLabel& SongPlayerUi::infoLabel()
     return *ui_->infoLabel;
 }
 
-QPushButton& SongPlayerUi::nextSong()
+QPushButton& SongPlayerUi::nextSongButton()
 {
     return *ui_->nextSong;
 }
 
-QPushButton& SongPlayerUi::prevSong()
+QPushButton& SongPlayerUi::prevSongButton()
 {
     return *ui_->prevSong;
 }
@@ -62,7 +62,7 @@ QPushButton& SongPlayerUi::loopButton()
     return *ui_->loopButton;
 }
 
-QSlider& SongPlayerUi::volumeControl()
+QSlider& SongPlayerUi::volumeControlSlider()
 {
     return *ui_->volumeControl;
 }

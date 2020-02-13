@@ -2,10 +2,12 @@
 
 #include <QScopedPointer>
 
-class I_SongPlayerUi;
+class SongPlayerUi;
 class SongPlayerView;
 class BusinessContainer;
 class ProgressBar;
+class CurrentSongView;
+class SongControlView;
 
 class ViewContainer
 {
@@ -14,7 +16,10 @@ public:
     ~ViewContainer();
 
 private:
-    I_SongPlayerUi* SongPlayerUI_;
-    ProgressBar* ProgressBar_;
-    QScopedPointer<SongPlayerView> SongPlayerView_;
+    QScopedPointer<SongPlayerUi> songPlayerUI_;
+    ProgressBar* progressBar_;
+//    QScopedPointer<SongPlayerView> SongPlayerView_;
+
+    QScopedPointer<CurrentSongView> currentSongView_;
+    QScopedPointer<SongControlView> songControlView_;
 };

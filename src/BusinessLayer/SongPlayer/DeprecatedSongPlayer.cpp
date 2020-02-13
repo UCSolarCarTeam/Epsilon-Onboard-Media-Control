@@ -5,7 +5,7 @@
 #include <QVariant>
 
 #include "SongControl/SongControl.h"
-#include "SongPlayer.h"
+#include "DeprecatedSongPlayer.h"
 
 namespace
 {

@@ -10,9 +10,9 @@ class I_SongControllerDeprecated;
 class SongPlayer : public I_SongPlayer
 {
 public:
-    SongPlayer(I_SongEntity& songEntity);
+    explicit SongPlayer(I_SongEntity& songEntity);
+    virtual ~SongPlayer();
 
-    // I_SongPlayer interface
     void play() override;
     void pause() override;
     void load(const QMediaContent& content) override;
