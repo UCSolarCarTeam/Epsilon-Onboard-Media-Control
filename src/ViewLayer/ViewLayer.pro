@@ -10,9 +10,6 @@ INCLUDEPATH += ../BusinessLayer
 
 HEADERS += \
     SongControlView.h \
-    SongPlayerUI/SongPlayerUi.h \
-    SongPlayerUI/I_SongPlayerUi.h \
-    SongPlayerView/SongPlayerView.h \
     ProgressBar/ProgressBar.h\
     ViewContainer.h \
     FontLoader/FontLoader.h \
@@ -22,8 +19,6 @@ HEADERS += \
 
 SOURCES += \
     SongControlView.cpp \
-    SongPlayerUI/SongPlayerUi.cpp \
-    SongPlayerView/SongPlayerView.cpp \
     ProgressBar/ProgressBar.cpp \
     ViewContainer.cpp \
     FontLoader/FontLoader.cpp \
