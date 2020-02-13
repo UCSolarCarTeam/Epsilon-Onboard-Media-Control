@@ -3,7 +3,6 @@
 #include <QWidget>
 #include "I_CurrentSongUi.h"
 #include "I_SongControlUi.h"
-#include "I_SongPlayerUi.h"
 
 class QProgressBar;
 class FontLoader;

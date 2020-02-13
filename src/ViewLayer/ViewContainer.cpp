@@ -1,6 +1,5 @@
 #include "SongPlayerUI/SongPlayerUi.h"
 #include "ProgressBar/ProgressBar.h"
-#include "SongPlayerView/SongPlayerView.h"
 #include "CurrentSongView.h"
 #include "SongControlView.h"
 #include "ViewContainer.h"

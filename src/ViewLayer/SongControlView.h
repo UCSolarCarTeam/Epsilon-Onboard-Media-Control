@@ -23,7 +23,7 @@ private slots:
     void shuffleButtonClicked();
     void loopButtonClicked();
     void updateSongControlUi();
-//    void setVolumeControl(); //Slider
+    void volumeSliderMoved(int newVolume);
 
 private:
 
