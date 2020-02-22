@@ -15,14 +15,16 @@ HEADERS += \
     FontLoader/FontLoader.h \
     SongPlayerUI/I_CurrentSongUi.h \
     SongPlayerUI/I_SongControlUi.h \
-    CurrentSongView.h
+    CurrentSongView.h \
+    SongPlayerUI/SongPlayerUi.h
 
 SOURCES += \
     SongControlView.cpp \
     ProgressBar/ProgressBar.cpp \
     ViewContainer.cpp \
     FontLoader/FontLoader.cpp \
-    CurrentSongView.cpp
+    CurrentSongView.cpp \
+    SongPlayerUI/SongPlayerUi.cpp
 
 FORMS += \
     SongPlayerUi.ui \

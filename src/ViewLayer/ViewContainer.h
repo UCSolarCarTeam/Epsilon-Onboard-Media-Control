@@ -18,8 +18,6 @@ public:
 private:
     QScopedPointer<SongPlayerUi> songPlayerUI_;
     ProgressBar* progressBar_;
-//    QScopedPointer<SongPlayerView> SongPlayerView_;
-
     QScopedPointer<CurrentSongView> currentSongView_;
     QScopedPointer<SongControlView> songControlView_;
 };

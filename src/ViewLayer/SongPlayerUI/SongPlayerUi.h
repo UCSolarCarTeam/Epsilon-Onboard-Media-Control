@@ -31,6 +31,6 @@ public:
     QVBoxLayout& progressBarContainer() override;
 
 private:
-    Ui::SongPlayerUi* ui_;
+    QScopedPointer<Ui::SongPlayerUi> ui_;
     QScopedPointer<FontLoader> fontLoader_;
 };

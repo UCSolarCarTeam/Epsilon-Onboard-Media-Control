@@ -29,7 +29,6 @@ SongPlayerUi::SongPlayerUi():
 
 SongPlayerUi::~SongPlayerUi()
 {
-    delete ui_;
 }
 
 QPushButton& SongPlayerUi::playButton()

@@ -13,12 +13,12 @@ SongControlView::SongControlView
     songControlUi_(songControlUi),
     songEntity_(songControlPresenter_.songControlEntity())
 {
-    connect(&songControlUi_.playButton(), SIGNAL(clicked()), this, SLOT(playedButtonClicked()));
+    connect(&songControlUi_.playButton(), SIGNAL(clicked()), this, SLOT(playButtonClicked()));
     connect(&songControlUi_.nextSongButton(), SIGNAL(clicked()), this, SLOT(nextSongButtonClicked()));
     connect(&songControlUi_.prevSongButton(),  SIGNAL(clicked()), this, SLOT(prevSongButtonClicked()));
     connect(&songControlUi_.shuffleButton(),  SIGNAL(clicked()), this, SLOT(shuffleButtonClicked()));
     connect(&songControlUi_.loopButton(),  SIGNAL(clicked()), this, SLOT(loopButtonClicked()));
-    connect(&songControlUi_.volumeControlSlider(), SIGNAL(valueChanged(int)), this, SLOT(volumeSliderChanged(int)));
+    connect(&songControlUi_.volumeControlSlider(), SIGNAL(valueChanged(int)), this, SLOT(volumeSliderMoved(int)));
     connect(&songControlPresenter_.songControlEntity(), SIGNAL(controlStateChanged()), this, SLOT(updateSongControlUi()));
     connect(&songControlPresenter_.songControlEntity(), SIGNAL(playingStateChanged()), this, SLOT(updateSongControlUi()));
 
