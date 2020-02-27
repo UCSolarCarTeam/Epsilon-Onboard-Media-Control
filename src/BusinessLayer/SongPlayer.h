@@ -8,18 +8,19 @@ class I_SongEntity;
 
 class SongPlayer : public I_SongPlayer
 {
+    Q_OBJECT
 public:
     explicit SongPlayer(I_SongEntity& songEntity);
-    ~SongPlayer() override;
+    virtual ~SongPlayer();
 
     void play() override;
     void pause() override;
     void load(const QMediaContent& content) override;
     void changeVolume(int volume) override;
 
-public slots:
-    void updateSongPosition(qint64 pos) override;
-    void songUpdate(const QMediaContent&) override;
+private slots:
+    void updateSongPosition(qint64 pos);
+    void songUpdate();
 
 private:
     QScopedPointer<QMediaPlayer> mediaPlayer_;

@@ -12,8 +12,4 @@ public:
     virtual void pause() = 0;
     virtual void load(const QMediaContent& content) = 0;
     virtual void changeVolume(int volume) = 0;
-public slots:
-    //slots
-    virtual void updateSongPosition(qint64 pos) = 0;
-    virtual void songUpdate(const QMediaContent&) = 0;
 };
