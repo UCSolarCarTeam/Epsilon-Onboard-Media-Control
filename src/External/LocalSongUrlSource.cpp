@@ -30,6 +30,6 @@ void LocalSongUrlSource::loadSongs()
 
     foreach (QString song, songFileList)
     {
-        songList_ << QUrl(song);
+        songList_ << QUrl::fromLocalFile(songDir.absoluteFilePath(song));
     }
 }
