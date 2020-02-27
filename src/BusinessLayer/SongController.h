@@ -25,6 +25,7 @@ public:
 
 private slots:
     void toggleSongPlayingState();
+    void changeVolumeState();
 
 private:
     void loadSong();

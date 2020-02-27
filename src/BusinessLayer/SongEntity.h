@@ -6,22 +6,23 @@
 
 class SongEntity : public I_SongEntity
 {
+    Q_OBJECT
 public:
     explicit SongEntity();
-    virtual ~SongEntity();
+    ~SongEntity() override;
 
 public:
-    QImage image();
-    QString artist();
-    QString songName();
-    qint64 duration();
-    qint64 position();
+    QImage image() override;
+    QString artist() override;
+    QString songName() override;
+    qint64 duration() override;
+    qint64 position() override;
 
-    void setImage(QImage image);
-    void setArtist(QString artist);
-    void setSongName(QString songName);
-    void setDuration(qint64 duration);
-    void setPosition(qint64 position);
+    void setImage(QImage image) override;
+    void setArtist(QString artist) override;
+    void setSongName(QString songName) override;
+    void setDuration(qint64 duration) override;
+    void setPosition(qint64 position) override;
 
 private:
     QImage image_;

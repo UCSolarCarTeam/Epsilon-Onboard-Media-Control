@@ -65,5 +65,5 @@ int SongControlEntity::volume()
 void SongControlEntity::setVolume(int volume)
 {
     volume_ = volume;
-    emit controlStateChanged();
+    emit volumeStateChanged();
 }

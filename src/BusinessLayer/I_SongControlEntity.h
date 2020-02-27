@@ -24,4 +24,5 @@ public:
 protected:
     virtual void controlStateChanged() = 0;
     virtual void playingStateChanged() = 0;
+    virtual void volumeStateChanged() = 0;
 };

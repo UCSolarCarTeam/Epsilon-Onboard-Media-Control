@@ -21,6 +21,8 @@ SongControlView::SongControlView
     connect(&songControlUi_.volumeControlSlider(), SIGNAL(valueChanged(int)), this, SLOT(volumeSliderMoved(int)));
     connect(&songControlPresenter_.songControlEntity(), SIGNAL(controlStateChanged()), this, SLOT(updateSongControlUi()));
     connect(&songControlPresenter_.songControlEntity(), SIGNAL(playingStateChanged()), this, SLOT(updateSongControlUi()));
+    connect(&songControlPresenter_.songControlEntity(), SIGNAL(volumeStateChanged()), this, SLOT(updateSongControlUi()));
+
 
     initializeUi();
 }
@@ -66,7 +68,7 @@ void SongControlView::volumeSliderMoved(int newVolume)
 void SongControlView::initializeUi()
 {
     songControlUi_.playButton().setCheckable(true);
-    songControlUi_.playButton().setCheckable(true);
-    songControlUi_.playButton().setCheckable(true);
+    songControlUi_.loopButton().setCheckable(true);
+    songControlUi_.shuffleButton().setCheckable(true);
     updateSongControlUi();
 }

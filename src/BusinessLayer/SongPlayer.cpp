@@ -42,4 +42,11 @@ void SongPlayer::songUpdate(const QMediaContent&)
     songEntity_.setImage(mediaPlayer_->metaData(QMediaMetaData::CoverArtImage).value<QImage>());
     songEntity_.setArtist(mediaPlayer_->metaData(QMediaMetaData::ContributingArtist).toString());
     songEntity_.setSongName(mediaPlayer_->metaData(QMediaMetaData::Title).toString());
+    emit songEntity_.metaDataChanged();
+}
+
+
+void SongPlayer::changeVolume(int volume)
+{
+    mediaPlayer_->setVolume(volume);
 }

@@ -55,4 +55,5 @@ void SongEntity::setDuration(qint64 duration)
 void SongEntity::setPosition(qint64 position)
 {
     position_ = position;
+    emit positionChanged();
 }

@@ -18,7 +18,7 @@ SongController::SongController(I_SongPlayer& songPlayer, I_SongControlEntity& so
     , previousSongs_(new QStack<int>)
 {
     connect(&songControlEntity_, SIGNAL(playingStateChanged()), this, SLOT(toggleSongPlayingState()));
-
+    connect(&songControlEntity_, SIGNAL(volumeStateChanged()), this, SLOT(changeVolumeState()));
     loadSong();
 }
 
@@ -69,6 +69,11 @@ void SongController::toggleSongPlayingState()
     {
         songPlayer_.pause();
     }
+}
+
+void SongController::changeVolumeState()
+{
+    songPlayer_.changeVolume(songControlEntity_.volume());
 }
 
 void SongController::loadSong()

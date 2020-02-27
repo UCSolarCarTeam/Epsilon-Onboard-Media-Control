@@ -2,13 +2,11 @@
 
 #include "I_CurrentSongPresenter.h"
 
-#include <QObject>
-
-class CurrentSongPresenter : public QObject, public I_CurrentSongPresenter
+class CurrentSongPresenter : public I_CurrentSongPresenter
 {
 public:
     explicit CurrentSongPresenter(I_SongEntity& songEntity);
-    virtual ~CurrentSongPresenter();
+    ~CurrentSongPresenter() override;
 
 public:
     I_SongEntity& songEntity() const override;

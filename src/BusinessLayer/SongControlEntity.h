@@ -24,6 +24,7 @@ public:
 signals:
     void controlStateChanged() override;
     void playingStateChanged() override;
+    void volumeStateChanged() override;
 
 private:
     bool shuffle_;
