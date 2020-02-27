@@ -3,8 +3,8 @@
 #include "I_CurrentSongPresenter.h"
 #include "I_SongEntity.h"
 
-#include <SongPlayerUI/I_CurrentSongUi.h>
-#include <ProgressBar/ProgressBar.h>
+#include <I_CurrentSongUi.h>
+#include <ProgressBar.h>
 
 #include <QVBoxLayout>
 #include <QLabel>
