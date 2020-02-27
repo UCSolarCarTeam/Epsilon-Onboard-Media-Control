@@ -35,21 +35,25 @@ qint64 SongEntity::position()
 void SongEntity::setImage(QImage image)
 {
     image_ = image;
+    emit metaDataChanged();
 }
 
 void SongEntity::setArtist(QString artist)
 {
     artist_ = artist;
+    emit metaDataChanged();
 }
 
 void SongEntity::setSongName(QString songName)
 {
     songName_ = songName;
+    emit metaDataChanged();
 }
 
 void SongEntity::setDuration(qint64 duration)
 {
     duration_ = duration;
+    emit metaDataChanged();
 }
 
 void SongEntity::setPosition(qint64 position)

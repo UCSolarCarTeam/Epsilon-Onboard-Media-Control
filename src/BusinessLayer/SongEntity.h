@@ -9,7 +9,7 @@ class SongEntity : public I_SongEntity
     Q_OBJECT
 public:
     explicit SongEntity();
-    ~SongEntity() override;
+    virtual ~SongEntity();
 
 public:
     QImage image() override;

@@ -82,5 +82,6 @@ void SongController::loadSong()
     {
         previousSongs_->push(songIndex_);
         songPlayer_.load(QMediaContent(songUrls_[songIndex_]));
+        toggleSongPlayingState();
     }
 }

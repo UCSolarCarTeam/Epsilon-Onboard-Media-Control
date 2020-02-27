@@ -28,6 +28,7 @@ CurrentSongView::~CurrentSongView()
 void CurrentSongView::setupUi()
 {
     currentSongUi_.infoLabel().setAlignment(Qt::AlignCenter);
+    currentSongUi_.labelPic().setScaledContents(true);
     currentSongUi_.progressBarContainer().addWidget(&progressBar_);
 }
 
