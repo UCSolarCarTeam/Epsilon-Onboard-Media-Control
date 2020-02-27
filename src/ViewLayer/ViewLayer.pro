@@ -6,25 +6,36 @@ error("Could not find common.pri file!")
 }
 
 DESTDIR = .lib
-INCLUDEPATH += ../BusinessLayer
+INCLUDEPATH += ../BusinessLayer \
+                ../BusinessLayer/SongControlEntity \
+                ../BusinessLayer/Presenter/SongControl \
+                ../BusinessLayer/Presenter/CurrentSong \
+                ../BusinessLayer/SongEntity \
+                ProgressBar \
+                FontLoader \
+                SongPlayerUI \
+                SongPlayerView \
+                SongPlayerView/SongControl \
+                SongPlayerView/CurrentSong \
+                ../Resources \
 
 HEADERS += \
-    SongControlView.h \
-    ProgressBar/ProgressBar.h\
     ViewContainer.h \
+    ProgressBar/ProgressBar.h\
     FontLoader/FontLoader.h \
     SongPlayerUI/I_CurrentSongUi.h \
     SongPlayerUI/I_SongControlUi.h \
-    CurrentSongView.h \
-    SongPlayerUI/SongPlayerUi.h
+    SongPlayerUI/SongPlayerUi.h \
+    SongPlayerView/SongControl/SongControlView.h \
+    SongPlayerView/CurrentSong/CurrentSongView.h \
 
 SOURCES += \
-    SongControlView.cpp \
-    ProgressBar/ProgressBar.cpp \
     ViewContainer.cpp \
+    ProgressBar/ProgressBar.cpp \
     FontLoader/FontLoader.cpp \
-    CurrentSongView.cpp \
-    SongPlayerUI/SongPlayerUi.cpp
+    SongPlayerUI/SongPlayerUi.cpp \
+    SongPlayerView/SongControl/SongControlView.cpp \
+    SongPlayerView/CurrentSong/CurrentSongView.cpp \
 
 FORMS += \
     SongPlayerUi.ui \

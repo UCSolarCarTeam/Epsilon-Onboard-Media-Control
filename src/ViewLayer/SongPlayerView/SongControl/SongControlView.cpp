@@ -1,6 +1,6 @@
 #include "SongControlView.h"
 #include "I_SongControlPresenter.h"
-#include "SongPlayerUI/I_SongControlUi.h"
+#include "I_SongControlUi.h"
 #include "I_SongControlEntity.h"
 #include <QPushButton>
 #include <QSlider>

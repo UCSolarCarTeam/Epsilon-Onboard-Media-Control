@@ -1,7 +1,7 @@
 #include <QCommandLineParser>
 
-#include "../BusinessLayer/BusinessContainer.h"
-#include "../ViewLayer/ViewContainer.h"
+#include "BusinessContainer.h"
+#include "ViewContainer.h"
 #include "OnboardMediaControl.h"
 
 EpsilonOnboardMediaControl::EpsilonOnboardMediaControl(int& argc, char** argv)

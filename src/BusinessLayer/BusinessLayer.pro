@@ -6,28 +6,36 @@ CONFIG += staticlib
 }
 
 DESTDIR = .lib
-INCLUDEPATH += ../External
+INCLUDEPATH += ../External/SongUrlSource \
+                ../External/SongUrlSource/Local \
+                SongPlayer \
+                SongEntity \
+                SongControlEntity \
+                SongController \
+                Presenter/SongControl \
+                Presenter/CurrentSong \
+
 
 HEADERS += \
     BusinessContainer.h \
-    I_SongEntity.h \
-    I_SongPlayer.h \
-    SongControlPresenter.h \
-    SongEntity.h \
-    SongPlayer.h \
-    I_SongControlEntity.h \
-    SongControlEntity.h \
-    I_SongController.h \
-    SongController.h \
-    I_CurrentSongPresenter.h \
-    I_SongControlPresenter.h \
-    CurrentSongPresenter.h \
+    SongPlayer/I_SongPlayer.h \
+    SongPlayer/SongPlayer.h \
+    SongEntity/I_SongEntity.h \
+    SongEntity/SongEntity.h \
+    SongControlEntity/I_SongControlEntity.h \
+    SongControlEntity/SongControlEntity.h \
+    SongController/I_SongController.h \
+    SongController/SongController.h \
+    Presenter/SongControl/SongControlPresenter.h \
+    Presenter/SongControl/I_SongControlPresenter.h \
+    Presenter/CurrentSong/I_CurrentSongPresenter.h \
+    Presenter/CurrentSong/CurrentSongPresenter.h \
 
 SOURCES += \
     BusinessContainer.cpp \
-    SongControlPresenter.cpp \
-    SongEntity.cpp \
-    SongPlayer.cpp \
-    SongControlEntity.cpp \
-    SongController.cpp \
-    CurrentSongPresenter.cpp \
+    SongPlayer/SongPlayer.cpp \
+    SongEntity/SongEntity.cpp \
+    SongControlEntity/SongControlEntity.cpp \
+    SongController/SongController.cpp \
+    Presenter/SongControl/SongControlPresenter.cpp \
+    Presenter/CurrentSong/CurrentSongPresenter.cpp \

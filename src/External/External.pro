@@ -7,10 +7,13 @@ CONFIG += staticlib
 }
 
 DESTDIR = .lib
+INCLUDEPATH += SongUrlSource \
+               SongUrlSource/Local \
+
 
 SOURCES += \
-    LocalSongUrlSource.cpp
+    SongUrlSource/Local/LocalSongUrlSource.cpp
 
 HEADERS += \
-    I_SongUrlSource.h \
-    LocalSongUrlSource.h
+    SongUrlSource/I_SongUrlSource.h \
+    SongUrlSource/Local/LocalSongUrlSource.h

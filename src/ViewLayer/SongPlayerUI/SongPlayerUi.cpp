@@ -3,7 +3,7 @@
 
 #include "SongPlayerUi.h"
 #include "ui_SongPlayerUi.h"
-#include "FontLoader/FontLoader.h"
+#include "FontLoader.h"
 
 SongPlayerUi::SongPlayerUi():
     ui_(new Ui::SongPlayerUi)

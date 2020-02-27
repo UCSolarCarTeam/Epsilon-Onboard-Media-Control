@@ -13,6 +13,8 @@ PRE_TARGETDEPS += \
 TARGET = OnboardMediaControl
 
 DESTDIR = ../bin/
+INCLUDEPATH += ../BusinessLayer \
+               ../ViewLayer \
 
 SOURCES += \
     main.cpp \
