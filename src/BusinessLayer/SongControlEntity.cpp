@@ -4,6 +4,7 @@ SongControlEntity::SongControlEntity()
     : shuffle_(false)
     , loop_(false)
     , playing_(false)
+    , volume_(100)
 {
 }
 
