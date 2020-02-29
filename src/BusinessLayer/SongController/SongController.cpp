@@ -32,6 +32,8 @@ void SongController::playNext()
     {
         return;
     }
+    //Add the current song to previously played songs
+    previousSongs_->push(songIndex_);
 
     if (songControlEntity_.loop())
     {
@@ -45,7 +47,6 @@ void SongController::playNext()
     {
         ++songIndex_ %= songUrls_.size();
     }
-
     loadSong();
 }
 
@@ -80,7 +81,6 @@ void SongController::loadSong()
 {
     if (!songUrls_.isEmpty())
     {
-        previousSongs_->push(songIndex_);
         songPlayer_.load(QMediaContent(songUrls_[songIndex_]));
         toggleSongPlayingState();
     }
