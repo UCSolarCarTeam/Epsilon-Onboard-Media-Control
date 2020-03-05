@@ -53,7 +53,7 @@ void SongEntity::setSongName(QString songName)
 void SongEntity::setDuration(qint64 duration)
 {
     duration_ = duration;
-    emit metaDataChanged();
+    emit durationChanged();
 }
 
 void SongEntity::setPosition(qint64 position)

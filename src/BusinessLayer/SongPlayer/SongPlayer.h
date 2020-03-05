@@ -20,6 +20,7 @@ public:
 
 private slots:
     void updateSongPosition(qint64 pos);
+    void updateSongDuration(qint64 pos);
     void songUpdate();
 
 private:

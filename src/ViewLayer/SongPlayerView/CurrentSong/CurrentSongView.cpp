@@ -18,6 +18,7 @@ CurrentSongView::CurrentSongView(I_CurrentSongPresenter& currentSongPresenter,
 {
     setupUi();
     connect(&currentSong_, SIGNAL(metaDataChanged()), this, SLOT(updateUiMetaData()));
+    connect(&currentSong_, SIGNAL(durationChanged()), this, SLOT(updateUiSongPosition()));
     connect(&currentSong_, SIGNAL(positionChanged()), this, SLOT(updateUiSongPosition()));
 }
 

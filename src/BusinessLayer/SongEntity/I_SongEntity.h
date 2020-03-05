@@ -24,4 +24,5 @@ public:
 signals:
     void metaDataChanged();
     void positionChanged();
+    void durationChanged();
 };
