@@ -1,5 +1,6 @@
 #pragma once
 
+#include <QMediaPlayer>
 #include<QObject>
 
 class QMediaContent;
@@ -12,4 +13,7 @@ public:
     virtual void pause() = 0;
     virtual void load(const QMediaContent& content) = 0;
     virtual void changeVolume(int volume) = 0;
+
+signals:
+    void mediaStatusChanged(QMediaPlayer::MediaStatus);
 };

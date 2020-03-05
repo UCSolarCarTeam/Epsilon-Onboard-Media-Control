@@ -2,6 +2,7 @@
 
 #include "I_SongController.h"
 
+#include <QMediaPlayer>
 #include <QObject>
 #include <QScopedPointer>
 
@@ -26,6 +27,7 @@ public:
 private slots:
     void toggleSongPlayingState();
     void changeVolumeState();
+    void checkSongEnded(QMediaPlayer::MediaStatus status);
 
 private:
     void loadSong();

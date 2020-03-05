@@ -19,6 +19,7 @@ SongController::SongController(I_SongPlayer& songPlayer, I_SongControlEntity& so
 {
     connect(&songControlEntity_, SIGNAL(playingStateChanged()), this, SLOT(toggleSongPlayingState()));
     connect(&songControlEntity_, SIGNAL(volumeStateChanged()), this, SLOT(changeVolumeState()));
+    connect(&songPlayer_, SIGNAL(mediaStatusChanged(QMediaPlayer::MediaStatus)), this, SLOT(checkSongEnded(QMediaPlayer::MediaStatus)));
     loadSong();
 }
 
@@ -75,6 +76,14 @@ void SongController::toggleSongPlayingState()
 void SongController::changeVolumeState()
 {
     songPlayer_.changeVolume(songControlEntity_.volume());
+}
+
+void SongController::checkSongEnded(QMediaPlayer::MediaStatus status)
+{
+    if(status == QMediaPlayer::EndOfMedia)
+    {
+        playNext();
+    }
 }
 
 void SongController::loadSong()

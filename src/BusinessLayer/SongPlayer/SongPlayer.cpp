@@ -11,6 +11,7 @@ SongPlayer::SongPlayer(I_SongEntity& songEntity):
     connect(mediaPlayer_.data(), SIGNAL(positionChanged(qint64)), this, SLOT(updateSongPosition(qint64)));
     connect(mediaPlayer_.data(), SIGNAL(durationChanged(qint64)), this, SLOT(updateSongDuration(qint64)));
     connect(mediaPlayer_.data(), SIGNAL(metaDataAvailableChanged(bool)), this, SLOT(songUpdate()));
+    connect(mediaPlayer_.data(), SIGNAL(mediaStatusChanged(QMediaPlayer::MediaStatus)), this, SIGNAL(mediaStatusChanged(QMediaPlayer::MediaStatus)));
 }
 
 SongPlayer::~SongPlayer()
