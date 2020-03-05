@@ -53,7 +53,7 @@ void SongController::playNext()
 
 void SongController::playPrevious()
 {
-    if (!previousSongs_->isEmpty())
+    if (!songControlEntity_.loop() && !previousSongs_->isEmpty())
     {
         songIndex_ = previousSongs_->pop();
     }
