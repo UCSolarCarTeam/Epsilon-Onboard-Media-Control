@@ -21,11 +21,6 @@ public:
     int volume() override;
     void setVolume(int volume) override;
 
-signals:
-    void controlStateChanged() override;
-    void playingStateChanged() override;
-    void volumeStateChanged() override;
-
 private:
     bool shuffle_;
     bool loop_;

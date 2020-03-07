@@ -21,7 +21,7 @@ public:
     virtual void setVolume(int volume) = 0;
 
 signals:
-    virtual void controlStateChanged() = 0;
-    virtual void playingStateChanged() = 0;
-    virtual void volumeStateChanged() = 0;
+    void controlStateChanged();
+    void playingStateChanged();
+    void volumeStateChanged();
 };

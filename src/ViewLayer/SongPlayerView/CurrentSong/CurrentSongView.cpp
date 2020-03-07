@@ -45,6 +45,6 @@ void CurrentSongView::updateUiMetaData()
 
 void CurrentSongView::updateUiSongPosition()
 {
-    progressBar_.progress = static_cast<double>(currentSong_.position()) / static_cast<double>(currentSong_.duration());
+    progressBar_.setProgress(static_cast<double>(currentSong_.position()) / static_cast<double>(currentSong_.duration()));
     progressBar_.update();
 }

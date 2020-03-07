@@ -7,6 +7,8 @@ CONFIG += staticlib
 
 DESTDIR = .lib
 INCLUDEPATH +=  ../External \
+                ../External/SongUrlSource  \
+                ../External/SongUrlSource/Local \
                 SongPlayer \
                 SongState \
                 SongPlayerState \

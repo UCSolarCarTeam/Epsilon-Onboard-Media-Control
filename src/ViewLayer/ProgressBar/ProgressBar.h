@@ -12,6 +12,8 @@ public:
     ProgressBar();
     ~ProgressBar();
     void changeColor(QColor color);
+    double progress();
+    void setProgress(const double progress);
 
 private:
     double progress_;
