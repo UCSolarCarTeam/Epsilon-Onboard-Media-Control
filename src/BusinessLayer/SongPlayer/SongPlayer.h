@@ -1,8 +1,8 @@
 #pragma once
+#include "I_SongPlayer.h"
+
 #include <QScopedPointer>
 #include <QMediaPlayer>
-
-#include "I_SongPlayer.h"
 
 class I_SongState;
 
@@ -16,7 +16,7 @@ public:
     void play() override;
     void pause() override;
     void load(const QMediaContent& content) override;
-    void changeVolume(int volume) override;
+    void changeVolume(const int volume) override;
 
 private slots:
     void updateSongPosition(qint64 pos);

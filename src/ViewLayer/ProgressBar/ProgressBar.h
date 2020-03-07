@@ -11,10 +11,10 @@ class ProgressBar : public QWidget
 public:
     ProgressBar();
     ~ProgressBar();
-    double progress;
     void changeColor(QColor color);
 
 private:
+    double progress_;
     QPen pen_;
     QColor color_;
 

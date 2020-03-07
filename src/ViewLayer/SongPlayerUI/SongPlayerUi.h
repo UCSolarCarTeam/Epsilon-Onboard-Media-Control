@@ -1,8 +1,9 @@
 #pragma once
 
-#include <QWidget>
 #include "I_CurrentSongUi.h"
 #include "I_SongControlUi.h"
+
+#include <QWidget>
 
 class QProgressBar;
 class FontLoader;
@@ -19,7 +20,8 @@ class SongPlayerUi : public QWidget,
     Q_OBJECT
 public:
     explicit SongPlayerUi();
-    ~SongPlayerUi();
+    virtual ~SongPlayerUi();
+
     QLabel& labelPic() override;
     QLabel& infoLabel() override;
     QPushButton& playButton() override;

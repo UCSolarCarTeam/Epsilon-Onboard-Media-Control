@@ -1,6 +1,8 @@
 #pragma once
-#include <QObject>
+
 #include "I_SongControlPresenter.h"
+
+#include <QObject>
 
 class I_SongPlayerState;
 class I_SongController;

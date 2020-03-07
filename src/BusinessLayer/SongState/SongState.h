@@ -1,8 +1,8 @@
+#pragma once
+
 #include "I_SongState.h"
 
 #include <QImage>
-#include <QMediaContent>
-#include <QObject>
 
 class SongState : public I_SongState
 {

@@ -14,7 +14,7 @@ public:
         I_SongControlPresenter& songControlPresenter,
         I_SongControlUi& songControlUi
     );
-    virtual ~SongControlView() = default;
+    virtual ~SongControlView();
 
 private slots:
     void playButtonClicked();

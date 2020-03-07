@@ -6,7 +6,6 @@ class I_SongController;
 class SongPlayer;
 class I_SongState;
 class I_SongPlayerState;
-class I_SongUrlSource;
 class I_CurrentSongPresenter;
 class I_SongControlPresenter;
 

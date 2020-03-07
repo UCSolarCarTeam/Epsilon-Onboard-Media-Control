@@ -1,9 +1,8 @@
 #include "SongController.h"
-
 #include "I_SongPlayerState.h"
 #include "I_SongPlayer.h"
-
 #include "I_SongUrlSource.h"
+
 #include <QMediaContent>
 #include <QRandomGenerator>
 #include <QStack>

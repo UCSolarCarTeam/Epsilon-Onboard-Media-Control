@@ -20,8 +20,7 @@ public:
     virtual int volume() = 0;
     virtual void setVolume(int volume) = 0;
 
-// signals
-protected:
+signals:
     virtual void controlStateChanged() = 0;
     virtual void playingStateChanged() = 0;
     virtual void volumeStateChanged() = 0;

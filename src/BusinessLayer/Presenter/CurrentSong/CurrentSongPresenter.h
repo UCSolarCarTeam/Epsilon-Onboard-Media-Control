@@ -6,9 +6,8 @@ class CurrentSongPresenter : public I_CurrentSongPresenter
 {
 public:
     explicit CurrentSongPresenter(I_SongState& songState);
-    ~CurrentSongPresenter() override;
+    virtual ~CurrentSongPresenter();
 
-public:
     I_SongState& songState() const override;
 
 private:

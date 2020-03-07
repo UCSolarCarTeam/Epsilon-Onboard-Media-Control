@@ -12,7 +12,7 @@ public:
     virtual void play() = 0;
     virtual void pause() = 0;
     virtual void load(const QMediaContent& content) = 0;
-    virtual void changeVolume(int volume) = 0;
+    virtual void changeVolume(const int volume) = 0;
 
 signals:
     void mediaStatusChanged(QMediaPlayer::MediaStatus);

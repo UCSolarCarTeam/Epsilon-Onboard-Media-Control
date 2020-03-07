@@ -30,6 +30,10 @@ SongControlView::SongControlView
     initializeUi();
 }
 
+SongControlView::~SongControlView()
+{
+}
+
 void SongControlView::playButtonClicked()
 {
     songControlPresenter_.songPlayerState().setPlaying(!songControlPresenter_.songPlayerState().playing());

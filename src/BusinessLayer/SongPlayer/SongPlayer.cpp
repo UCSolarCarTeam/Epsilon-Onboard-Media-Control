@@ -1,6 +1,6 @@
 #include "SongPlayer.h"
-
 #include "I_SongState.h"
+
 #include <QImage>
 #include <QMediaMetaData>
 
@@ -50,8 +50,7 @@ void SongPlayer::updateSong()
     songState_.setSongName(mediaPlayer_->metaData(QMediaMetaData::Title).toString());
 }
 
-
-void SongPlayer::changeVolume(int volume)
+void SongPlayer::changeVolume(const int volume)
 {
     mediaPlayer_->setVolume(volume);
 }

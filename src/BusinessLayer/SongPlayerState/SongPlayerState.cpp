@@ -19,13 +19,16 @@ bool SongPlayerState::shuffle()
 
 void SongPlayerState::setShuffle(bool shuffle)
 {
-    if (loop_)
+    if (shuffle_ != shuffle)
     {
-        loop_ = false;
-    }
+        if (loop_)
+        {
+            loop_ = false;
+        }
 
-    shuffle_ = shuffle;
-    emit controlStateChanged();
+        shuffle_ = shuffle;
+        emit controlStateChanged();
+    }
 }
 
 bool SongPlayerState::loop()
@@ -35,13 +38,16 @@ bool SongPlayerState::loop()
 
 void SongPlayerState::setLoop(bool loop)
 {
-    if (shuffle_)
+    if (loop_ != loop)
     {
-        shuffle_ = false;
-    }
+        if (shuffle_)
+        {
+            shuffle_ = false;
+        }
 
-    loop_ = loop;
-    emit controlStateChanged();
+        loop_ = loop;
+        emit controlStateChanged();
+    }
 }
 
 bool SongPlayerState::playing()
@@ -65,6 +71,9 @@ int SongPlayerState::volume()
 
 void SongPlayerState::setVolume(int volume)
 {
-    volume_ = volume;
-    emit volumeStateChanged();
+    if (volume_ != volume)
+    {
+        volume_ = volume;
+        emit volumeStateChanged();
+    }
 }

@@ -5,7 +5,7 @@
 
 namespace
 {
-    QString SONG_DIRECTORY = "/Music/SongLibrary";
+    const QString SONG_DIRECTORY = "/Music/SongLibrary";
 }
 
 LocalSongUrlSource::LocalSongUrlSource() : songList_()
