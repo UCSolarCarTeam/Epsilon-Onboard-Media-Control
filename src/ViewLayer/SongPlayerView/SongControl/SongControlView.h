@@ -3,7 +3,7 @@
 
 class I_SongControlPresenter;
 class I_SongControlUi;
-class I_SongControlEntity;
+class I_SongPlayerState;
 
 class SongControlView : public QObject
 {
@@ -31,5 +31,5 @@ private:
 
     I_SongControlPresenter& songControlPresenter_;
     I_SongControlUi& songControlUi_;
-    I_SongControlEntity& songEntity_;
+    I_SongPlayerState& songState_;
 };

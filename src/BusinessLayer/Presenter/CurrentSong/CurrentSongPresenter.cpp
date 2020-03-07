@@ -1,7 +1,7 @@
 #include "CurrentSongPresenter.h"
 
-CurrentSongPresenter::CurrentSongPresenter(I_SongEntity& songEntity)
-    : songEntity_(songEntity)
+CurrentSongPresenter::CurrentSongPresenter(I_SongState& songState)
+    : songState_(songState)
 {
 }
 
@@ -9,7 +9,7 @@ CurrentSongPresenter::~CurrentSongPresenter()
 {
 }
 
-I_SongEntity& CurrentSongPresenter::songEntity() const
+I_SongState& CurrentSongPresenter::songState() const
 {
-    return songEntity_;
+    return songState_;
 }

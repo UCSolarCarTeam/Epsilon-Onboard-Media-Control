@@ -7,7 +7,7 @@
 #include <QScopedPointer>
 
 class I_SongPlayer;
-class I_SongControlEntity;
+class I_SongPlayerState;
 class I_SongUrlSource;
 class QUrl;
 class QRandomGenerator;
@@ -17,7 +17,7 @@ class SongController : public QObject, public I_SongController
 {
     Q_OBJECT
 public:
-    explicit SongController(I_SongPlayer& songPlayer, I_SongControlEntity& songControlEntity,
+    explicit SongController(I_SongPlayer& songPlayer, I_SongPlayerState& songPlayerState,
                             I_SongUrlSource& songUrlSource);
     virtual ~SongController() override;
 
@@ -33,7 +33,7 @@ private:
     void loadSong();
 
     I_SongPlayer& songPlayer_;
-    I_SongControlEntity& songControlEntity_;
+    I_SongPlayerState& songPlayerState_;
     QList<QUrl> songUrls_;
 
     int songIndex_;

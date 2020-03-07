@@ -1,11 +1,11 @@
 #include "SongControlPresenter.h"
-#include "I_SongControlEntity.h"
+#include "I_SongPlayerState.h"
 #include "I_SongController.h"
 
 SongControlPresenter::SongControlPresenter(I_SongController& songController,
-        I_SongControlEntity& songEntity)
+        I_SongPlayerState& songState)
     : songController_(songController),
-      songEntity_(songEntity)
+      songState_(songState)
 {
 }
 
@@ -23,7 +23,7 @@ void SongControlPresenter::playPrevious()
     songController_.playPrevious();
 }
 
-I_SongControlEntity& SongControlPresenter::songControlEntity() const
+I_SongPlayerState& SongControlPresenter::songPlayerState() const
 {
-    return songEntity_;
+    return songState_;
 }

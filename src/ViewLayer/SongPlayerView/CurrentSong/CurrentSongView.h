@@ -4,7 +4,7 @@
 
 class I_CurrentSongPresenter;
 class I_CurrentSongUi;
-class I_SongEntity;
+class I_SongState;
 class ProgressBar;
 
 class CurrentSongView : public QObject
@@ -24,7 +24,7 @@ private slots:
     void updateUiSongPosition();
 
 private:
-    I_SongEntity& currentSong_;
+    I_SongState& currentSong_;
     I_CurrentSongUi& currentSongUi_;
     ProgressBar& progressBar_;
 };

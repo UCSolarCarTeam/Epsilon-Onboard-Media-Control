@@ -1,6 +1,6 @@
 #pragma once
 
-class I_SongControlEntity;
+class I_SongPlayerState;
 
 class I_SongControlPresenter
 {
@@ -9,5 +9,5 @@ public:
 
     virtual void playNext() = 0;
     virtual void playPrevious() = 0;
-    virtual I_SongControlEntity& songControlEntity() const = 0;
+    virtual I_SongPlayerState& songPlayerState() const = 0;
 };

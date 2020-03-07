@@ -1,7 +1,7 @@
 #include "CurrentSongView.h"
 
 #include "I_CurrentSongPresenter.h"
-#include "I_SongEntity.h"
+#include "I_SongState.h"
 
 #include <I_CurrentSongUi.h>
 #include <ProgressBar.h>
@@ -12,7 +12,7 @@
 CurrentSongView::CurrentSongView(I_CurrentSongPresenter& currentSongPresenter,
                                  I_CurrentSongUi& currentSongUi,
                                  ProgressBar& progressBar)
-    : currentSong_(currentSongPresenter.songEntity())
+    : currentSong_(currentSongPresenter.songState())
     , currentSongUi_(currentSongUi)
     , progressBar_(progressBar)
 {

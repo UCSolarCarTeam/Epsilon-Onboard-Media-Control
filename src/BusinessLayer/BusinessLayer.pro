@@ -9,8 +9,8 @@ DESTDIR = .lib
 INCLUDEPATH += ../External/SongUrlSource \
                 ../External/SongUrlSource/Local \
                 SongPlayer \
-                SongEntity \
-                SongControlEntity \
+                SongState \
+                SongPlayerState \
                 SongController \
                 Presenter/SongControl \
                 Presenter/CurrentSong \
@@ -18,12 +18,12 @@ INCLUDEPATH += ../External/SongUrlSource \
 
 HEADERS += \
     BusinessContainer.h \
+    SongPlayerState/I_SongPlayerState.h \
+    SongPlayerState/SongPlayerState.h \
+    SongState/I_SongState.h \
+    SongState/SongState.h \
     SongPlayer/I_SongPlayer.h \
     SongPlayer/SongPlayer.h \
-    SongEntity/I_SongEntity.h \
-    SongEntity/SongEntity.h \
-    SongControlEntity/I_SongControlEntity.h \
-    SongControlEntity/SongControlEntity.h \
     SongController/I_SongController.h \
     SongController/SongController.h \
     Presenter/SongControl/SongControlPresenter.h \
@@ -33,9 +33,9 @@ HEADERS += \
 
 SOURCES += \
     BusinessContainer.cpp \
+    SongPlayerState/SongPlayerState.cpp \
+    SongState/SongState.cpp \
     SongPlayer/SongPlayer.cpp \
-    SongEntity/SongEntity.cpp \
-    SongControlEntity/SongControlEntity.cpp \
     SongController/SongController.cpp \
     Presenter/SongControl/SongControlPresenter.cpp \
     Presenter/CurrentSong/CurrentSongPresenter.cpp \

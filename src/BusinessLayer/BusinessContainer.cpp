@@ -1,21 +1,21 @@
 #include "BusinessContainer.h"
 #include "CurrentSongPresenter.h"
-#include "SongControlEntity.h"
+#include "SongPlayerState.h"
 #include "SongControlPresenter.h"
 #include "SongController.h"
-#include "SongEntity.h"
+#include "SongState.h"
 #include "SongPlayer.h"
 
 #include "LocalSongUrlSource.h"
 
 BusinessContainer::BusinessContainer()
     : songUrlSource_(new LocalSongUrlSource)
-    , songEntity_(new SongEntity)
-    , songControlEntity_(new SongControlEntity)
-    , songPlayer_(new SongPlayer(*songEntity_))
-    , songController_(new SongController(*songPlayer_, *songControlEntity_, *songUrlSource_))
-    , currentSongPresenter_(new CurrentSongPresenter(*songEntity_))
-    , songControlPresenter_(new SongControlPresenter(*songController_, *songControlEntity_))
+    , songState_(new SongState)
+    , songPlayerState_(new SongPlayerState)
+    , songPlayer_(new SongPlayer(*songState_))
+    , songController_(new SongController(*songPlayer_, *songPlayerState_, *songUrlSource_))
+    , currentSongPresenter_(new CurrentSongPresenter(*songState_))
+    , songControlPresenter_(new SongControlPresenter(*songController_, *songPlayerState_))
 {
 }
 

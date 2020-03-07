@@ -4,13 +4,13 @@
 
 #include "I_SongPlayer.h"
 
-class I_SongEntity;
+class I_SongState;
 
 class SongPlayer : public I_SongPlayer
 {
     Q_OBJECT
 public:
-    explicit SongPlayer(I_SongEntity& songEntity);
+    explicit SongPlayer(I_SongState& songState);
     virtual ~SongPlayer();
 
     void play() override;
@@ -21,11 +21,11 @@ public:
 private slots:
     void updateSongPosition(qint64 pos);
     void updateSongDuration(qint64 pos);
-    void songUpdate();
+    void updateSong();
 
 private:
     QScopedPointer<QMediaPlayer> mediaPlayer_;
-    I_SongEntity& songEntity_;
+    I_SongState& songState_;
 
 };
 

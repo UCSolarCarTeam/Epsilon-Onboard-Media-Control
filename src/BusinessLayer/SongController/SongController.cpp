@@ -1,6 +1,6 @@
 #include "SongController.h"
 
-#include "I_SongControlEntity.h"
+#include "I_SongPlayerState.h"
 #include "I_SongPlayer.h"
 
 #include "I_SongUrlSource.h"
@@ -8,17 +8,17 @@
 #include <QRandomGenerator>
 #include <QStack>
 
-SongController::SongController(I_SongPlayer& songPlayer, I_SongControlEntity& songControlEntity,
+SongController::SongController(I_SongPlayer& songPlayer, I_SongPlayerState& songPlayerState,
                                I_SongUrlSource& songUrlSource)
     : songPlayer_(songPlayer)
-    , songControlEntity_(songControlEntity)
+    , songPlayerState_(songPlayerState)
     , songUrls_(songUrlSource.getSongList())
     , songIndex_(0)
     , generator_(QRandomGenerator::system())
     , previousSongs_(new QStack<int>)
 {
-    connect(&songControlEntity_, SIGNAL(playingStateChanged()), this, SLOT(toggleSongPlayingState()));
-    connect(&songControlEntity_, SIGNAL(volumeStateChanged()), this, SLOT(changeVolumeState()));
+    connect(&songPlayerState_, SIGNAL(playingStateChanged()), this, SLOT(toggleSongPlayingState()));
+    connect(&songPlayerState_, SIGNAL(volumeStateChanged()), this, SLOT(changeVolumeState()));
     connect(&songPlayer_, SIGNAL(mediaStatusChanged(QMediaPlayer::MediaStatus)), this, SLOT(checkSongEnded(QMediaPlayer::MediaStatus)));
     loadSong();
 }
@@ -36,11 +36,11 @@ void SongController::playNext()
     //Add the current song to previously played songs
     previousSongs_->push(songIndex_);
 
-    if (songControlEntity_.loop())
+    if (songPlayerState_.loop())
     {
         songPlayer_.load(QMediaContent(songUrls_[songIndex_]));
     }
-    else if (songControlEntity_.shuffle())
+    else if (songPlayerState_.shuffle())
     {
         songIndex_ = generator_->bounded(songUrls_.size());
     }
@@ -63,7 +63,7 @@ void SongController::playPrevious()
 
 void SongController::toggleSongPlayingState()
 {
-    if (songControlEntity_.playing())
+    if (songPlayerState_.playing())
     {
         songPlayer_.play();
     }
@@ -75,7 +75,7 @@ void SongController::toggleSongPlayingState()
 
 void SongController::changeVolumeState()
 {
-    songPlayer_.changeVolume(songControlEntity_.volume());
+    songPlayer_.changeVolume(songPlayerState_.volume());
 }
 
 void SongController::checkSongEnded(QMediaPlayer::MediaStatus status)

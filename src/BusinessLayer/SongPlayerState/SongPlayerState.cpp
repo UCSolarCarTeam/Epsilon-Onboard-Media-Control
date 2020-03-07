@@ -1,6 +1,6 @@
-#include "SongControlEntity.h"
+#include "SongPlayerState.h"
 
-SongControlEntity::SongControlEntity()
+SongPlayerState::SongPlayerState()
     : shuffle_(false)
     , loop_(false)
     , playing_(false)
@@ -8,16 +8,16 @@ SongControlEntity::SongControlEntity()
 {
 }
 
-SongControlEntity::~SongControlEntity()
+SongPlayerState::~SongPlayerState()
 {
 }
 
-bool SongControlEntity::shuffle()
+bool SongPlayerState::shuffle()
 {
     return shuffle_;
 }
 
-void SongControlEntity::setShuffle(bool shuffle)
+void SongPlayerState::setShuffle(bool shuffle)
 {
     if (loop_)
     {
@@ -28,12 +28,12 @@ void SongControlEntity::setShuffle(bool shuffle)
     emit controlStateChanged();
 }
 
-bool SongControlEntity::loop()
+bool SongPlayerState::loop()
 {
     return loop_;
 }
 
-void SongControlEntity::setLoop(bool loop)
+void SongPlayerState::setLoop(bool loop)
 {
     if (shuffle_)
     {
@@ -44,12 +44,12 @@ void SongControlEntity::setLoop(bool loop)
     emit controlStateChanged();
 }
 
-bool SongControlEntity::playing()
+bool SongPlayerState::playing()
 {
     return playing_;
 }
 
-void SongControlEntity::setPlaying(bool playing)
+void SongPlayerState::setPlaying(bool playing)
 {
     if (playing_ != playing)
     {
@@ -58,12 +58,12 @@ void SongControlEntity::setPlaying(bool playing)
     }
 }
 
-int SongControlEntity::volume()
+int SongPlayerState::volume()
 {
     return volume_;
 }
 
-void SongControlEntity::setVolume(int volume)
+void SongPlayerState::setVolume(int volume)
 {
     volume_ = volume;
     emit volumeStateChanged();

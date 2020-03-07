@@ -1,13 +1,13 @@
 #pragma once
 
-#include "I_SongControlEntity.h"
+#include "I_SongPlayerState.h"
 
-class SongControlEntity :  public I_SongControlEntity
+class SongPlayerState :  public I_SongPlayerState
 {
     Q_OBJECT
 public:
-    explicit SongControlEntity();
-    virtual ~SongControlEntity();
+    explicit SongPlayerState();
+    virtual ~SongPlayerState();
 
     bool shuffle() override;
     void setShuffle(bool shuffle) override;

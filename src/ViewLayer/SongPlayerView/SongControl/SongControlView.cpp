@@ -1,7 +1,7 @@
 #include "SongControlView.h"
 #include "I_SongControlPresenter.h"
 #include "I_SongControlUi.h"
-#include "I_SongControlEntity.h"
+#include "I_SongPlayerState.h"
 #include <QPushButton>
 #include <QSlider>
 SongControlView::SongControlView
@@ -11,7 +11,7 @@ SongControlView::SongControlView
 ):
     songControlPresenter_(songControlPresenter),
     songControlUi_(songControlUi),
-    songEntity_(songControlPresenter_.songControlEntity())
+    songState_(songControlPresenter_.songPlayerState())
 {
     //Connecting buttons to data
     connect(&songControlUi_.playButton(), SIGNAL(clicked()), this, SLOT(playButtonClicked()));
@@ -22,9 +22,9 @@ SongControlView::SongControlView
     connect(&songControlUi_.volumeControlSlider(), SIGNAL(valueChanged(int)), this, SLOT(volumeSliderMoved(int)));
 
     //Connecting states to UI
-    connect(&songControlPresenter_.songControlEntity(), SIGNAL(controlStateChanged()), this, SLOT(updateSongControlUi()));
-    connect(&songControlPresenter_.songControlEntity(), SIGNAL(playingStateChanged()), this, SLOT(updateSongControlUi()));
-    connect(&songControlPresenter_.songControlEntity(), SIGNAL(volumeStateChanged()), this, SLOT(updateSongControlUi()));
+    connect(&songControlPresenter_.songPlayerState(), SIGNAL(controlStateChanged()), this, SLOT(updateSongControlUi()));
+    connect(&songControlPresenter_.songPlayerState(), SIGNAL(playingStateChanged()), this, SLOT(updateSongControlUi()));
+    connect(&songControlPresenter_.songPlayerState(), SIGNAL(volumeStateChanged()), this, SLOT(updateSongControlUi()));
 
 
     initializeUi();
@@ -32,7 +32,7 @@ SongControlView::SongControlView
 
 void SongControlView::playButtonClicked()
 {
-    songControlPresenter_.songControlEntity().setPlaying(!songControlPresenter_.songControlEntity().playing());
+    songControlPresenter_.songPlayerState().setPlaying(!songControlPresenter_.songPlayerState().playing());
 }
 
 void SongControlView::nextSongButtonClicked()
@@ -47,25 +47,25 @@ void SongControlView::prevSongButtonClicked()
 
 void SongControlView::shuffleButtonClicked()
 {
-    songControlPresenter_.songControlEntity().setShuffle(!songControlPresenter_.songControlEntity().shuffle());
+    songControlPresenter_.songPlayerState().setShuffle(!songControlPresenter_.songPlayerState().shuffle());
 }
 
 void SongControlView::loopButtonClicked()
 {
-    songControlPresenter_.songControlEntity().setLoop(!songControlPresenter_.songControlEntity().loop());
+    songControlPresenter_.songPlayerState().setLoop(!songControlPresenter_.songPlayerState().loop());
 }
 
 void SongControlView::updateSongControlUi()
 {
-    songControlUi_.playButton().setChecked(songEntity_.playing());
-    songControlUi_.shuffleButton().setChecked(songEntity_.shuffle());
-    songControlUi_.loopButton().setChecked(songEntity_.loop());
-    songControlUi_.volumeControlSlider().setSliderPosition(songControlPresenter_.songControlEntity().volume());
+    songControlUi_.playButton().setChecked(songState_.playing());
+    songControlUi_.shuffleButton().setChecked(songState_.shuffle());
+    songControlUi_.loopButton().setChecked(songState_.loop());
+    songControlUi_.volumeControlSlider().setSliderPosition(songControlPresenter_.songPlayerState().volume());
 }
 
 void SongControlView::volumeSliderMoved(int newVolume)
 {
-    songControlPresenter_.songControlEntity().setVolume(newVolume);
+    songControlPresenter_.songPlayerState().setVolume(newVolume);
 }
 
 void SongControlView::initializeUi()

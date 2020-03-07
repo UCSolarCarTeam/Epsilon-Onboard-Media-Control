@@ -3,8 +3,8 @@
 #include <QScopedPointer>
 class I_SongController;
 class SongPlayer;
-class I_SongEntity;
-class I_SongControlEntity;
+class I_SongState;
+class I_SongPlayerState;
 class I_SongUrlSource;
 class I_CurrentSongPresenter;
 class I_SongControlPresenter;
@@ -22,8 +22,8 @@ private:
     //TODO move to external container
     QScopedPointer<I_SongUrlSource> songUrlSource_;
 
-    QScopedPointer<I_SongEntity> songEntity_;
-    QScopedPointer<I_SongControlEntity> songControlEntity_;
+    QScopedPointer<I_SongState> songState_;
+    QScopedPointer<I_SongPlayerState> songPlayerState_;
     QScopedPointer<SongPlayer> songPlayer_;
     QScopedPointer<I_SongController> songController_;
 

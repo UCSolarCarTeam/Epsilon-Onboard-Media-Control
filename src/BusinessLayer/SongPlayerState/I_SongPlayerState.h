@@ -2,11 +2,11 @@
 
 #include <QObject>
 
-class I_SongControlEntity : public QObject
+class I_SongPlayerState : public QObject
 {
     Q_OBJECT
 public:
-    virtual ~I_SongControlEntity() {}
+    virtual ~I_SongPlayerState() {}
 
     virtual bool shuffle() = 0;
     virtual void setShuffle(bool shuffle) = 0;

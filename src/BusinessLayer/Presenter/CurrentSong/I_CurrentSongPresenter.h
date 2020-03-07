@@ -1,11 +1,11 @@
 #pragma once
 
-class I_SongEntity;
+class I_SongState;
 
 class I_CurrentSongPresenter
 {
 public:
     virtual ~I_CurrentSongPresenter() {}
 
-    virtual I_SongEntity& songEntity() const = 0;
+    virtual I_SongState& songState() const = 0;
 };

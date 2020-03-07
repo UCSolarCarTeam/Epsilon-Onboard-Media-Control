@@ -7,10 +7,10 @@ error("Could not find common.pri file!")
 
 DESTDIR = .lib
 INCLUDEPATH += ../BusinessLayer \
-                ../BusinessLayer/SongControlEntity \
+                ../BusinessLayer/SongPlayerState \
                 ../BusinessLayer/Presenter/SongControl \
                 ../BusinessLayer/Presenter/CurrentSong \
-                ../BusinessLayer/SongEntity \
+                ../BusinessLayer/SongState \
                 ProgressBar \
                 FontLoader \
                 SongPlayerUI \

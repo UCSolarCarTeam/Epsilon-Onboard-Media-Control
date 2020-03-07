@@ -1,15 +1,15 @@
-#include "I_SongEntity.h"
+#include "I_SongState.h"
 
 #include <QImage>
 #include <QMediaContent>
 #include <QObject>
 
-class SongEntity : public I_SongEntity
+class SongState : public I_SongState
 {
     Q_OBJECT
 public:
-    explicit SongEntity();
-    virtual ~SongEntity();
+    explicit SongState();
+    virtual ~SongState();
 
 public:
     QImage image() override;
