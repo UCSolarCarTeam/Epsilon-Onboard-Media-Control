@@ -13,8 +13,8 @@ namespace Ui
 }
 
 class SongPlayerUi : public QWidget,
-                     public I_CurrentSongUi,
-                     public I_SongControlUi
+    public I_CurrentSongUi,
+    public I_SongControlUi
 {
     Q_OBJECT
 public:

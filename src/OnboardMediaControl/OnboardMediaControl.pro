@@ -15,6 +15,7 @@ TARGET = OnboardMediaControl
 DESTDIR = ../bin/
 INCLUDEPATH += ../BusinessLayer \
                ../ViewLayer \
+               ../External \
 
 SOURCES += \
     main.cpp \

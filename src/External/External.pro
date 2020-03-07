@@ -12,8 +12,10 @@ INCLUDEPATH += SongUrlSource \
 
 
 SOURCES += \
-    SongUrlSource/Local/LocalSongUrlSource.cpp
+    SongUrlSource/Local/LocalSongUrlSource.cpp \
+    ExternalContainer.cpp
 
 HEADERS += \
     SongUrlSource/I_SongUrlSource.h \
-    SongUrlSource/Local/LocalSongUrlSource.h
+    SongUrlSource/Local/LocalSongUrlSource.h \
+    ExternalContainer.h

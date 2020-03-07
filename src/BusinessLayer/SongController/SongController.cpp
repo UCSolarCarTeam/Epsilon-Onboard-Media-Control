@@ -33,6 +33,7 @@ void SongController::playNext()
     {
         return;
     }
+
     //Add the current song to previously played songs
     previousSongs_->push(songIndex_);
 
@@ -48,12 +49,13 @@ void SongController::playNext()
     {
         ++songIndex_ %= songUrls_.size();
     }
+
     loadSong();
 }
 
 void SongController::playPrevious()
 {
-    if (!songControlEntity_.loop() && !previousSongs_->isEmpty())
+    if (!songPlayerState_.loop() && !previousSongs_->isEmpty())
     {
         songIndex_ = previousSongs_->pop();
     }
@@ -80,7 +82,7 @@ void SongController::changeVolumeState()
 
 void SongController::checkSongEnded(QMediaPlayer::MediaStatus status)
 {
-    if(status == QMediaPlayer::EndOfMedia)
+    if (status == QMediaPlayer::EndOfMedia)
     {
         playNext();
     }
