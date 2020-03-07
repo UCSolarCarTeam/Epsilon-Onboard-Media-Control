@@ -44,7 +44,7 @@ void ProgressBar::changeColor(QColor color)
 
 double ProgressBar::progress()
 {
-  return progress_;
+    return progress_;
 }
 
 void ProgressBar::setProgress(const double progress)
