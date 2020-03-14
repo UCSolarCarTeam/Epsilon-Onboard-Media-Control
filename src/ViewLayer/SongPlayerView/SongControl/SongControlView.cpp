@@ -4,6 +4,7 @@
 #include "I_SongPlayerState.h"
 #include <QPushButton>
 #include <QSlider>
+
 SongControlView::SongControlView
 (
     I_SongControlPresenter& songControlPresenter,
@@ -13,7 +14,6 @@ SongControlView::SongControlView
     songControlUi_(songControlUi),
     songState_(songControlPresenter_.songPlayerState())
 {
-    //Connecting buttons to data
     connect(&songControlUi_.playButton(), SIGNAL(clicked()), this, SLOT(playButtonClicked()));
     connect(&songControlUi_.nextSongButton(), SIGNAL(clicked()), this, SLOT(nextSongButtonClicked()));
     connect(&songControlUi_.prevSongButton(),  SIGNAL(clicked()), this, SLOT(prevSongButtonClicked()));
@@ -21,7 +21,6 @@ SongControlView::SongControlView
     connect(&songControlUi_.loopButton(),  SIGNAL(clicked()), this, SLOT(loopButtonClicked()));
     connect(&songControlUi_.volumeControlSlider(), SIGNAL(valueChanged(int)), this, SLOT(volumeSliderMoved(int)));
 
-    //Connecting states to UI
     connect(&songControlPresenter_.songPlayerState(), SIGNAL(controlStateChanged()), this, SLOT(updateSongControlUi()));
     connect(&songControlPresenter_.songPlayerState(), SIGNAL(playingStateChanged()), this, SLOT(updateSongControlUi()));
     connect(&songControlPresenter_.songPlayerState(), SIGNAL(volumeStateChanged()), this, SLOT(updateSongControlUi()));

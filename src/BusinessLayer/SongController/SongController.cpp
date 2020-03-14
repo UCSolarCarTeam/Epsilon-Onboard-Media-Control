@@ -33,7 +33,6 @@ void SongController::playNext()
         return;
     }
 
-    //Add the current song to previously played songs
     previousSongs_->push(songIndex_);
 
     if (songPlayerState_.loop())
