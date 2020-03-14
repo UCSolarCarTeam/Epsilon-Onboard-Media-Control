@@ -1,9 +1,10 @@
-#include "SongControlView.h"
-#include "I_SongControlPresenter.h"
-#include "I_SongControlUi.h"
-#include "I_SongPlayerState.h"
 #include <QPushButton>
 #include <QSlider>
+
+#include "I_SongControlPresenter.h"
+#include "I_SongPlayerState.h"
+#include "I_SongControlUi.h"
+#include "SongControlView.h"
 
 SongControlView::SongControlView
 (
@@ -24,9 +25,6 @@ SongControlView::SongControlView
     connect(&songControlPresenter_.songPlayerState(), SIGNAL(controlStateChanged()), this, SLOT(updateSongControlUi()));
     connect(&songControlPresenter_.songPlayerState(), SIGNAL(playingStateChanged()), this, SLOT(updateSongControlUi()));
     connect(&songControlPresenter_.songPlayerState(), SIGNAL(volumeStateChanged()), this, SLOT(updateSongControlUi()));
-
-
-    initializeUi();
 }
 
 SongControlView::~SongControlView()
@@ -69,12 +67,4 @@ void SongControlView::updateSongControlUi()
 void SongControlView::volumeSliderMoved(int newVolume)
 {
     songControlPresenter_.songPlayerState().setVolume(newVolume);
-}
-
-void SongControlView::initializeUi()
-{
-    songControlUi_.playButton().setCheckable(true);
-    songControlUi_.loopButton().setCheckable(true);
-    songControlUi_.shuffleButton().setCheckable(true);
-    updateSongControlUi();
 }

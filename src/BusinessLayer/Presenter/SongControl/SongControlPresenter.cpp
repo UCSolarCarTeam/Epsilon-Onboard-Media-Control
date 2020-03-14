@@ -1,11 +1,11 @@
-#include "SongControlPresenter.h"
-#include "I_SongPlayerState.h"
 #include "I_SongController.h"
+#include "I_SongPlayerState.h"
+#include "SongControlPresenter.h"
 
 SongControlPresenter::SongControlPresenter(I_SongController& songController,
         I_SongPlayerState& songState)
-    : songController_(songController),
-      songState_(songState)
+    : songController_(songController)
+    , songState_(songState)
 {
 }
 

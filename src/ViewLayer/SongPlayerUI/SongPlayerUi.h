@@ -1,9 +1,9 @@
 #pragma once
 
+#include <QWidget>
+
 #include "I_CurrentSongUi.h"
 #include "I_SongControlUi.h"
-
-#include <QWidget>
 
 class QProgressBar;
 class FontLoader;

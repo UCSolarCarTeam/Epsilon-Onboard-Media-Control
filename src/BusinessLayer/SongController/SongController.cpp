@@ -1,13 +1,14 @@
-#include "SongController.h"
-#include "I_SongPlayerState.h"
-#include "I_SongPlayer.h"
-#include "I_SongUrlSource.h"
-
 #include <QMediaContent>
 #include <QRandomGenerator>
 #include <QStack>
 
-SongController::SongController(I_SongPlayer& songPlayer, I_SongPlayerState& songPlayerState,
+#include "I_SongPlayer.h"
+#include "I_SongPlayerState.h"
+#include "I_SongUrlSource.h"
+#include "SongController.h"
+
+SongController::SongController(I_SongPlayer& songPlayer,
+                               I_SongPlayerState& songPlayerState,
                                I_SongUrlSource& songUrlSource)
     : songPlayer_(songPlayer)
     , songPlayerState_(songPlayerState)

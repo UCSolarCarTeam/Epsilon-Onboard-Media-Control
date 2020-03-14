@@ -2,8 +2,8 @@
 
 #include "BusinessContainer.h"
 #include "ExternalContainer.h"
-#include "ViewContainer.h"
 #include "OnboardMediaControl.h"
+#include "ViewContainer.h"
 
 EpsilonOnboardMediaControl::EpsilonOnboardMediaControl(int& argc, char** argv)
     : QApplication(argc, argv)

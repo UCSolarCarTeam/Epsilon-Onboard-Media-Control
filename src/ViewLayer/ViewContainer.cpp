@@ -1,9 +1,9 @@
-#include "SongPlayerUi.h"
-#include "ProgressBar.h"
-#include "CurrentSongView.h"
-#include "SongControlView.h"
-#include "ViewContainer.h"
 #include "BusinessContainer.h"
+#include "CurrentSongView.h"
+#include "ProgressBar.h"
+#include "SongControlView.h"
+#include "SongPlayerUi.h"
+#include "ViewContainer.h"
 
 ViewContainer::ViewContainer(BusinessContainer& businessContainer)
     : songPlayerUI_(new SongPlayerUi())

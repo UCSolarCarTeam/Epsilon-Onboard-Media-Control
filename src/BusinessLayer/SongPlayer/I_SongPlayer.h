@@ -1,7 +1,7 @@
 #pragma once
 
 #include <QMediaPlayer>
-#include<QObject>
+#include <QObject>
 
 class QMediaContent;
 class I_SongPlayer : public QObject

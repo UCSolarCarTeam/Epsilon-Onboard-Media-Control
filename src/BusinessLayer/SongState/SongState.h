@@ -1,8 +1,8 @@
 #pragma once
 
-#include "I_SongState.h"
-
 #include <QImage>
+
+#include "I_SongState.h"
 
 class SongState : public I_SongState
 {

@@ -1,8 +1,9 @@
 #pragma once
-#include "I_SongPlayer.h"
 
-#include <QScopedPointer>
 #include <QMediaPlayer>
+#include <QScopedPointer>
+
+#include "I_SongPlayer.h"
 
 class I_SongState;
 

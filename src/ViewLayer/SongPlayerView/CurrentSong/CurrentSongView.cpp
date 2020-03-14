@@ -1,13 +1,12 @@
-#include "CurrentSongView.h"
-
-#include "I_CurrentSongPresenter.h"
-#include "I_SongState.h"
-
-#include <I_CurrentSongUi.h>
-#include <ProgressBar.h>
-
-#include <QVBoxLayout>
 #include <QLabel>
+#include <QVBoxLayout>
+
+#include "CurrentSongView.h"
+#include "I_CurrentSongPresenter.h"
+#include "I_CurrentSongUi.h"
+#include "I_SongState.h"
+#include "ProgressBar.h"
+
 
 CurrentSongView::CurrentSongView(I_CurrentSongPresenter& currentSongPresenter,
                                  I_CurrentSongUi& currentSongUi,

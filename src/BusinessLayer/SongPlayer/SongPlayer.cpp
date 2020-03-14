@@ -1,8 +1,8 @@
-#include "SongPlayer.h"
-#include "I_SongState.h"
-
 #include <QImage>
 #include <QMediaMetaData>
+
+#include "I_SongState.h"
+#include "SongPlayer.h"
 
 SongPlayer::SongPlayer(I_SongState& songState):
     mediaPlayer_(new QMediaPlayer()),

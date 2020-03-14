@@ -1,6 +1,7 @@
 #pragma once
 
 #include <QScopedPointer>
+
 class ExternalContainer;
 class I_SongController;
 class SongPlayer;

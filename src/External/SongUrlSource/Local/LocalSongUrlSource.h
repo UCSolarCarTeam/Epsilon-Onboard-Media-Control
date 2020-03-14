@@ -1,8 +1,8 @@
 #pragma once
 
-#include "I_SongUrlSource.h"
-
 #include <QList>
+
+#include "I_SongUrlSource.h"
 
 class LocalSongUrlSource : public I_SongUrlSource
 {

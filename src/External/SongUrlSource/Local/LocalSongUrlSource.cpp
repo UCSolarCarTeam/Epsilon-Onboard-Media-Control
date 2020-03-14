@@ -1,7 +1,7 @@
-#include "LocalSongUrlSource.h"
-
 #include <QDir>
 #include <QString>
+
+#include "LocalSongUrlSource.h"
 
 namespace
 {
