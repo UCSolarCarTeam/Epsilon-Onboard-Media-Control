@@ -6,15 +6,37 @@ CONFIG += staticlib
 }
 
 DESTDIR = .lib
+INCLUDEPATH +=  ../External \
+                ../External/SongUrlSource  \
+                ../External/SongUrlSource/Local \
+                SongPlayer \
+                SongState \
+                SongPlayerState \
+                SongController \
+                Presenter/SongControl \
+                Presenter/CurrentSong \
+
 
 HEADERS += \
     BusinessContainer.h \
-    SongPlayer/SongPlayer.h \
+    SongPlayerState/I_SongPlayerState.h \
+    SongPlayerState/SongPlayerState.h \
+    SongState/I_SongState.h \
+    SongState/SongState.h \
     SongPlayer/I_SongPlayer.h \
-    SongControl/SongControl.h \
-    SongPlayer/I_MediaPlayer.h
+    SongPlayer/SongPlayer.h \
+    SongController/I_SongController.h \
+    SongController/SongController.h \
+    Presenter/SongControl/SongControlPresenter.h \
+    Presenter/SongControl/I_SongControlPresenter.h \
+    Presenter/CurrentSong/I_CurrentSongPresenter.h \
+    Presenter/CurrentSong/CurrentSongPresenter.h \
 
 SOURCES += \
     BusinessContainer.cpp \
+    SongPlayerState/SongPlayerState.cpp \
+    SongState/SongState.cpp \
     SongPlayer/SongPlayer.cpp \
-    SongControl/SongControl.cpp
+    SongController/SongController.cpp \
+    Presenter/SongControl/SongControlPresenter.cpp \
+    Presenter/CurrentSong/CurrentSongPresenter.cpp \

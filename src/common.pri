@@ -1,5 +1,5 @@
 INCLUDEPATH += .
-QT+=core gui widgets network multimedia
+QT+=core gui widgets multimedia
 
 CONFIG += static c++11 debug
 

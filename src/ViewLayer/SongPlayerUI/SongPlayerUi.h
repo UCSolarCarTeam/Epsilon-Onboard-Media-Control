@@ -1,6 +1,9 @@
 #pragma once
 
-#include "I_SongPlayerUi.h"
+#include <QWidget>
+
+#include "I_CurrentSongUi.h"
+#include "I_SongControlUi.h"
 
 class QProgressBar;
 class FontLoader;
@@ -10,25 +13,26 @@ namespace Ui
     class SongPlayerUi;
 }
 
-class SongPlayerUi : public I_SongPlayerUi
+class SongPlayerUi : public QWidget,
+    public I_CurrentSongUi,
+    public I_SongControlUi
 {
     Q_OBJECT
-
 public:
     explicit SongPlayerUi();
-    ~SongPlayerUi();
-    QLabel& labelPic();
-    QLabel& infoLabel();
-    QPushButton& playButton();
-    QPushButton& shuffleButton();
-    QPushButton& loopButton();
-    QProgressBar& progressBar();
-    QPushButton& nextSong();
-    QPushButton& prevSong();
-    QVBoxLayout& progressBarContainer();
-    QSlider& volumeControl();
+    virtual ~SongPlayerUi();
+
+    QLabel& labelPic() override;
+    QLabel& infoLabel() override;
+    QPushButton& playButton() override;
+    QPushButton& shuffleButton() override;
+    QPushButton& loopButton() override;
+    QSlider& volumeControlSlider() override;
+    QPushButton& nextSongButton() override;
+    QPushButton& prevSongButton() override;
+    QVBoxLayout& progressBarContainer() override;
 
 private:
-    Ui::SongPlayerUi* ui_;
+    QScopedPointer<Ui::SongPlayerUi> ui_;
     QScopedPointer<FontLoader> fontLoader_;
 };

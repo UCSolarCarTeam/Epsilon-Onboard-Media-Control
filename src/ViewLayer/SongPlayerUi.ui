@@ -299,6 +299,9 @@ QPushButton:checked:pressed
          <property name="text">
           <string/>
          </property>
+         <property name="checkable">
+          <bool>true</bool>
+         </property>
         </widget>
         <widget class="QWidget" name="verticalWidget" native="true">
          <property name="geometry">
@@ -396,6 +399,9 @@ QPushButton:checked:pressed
         <property name="text">
          <string/>
         </property>
+        <property name="checkable">
+         <bool>true</bool>
+        </property>
        </widget>
       </item>
       <item row="2" column="2">
@@ -435,6 +441,9 @@ QPushButton:checked:pressed
         </property>
         <property name="text">
          <string/>
+        </property>
+        <property name="checkable">
+         <bool>true</bool>
         </property>
        </widget>
       </item>

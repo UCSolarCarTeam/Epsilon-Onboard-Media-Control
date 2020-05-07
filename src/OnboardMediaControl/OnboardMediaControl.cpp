@@ -1,12 +1,14 @@
 #include <QCommandLineParser>
 
-#include "../BusinessLayer/BusinessContainer.h"
-#include "../ViewLayer/ViewContainer.h"
+#include "BusinessContainer.h"
+#include "ExternalContainer.h"
 #include "OnboardMediaControl.h"
+#include "ViewContainer.h"
 
 EpsilonOnboardMediaControl::EpsilonOnboardMediaControl(int& argc, char** argv)
     : QApplication(argc, argv)
-    , businessContainer_(new BusinessContainer())
+    , externalContainer_(new ExternalContainer())
+    , businessContainer_(new BusinessContainer(*externalContainer_))
     , viewContainer_(new ViewContainer(*businessContainer_))
 {
 }

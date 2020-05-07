@@ -1,9 +1,9 @@
-#include <QStyle>
 #include <QDesktopWidget>
+#include <QStyle>
 
+#include "FontLoader.h"
 #include "SongPlayerUi.h"
 #include "ui_SongPlayerUi.h"
-#include "FontLoader/FontLoader.h"
 
 SongPlayerUi::SongPlayerUi():
     ui_(new Ui::SongPlayerUi)
@@ -29,7 +29,6 @@ SongPlayerUi::SongPlayerUi():
 
 SongPlayerUi::~SongPlayerUi()
 {
-    delete ui_;
 }
 
 QPushButton& SongPlayerUi::playButton()
@@ -42,12 +41,12 @@ QLabel& SongPlayerUi::infoLabel()
     return *ui_->infoLabel;
 }
 
-QPushButton& SongPlayerUi::nextSong()
+QPushButton& SongPlayerUi::nextSongButton()
 {
     return *ui_->nextSong;
 }
 
-QPushButton& SongPlayerUi::prevSong()
+QPushButton& SongPlayerUi::prevSongButton()
 {
     return *ui_->prevSong;
 }
@@ -62,7 +61,7 @@ QPushButton& SongPlayerUi::loopButton()
     return *ui_->loopButton;
 }
 
-QSlider& SongPlayerUi::volumeControl()
+QSlider& SongPlayerUi::volumeControlSlider()
 {
     return *ui_->volumeControl;
 }

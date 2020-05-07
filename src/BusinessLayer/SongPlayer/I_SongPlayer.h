@@ -1,12 +1,19 @@
 #pragma once
 
-#include <QWidget>
+#include <QMediaPlayer>
+#include <QObject>
 
-class I_SongPlayer : public QWidget
+class QMediaContent;
+class I_SongPlayer : public QObject
 {
     Q_OBJECT
+public:
+    virtual ~I_SongPlayer() {}
+    virtual void play() = 0;
+    virtual void pause() = 0;
+    virtual void load(const QMediaContent& content) = 0;
+    virtual void changeVolume(const int volume) = 0;
+
 signals:
-    void updateGUI(const QString& fileName, const QString& author);
-    void togglePlayback();
-    void openFile();
+    void mediaStatusChanged(QMediaPlayer::MediaStatus);
 };
