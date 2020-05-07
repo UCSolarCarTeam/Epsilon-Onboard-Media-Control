@@ -1,6 +1,6 @@
 # Epsilon Onboard Media Player
 
-This program is the onboard media control for the University of Calgary’s Solar Car Schulich Elysia. This program is a music player which runs on the car's secondary Raspberry Pi on the center display.
+This program is the onboard media control for the University of Calgary's Solar Car Schulich Elysia. This program is a music player which runs on the car's secondary Raspberry Pi on the center display.
 
 ## Playing Music
 
