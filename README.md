@@ -22,7 +22,7 @@ In order to download all song, first you need to install AWSCLI by running:
 To directly download from the aws bucket, you will need to obtain the Access Key ID and the Secret Access Key.
 
 3. Configure the AWS CLI
-run: `aws configure` in the terminal to configure the profile for AWS. Input the access keys obtained. The region name is `us-west-2`.
+run `aws configure` in the terminal to configure the profile for AWS. Input the access keys obtained. The region name is `us-west-2`.
 
  
 4. Downloading all songs
