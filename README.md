@@ -19,4 +19,4 @@ In order to download all song, first you need to install AWSCLI by running:
 To directly download from the aws bucket, you will need to obtain the access key ID and the secret acess key.
 
 3. Downloading all songs
-With the access keys, you can now run `./DownloadAllSong.sh` and inputting the acess keys into the apporiate places.
+With the access keys, you can now run `./DownloadAllSong.sh` and inputting the acess keys into the apporiate places. The region name is `us-west-2`.
