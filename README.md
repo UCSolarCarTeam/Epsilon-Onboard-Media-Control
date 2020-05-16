@@ -10,7 +10,10 @@ The media player will search for songs in the `/home/{user}/Music/SongLibrary` f
 
 ![Class Diagram](pictures/ClassDiagram.png)
 
-## Download All Song
+## Download Songs
+If you only need a small number of song, you can run the `./DownloadSongs.sh` in the terminal to download a pre-selected selection of songs.
+
+To download all the songs hosted on the AWS bucket:
 1. Installing AWSCLI
 In order to download all song, first you need to install AWSCLI by running:
 `sudo apt-get install awscli`
@@ -19,4 +22,4 @@ In order to download all song, first you need to install AWSCLI by running:
 To directly download from the aws bucket, you will need to obtain the Access Key ID and the Secret Access Key.
 
 3. Downloading all songs
-With the access keys, you can now run `./DownloadAllSong.sh` and inputting the access keys into the appropriate places. The region name is `us-west-2`.
+With the access keys, you can now run `./DownloadSongs.sh -a` and inputting the access keys into the appropriate places. The region name is `us-west-2`.
