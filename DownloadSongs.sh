@@ -6,8 +6,8 @@ cd $HOME/Music/SongLibrary
 while getopts ":a" opt; do
   case $opt in
     a)
-	aws configure
-	aws s3 sync s3://ucsolarteam.onboardmedia.songs .      
+	aws s3 sync s3://ucsolarteam.onboardmedia.songs .
+	exit 1    
 	;;
     *)
 	echo "Invalid Flag"
