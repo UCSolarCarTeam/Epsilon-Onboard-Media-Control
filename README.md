@@ -15,8 +15,8 @@ The media player will search for songs in the `/home/{user}/Music/SongLibrary` f
 In order to download all song, first you need to install AWSCLI by running:
 `sudo apt-get install awscli`
 
-2. Obtaining Acess Keys
-To directly download from the aws bucket, you will need to obtain the access key ID and the secret acess key.
+2. Obtaining Access Keys
+To directly download from the aws bucket, you will need to obtain the Access Key ID and the Secret Access Key.
 
 3. Downloading all songs
-With the access keys, you can now run `./DownloadAllSong.sh` and inputting the acess keys into the apporiate places. The region name is `us-west-2`.
+With the access keys, you can now run `./DownloadAllSong.sh` and inputting the access keys into the appropriate places. The region name is `us-west-2`.
