@@ -11,7 +11,7 @@ The media player will search for songs in the `/home/{user}/Music/SongLibrary` f
 ![Class Diagram](pictures/ClassDiagram.png)
 
 ## Download Songs
-If you only need a small number of song, you can run the `./DownloadSongs.sh` in the terminal to download a pre-selected selection of songs.
+If you only need a small number of songs, you can run the `./DownloadSongs.sh` in the terminal to download a pre-selected selection of songs.
 
 To download all the songs hosted on the AWS bucket:
 
@@ -25,7 +25,11 @@ To directly download from the aws bucket, you will need to obtain the Access Key
 
 **3. Configure the AWS CLI**
 
-Run `aws configure` in the terminal to configure the profile for AWS. Input the access keys obtained. The region name is `us-west-2`.
+Run `aws configure` in the terminal to configure the profile for AWS.
+
+Input the access keys obtained. 
+
+The region name is `us-west-2`.
 
 **4. Download all songs**
 
